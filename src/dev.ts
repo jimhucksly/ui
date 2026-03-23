@@ -1,15 +1,10 @@
-import { createApp, defineComponent } from 'vue';
-import { generatePalette } from '@dn-web/core';
+import '@/scss';
+import { createApp } from 'vue';
+import App from './app.vue';
+import plugin from './index';
 
-const App = defineComponent({
-  template: '<div id="title">DN UI Library </div>',
-  created() {
-    const palette = document.createElement('style');
-    palette.innerHTML = generatePalette();
-    palette.id = 'dn-palette';
-    document.body.appendChild(palette);
-  }
-})
+const app = createApp(App);
 
-const appComponent = createApp(App);
-appComponent.mount('#app');
+app.use(plugin);
+
+app.mount('#app');
