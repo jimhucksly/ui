@@ -3,4 +3,4 @@
     <span :class="[`${root}__content`]"> aaaaaa </span>
   </button>
 </template>
-<script src="./button.ts" lang="ts"></script>
+<script src="./button.ts"></script>

@@ -15,7 +15,7 @@ export default class ButtonComponent extends Vue {
 
   get classes(): Array<string> {
     const result = ['b-button'];
-    result.push(`${this.root}--${this.color}`);
+    result.push(`${this.root}`);
     return result;
   }
 

@@ -1,5 +1,6 @@
 <template>
   <div class="title">DN UI Library</div>
+  <b-button>aaa</b-button>
   <div class="ver">{{ $dnwebui.ver }}</div>
 </template>
 <script>
@@ -28,8 +29,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: var(--semibold);
   font-size: 36px;
-  font-weight: 700;
   height: 100vh;
   color: var(--grey-l-1);
   z-index: 2;
@@ -40,6 +41,9 @@ export default {
   left: 0;
   right: 0;
   padding: 12px 0;
+  font-family: var(--semibold);
+  font-size: 16px;
+  font-weight: 700;
   color: var(--grey-l-1);
   text-align: center;
   z-index: 2;

@@ -19,7 +19,11 @@
     "preserveConstEnums": true,
     "noImplicitThis": false,
     "strictPropertyInitialization": false,
-    "allowJs": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "noEmit": true,
     "paths": {
       "@/*": ["src/*"],
     },

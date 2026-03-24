@@ -1,0 +1,32 @@
+@use "mixins";
+
+@font-face {
+  @include mixins.mix-font-face('Roboto', Roboto-Regular);
+}
+
+@font-face {
+  @include  mixins.mix-font-face('Roboto Medium', Roboto-Medium);
+}
+
+@font-face {
+  @include  mixins.mix-font-face('Roboto Semi Bold', Roboto-SemiBold);
+}
+
+$font-size: 12px !default; // основной шрифт приложения
+
+$regular: "Roboto Regular", Arial, Helvetica, sans-serif;
+$semibold: "Roboto Semi Bold", Arial, Helvetica, sans-serif;
+$medium: "Roboto Medium", Arial, Helvetica, sans-serif;
+
+html,
+body {
+  font-family: var(--regular);
+  font-size: var(--font-size);
+}
+
+:root {
+  --font-size: #{$font-size}; // 12px
+  --regular: #{$regular};
+  --semibold: #{$semibold};
+  --medium: #{$medium};
+}

@@ -22,7 +22,7 @@ module.exports = {
   },
   // Плагин с наборами правил для TypeScript
   plugins: ['prettier', '@typescript-eslint', 'simple-import-sort', 'promise', 'vue'],
-  ignorePatterns: ["src/lib", "**/*.js"],
+  ignorePatterns: ["**/*.js"],
   rules: {
     'prettier/prettier': [
       'error',
