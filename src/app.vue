@@ -1,7 +1,5 @@
 <template>
-  <div class="title">DN UI Library</div>
-  <b-button>aaa</b-button>
-  <div class="ver">{{ $dnwebui.ver }}</div>
+  <router-view></router-view>
 </template>
 <script>
 import { generatePalette } from '@dn-web/core';
@@ -20,32 +18,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--semibold);
-  font-size: 36px;
-  height: 100vh;
-  color: var(--grey-l-1);
-  z-index: 2;
-}
-.ver {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 0;
-  font-family: var(--semibold);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--grey-l-1);
-  text-align: center;
-  z-index: 2;
-}
-</style>

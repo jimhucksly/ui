@@ -1,4 +1,5 @@
 import { Prop, Vue } from 'vue-property-decorator';
+import ClassService from '@/services/class.service';
 import { Colors } from '@/types/colors';
 
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
@@ -9,17 +10,5 @@ export default class ButtonComponent extends Vue {
 
   static rootclass = name;
 
-  get root() {
-    return ButtonComponent.rootclass;
-  }
-
-  get classes(): Array<string> {
-    const result = ['b-button'];
-    result.push(`${this.root}`);
-    return result;
-  }
-
-  get classHelper() {
-    return this.$dnwebui.ver;
-  }
+  classService = new ClassService(ButtonComponent.rootclass);
 }

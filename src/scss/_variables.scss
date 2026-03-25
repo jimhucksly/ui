@@ -1,0 +1,6 @@
+$gutter: 4px;
+
+:root {
+  --gutter: #{$gutter};
+  --border-radius: calc(3 * var(--gutter));
+}

@@ -1,0 +1,40 @@
+@use "mixins";
+@use "functions";
+
+.b-button {
+  display: flex;
+  align-items: center;
+  height: functions.px(8);
+  padding: 0 functions.px(3);
+  font-family: var(--semibold);
+  font-size: var(--text-body-s);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.1s;
+
+  &--primary {
+    background: var(--primary);
+    color: var(--white);
+
+    &:hover {
+      background: var(--primary-d-1);
+    }
+
+    &:active {
+      background: var(--primary-d-2);
+    }
+  }
+
+  &--success {
+    background: var(--success);
+    color: var(--white);
+
+    &:hover {
+      background: var(--success-d-1);
+    }
+
+    &:active {
+      background: var(--success-d-2);
+    }
+  }
+}
