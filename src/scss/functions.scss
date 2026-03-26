@@ -1,3 +1,21 @@
+@use "sass:selector";
+@use "sass:list";
+
 @function px($value) {
   @return calc($value * var(--gutter));
+}
+
+@function getParent($class) {
+  $parent: '';
+
+  @each $selector in $class {
+    $l: list.length($selector);
+    $parent: list.nth($selector, $l);
+  }
+
+  @return $parent;
+}
+
+@function getSelector($class, $prefix) {
+  @return selector.append($class, $prefix);
 }

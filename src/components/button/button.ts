@@ -7,6 +7,7 @@ const name = require('./metadata.js');
 
 export default class ButtonComponent extends Vue {
   @Prop({ type: String, default: Colors.Primary }) color: Colors;
+  @Prop({ type: Boolean, default: false }) outlined: boolean;
 
   static rootclass = name;
 

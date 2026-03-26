@@ -1,0 +1,62 @@
+@use "functions";
+
+.flex-start {display: flex; justify-content: flex-start}
+.flex-end {display: flex; justify-content: flex-end}
+.flex-center {display: flex; justify-content: center}
+.flex-around {display: flex; justify-content: space-around}
+.flex-between {display: flex; justify-content: space-between}
+.items-start {display: flex; align-items: flex-start}
+.items-center {display: flex; align-items: center}
+.items-stretch {display: flex; align-items: stretch}
+.flex-wrap {display: flex; flex-wrap: wrap}
+
+.basis-100 {flex-basis: 100%}
+.shrink-0 {flex-shrink: 0}
+
+.flex-start,
+.flex-end,
+.flex-center,
+.flex-around,
+.flex-between,
+.items-start,
+.items-center,
+.items-end,
+.items-stretch {
+  & > .row {
+    min-width: 100%
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+.h-100 {
+  height: 100%;
+}
+
+@for $i from 1 through 8 {
+  @each $n, $name in ('m': 'margin', 'p':'padding') {
+    @each $t, $type in ('t': 'top', 'r': 'right', 'b': 'bottom', 'l': 'left') {
+      .#{$n}#{$t}-#{$i} {
+        #{$name}-#{$type}: functions.px($i) !important;
+      }
+      @if $name == 'margin' {
+        .-#{$n}#{$t}-#{$i} {
+          #{$name}-#{$type}: functions.px($i * -1) !important;
+        }
+      }
+    }
+    .#{$n}x-#{$i} {
+      #{$name}-left: functions.px($i) !important;
+      #{$name}-right: functions.px($i) !important;
+    }
+    .#{$n}y-#{$i} {
+      #{$name}-top: functions.px($i) !important;
+      #{$name}-bottom: functions.px($i) !important;
+    }
+
+    .#{$n}a-#{$i} {
+      #{$name}: functions.px($i) !important;
+    }
+  }
+}

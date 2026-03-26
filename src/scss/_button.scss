@@ -12,29 +12,171 @@
   cursor: pointer;
   transition: all 0.1s;
 
-  &--primary {
+  $parent: functions.getParent(&);
+
+  $outlined: functions.getSelector($parent, '--outlined');
+
+  $primary: functions.getSelector($parent, '--primary');
+
+  &#{$primary} {
+    border: 1px solid var(--primary);
     background: var(--primary);
     color: var(--white);
 
     &:hover {
+      border: 1px solid var(--primary-d-1);
       background: var(--primary-d-1);
     }
 
     &:active {
+      border: 1px solid var(--primary-d-2);
       background: var(--primary-d-2);
     }
   }
 
-  &--success {
-    background: var(--success);
-    color: var(--white);
+  &#{$primary}#{$outlined} {
+    border: 1px solid var(--primary);
+    background-color: var(--white);
+    color: var(--primary);
 
     &:hover {
-      background: var(--success-d-1);
+      border: 1px solid var(--primary-d-1);
+      color: var(--primary-d-1);
     }
 
     &:active {
+     border: 1px solid var(--primary-d-2);
+     color: var(--primary-d-2);
+    }
+  }
+
+  $success: functions.getSelector($parent, '--success');
+
+  &#{$success} {
+    border: 1px solid var(--success-d-1);
+    background: var(--success-d-1);
+    color: var(--white);
+
+    &:hover {
+      border: 1px solid var(--success-d-2);
       background: var(--success-d-2);
+    }
+
+    &:active {
+      border: 1px solid var(--success-d-3);
+      background: var(--success-d-3);
+    }
+  }
+
+  &#{$success}#{$outlined} {
+    border: 1px solid var(--success-d-1);
+    background-color: var(--white);
+    color: var(--success-d-1);
+
+    &:hover {
+      border: 1px solid var(--success-d-2);
+      color: var(--success-d-2);
+    }
+
+    &:active {
+     border: 1px solid var(--success-d-3);
+     color: var(--success-d-3);
+    }
+  }
+
+  $warning: functions.getSelector($parent, '--warning');
+
+  &#{$warning} {
+    border: 1px solid var(--warning);
+    background: var(--warning);
+    color: var(--white);
+
+    &:hover {
+      border: 1px solid var(--warning-d-1);
+      background: var(--warning-d-1);
+    }
+
+    &:active {
+      border: 1px solid var(--warning-d-2);
+      background: var(--warning-d-2);
+    }
+  }
+
+  &#{$warning}#{$outlined} {
+    border: 1px solid var(--warning);
+    background-color: var(--white);
+    color: var(--warning);
+
+    &:hover {
+      border: 1px solid var(--warning-d-1);
+      color: var(--warning-d-1);
+    }
+
+    &:active {
+      border: 1px solid var(--warning-d-2);
+      color: var(--warning-d-2);
+    }
+  }
+
+  $error: functions.getSelector($parent, '--error');
+
+  &#{$error} {
+    background: var(--error);
+    color: var(--white);
+
+    &:hover {
+      background: var(--error-d-1);
+    }
+
+    &:active {
+      background: var(--error-d-2);
+    }
+  }
+
+  &#{$error}#{$outlined} {
+    border: 1px solid var(--error);
+    background-color: var(--white);
+    color: var(--error);
+
+    &:hover {
+      border: 1px solid var(--error-d-1);
+      color: var(--error-d-1);
+    }
+
+    &:active {
+      border: 1px solid var(--error-d-2);
+      color: var(--error-d-2);
+    }
+  }
+
+  $grey: functions.getSelector($parent, '--grey');
+
+  &#{$grey} {
+    background: var(--grey-d-1);
+    color: var(--white);
+
+    &:hover {
+      background: var(--grey-d-2);
+    }
+
+    &:active {
+      background: var(--grey-d-3);
+    }
+  }
+
+  &#{$grey}#{$outlined} {
+    border: 1px solid var(--grey-d-1);
+    background-color: var(--white);
+    color: var(--grey-d-1);
+
+    &:hover {
+      border: 1px solid var(--grey-d-2);
+      color: var(--grey-d-2);
+    }
+
+    &:active {
+      border: 1px solid var(--grey-d-3);
+      color: var(--grey-d-3);
     }
   }
 }
