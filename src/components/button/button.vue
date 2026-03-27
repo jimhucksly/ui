@@ -8,7 +8,10 @@
       },
     ]"
   >
-    <span :class="classService.submodule('content')">
+    <div :class="classService.submodule('loader')" :style="{ opacity: loading ? 1 : 0 }">
+      <b-loader view="dotts" :color="outlined ? color : undefined"></b-loader>
+    </div>
+    <span :class="classService.submodule('content')" :style="{ opacity: loading ? 0 : 1 }">
       <slot></slot>
     </span>
   </button>

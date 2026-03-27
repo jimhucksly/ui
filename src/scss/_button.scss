@@ -2,21 +2,29 @@
 @use "functions";
 
 .b-button {
+  position: relative;
   display: flex;
   align-items: center;
   height: functions.px(8);
+  min-width: functions.px(16);
   padding: 0 functions.px(3);
   font-family: var(--semibold);
   font-size: var(--text-body-s);
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: all 0.1s;
+  overflow: hidden;
 
   $parent: functions.getParent(&);
 
   $outlined: functions.getSelector($parent, '--outlined');
 
   $primary: functions.getSelector($parent, '--primary');
+  $success: functions.getSelector($parent, '--success');
+  $warning: functions.getSelector($parent, '--warning');
+  $error: functions.getSelector($parent, '--error');
+  $grey: functions.getSelector($parent, '--grey');
+  $white: functions.getSelector($parent, '--white');
 
   &#{$primary} {
     border: 1px solid var(--primary);
@@ -50,8 +58,6 @@
     }
   }
 
-  $success: functions.getSelector($parent, '--success');
-
   &#{$success} {
     border: 1px solid var(--success-d-1);
     background: var(--success-d-1);
@@ -83,8 +89,6 @@
      color: var(--success-d-3);
     }
   }
-
-  $warning: functions.getSelector($parent, '--warning');
 
   &#{$warning} {
     border: 1px solid var(--warning);
@@ -118,8 +122,6 @@
     }
   }
 
-  $error: functions.getSelector($parent, '--error');
-
   &#{$error} {
     background: var(--error);
     color: var(--white);
@@ -149,8 +151,6 @@
     }
   }
 
-  $grey: functions.getSelector($parent, '--grey');
-
   &#{$grey} {
     background: var(--grey-d-1);
     color: var(--white);
@@ -178,5 +178,15 @@
       border: 1px solid var(--grey-d-3);
       color: var(--grey-d-3);
     }
+  }
+
+  $loader: functions.getSelector($parent, '__loader');
+
+  #{$loader} {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
 }
