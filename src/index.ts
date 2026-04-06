@@ -1,5 +1,6 @@
 import { App, DefineComponent } from 'vue';
 import * as components from '@/components';
+import validation from './plugins/validation';
 
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const { version } = require('../package.json');
@@ -13,6 +14,8 @@ const plugin = {
     vue.config.globalProperties.$dnwebui = {
       ver: version,
     };
+
+    vue.use(validation);
 
     for (const c of $COMPONENTS) {
       const key = c.replace(/-/g, '');

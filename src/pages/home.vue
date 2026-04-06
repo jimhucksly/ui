@@ -10,6 +10,12 @@ export default {
       //
     };
   },
+  mounted() {
+    document.body.style['background-color'] = 'var(--grey-d-6)';
+  },
+  beforeUnmount() {
+    document.body.style['background-color'] = 'unset';
+  },
 };
 </script>
 <style lang="scss" scoped>

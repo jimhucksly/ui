@@ -5,7 +5,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: functions.px(8);
+  justify-content: center;
+  height: var(--input-height);
   min-width: functions.px(16);
   padding: 0 functions.px(3);
   font-family: var(--semibold);
@@ -49,11 +50,13 @@
 
     &:hover {
       border: 1px solid var(--primary-d-1);
+      background-color: var(--primary-l-6);
       color: var(--primary-d-1);
     }
 
     &:active {
      border: 1px solid var(--primary-d-2);
+     background-color: var(--primary-l-5);
      color: var(--primary-d-2);
     }
   }
@@ -80,13 +83,15 @@
     color: var(--success-d-1);
 
     &:hover {
+      background-color: var(--success-l-6);
       border: 1px solid var(--success-d-2);
       color: var(--success-d-2);
     }
 
     &:active {
-     border: 1px solid var(--success-d-3);
-     color: var(--success-d-3);
+      border: 1px solid var(--success-d-3);
+      background-color: var(--success-l-5);
+      color: var(--success-d-3);
     }
   }
 
@@ -113,11 +118,13 @@
 
     &:hover {
       border: 1px solid var(--warning-d-1);
+      background-color: var(--warning-l-6);
       color: var(--warning-d-1);
     }
 
     &:active {
       border: 1px solid var(--warning-d-2);
+      background-color: var(--warning-l-5);
       color: var(--warning-d-2);
     }
   }
@@ -142,11 +149,13 @@
 
     &:hover {
       border: 1px solid var(--error-d-1);
+      background-color: var(--error-l-6);
       color: var(--error-d-1);
     }
 
     &:active {
       border: 1px solid var(--error-d-2);
+      background-color: var(--error-l-5);
       color: var(--error-d-2);
     }
   }
@@ -171,11 +180,13 @@
 
     &:hover {
       border: 1px solid var(--grey-d-2);
+      background-color: var(--grey-l-6);
       color: var(--grey-d-2);
     }
 
     &:active {
       border: 1px solid var(--grey-d-3);
+      background-color: var(--grey-l-5);
       color: var(--grey-d-3);
     }
   }
@@ -188,5 +199,12 @@
     height: 100%;
     top: 0;
     left: 0;
+  }
+
+  $content: functions.getSelector($parent, '__content');
+
+  #{$content} {
+    display: flex;
+    justify-content: center;
   }
 }

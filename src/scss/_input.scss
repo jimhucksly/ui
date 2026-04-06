@@ -1,0 +1,106 @@
+@use "functions";
+
+.b-input {
+  display: flex;
+  flex-direction: column;
+
+  $parent: functions.getParent(&);
+
+  $content: functions.getSelector($parent, '__content');
+
+  #{$content} {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "label input";
+    gap: functions.px(2);
+    width: 100%;
+  }
+
+  $input: functions.getSelector($parent, '__input');
+
+  #{$input} {
+    grid-area: input;
+  }
+
+  $label: functions.getSelector($parent, '__label');
+
+  #{$label} {
+    display: flex;
+    align-items: center;
+    grid-area: label;
+    height: var(--input-height);
+    flex-shrink: 0;
+    font-family: var(--medium);
+  }
+
+  input {
+    height: var(--input-height);
+    width: 100%;
+    background-color: var(--white);
+    border: 1px solid var(--grey-l-4);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size);
+    color: var(--text);
+    padding: 0 calc(3 * var(--gutter));
+    outline: none;
+    transform: border 0.1s;
+
+    &:hover {
+      border: 1px solid var(--grey-l-2);
+    }
+
+    &:focus {
+      border: 1px solid var(--grey);
+
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+
+  $error: functions.getSelector($parent, '__error');
+
+  #{$error} {
+    display: flex;
+    align-items: center;
+    color: var(--error);
+    width: 100%;
+    font-size: 12px;
+    height: functions.px(6);
+    white-space: nowrap;
+  }
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--grey-d-3) inset !important;
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+@-webkit-keyframes autofill {
+  0%, 100% {
+    color: var(--grey-d-3);
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-delay: 1s;
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--white) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0 30px var(--grey-d-3) inset !important;
+}
+
+input::placeholder {
+  color: var(--white);
+  opacity: 0.8;
+}

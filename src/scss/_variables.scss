@@ -1,6 +1,12 @@
+@use "functions";
+
 $gutter: 4px;
+$border-radius: functions.px(3);
+$input-height: functions.px(8);
 
 :root {
   --gutter: #{$gutter};
-  --border-radius: calc(3 * var(--gutter));
+  --border-radius: #{$border-radius};
+  --input-height: #{$input-height};
+  --text: var(--grey-d-3);
 }
