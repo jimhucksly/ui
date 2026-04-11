@@ -1,0 +1,73 @@
+@use "functions";
+
+.b-slider {
+  position: relative;
+  margin-bottom: functions.px(8);
+
+  $parent: functions.getParent(&);
+
+  $points: functions.getSelector($parent, '__points');
+
+  #{$points} {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    height: 21px;
+
+    $item: functions.getSelector($points, '__item');
+
+    #{$item} {
+      position: relative;
+      width: var(--b-slider-size);
+      text-align: center;
+      color: var(--text);
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: functions.px(2);
+        height: functions.px(2);
+        width: functions.px(1);
+        border-top-left-radius: var(--border-radius);
+        border-top-right-radius: var(--border-radius);
+        background-color: var(--primary-l-6);
+      }
+    }
+  }
+
+  $track: functions.getSelector($parent, '__track');
+
+  #{$track} {
+    width: 100%;
+    height: functions.px(2);
+    background-color: var(--primary-l-6);
+    border-radius: var(--border-radius);
+  }
+
+  $thumb: functions.getSelector($parent, '__thumb');
+
+  #{$thumb} {
+    position: absolute;
+    top: functions.px(8);
+    left: 0;
+    width: var(--b-slider-size);
+    height: functions.px(5);
+    border-radius: var(--border-radius);
+    background-color: var(--primary);
+    cursor: pointer;
+    user-select: none;
+    will-change: transform;
+    &:after {
+      content: '';
+      position: absolute;
+      top: calc(-100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      height: functions.px(5);
+      width: functions.px(1);
+      background-color: var(--primary);
+      border-top-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
+    }
+  }
+}

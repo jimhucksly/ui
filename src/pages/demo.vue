@@ -29,6 +29,7 @@
           name="code"
           :error="v?.elements?.code?.message"
         ></b-otp>
+        <b-slider></b-slider>
         <div>
           <b-button @click="validate">Validate</b-button>
         </div>

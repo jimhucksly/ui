@@ -5,5 +5,6 @@ import bcontainer from './container/container.vue';
 import binput from './input/input.vue';
 import bloader from './loader/loader.vue';
 import brow from './row/row.vue';
+import bslider from './slider/slider.vue';
 
-export { bbutton, bcol, brow, bloader, binput, bcontainer, botp };
+export { bbutton, bcol, brow, bloader, binput, bcontainer, botp, bslider };
