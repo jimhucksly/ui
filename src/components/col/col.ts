@@ -1,7 +1,7 @@
 import { Prop, Vue } from 'vue-property-decorator';
 
 export default class ColComponent extends Vue {
-  @Prop({ type: String, default: '' }) cols: string;
+  @Prop({ type: [String, Number], default: '' }) cols: string | number;
   @Prop({ type: Boolean, default: false }) end: boolean;
   @Prop({ type: Boolean, default: false }) center: boolean;
 

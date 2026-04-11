@@ -1,3 +1,5 @@
+@use "functions";
+
 @mixin mix-font-face ($font_name, $font_file) {
   font-family: $font_name;
   src: local('O'),
@@ -6,4 +8,54 @@
   url('../fonts/#{$font_file}.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+@mixin label($classname) {
+  #{$classname} {
+    display: flex;
+    align-items: center;
+    grid-area: label;
+    height: var(--input-height);
+    flex-shrink: 0;
+    font-family: var(--medium);
+  }
+}
+
+@mixin input() {
+  input {
+    height: var(--input-height);
+    width: 100%;
+    background-color: var(--white);
+    border: 1px solid var(--grey-l-4);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size);
+    color: var(--text);
+    padding: 0 calc(3 * var(--gutter));
+    outline: none;
+    transform: border 0.1s;
+
+    &:hover {
+      border: 1px solid var(--grey-l-2);
+    }
+
+    &:focus {
+      border: 1px solid var(--grey);
+
+      &::placeholder {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@mixin error($classname) {
+  #{$classname} {
+    display: flex;
+    align-items: center;
+    color: var(--error);
+    width: 100%;
+    font-size: 12px;
+    height: functions.px(6);
+    white-space: nowrap;
+  }
 }

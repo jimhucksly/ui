@@ -1,17 +1,14 @@
 import { uniqueID } from '@dn-web/core';
-import { Emit, Prop, Vue, Watch } from 'vue-property-decorator';
+import { Emit, mixins, Prop, Watch } from 'vue-property-decorator';
+import GridMixin from '@/mixins/grid.mixin';
+import InputMixin from '@/mixins/input.mixin';
 import ClassService from '@/services/class.service';
 
 /* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const name = require('./metadata.js');
 
-export default class InputComponent extends Vue {
+export default class InputComponent extends mixins(InputMixin, GridMixin) {
   @Prop() modelValue: string;
-  @Prop({ type: String, default: null }) label: string;
-  @Prop({ type: String, default: null }) placeholder: string;
-  @Prop({ type: String, default: null }) name: string;
-  @Prop({ type: Boolean, default: false }) required: string;
-  @Prop({ type: String, default: null }) error: string;
 
   static rootclass = name;
 

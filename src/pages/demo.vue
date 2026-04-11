@@ -12,7 +12,23 @@
         <b-button color="grey">Grey</b-button>
       </b-col>
       <b-col cols="5">
-        <b-input v-model="input" label="Input" required name="input" :error="v?.elements?.input?.message"></b-input>
+        <b-input
+          v-model="input"
+          label="Input"
+          label-on-top
+          :grid="[2, 10]"
+          required
+          name="input"
+          :error="v?.elements?.input?.message"
+        ></b-input>
+        <b-otp
+          v-model="code"
+          label="OTP Input"
+          label-on-top
+          required
+          name="code"
+          :error="v?.elements?.code?.message"
+        ></b-otp>
         <div>
           <b-button @click="validate">Validate</b-button>
         </div>
@@ -63,6 +79,7 @@ export default {
     return {
       v: {},
       input: null,
+      code: null,
     };
   },
   mounted() {

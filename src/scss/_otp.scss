@@ -1,0 +1,33 @@
+@use "functions";
+@use "mixins";
+
+.b-otp {
+  display: flex;
+  flex-direction: column;
+
+  $parent: functions.getParent(&);
+
+  $label: functions.getSelector($parent, '__label');
+
+  @include mixins.label($label);
+
+  $input: functions.getSelector($parent, '__input');
+
+  #{$input} {
+    display: flex;
+    justify-content: space-between;
+
+    @include mixins.input();
+
+    input {
+      width: functions.px(10);
+      height: functions.px(12);
+      font-size: var(--text-body-s);
+      text-align: center;
+    }
+  }
+
+  $error: functions.getSelector($parent, '__error');
+
+  @include mixins.error($error);
+}

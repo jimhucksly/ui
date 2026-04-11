@@ -1,8 +1,10 @@
 <template>
   <div :class="[classService.rootclass]">
-    <div :class="classService.submodule('content')">
-      <div :class="classService.submodule('label')" v-if="label">{{ label }}</div>
-      <div :class="classService.submodule('input')">
+    <b-row :class="classService.submodule('content')">
+      <b-col v-if="label && labelCell" :cols="labelCell" :class="classService.submodule('label')">
+        {{ label }}
+      </b-col>
+      <b-col :cols="inputCell" :class="classService.submodule('input')">
         <input
           :id="uid"
           :model-value="internalValue"
@@ -16,8 +18,8 @@
         <div :class="classService.submodule('error')">
           <span v-if="error">{{ error }}</span>
         </div>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script src="./input.ts"></script>
