@@ -1,0 +1,26 @@
+import component from '@ldmjs/datatable';
+import { App, DefineComponent } from 'vue';
+import CommonService from '@/services/common.service';
+import { ldmuiAliases, ldmuiOptions } from '@/types/options';
+
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
+const name: keyof ldmuiAliases = require('./metadata.js');
+
+function reg(vue: App, options: ldmuiOptions) {
+  CommonService.propsFactory(component as DefineComponent, CommonService.defaults(options, name));
+  vue.component(options.aliases[name], component);
+  const hasExtensions = CommonService.isArray(options.extensions) && options.extensions.length > 0;
+  if (hasExtensions) {
+    const arr = options.extensions.filter(e => e.alias === name);
+    if (arr.length) {
+      for (const el of arr) {
+        vue.component(el.name, {
+          ...(component as DefineComponent),
+          props: CommonService.returnProps(component as DefineComponent, el.props),
+        });
+      }
+    }
+  }
+}
+
+export { reg };

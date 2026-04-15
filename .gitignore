@@ -4,4 +4,6 @@ yarn.lock
 .vscode/
 .yarn/
 dist/
+release/
+build/
 

@@ -1,15 +1,148 @@
-@use "reset";
 @use "fonts";
+@use "colors";
+@use "shadows";
+@use "scroll";
+@use "tooltip";
 @use "variables";
-@use "common";
-@use "grid";
-@use "typography";
-@use "button";
+@use "buttons";
+@use "checkbox";
+@use "radiogroup";
+@use "radiobutton";
+@use "switch";
+@use "chip";
+@use "badge";
+@use "avatar";
+@use "breadcrumbs";
 @use "loader";
-@use "input";
-@use "otp";
+@use "splitter";
+@use "tabs";
+@use "toggle";
+@use "progress";
+@use "inputs";
+@use "calendar";
+@use "toolbar";
+@use "animations";
+@use "toasted";
+@use "dialogs";
+@use "iterator";
+@use "pager";
+@use "time";
+@use "uploader";
+@use "step";
 @use "slider";
+@use "editor";
+@use "textviewer";
+@use "treeview";
+@use "textmarkup";
+@use "expansions";
 
-:root {
-  --white: rgba(255, 255, 255, 1);
+@use "@ldmjs/datatable/styles";
+
+@use 'vuetify' with (
+  $color-pack: false,
+);
+
+body {
+  .v-card {
+    background-color: var(--white);
+  }
+
+  .v-menu {
+    .v-overlay__content {
+      border-radius: var(--border-radius);
+      background-color: var(--white);
+      box-shadow: var(--shadow-l);
+
+      .v-list {
+        background-color: var(--white);
+
+        .v-list-item__overlay {
+          background-color: var(--grey-l-6);
+        }
+
+        .v-list-item__prepend {
+          display: flex;
+          align-items: start;
+          height: 100%;
+        }
+      }
+
+      .v-card {
+        &.v-card--variant-elevated {
+          box-shadow: var(--shadow-xl);
+        }
+      }
+    }
+  }
+
+  .v-list {
+    border-radius: var(--border-radius);
+
+    .v-list-item__overlay,
+    .v-list-item__underlay {
+      display: none;
+    }
+
+    .v-list-item {
+      color: var(--grey-d-3);
+      transition: all 0.1s;
+      &:hover {
+        background-color: var(--grey-l-6);
+        color: var(--text);
+      }
+
+      &--active {
+        color: var(--primary-d-1);
+        &:hover {
+          color: var(--primary-d-1);
+        }
+      }
+
+      .v-list-item__content {
+        .v-list-item-title {
+          font-family: var(--regular);
+          font-weight: 500;
+        }
+        .v-list-item-subtitle {
+          font-family: var(--regular);
+          color: var(--grey-d-1);
+        }
+      }
+    }
+
+    &.v-list--x-small {
+      .v-list-item {
+        padding: 6px 12px;
+      }
+    }
+
+    &.v-list--small {
+      .v-list-item {
+        padding: 8px 12px;
+      }
+    }
+
+    &.v-list--large {
+      .v-list-item {
+        padding: 12px 20px;
+      }
+    }
+  }
+
+  .ld-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ld-label-content {
+      color: var(--text);
+      line-height: 20px;
+    }
+
+    .ld-label-reqiured::after {
+      content: '*';
+      display: inline-block;
+      color: var(--error);
+    }
+  }
 }

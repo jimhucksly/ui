@@ -1,15 +1,34 @@
-class ResizeObserver {
-  observe() {
-    //
+const { getComponentsList }  = require('./config/helpers');
+
+const doAsync = async () => {
+  const components = await getComponentsList();
+  if (window) {
+    window['$COMPONENTS'] = components;
+    window['$DEV'] = false;
   }
-  unobserve() {
-    //
+
+  class ResizeObserver {
+    observe() {
+      //
+    }
+    unobserve() {
+      //
+    }
+    disconnect() {
+      //
+    }
+  };
+
+  if (window) {
+    window.ResizeObserver = ResizeObserver;
   }
-  disconnect() {
-    //
+
+  const visualViewportMock = new EventTarget();
+  visualViewportMock.offsetLeft = 0;
+  visualViewportMock.offsetTop = 0;
+  if (window) {
+    window.visualViewport = visualViewportMock;
   }
 }
 
-if (window) {
-  window.ResizeObserver = ResizeObserver;
-}
+module.exports = doAsync;

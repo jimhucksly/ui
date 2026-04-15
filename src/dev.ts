@@ -1,14 +1,20 @@
 import '@/scss';
 import { createApp } from 'vue';
-import App from './app.vue';
-import application from './application';
-import plugin from './index';
-import router from './router';
+import App from '@/demo/index.vue';
+import ldmui, { ldmuii18n } from '@/index';
+import { options } from '@/options';
+import { startup } from '@/startup';
 
-const app = createApp(App);
+function start() {
+  const appComponent = createApp(App, {
+    version: $VERSION,
+    versions: $VERSIONS,
+    icons: $ICONS,
+  });
+  appComponent.use(ldmui, options);
+  appComponent.use(ldmuii18n);
+  startup(appComponent);
+  appComponent.mount('#app');
+}
 
-app.use(router);
-app.use(plugin);
-app.use(application, router);
-
-app.mount('#app');
+start();

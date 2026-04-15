@@ -6,7 +6,6 @@
     "module": "esnext",
     "target": "esnext",
     "baseUrl": ".",
-    "strict": false,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -20,13 +19,10 @@
     "preserveConstEnums": true,
     "noImplicitThis": false,
     "strictPropertyInitialization": false,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false,
+    "allowJs": false,
     "ignoreDeprecations": "6.0",
-    "isolatedModules": true,
-    "allowJs": true,
-    "noEmit": true,
+    "strict": false,
+    "useUnknownInCatchVariables": false,
     "paths": {
       "@/*": ["src/*"],
     },
@@ -36,5 +32,7 @@
   "exclude": [
     "node_modules",
     "dist",
+    "config",
+    "lib"
   ]
 }

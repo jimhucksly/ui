@@ -8,7 +8,7 @@ const minimizer = new TerserPlugin({
     mangle: true,
     output: {
       comments: false,
-      beautify: true,
+      beautify: false,
     },
     toplevel: true,
     nameCache: null,

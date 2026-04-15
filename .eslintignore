@@ -1,2 +1,16 @@
+src/lib
+dist
+coverage
+**/*.d.ts
 **/*.js
-**/*.spec.*
+**/*.html
+**/*.json
+**/*.scss
+**/*.css
+**/*.md
+**/*.mdx
+**/*.conf
+**/*.png
+**/*.jpg
+**/*.svg
+**/*.pdf

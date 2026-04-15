@@ -1,12 +1,11 @@
-@use "functions";
-
-$gutter: 4px;
-$border-radius: functions.px(3);
-$input-height: functions.px(8);
+$border-radius: 8px !default; // радиус скругления атомарного элемента ui
+$icon-height: 24px !default; // размеры обычной иконки
 
 :root {
-  --gutter: #{$gutter};
+  --text: var(--grey-d-5);
+  --focus: var(--primary-d-1);
+  --highlight: var(--grey-d-1);
+  --white: hsla(255, 100%, 100%, 100%);
   --border-radius: #{$border-radius};
-  --input-height: #{$input-height};
-  --text: var(--grey-d-3);
+  --icon-height: #{$icon-height};
 }

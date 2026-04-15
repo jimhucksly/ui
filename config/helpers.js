@@ -1,31 +1,84 @@
 const path = require('path');
-const fs = require('node:fs');
+const fs = require('fs');
 
-function getComponents() {
+function getComponentsList() {
   return new Promise((resolve, reject) => {
-    const p = path.resolve(__dirname, '../src/components');
+    const p = path.resolve(__dirname, '../src');
 
-    const components = [];
+    const regExp = new RegExp(/^ld-/);
 
-    fs.readdir(p, (err, list) => {
+    const list = [];
+
+    return fs.readdir(p, (err, arr) => {
       if (err) {
         return reject(err);
       }
-      for (const f of list) {
-        const item = path.join(p, f);
+      for (const el of Array.from(arr)) {
+        const item = path.resolve(p, './' + el);
         const stat = fs.statSync(item);
-        if (stat.isDirectory()) {
-          const file = path.join(item, 'metadata.js');
-          const name = require(file);
-          components.push(name);
+        if (stat.isDirectory() && regExp.test(el)) {
+          const metadata = path.resolve(item, './metadata.js');
+          if (fs.existsSync(metadata)) {
+            const name = require(metadata);
+            list.push(name);
+          }
         }
       }
+      return resolve(list);
+    });
+  });
+}
 
-      return resolve(components);
+function getExternalsList(components) {
+  const skip = ['ld-datatable', 'ld-treeview'];
+  const externals = {};
+
+  for (const cmp of components) {
+    if (skip.includes(cmp)) {
+      continue;
+    }
+    externals[`@/${cmp}/${cmp}.vue`] = `./components/${cmp}.js`;
+  };
+  return externals;
+}
+
+function getEntryList(components) {
+  const skip = ['ld-datatable', 'ld-treeview'];
+  const entry = {};
+
+  for (const cmp of components) {
+    if (skip.includes(cmp)) {
+      continue;
+    }
+    entry[cmp] = path.join(__dirname, '../src/' + cmp + `/${cmp}.vue`);
+  };
+
+  return entry;
+}
+
+function getIconsList() {
+  const p = path.resolve(__dirname, '../src/ld-icon/icons');
+
+  const list = [];
+
+  return new Promise((resolve, reject) => {
+    return fs.readdir(p, (err, files) => {
+      if (err) {
+        return reject(err);
+      }
+      for (const file of Array.from(files)) {
+        if (/.svg$/.test(file)) {
+          list.push(file);
+        }
+      }
+      return resolve(list);
     });
   });
 }
 
 module.exports = {
-  getComponents
+  getIconsList,
+  getComponentsList,
+  getExternalsList,
+  getEntryList
 }

@@ -17,18 +17,18 @@ const cssLoaders = (ext) => {
   }
   if (isProduction) {
     result.push(MiniCssExtractPlugin.loader);
-    // if (ext !== 'css') {
-    //   result.push({
-    //   loader: 'string-replace-loader',
-    //     options: {
-    //       multiple: [
-    //         { search: '../fonts/MaterialIcons', replace: '/fonts/MaterialIcons', flags: 'g' },
-    //         { search: '../fonts/Montserrat-ExtraBold.ttf', replace: '/fonts/Montserrat-ExtraBold.ttf', flags: 'g' },
-    //         { search: '../img/Moscow.png', replace: '/img/Moscow.png', flags: 'g' },
-    //       ]
-    //     }
-    //   });
-    // }
+    if (ext !== 'css') {
+      result.push({
+      loader: 'string-replace-loader',
+        options: {
+          multiple: [
+            { search: '../fonts/MaterialIcons', replace: '/fonts/MaterialIcons', flags: 'g' },
+            { search: '../fonts/Montserrat-ExtraBold.ttf', replace: '/fonts/Montserrat-ExtraBold.ttf', flags: 'g' },
+            { search: '../img/Moscow.png', replace: '/img/Moscow.png', flags: 'g' },
+          ]
+        }
+      });
+    }
     result.push({
       loader: 'css-loader',
       options: {
