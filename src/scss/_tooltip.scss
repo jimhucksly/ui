@@ -1,0 +1,30 @@
+body {
+  .v-tooltip {
+    .v-overlay__content {
+      font-family: var(--regular);
+      font-size: var(--text-body-s);
+      line-height: 20px;
+
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-m);
+
+      &.bg-dark {
+        background-color: var(--dark);
+        color: var(--white);
+      }
+
+      &.bg-light {
+        background-color: var(--white);
+        color: var(--grey-d-3);
+      }
+
+      &.ld-tooltip {
+        padding: 10px 12px;
+      }
+
+      &.ld-popover {
+        padding: 20px;
+      }
+    }
+  }
+}

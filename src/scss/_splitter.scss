@@ -1,0 +1,60 @@
+:root {
+  --splitter: 8px;
+}
+
+body {
+  .ld-splitter {
+    height: inherit;
+    display: flex;
+
+    .splitter-pane {
+      height: inherit;
+      overflow-y: auto;
+      background: var(--white);
+    }
+
+    .splitter {
+      display: flex;
+      background-color: var(--white) !important;
+      border-color: var(--grey-l-5);
+      border-style: solid;
+
+      &--hor {
+        justify-content: center;
+        width: 100%;
+        height: var(--splitter);
+        cursor: ns-resize;
+        border-width: 1px 0;
+
+        &.splitter--disabled {
+          height: 1px;
+          border-top: none;
+        }
+      }
+      &--ver {
+        align-items: center;
+        width: var(--splitter);
+        height: 100%;
+        cursor: ew-resize;
+        border-width: 0 1px;
+
+        &.splitter--disabled {
+          width: 1px;
+          border-left: none;
+        }
+      }
+      &--disabled {
+        cursor: default;
+        svg {
+          display: none;
+        }
+      }
+    }
+
+    &.splitter {
+      width: 100%;
+      border-left: none;
+      border-right: none;
+    }
+  }
+}

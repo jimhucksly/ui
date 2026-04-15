@@ -1,0 +1,87 @@
+@use "sass:list";
+
+:root {
+  --radio-s: 16px;
+  --radio-m: 20px;
+  --radio-l: 24px;
+}
+
+$sizearray: (
+  "x-small": (
+    // font size
+    var(--text-body-s),
+  ),
+  "small": (
+    var(--text-body-m),
+  ),
+  "large": (
+    var(--text-body-l),
+  ),
+);
+
+body {
+  .ld-radiogroup {
+    padding: 0 !important;
+
+    .ld-radiogroup-radiobuttons {
+      display: flex;
+    }
+
+    .ld-radiogroup-label {
+      min-height: unset;
+      font-family: var(--medium);
+    }
+
+    .validate {
+      overflow: hidden;
+      height: 20px;
+    }
+
+    &.ld-radiogroup--row {
+      &.ld-radiogroup--ltr {
+        .ld-radiogroup-radiobuttons {
+          flex-direction: row;
+        }
+        .ld-radiobutton:not(:first-child) {
+          margin-left: 8px;
+        }
+      }
+      &.ld-radiogroup--rtl {
+        .ld-radiogroup-radiobuttons {
+          flex-direction: row-reverse;
+        }
+        .ld-radiobutton:not(:first-child) {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    &.ld-radiogroup--column {
+      :deep(.ld-radiogroup-label) {
+        margin-bottom: 16px;
+      }
+      .ld-radiogroup-radiobuttons {
+        flex-direction: column;
+        :deep(.ld-radiobutton) {
+          margin-bottom: 14px;
+        }
+        :deep(.ld-label) {
+          min-height: unset;
+        }
+      }
+    }
+
+    @each $size, $values in $sizearray {
+      $f: list.nth($values, 1);
+
+      &.ld-radiogroup--#{$size} {
+        .ld-radiogroup-label {
+          .ld-label-content {
+            font-size: $f;
+            line-height: calc($f + 6px);
+          }
+        }
+      }
+    }
+  }
+}

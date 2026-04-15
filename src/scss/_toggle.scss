@@ -1,0 +1,125 @@
+@use "sass:list";
+
+$sizearray: (
+  "small": (
+    // font size
+    var(--text-body-s),
+    // height
+    var(--button-xs),
+    // radius
+    var(--border-radius),
+    // icon padding
+    12px
+  ),
+  "large": (
+    var(--text-body-m),
+    var(--button-s),
+    var(--border-radius),
+    16px,
+  ),
+  "x-large": (
+    var(--text-body-l),
+    var(--button-m),
+    var(--border-radius),
+    20px,
+  ),
+);
+
+body {
+  .ld-toggle-buttons {
+    width: max-content;
+    & > div {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 8px;
+      background-color: var(--grey-l-6);
+      width: max-content;
+      padding: 4px;
+
+      .ld-toggle-button {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: var(--medium);
+        color: var(--grey-d-3);
+        transition: all 0.1s;
+
+        .ld-toggle-button-content {
+          display: grid;
+          align-items: center;
+          grid-auto-flow: column;
+          gap: 8px;
+        }
+
+        &:hover {
+          color: var(--text);
+        }
+
+        &.ld-toggle-button--selected {
+          background-color: var(--white);
+          color: var(--primary);
+        }
+
+        &[disabled] {
+          color: var(--grey-l-2);
+        }
+
+        &:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          width: calc(100% + 4px);
+          height: calc(100% + 4px);
+          border: 2px solid var(--focus);
+          border-radius: calc(var(--border-radius) + 4px);
+          opacity: 0;
+        }
+
+
+        &:focus-visible {
+          &:after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    @each $size, $values in $sizearray {
+      $f: list.nth($values, 1);
+      $h: list.nth($values, 2);
+      $r: list.nth($values, 3);
+      $p: list.nth($values, 4);
+      &.ld-toggle-buttons--#{$size} {
+        & > div {
+          border-radius: calc($r + 4px);
+
+          .ld-toggle-button {
+            font-size: $f;
+            min-width: $h;
+            height: $h;
+            border-radius: $r;
+
+            &:not(.ld-toggle-button--icon) {
+              padding: 0 $p;
+            }
+          }
+        }
+        &.ld-toggle-buttons--rounded {
+          & > div {
+            border-radius: $h;
+            .ld-toggle-button {
+              border-radius: calc($h - 6px);
+
+              &:after {
+                border-radius: calc($h - 6px + 4px);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

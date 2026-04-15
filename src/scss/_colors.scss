@@ -1,0 +1,65 @@
+$colors: ('primary', 'secondary', 'success', 'warning', 'error', 'grey', 'white');
+
+body,
+.v-application {
+  @each $color in $colors {
+    & .#{$color} {
+      background-color: var(--#{$color});
+      border-color: var(--#{$color});
+    }
+    & .#{$color}--text, & .text-#{$color} {
+      @if $color == 'primary' {
+        color: var(--#{$color}-d-1);
+      }
+      @else if $color == 'success' {
+        color: var(--#{$color}-d-1);
+      }
+      @else if $color == 'grey' {
+        color: var(--#{$color}-d-3);
+      } @else {
+        color: var(--#{$color});
+      }
+    }
+    & .#{$color}--bg, & .bg-#{$color} {
+      @if $color == 'primary' {
+        background-color: var(--#{$color}-l-5);
+      } @else if $color == 'grey' {
+        background-color: var(--#{$color}-l-6);
+      } @else if $color == 'secondary' {
+        background-color: var(--#{$color}-l-5);
+      } @else {
+        background-color: var(--#{$color});
+      }
+    }
+    & .#{$color}--border, & .border-#{$color} {
+      @if $color == 'primary' {
+        border-color: var(--#{$color}-l-2);
+      } @else if $color == 'grey' {
+        border-color: var(--#{$color}-l-5);
+      } @else {
+        border-color: var(--#{$color});
+      }
+    }
+    & .#{$color}--hover {
+      transition: background 0.1s;
+      @if $color == 'grey' {
+        &:hover {
+          background-color: var(--#{$color}-l-6);
+        }
+      } @else if $color == 'secondary' {
+          &:hover {
+            background-color: var(--#{$color}-l-5);
+          }
+      } @else {
+        &:hover {
+          background-color: var(--#{$color});
+        }
+      }
+    }
+  }
+
+  & .text-color {
+    color: var(--text);
+  }
+}
+

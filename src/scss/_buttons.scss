@@ -1,0 +1,742 @@
+:root {
+  --button-xxs: 24px;
+  --button-xs: 32px;
+  --button-s: 40px;
+  --button-m: 48px;
+  --button-l: 56px;
+}
+
+body {
+  button:focus,
+  button:active {
+    outline: none !important;
+  }
+
+  .v-btn:after {
+    transition: none !important;
+  }
+
+  .v-btn {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+
+    .v-btn__overlay {
+      display: none;
+    }
+    .v-btn__underlay {
+      display: none;
+    }
+
+    &.v-btn--variant-flat {
+      box-shadow: none;
+    }
+
+    &.v-btn--size-x-small,
+    &.v-btn--size-small,
+    &.v-btn--size-default,
+    &.v-btn--size-large,
+    &.v-btn--size-x-large {
+      min-width: unset;
+    }
+
+    &.v-btn--disabled {
+      opacity: 1;
+    }
+  }
+
+  .ld-button {
+    font-family: var(--semibold);
+    font-weight: 400 !important;
+    border-radius: var(--border-radius) !important;
+
+    &:not(.ld-button-square) {
+      .v-btn__content {
+        svg:nth-child(1) {
+          margin-right: 4px;
+        }
+        svg:nth-child(3) {
+          margin-left: 4px;
+        }
+      }
+    }
+
+    &.v-btn {
+      position: relative;
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        border: 2px solid var(--focus);
+        border-radius: calc(var(--border-radius) + 4px);
+      }
+    }
+
+    &.v-btn:focus-visible {
+      &:after {
+        opacity: 1;
+      }
+    }
+
+    &.v-btn--size-x-small {
+      font-size: var(--text-body-s) !important;
+      min-height: unset;
+      height: var(--button-xs) !important;
+      padding: 0 14px !important;
+
+      &.ld-button-square {
+        min-width: unset;
+        width: var(--button-xs) !important;
+        padding: 0 !important;
+
+        &.v-btn--icon {
+          width: var(--button-xxs) !important;
+          height: var(--button-xxs) !important;
+        }
+      }
+    }
+
+    &.v-btn--size-small {
+      font-size: var(--text-body-s) !important;
+      min-height: unset;
+      height: var(--button-s) !important;
+      padding: 0 16px !important;
+
+      &.ld-button-square {
+        min-width: unset;
+        width: var(--button-s) !important;
+        padding: 0 !important;
+
+        &.v-btn--icon {
+          width: var(--button-xs) !important;
+          height: var(--button-xs) !important;
+        }
+      }
+    }
+
+    &.v-btn--size-large {
+      font-size: var(--text-body-m) !important;
+      min-height: unset;
+      height: var(--button-m) !important;
+      padding: 0 20px !important;
+
+      &.ld-button-square {
+        min-width: unset;
+        width: var(--button-m) !important;
+        padding: 0 !important;
+
+        &.v-btn--icon {
+          width: var(--button-s) !important;
+          height: var(--button-s) !important;
+        }
+      }
+    }
+
+    &.v-btn--size-x-large {
+      font-size: var(--text-body-l) !important;
+      min-height: unset;
+      height: var(--button-l) !important;
+      padding: 0 24px !important;
+
+      &.ld-button-square {
+        min-width: unset;
+        width: var(--button-l) !important;
+        padding: 0 !important;
+
+        &.v-btn--icon {
+          width: var(--button-m) !important;
+          height: var(--button-m) !important;
+        }
+      }
+    }
+
+    @mixin buttonflat(
+      $colorname,
+      $iconcolor,
+      $default,
+      $hover,
+      $active,
+      $disabled
+    ) {
+      &.bg-#{$colorname} {
+        background-color: $default !important;
+        color: var(--white) !important;
+
+        svg {
+          color: var(--white) !important;
+        }
+
+        &.ld-button-text {
+          background-color: transparent !important;
+          color: $iconcolor !important;
+
+          svg {
+            color: $iconcolor !important;
+          }
+
+          &:hover,
+          &:active,
+          &[disabled] {
+            background-color: transparent !important;
+            border-color: transparent !important;
+          }
+        }
+
+        &:hover {
+          background-color: $hover !important;
+        }
+
+        &:active {
+          background-color: $active !important;
+        }
+
+        &[disabled] {
+          background-color: $disabled !important;
+          color: var(--white) !important;
+        }
+      }
+    }
+
+    @mixin buttonoutlined(
+      $colorname,
+      $borderDefault,
+      $colorDefault,
+      $bgHover,
+      $borderHover,
+      $colorHover,
+      $bgActive,
+      $borderActive,
+      $colorActive
+    ) {
+      &.v-btn--variant-outlined.text-#{$colorname} {
+        background-color: var(--white) !important;
+        border-color: $borderDefault !important;
+        color: $colorDefault !important;
+
+        svg {
+          color: $colorDefault !important;
+        }
+
+        &.ld-button-text {
+          background-color: transparent !important;
+          border-color: transparent !important;
+          color: $colorDefault !important;
+
+          svg {
+            color: $colorDefault !important;
+          }
+
+          &:hover,
+          &:active,
+          &[disabled] {
+            background-color: transparent !important;
+            border-color: transparent !important;
+          }
+        }
+
+        &:hover {
+          background-color: $bgHover !important;
+          border-color: $borderHover !important;
+          color: $colorHover !important;
+
+          svg {
+            color: $colorHover !important;
+          }
+        }
+
+        &:active {
+          background-color: $bgActive !important;
+          border-color: $borderActive !important;
+          color: $colorActive !important;
+
+          svg {
+            color: $colorActive !important;
+          }
+        }
+
+        &[disabled] {
+          background-color: var(--white) !important;
+          border-color: var(--grey-l-4) !important;
+          color: var(--grey-l-2) !important;
+
+          svg {
+            color: var(--grey-l-2) !important;
+          }
+        }
+      }
+    }
+
+    @mixin buttontonal(
+      $colorname,
+      $bgDefault,
+      $colorDefault,
+      $bgHover,
+      $colorHover,
+      $bgActive,
+      $colorActive,
+      $bgDisabled,
+      $colorDisabled
+    ) {
+      &.v-btn--variant-tonal.text-#{$colorname} {
+        background-color: $bgDefault !important;
+        color: $colorDefault !important;
+
+        svg {
+          color: $colorDefault !important;
+        }
+
+        &.ld-button-text {
+          background-color: transparent !important;
+          color: $colorDefault !important;
+
+          svg {
+            color: $colorDefault !important;
+          }
+
+          &:hover,
+          &:active,
+          &[disabled] {
+            background-color: transparent !important;
+            border-color: transparent !important;
+          }
+        }
+
+        &:hover {
+          background-color: $bgHover !important;
+          border-color: transparent;
+          color: $colorHover !important;
+
+          svg {
+            color: $colorHover !important;
+          }
+        }
+
+        &:active {
+          background-color: $bgActive !important;
+          border-color: transparent;
+          color: $colorActive !important;
+
+          svg {
+            color: $colorActive !important;
+          }
+        }
+
+        &[disabled] {
+          background-color: $bgDisabled !important;
+          color: $colorDisabled !important;
+
+          svg {
+            color: $colorDisabled !important;
+          }
+        }
+      }
+    }
+
+    @mixin buttontext(
+      $colorname,
+      $colorDefault,
+      $bgHover,
+      $colorHover,
+      $bgActive,
+      $colorActive
+    ) {
+      &.v-btn--variant-text.text-#{$colorname} {
+        color: $colorDefault !important;
+
+        svg {
+          color: $colorDefault !important;
+        }
+
+        &.ld-button-text {
+          background-color: transparent !important;
+        }
+
+        &:hover {
+          color: $colorHover !important;
+          background-color: $bgHover;
+
+          svg {
+            color: $colorHover !important;
+          }
+        }
+
+        &:active {
+          color: $colorActive !important;
+          background-color: $bgActive;
+
+          svg {
+            color: $colorActive !important;
+          }
+        }
+
+        &[disabled] {
+          color: var(--grey-l-2) !important;
+          background-color: var(--white);
+
+          svg {
+            color: var(--grey-l-2) !important;
+          }
+        }
+      }
+    }
+
+    // ----------- primary
+
+    // -- flat
+
+    @include buttonflat(
+      'primary',
+      // icon text color
+      var(--primary-d-1),
+      // default bg
+      var(--primary),
+      // hover bg
+      var(--primary-d-1),
+      // active bg
+      var(--primary-d-2),
+      // disabled bg
+      var(--primary-l-4)
+    );
+
+    // -- outlined
+
+    @include buttonoutlined(
+      'primary',
+      // border default
+      var(--primary-l-3),
+      // color default
+      var(--primary-d-1),
+      // bg hover
+      var(--primary-l-6),
+      // border hover
+      var(--primary-l-2),
+      // color hover
+      var(--primary-d-2),
+      // bg active
+      var(--primary-l-5),
+      // border active
+      var(--primary-l-1),
+      // color active
+      var(--primary-d-3)
+    );
+
+    // -- tonal
+
+    @include buttontonal(
+      'primary',
+      // bg default
+      var(--primary-l-6),
+      // color default
+      var(--primary-d-1),
+      // bg hover
+      var(--primary-l-5),
+      // color hover
+      var(--primary-d-2),
+      // bg active
+      var(--primary-l-4),
+      // color active
+      var(--primary-d-3),
+      // bg disabled
+      var(--primary-l-6),
+      // color disabled
+      var(--primary-l-3)
+    );
+
+    // -- text
+
+    @include buttontext(
+      'primary',
+      // color default
+      var(--primary-d-1),
+      // bg hover
+      var(--primary-l-6),
+      // color hover
+      var(--primary-d-2),
+      // bg avtive
+      var(--primary-l-5),
+      // color active
+      var(--primary-d-3)
+    );
+
+    // ----------- success
+
+    // -- flat
+
+    @include buttonflat(
+      'success',
+      // icon text color
+      var(--success-d-1),
+       // default bg
+      var(--success),
+      // hover bg
+      var(--success-d-1),
+      // active bg
+      var(--success-d-2),
+      // disabled bg
+      var(--success-l-5)
+    );
+
+    // -- outlined
+
+    @include buttonoutlined(
+      'success',
+      // border default
+      var(--success-l-2),
+      // color default
+      var(--success-d-1),
+      // bg hover
+      var(--success-l-7),
+      // border hover
+      var(--success-l-1),
+      // color hover
+      var(--success-d-2),
+      // bg active
+      var(--success-l-6),
+      // border active
+      var(--success),
+      // color active
+      var(--success-d-3)
+    );
+
+    // -- tonal
+
+    @include buttontonal(
+      'success',
+      // bg default
+      var(--success-l-7),
+      // color default
+      var(--success-d-1),
+      // bg hover
+      var(--success-l-6),
+      // color hover
+      var(--success-d-2),
+      // bg active
+      var(--success-l-5),
+      // color active
+      var(--success-d-3),
+      // bg disabled
+      var(--success-l-7),
+      // color disabled
+      var(--success-l-3)
+    );
+
+    // -- text
+
+    @include buttontext(
+      'success',
+      // color default
+      var(--success-d-1),
+      // bg hover
+      var(--success-l-6),
+      // color hover
+      var(--success-d-2),
+      // bg avtive
+      var(--success-l-5),
+      // color active
+      var(--success-d-3)
+    );
+
+    // ----------- error
+
+    // -- flat
+
+    @include buttonflat(
+      'error',
+      // icon text color
+      var(--error-d-1),
+       // default bg
+      var(--error),
+      // hover bg
+      var(--error-d-1),
+      // active bg
+      var(--error-d-2),
+      // disabled bg
+      var(--error-l-5)
+    );
+
+    // -- outlined
+
+    @include buttonoutlined(
+      'error',
+      // border default
+      var(--error-l-3),
+      // color default
+      var(--error),
+      // bg hover
+      var(--error-l-7),
+      // border hover
+      var(--error-l-2),
+      // color hover
+      var(--error-d-1),
+      // bg active
+      var(--error-l-6),
+      // border active
+      var(--error-l-1),
+      // color active
+      var(--error-d-2)
+    );
+
+    // -- tonal
+
+    @include buttontonal(
+      'error',
+      // bg default
+      var(--error-l-7),
+      // color default
+      var(--error-d-1),
+      // bg hover
+      var(--error-l-6),
+      // color hover
+      var(--error-d-2),
+      // bg active
+      var(--error-l-5),
+      // color active
+      var(--error-d-3),
+      // bg disabled
+      var(--error-l-7),
+      // color disabled
+      var(--error-l-3)
+    );
+
+    // -- text
+
+    @include buttontext(
+      'error',
+      // color default
+      var(--error-d-1),
+      // bg hover
+      var(--error-l-6),
+      // color hover
+      var(--error-d-2),
+      // bg avtive
+      var(--error-l-5),
+      // color active
+      var(--error-d-3)
+    );
+
+    // ----------- grey
+
+    // -- flat
+
+    @include buttonflat(
+      'grey',
+      // icon text color
+      var(--grey-d-3),
+      // default bg
+      var(--grey),
+      // hover bg
+      var(--grey-d-1),
+      // active bg
+      var(--grey-d-2),
+      // disabled bg
+      var(--grey-l-4)
+    );
+
+    // -- outlined
+
+    @include buttonoutlined(
+      'grey',
+      // border default
+      var(--grey-l-3),
+      // color default
+      var(--grey-d-3),
+      // bg hover
+      var(--grey-l-6),
+      // border hover
+      var(--grey-l-2),
+      // color hover
+      var(--grey-d-4),
+      // bg active
+      var(--grey-l-5),
+      // border active
+      var(--grey-l-1),
+      // color active
+      var(--grey-d-5)
+    );
+
+    // -- tonal
+
+    @include buttontonal(
+      'grey',
+      // bg default
+      var(--grey-l-6),
+      // color default
+      var(--grey-d-3),
+      // bg hover
+      var(--grey-l-5),
+      // color hover
+      var(--grey-d-4),
+      // bg active
+      var(--grey-l-4),
+      // color active
+      var(--grey-d-5),
+      // bg disabled
+      var(--grey-l-6),
+      // color disabled
+      var(--grey-l-2)
+    );
+
+    // -- text
+
+    @include buttontext(
+      'grey',
+      // color default
+      var(--grey-d-3),
+      // bg hover
+      var(--grey-l-5),
+      // color hover
+      var(--grey-d-4),
+      // bg avtive
+      var(--grey-l-4),
+      // color active
+      var(--grey-d-5)
+    );
+
+    // ----------- white
+
+    // -- flat
+
+    @include buttonflat(
+      'white',
+      // icon text color
+      var(--white),
+      // default bg
+      transparent,
+      // hover bg
+      transparent,
+      // active bg
+      transparent,
+      // disabled bg
+      transparent,
+    );
+
+    // -- outlined
+
+    // -- tonal
+
+    // -- text
+
+    @include buttontext(
+      'white',
+      // color default
+      var(--white),
+      // bg hover
+      transparent,
+      // color hover
+      var(--white),
+      // bg avtive
+      transparent,
+      // color active
+      var(--white),
+    );
+
+    // --------------------------------------------------
+
+    svg.primary--text {
+      color: var(--primary) !important;
+    }
+  }
+}

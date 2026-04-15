@@ -1,0 +1,204 @@
+@use "sass:list";
+
+:root {
+  --badge-s: 20px;
+  --badge-m: 24px;
+  --badge-l: 28px;
+  --badge-rounded-border-radius: 24px;
+  --badge-square-border-radius: 6px;
+}
+
+$sizearray: (
+  "x-small": (
+    // height
+    var(--badge-s),
+    // padding
+    6px,
+    // font size
+    var(--font-size),
+  ),
+  "small": (
+    var(--badge-m),
+    8px,
+    var(--text-body-s),
+  ),
+  "large": (
+    var(--badge-l),
+    10px,
+    var(--text-body-m),
+  ),
+);
+
+body {
+  .ld-badge {
+    font-family: var(--medium);
+    &.ld-badge--rounded {
+      border-radius: var(--badge-rounded-border-radius);
+    }
+
+    &.ld-badge--square {
+      border-radius: var(--badge-square-border-radius);
+    }
+
+    @mixin badgeflat(
+      $colorName,
+      $bg
+    ) {
+      &.bg-#{$colorName} {
+        background-color: $bg;
+        border: 1px solid transparent;
+        color: var(--white);
+
+        .ld-badge-dot {
+          background-color: var(--white);
+        }
+      }
+    }
+
+    @mixin badgeoutlined(
+      $colorName,
+      $border
+    ) {
+      &.v-btn--variant-outlined.text-#{$colorName} {
+        background-color: var(--white);
+        border: 1px solid $border;
+        color: $border;
+
+        .ld-badge-dot {
+          background-color: $border;
+        }
+      }
+    }
+
+    @mixin badgetonal(
+      $colorName,
+      $bg,
+      $color
+    ) {
+      &.v-btn--variant-tonal.text-#{$colorName} {
+        background-color: $bg;
+        border: 1px solid transparent;
+        color: $color;
+
+        .ld-badge-dot {
+          background-color: $color;
+        }
+      }
+    }
+
+    // ----- primary
+
+    // -- flat
+
+    @include badgeflat('primary', var(--primary));
+
+    // -- outlined
+
+    @include badgeoutlined('primary', var(--primary));
+
+    // -- tonal
+
+    @include badgetonal('primary', var(--primary-l-5), var(--primary));
+
+    // ----- secondary
+
+    // -- flat
+
+    @include badgeflat('secondary', var(--secondary));
+
+    // -- outlined
+
+    @include badgeoutlined('secondary', var(--secondary));
+
+    // -- tonal
+
+    @include badgetonal('secondary', var(--secondary-l-5), var(--secondary-d-2));
+
+    // ----- success
+
+    // -- flat
+
+    @include badgeflat('success', var(--success));
+
+    // -- outlined
+
+    @include badgeoutlined('success', var(--success));
+
+    // -- tonal
+
+    @include badgetonal('success', var(--success-l-6), var(--success-d-1));
+
+    // ----- warning
+
+    // -- flat
+
+    @include badgeflat('warning', var(--warning));
+
+    // -- outlined
+
+    @include badgeoutlined('warning', var(--warning));
+
+    // -- tonal
+
+    @include badgetonal('warning', var(--warning-l-5), var(--warning-d-1));
+
+    // ----- error
+
+    // -- flat
+
+    @include badgeflat('error', var(--error));
+
+    // -- outlined
+
+    @include badgeoutlined('error', var(--error));
+
+    // -- tonal
+
+    @include badgetonal('error', var(--error-l-6), var(--error));
+
+    // ----- grey
+
+    // -- flat
+
+    @include badgeflat('grey', var(--grey-d-1));
+
+    // -- outlined
+
+    @include badgeoutlined('grey', var(--grey-d-1));
+
+    // -- tonal
+
+    @include badgetonal('grey', var(--grey-l-5), var(--grey-d-3));
+
+    @each $size, $values in $sizearray {
+      &.v-btn--size-#{$size} {
+        $h: list.nth($values, 1);
+        $p: list.nth($values, 2);
+        $f: list.nth($values, 3);
+        font-weight: 500;
+        height: $h;
+        padding: 0 $p !important;
+
+        .v-btn__content {
+          font-size: $f;
+          line-height: calc($f + 4px);
+        }
+
+        &.ld-badge--circle {
+          width: $h;
+          max-width: $h;
+          min-width: $h;
+          padding: 0 0 !important;
+        }
+      }
+    }
+
+    .ld-badge-dot {
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+  }
+}

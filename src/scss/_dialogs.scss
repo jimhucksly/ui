@@ -1,0 +1,136 @@
+$modal-border-radius: 20px !default; // радиус скругления модальных окон
+$modal-window-gap: 24px !default;
+
+:root {
+  --modal-border-radius: #{$modal-border-radius};
+  --modal-window-gap: #{$modal-window-gap};
+}
+
+body {
+  .v-dialog {
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .v-overlay__scrim {
+      opacity: 1;
+      background-color: var(--shade-30);
+    }
+
+    &.Alert,
+    &.Confirm {
+      align-items: center;
+    }
+
+    &:not(.Alert):not(.Confirm) {
+      align-items: start;
+    }
+
+    &--align-left {
+      justify-content: flex-start !important;
+
+      .ld-dialog-content.v-overlay__content {
+        border-radius: 0 !important;
+
+        & > .v-card {
+          border-radius: 0 !important;
+        }
+      }
+    }
+
+    &--align-right {
+      justify-content: flex-end !important;
+
+      .ld-dialog-content.v-overlay__content {
+        border-radius: 0 !important;
+
+        & > .v-card {
+          border-radius: 0 !important;
+        }
+      }
+    }
+
+    &.ld-dialog--hidden {
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+    .ld-dialog-content.v-overlay__content {
+      max-width: unset;
+      max-height: unset;
+      border-radius: var(--modal-border-radius);
+
+      & > .v-card {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--modal-border-radius);
+        box-shadow: var(--shadow-xxl);
+
+        & > .v-card-title {
+          display: flex;
+          align-items: center;
+          flex-wrap: nowrap;
+          position: relative;
+          flex-shrink: 0;
+          padding: 24px 24px 20px 24px;
+          border-bottom: 1px solid var(--grey-l-5);
+
+          & > span:first-child {
+            color: var(--text);
+            font-family: var(--semibold);
+            font-size: var(--text-body-x);
+            font-weight: 600;
+            line-height: calc(var(--text-body-x) + 8px);
+          }
+        }
+
+        & > .v-card-text {
+          color: var(--text);
+          font-family: var(--regular);
+          font-size: var(--text-body-m);
+          line-height: 20px;
+          padding: 20px 24px;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        & > .v-card-actions {
+          position: relative;
+          flex-shrink: 0;
+          padding: 24px 24px 20px 24px;
+          border-top: 1px solid var(--grey-l-5);
+
+          & > button {
+            width: var(--max-child-width);
+          }
+        }
+      }
+
+      &.ld-dialog-content--without-content {
+        & > .v-card {
+          & > .v-card-title {
+            border-color: transparent;
+          }
+          & > .v-card-actions {
+            border-color: transparent;
+          }
+        }
+      }
+      &.ld-dialog-content--mobile {
+        & > .v-card {
+          & > .v-card-actions {
+            display: grid;
+            grid-auto-flow: column dense;
+            grid-auto-columns: 1fr;
+            gap: 8px;
+          }
+        }
+      }
+      &.ld-dialog-content--hidden {
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+body {
+  .ld-pager {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .ld-pager-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: var(--button-xs);
+      border-radius: var(--border-radius);
+      font-family: var(--semibold);
+      font-size: var(--text-body-s);
+      color: var(--grey-d-3);
+      cursor: pointer;
+      transition: all 0.15s;
+
+      &[aria-selected=false]:not([disabled]),
+      &[aria-role=navigation] {
+        &:hover {
+          background-color: var(--grey-l-6);
+          color: var(--grey-d-4);
+        }
+
+        &:active {
+          background-color: var(--grey-l-5);
+          color: var(--grey-d-5);
+        }
+      }
+
+      &[disabled] {
+        color: var(--grey-l-2);
+
+        span {
+          color: var(--grey-l-2);
+        }
+      }
+
+      &[aria-selected=true] {
+        background-color: var(--primary-l-6);
+        color: var(--primary-d-1);
+
+        &:hover {
+          background-color: var(--primary-l-6);
+          color: var(--primary-d-1);
+        }
+
+        &:active {
+          background-color: var(--primary-l-6);
+          color: var(--primary-d-1);
+        }
+      }
+
+      &.ld-pager-button--icon {
+        width: var(--button-xs);
+      }
+    }
+
+    &.ld-pager--rounded {
+      .ld-pager-button {
+        border-radius: var(--button-xs);
+      }
+    }
+
+    &.ld-pager--fluid {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    span {
+      color: var(--grey-d-3);
+    }
+
+    ul {
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+
+    .ld-pager-page {
+      font-family: var(--semibold);
+      font-size: var(--text-body-s);
+      color: var(--text);
+    }
+  }
+}

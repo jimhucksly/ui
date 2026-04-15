@@ -1,0 +1,23 @@
+@use "sass:selector";
+@use "sass:list";
+
+@function getParent($class) {
+  $parent: '';
+
+  @each $selector in $class {
+    $l: list.length($selector);
+    $parent: list.nth($selector, $l);
+  }
+
+  @return $parent;
+}
+
+@function getSelector($class, $prefix) {
+  @return selector.append($class, $prefix);
+}
+
+@mixin not-class($className) {
+  &:not(#{$className}) {
+    @content;
+  }
+}

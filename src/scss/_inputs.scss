@@ -1,0 +1,1086 @@
+@use "sass:selector";
+@use "sass:list";
+@use "sass:map";
+@use "utils";
+
+$input-s: 32px;
+$input-m: 40px;
+$input-l: 48px;
+
+:root {
+  --input-s: #{$input-s};
+  --input-m: #{$input-m};
+  --input-l: #{$input-l};
+}
+
+$sizearray: (
+  '--x-small': (
+    // input height
+    $input-s,
+    // font-size
+    var(--text-body-s),
+    // dropdown list item padding
+    6px 12px,
+    // dropdown list title font size
+    var(--text-body-s),
+    // dropdown list subtitle font size
+    var(--text-body),
+    // dropdown list subtitle margin top
+    0
+  ),
+  '--small': (
+    $input-m,
+    var(--text-body-m),
+    8px 12px,
+    var(--text-body-m),
+    var(--text-body),
+    4px
+  ),
+  '--large': (
+    $input-l,
+    var(--text-body-l),
+    12px 20px,
+    var(--text-body-l),
+    var(--text-body-s),
+    4px
+  ),
+);
+
+$input-border-color-default: var(--grey-l-4);
+$input-border-color-hover: var(--grey);
+$input-disabled-color: var(--grey-l-2);
+$input-disabled-background-color: var(--grey-l-6);
+
+$input-border-color-readonly: var(--grey-l-6);
+$input-readonly-color: var(--grey-d-3);
+
+$colors: (
+  "grey": ("default": $input-border-color-default, "hover": $input-border-color-hover),
+  "success": ("default": var(--success-d-1), "hover": var(--success-d-2)),
+  "error": ("default": var(--error), "hover": var(--error-d-1)),
+);
+
+:root {
+  --input-height: #{$input-s};
+  --input-height-m: #{$input-m};
+  --input-height-l: #{$input-l};
+  --input-border-color-default: #{$input-border-color-default};
+  --input-border-color-hover: #{$input-border-color-hover};
+  --input-disabled-color: #{$input-disabled-color};
+  --input-disabled-background-color: #{$input-disabled-background-color};
+}
+
+@mixin inputlabel($parent, $size) {
+  $label-on-top: utils.getSelector($parent, '--label-on-top');
+  @include utils.not-class(utils.getSelector($parent, '--label-on-top')) {
+    .ld-label {
+      height: $size;
+    }
+  }
+  &#{utils.getSelector($parent, '--label-on-top')} {
+    .ld-label {
+      margin-bottom: 4px;
+    }
+  }
+
+  .ld-label {
+    font-size: var(--text-body-s);
+    &-content {
+      color: var(--grey-d-1);
+    }
+  }
+}
+
+@mixin inputdetails() {
+  .v-input__details {
+    position: relative;
+    padding: 0 !important;
+    margin: 6px 0 0 0 !important;
+    z-index: 1;
+    height: 20px;
+    min-height: 20px;
+    align-items: center;
+
+    .v-messages {
+      color: var(--grey-d-1);
+      font-family: var(--regular);
+      font-size: var(--font-size);
+      line-height: calc(var(--font-size) + 6px);
+    }
+  }
+}
+
+@mixin inputsize() {
+  $parent: utils.getParent(&);
+
+  @at-root {
+    @each $s, $values in $sizearray {
+
+      &#{utils.getSelector($parent, $s)} {
+        $size: list.nth($values, 1);
+        $font: list.nth($values, 2);
+
+        .v-field {
+          min-height: $size;
+
+          .v-field__input {
+            min-height: $size;
+            font-size: $font;
+            padding-top: 3px;
+            padding-bottom: 3px;
+          }
+
+          @if $parent == '.ld-edit-text' {
+            .v-field__input {
+              height: $size;
+              max-height: $size;
+            }
+          }
+
+          .v-text-field__prefix,
+          .v-text-field__suffix {
+            min-height: $size;
+          }
+        }
+
+        @include inputlabel($parent, $size);
+
+        @include inputdetails();
+
+        #{utils.getSelector($parent, '-help')} {
+          display: flex;
+          align-items: center;
+          margin-left: 8px;
+          height: $size;
+        }
+      }
+    }
+  }
+}
+
+@mixin dropdownlistsize() {
+  @at-root {
+    @each $size, $values in $sizearray {
+      $p: list.nth($values, 3);
+      $f: list.nth($values, 4);
+      $s: list.nth($values, 5);
+      $mt: list.nth($values, 6);
+
+      &#{utils.getSelector('.ld-dropdown-list', $size)} {
+        .v-list-item {
+          padding: $p !important;
+          .v-list-item__content {
+            .v-list-item-title {
+              font-size: $f;
+              line-height: calc($f + 4px);
+            }
+            .v-list-item-subtitle {
+              font-size: $s;
+              line-height: calc($s + 4px);
+              margin-top: $mt;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@mixin vfieldoutline($color) {
+  .v-field__outline {
+    border-radius: var(--border-radius);
+    .v-field__outline__start,
+    .v-field__outline__end {
+      border-color: $color !important;
+      opacity: 1 !important;
+      transition: all 0.2s;
+    }
+  }
+}
+
+@mixin vfield {
+  .v-field {
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    overflow: hidden;
+
+    .v-field__input {
+      font-family: var(--regular);
+      color: var(--text);
+      padding-inline: unset;
+      padding-top: unset;
+      padding-bottom: unset;
+      padding: 0 12px;
+    }
+
+    .v-text-field__prefix {
+      padding: 0 0 0 12px;
+      opacity: 1 !important;
+
+      .v-text-field__prefix__text {
+        font-family: var(--regular);
+        font-size: var(--text-body-s);
+        color: var(--text);
+      }
+    }
+
+    .v-text-field__suffix {
+      padding: 0 12px 0 0;
+      opacity: 1 !important;
+
+      .v-text-field__suffix__text {
+        font-family: var(--regular);
+        font-size: var(--text-body-s);
+        color: var(--text);
+      }
+    }
+
+    .v-field__prepend-inner {
+      color: var(--grey-d-1);
+    }
+
+    .v-field__append-inner {
+      padding-right: 16px;
+      color: var(--grey-d-1);
+    }
+  }
+}
+
+@mixin vfieldborder() {
+  $parent: utils.getParent(&);
+
+  @at-root {
+    $index: 0;
+    @each $color, $values in $colors {
+      $index: $index + 1;
+      $prefix: #{selector.append('--', $color)};
+
+
+      &#{utils.getSelector($parent, $prefix)} {
+        $default: '';
+        $hover : '';
+        @each $key, $value in $values {
+          @if $key == "default" {
+            $default: $value;
+          }
+          @if $key == "hover" {
+            $hover: $value;
+          }
+        }
+
+        .v-input {
+          .v-field.v-field--variant-outlined {
+            @include vfieldoutline($default);
+          }
+
+          .v-input__append {
+            &:after {
+              border-color: $default;
+              border-width: 1px;
+            }
+          }
+
+          &:not(.v-input--readonly) {
+            &:hover {
+              .v-field.v-field--variant-outlined {
+                @include vfieldoutline($hover);
+              }
+
+              .v-input__append {
+                &:after {
+                  border-color: $hover;
+                  border-width: 1px;
+                }
+              }
+            }
+
+            &.v-input--focused {
+              .v-field.v-field--variant-outlined {
+                @include vfieldoutline(var(--focus));
+              }
+
+              .v-input__append {
+                &:after {
+                  border-color: var(--focus);
+                  border-width: 2px;
+                }
+              }
+            }
+          }
+
+          &.v-input--readonly {
+            .v-field.v-field--variant-outlined {
+              @include vfieldoutline($input-border-color-readonly);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin vfielddisabled() {
+  .v-input--disabled {
+    .v-field.v-field--variant-outlined.v-field--disabled {
+      background-color: var(--input-disabled-background-color);
+
+      .v-field__input {
+        color: var(--input-disabled-color);
+      }
+
+      .v-field__prepend-inner {
+        color: var(--input-disabled-color);
+      }
+
+      @include vfieldoutline(var(--input-disabled-background-color));
+
+      .v-text-field__prefix__text,
+      .v-text-field__suffix__text {
+        color: var(--input-disabled-color);
+      }
+    }
+  }
+}
+
+@mixin inputloader() {
+  $parent: utils.getParent(&);
+  $selector: utils.getSelector($parent, '-loader');
+
+  #{$selector} {
+    position: relative;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary);
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30%;
+      height: 3px;
+      background-color: var(--primary-l-3);
+      border-radius: 3px;
+      animation: slideOut 0.8s linear infinite;
+    }
+  }
+}
+
+@mixin inputnoborder($direction) {
+  $outlinesuffix: '';
+  @if $direction == 'right' {
+    $outlinesuffix: 'end';
+  } @else {
+    $outlinesuffix: 'start';
+  }
+
+  .v-input {
+    .v-field.v-field--variant-outlined {
+      .v-field__outline__#{$outlinesuffix} {
+        #{selector.append('border-', $direction, '-width')}: 0;
+      }
+    }
+  }
+}
+
+@mixin inputborder($direction, $size) {
+  $outlinesuffix: '';
+  @if $direction == 'right' {
+    $outlinesuffix: 'end';
+  } @else {
+    $outlinesuffix: 'start';
+  }
+
+  .v-field.v-field--variant-outlined {
+    .v-field__outline__#{$outlinesuffix} {
+      #{selector.append('border-', $direction, '-width')}: $size;
+    }
+  }
+}
+
+@mixin inputnoborderradius($direction) {
+  $outlinesuffix: '';
+  @if $direction == 'right' {
+    $outlinesuffix: 'end';
+  } @else {
+    $outlinesuffix: 'start';
+  }
+
+  %noborderradius {
+    #{selector.append('border-top-', $direction, '-radius')}:  0 !important;
+    #{selector.append('border-bottom-', $direction, '-radius')}:  0 !important;
+  }
+
+  .v-input {
+    .v-field {
+      @extend %noborderradius;
+    }
+    .v-field.v-field--variant-outlined {
+      .v-field__outline {
+        @extend %noborderradius;
+      }
+
+      .v-field__outline__#{$outlinesuffix} {
+        @extend %noborderradius;
+      }
+    }
+  }
+}
+
+@mixin spinbutton($el) {
+  $selector: selector.append($el, '--active-menu');
+
+  .#{$selector} {
+    .v-field {
+      .v-field__append-inner {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}
+
+%custom-edit {
+  padding: 0 !important;
+}
+
+// ---------------------
+// ------ body
+// ---------------------
+
+body {
+  .v-field {
+    .v-field__input {
+      font-family: var(--regular);
+    }
+
+    &.v-field--appended {
+      padding-inline-end: 0 !important;
+    }
+
+    .v-field__append-inner {
+      .v-btn--icon {
+        color: var(--grey-d-1) !important;
+
+        svg {
+          color: var(--grey-d-1) !important;
+        }
+      }
+    }
+  }
+
+  .v-input {
+    &.v-input--readonly {
+      &.v-input--focused {
+        .v-field.v-field--variant-outlined {
+          .v-field__outline {
+            --v-field-border-width: 1px;
+          }
+        }
+      }
+
+      &:not(.v-input--disabled) {
+        .v-field__input {
+          color: $input-readonly-color !important;
+        }
+      }
+    }
+  }
+
+  .ld-edit-text {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    .ld-edit-text--type-password {
+      .v-field__input {
+        font-size: calc(var(--font-size) + 6px) !important;
+      }
+    }
+
+    @include inputdetails();
+  }
+
+  .ld-edit-masked-text {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+  }
+
+  .ld-datepicker {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    .ld-datepicker-date-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-basis: 100%;
+    }
+
+    .ld-datepicker-time-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-basis: 100%;
+    }
+
+    &:not(.ld-datepicker--dateonly) {
+      .ld-datepicker-date-field {
+        @include inputnoborderradius('right');
+
+        @include inputnoborder('right');
+
+        .v-input {
+          &:hover {
+            @include inputborder('right', 1px);
+          }
+
+          &.v-input--focused {
+            @include inputborder('right', 2px);
+          }
+        }
+      }
+      .ld-datepicker-time-field {
+        @include inputnoborderradius('left');
+
+        .v-input {
+          &:hover {
+            @include inputborder('left', 1px);
+          }
+
+          &.v-input--focused {
+            @include inputborder('left', 2px);
+          }
+        }
+      }
+    }
+  }
+
+  .ld-daterange {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    .ld-daterange-date-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-basis: 100%;
+    }
+  }
+
+  .ld-timepicker {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+  }
+
+  .ld-select {
+    @extend %custom-edit;
+
+    padding: 0 !important;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    @include spinbutton('v-select');
+  }
+
+  .ld-edit-list-box {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    &:not(.ld-edit-list-box--readonly) {
+      .v-autocomplete {
+        & > .v-input__control > .v-field.v-field--variant-outlined {
+          @include vfieldoutline($input-border-color-default);
+        }
+
+        &:hover {
+          & > .v-input__control > .v-field.v-field--variant-outlined {
+            @include vfieldoutline($input-border-color-hover);
+          }
+
+          & > .v-input__append {
+            &:after {
+              border-color: $input-border-color-hover;
+              border-width: 1px;
+            }
+          }
+        }
+      }
+    }
+
+    &.ld-edit-list-box--readonly {
+      .v-autocomplete {
+        & > .v-input__control > .v-field.v-field--variant-outlined {
+          @include vfieldoutline($input-border-color-readonly);
+        }
+      }
+    }
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+  }
+
+  .ld-combobox {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    @include inputloader();
+
+    @include spinbutton('v-combobox');
+  }
+
+  .ld-select-list-box {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    @include inputloader();
+
+    @include inputnoborderradius('right');
+
+    @include inputnoborder('right');
+
+    .v-input {
+      .v-input__append {
+        position: relative;
+        margin-inline-start: unset;
+        padding-left: 8px;
+        padding-right: 12px;
+
+        &:after {
+          content: '';
+          display: block;
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-style: solid;
+          border-left: none;
+          border-top-right-radius: var(--border-radius);
+          border-bottom-right-radius: var(--border-radius);
+          z-index: 0;
+          transition: all 0.2s;
+        }
+
+        button {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 20px;
+          z-index: 1;
+        }
+      }
+
+      &.v-input--disabled {
+        .v-input__append {
+          &:after {
+            border: none;
+            background-color: var(--grey-l-6);
+          }
+        }
+      }
+    }
+  }
+
+  .ld-textarea {
+    @extend %custom-edit;
+
+    ::-webkit-resizer{
+      background-image: -webkit-repeating-radial-gradient(center center, hsla(220, 5%, 56%, 1), hsla(220, 5%, 56%, 1) 1px, transparent 1px, transparent 100%);
+      background-size: 3px 3px;
+      border-bottom-right-radius: var(--border-radius);
+    }
+
+    $parent: '.ld-textarea';
+
+    $props: (
+      '--x-small': (
+        // input padding
+        6px 12px,
+        // height
+        72px,
+      ),
+      '--small': (
+        10px 16px,
+        80px,
+      ),
+      '--large': (
+        12px 16px,
+        96px,
+      )
+    );
+
+    @each $s, $values in $sizearray {
+      $size: list.nth($values, 1);
+      $font: list.nth($values, 2);
+
+      $propsValues: map.get($props, $s);
+
+      $p: list.nth($propsValues, 1);
+
+      &#{utils.getSelector($parent, $s)} {
+        .v-field {
+          .v-field__input {
+            font-size: $font;
+            line-height: calc($font + 6px);
+            padding: $p;;
+          }
+          .v-field__clearable {
+            top: 4px;
+            right: 4px;
+          }
+        }
+
+        @include inputlabel($parent, $size);
+
+        .ld-textarea-help {
+          height: $size;
+          display: flex;
+          align-items: center;
+          margin-left: 8px;
+        }
+
+        &.ld-textarea--clearable {
+          .v-field {
+            .v-field__input {
+              $px: list.nth($p, 2);
+              padding-right: calc($px + var(--icon-height));
+            }
+          }
+        }
+
+        @include inputdetails();
+      }
+    }
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+
+    .v-field {
+      position: relative;
+
+      .v-field__clearable {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-top: 0 !important;
+      }
+    }
+  }
+
+  .ld-text-markup {
+    @extend %custom-edit;
+
+    &--focused {
+      .md-editor-content {
+        &:after {
+          border: 2px solid var(--focus) !important;
+        }
+      }
+    }
+
+    &--disabled {
+      .ld-text-markup-preview {
+        background-color: var(--input-disabled-background-color);
+        border-color: var(--input-disabled-background-color);
+        color: var(--input-disabled-color);
+      }
+    }
+
+    &-preview {
+      font-size: var(--text-body-s);
+      border: 1px solid var(--input-border-color-default);
+      border-radius: var(--border-radius);
+      padding: 12px 16px !important;
+
+      h1 {
+        font-size: 28px;
+      }
+      h2 {
+        font-size: 24px;
+      }
+      h3 {
+        font-size: 20px;
+      }
+      ul {
+        padding: 0 12px;
+        list-style: disc;
+        margin-bottom: 8px;
+      }
+      ol {
+        list-style: decimal;
+        padding: 0 12px;
+        margin-bottom: 8px;
+      }
+      p {
+        margin-bottom: 8px;
+      }
+      pre {
+        padding: 4px;
+      }
+      code {
+        background: none;
+        color: var(--text);
+        padding: 0;
+        font-size: 100%;
+      }
+    }
+
+    @include inputdetails();
+  }
+
+  .v-select__content,
+  .v-combobox__content,
+  .v-autocomplete__content {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-l);
+
+    .v-list {
+      box-shadow: unset !important;
+
+      @include dropdownlistsize();
+    }
+  }
+
+  .v-menu.ld-datepicker-menu {
+    .ld-datepicker-dropdown {
+      padding: 0 !important;
+    }
+  }
+
+  .v-menu.ld-daterange-menu {
+    .v-card.ld-daterange-dropdown {
+      padding: 0 !important;
+      .v-card-text  {
+        display: flex;
+        padding: 0 !important;
+      }
+      .v-card-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 16px !important;
+        min-height: unset;
+      }
+    }
+  }
+
+  .v-menu.ld-timepicker-menu {
+    .ld-timepicker-dropdown {
+      padding: 16px !important;
+      overflow: hidden;
+
+      .ld-timepicker-ampm {
+        display: flex;
+
+        .v-btn {
+          font-family: var(--regular);
+          font-size: var(--font-size);
+          flex: 1 1 auto;
+          height: var(--icon-height);
+          border: 2px solid var(--primary);
+          border-radius: 4px;
+          color: var(--text);
+          padding: 0 !important;
+
+          &.v-btn--active {
+            color: var(--white);
+            background-color: var(--primary);
+          }
+
+          &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
+          &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+
+      .ld-timepicker-placeholder {
+        display: grid;
+        grid-template-columns: 1fr 3px 1fr;
+        color: var(--grey-d-1);
+        height: var(--icon-height);
+
+        & > div {
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      .ld-timepicker-inputs {
+        display: grid;
+        grid-template-columns: 1fr 3px 1fr;
+        border: 1px solid var(--grey-l-5);
+        border-radius: var(--border-radius);
+
+        .ld-edit-text {
+          flex: 1 1 auto;
+        }
+
+        .v-field__input {
+          text-align: center;
+          padding: 0 !important;
+        }
+
+        .v-input {
+          .v-field.v-field--variant-outlined {
+            .v-field__outline__start {
+              border: none !important;
+            }
+            .v-field__outline__end {
+              border: none !important;
+            }
+          }
+        }
+      }
+
+      .ld-timepicker-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        & > div {
+          max-height: 280px;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+
+        .v-btn {
+          font-family: var(--regular);
+          // color: var(--text) !important;
+
+          &:not(:last-child) {
+            margin-bottom: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+input::placeholder {
+  color: var(--grey-d-1) !important;
+}
+
+input::-ms-input-placeholder { /* Для Microsoft Edge */
+  color: var(--grey-d-1) !important;
+}
+
+input::-webkit-input-placeholder { /* Для WebKit-браузеров (Chrome, Safari) */
+  color: var(--grey-d-1) !important;
+}
+
+input:-moz-placeholder { /* Для Firefox 19+ */
+  color: var(--grey-d-1) !important;
+}
+
+input.disabled,
+input[disabled] {
+  background-color: var(--grey-l-6);
+  color: var(--grey-l-2);
+}
+
+input {
+  outline: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-background-clip: text;
+  background-clip: text;
+}

@@ -1,0 +1,284 @@
+@use "sass:list";
+
+:root {
+  --chip-s: 24px;
+  --chip-m: 32px;
+  --chip-l: 40px;
+  --chip-border-radius: 24px;
+}
+
+$sizearray: (
+  'x-small': (
+    // font size
+    var(--font-size),
+    // height
+    var(--chip-s),
+    // padding
+    8px,
+  ),
+  'small': (
+    var(--text-body-s),
+    var(--chip-m),
+    12px,
+  ),
+  'large': (
+    var(--text-body-m),
+    var(--chip-l),
+    12px,
+  )
+);
+
+body {
+  .ld-chip {
+    font-family: var(--medium);
+    position: relative;
+    border-radius: var(--chip-border-radius) !important;
+    box-sizing: border-box;
+
+    @each $size, $values in $sizearray {
+      &.v-btn--size-#{$size} {
+        $f: list.nth($values, 1);
+        $h: list.nth($values, 2);
+        $p: list.nth($values, 3);
+
+        font-size: $f !important;
+        height: $h;
+        padding: 0 $p !important;
+
+        &.ld-chip--focused {
+          &:after {
+            height: calc($h + 8px);
+          }
+        }
+      }
+    }
+
+    &.ld-chip--focused {
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: calc(100% + 10px);
+        border-radius: 20px;
+        border: 2px solid var(--focus);
+        opacity: 1;
+      }
+    }
+
+    .v-btn__content {
+      overflow: hidden;
+    }
+
+    .ld-chip__content {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .v-btn__append {
+      button {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    @mixin chipflat(
+      $colorname,
+      $defaultBgColor,
+      $hoverBgColor,
+      $activeBgColor,
+      $disabledBgColor,
+      ) {
+      &.bg-#{$colorname} {
+        border: 1px solid transparent;
+        background-color: $defaultBgColor;
+        color: var(--white);
+
+        svg {
+          color: var(--white);
+        }
+
+        &:hover {
+          border: 1px solid transparent;
+          background-color: $hoverBgColor;
+        }
+
+        &:active {
+          border: 1px solid transparent;
+          background-color: $activeBgColor;
+        }
+
+        &[disabled] {
+          border: 1px solid transparent;
+          background-color: $disabledBgColor;
+        }
+      }
+    }
+
+    @mixin chipoutlined(
+      $colorname,
+      $borderColor,
+      $color,
+      $bgHover,
+      $borderHover,
+      $bgActive,
+      $borderActive
+    ) {
+      &.v-btn--variant-outlined.text-#{$colorname} {
+        border: 1px solid $borderColor;
+        color: $color;
+
+        svg {
+          color: $color;
+        }
+
+        &:hover {
+          background-color: $bgHover !important;
+          border-color: $borderHover !important;
+        }
+
+        &:active {
+          background-color: $bgActive !important;
+          border-color: $borderActive !important;
+        }
+
+        &[disabled] {
+          background-color: var(--grey-l-6) !important;
+          border-color: var(--grey-l-6) !important;
+          color: var(--grey-l-2) !important;
+
+          svg {
+            color: var(--grey-l-2) !important;
+          }
+        }
+      }
+    }
+
+    @mixin chiptonal(
+      $colorname,
+      $bgColor,
+      $color,
+      $bgHover,
+      $bgActive,
+      $colorDisabled
+    ) {
+      &.v-btn--variant-tonal.text-#{$colorname} {
+        border: 1px solid transparent;
+        background-color: $bgColor;
+        color: $color;
+
+        svg {
+          color: $color;
+        }
+
+        &:hover {
+          border: 1px solid transparent;
+          background-color: $bgHover;
+        }
+
+        &:active {
+          border: 1px solid transparent;
+          background-color: $bgActive;
+        }
+
+        &[disabled] {
+          border: 1px solid transparent;
+          background-color: $bgColor;
+          color: $colorDisabled;
+
+          svg {
+            color: $colorDisabled;
+          }
+        }
+      }
+    }
+
+    // ------- primary
+
+    // -- flat
+
+    @include chipflat('primary', var(--primary), var(--primary-d-1), var(--primary-d-2), var(--primary-l-4));
+
+    // -- outlined
+
+    @include chipoutlined(
+      'primary',
+      // default border color
+      var(--primary-l-3),
+      // default color
+      var(--primary-d-1),
+      // hover bg color
+      var(--primary-l-6),
+      // hover border color
+      var(--primary-l-2),
+      // active bg color
+      var(--primary-l-5),
+      // active border color
+      var(--primary-l-1),
+    );
+
+    // -- tonal
+
+    @include chiptonal(
+      'primary',
+      // default bg color
+      var(--primary-l-6),
+      // color
+      var(--primary-d-1),
+      // hover bg color
+      var(--primary-l-5),
+      // active bg color
+      var(--primary-l-4),
+      // color disabled
+      var(--primary-l-3),
+    );
+
+    // ------- grey
+
+    // -- flat
+
+    @include chipflat('grey', var(--grey), var(--grey-d-1), var(--grey-d-2), var(--grey-l-4));
+
+    // -- outlined
+
+    @include chipoutlined(
+      'grey',
+      // default border color
+      var(--grey),
+      // default color
+      var(--grey-d-3),
+      // hover bg color
+      var(--grey-l-6),
+      // hover border color
+      var(--grey-l-5),
+      // active bg color
+      var(--grey-l-4),
+      // active border color
+      var(--grey-l-4),
+    );
+
+    // -- tonal
+
+    @include chiptonal(
+      'grey',
+      // default bg color
+      var(--grey-l-6),
+      // color
+      var(--grey-d-1),
+      // hover bg color
+      var(--grey-l-5),
+      // active bg color
+      var(--grey-l-4),
+      // color disabled
+      var(--grey-l-3),
+    );
+
+    .ld-chip-close {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

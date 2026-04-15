@@ -1,0 +1,194 @@
+@use "utils";
+
+$button-width: 36px;
+
+@mixin calendarbutton {
+  $parent: utils.getParent(&);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--button-xs);
+  border: 2px solid transparent;
+
+  $start: utils.getSelector($parent, '--start');
+  $end: utils.getSelector($parent, '--end');
+  $in-range: utils.getSelector($parent, '--in-range');
+
+  &#{$start} {
+    @include selected();
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+  }
+
+  &#{$end} {
+    @include selected();
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+
+  &#{$in-range} {
+    background-color: var(--primary-l-5);
+
+    &:hover {
+      background-color: var(--primary-l-4) !important;
+    }
+  }
+
+  span {
+    font-family: var(--regular);
+    font-size: var(--text-body-s);
+  }
+
+  &[disabled] {
+    span {
+      color: var(--grey-d-1);
+    }
+  }
+
+  $selected: utils.getSelector($parent, '--selected');
+
+  &:not([disabled]):not(#{$selected}):not(#{$start}):not(#{$end}):not(#{$in-range}) {
+    border-radius: var(--border-radius);
+    &:hover {
+      background-color: var(--grey-l-6);
+    }
+
+    &:focus-visible {
+      border: 2px solid var(--focus);
+    }
+  }
+}
+
+@mixin today() {
+  $parent: utils.getParent(&);
+
+  span {
+    position: relative;
+    font-family: var(--semibold);
+    color: var(--primary-d-1);
+  }
+
+  @include utils.not-class(utils.getSelector($parent, '--selected')) {
+    span {
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        margin-left: -2px;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background-color: var(--primary-d-1);
+      }
+    }
+  }
+}
+
+@mixin selected() {
+  &:not([disabled]) {
+    background-color: var(--primary);
+    span {
+      color: var(--white);
+    }
+
+    &:hover {
+      background-color: var(--primary-d-1) !important;
+      span {
+        color: var(--white);
+      }
+    }
+  }
+
+  &[disabled] {
+    background-color: var(--primary-l-2);
+    span {
+      color: var(--text);
+    }
+  }
+}
+
+body {
+  .ld-calendar {
+    width: 284px;
+    padding-top: 16px;
+
+    .v-date-picker-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      height: 40px;
+      margin-bottom: 8px;
+      padding: 0 16px;
+      flex: unset;
+      flex-shrink: 0;
+
+      button {
+        font-family: var(--medium);
+        font-size: var(--text-body-m);
+      }
+    }
+
+    .v-date-picker-month__days {
+      column-gap: 0;
+      justify-content: start;
+    }
+
+    .v-date-picker-month__day {
+      width: $button-width;
+      height: var(--button-xs);
+      margin-bottom: 8px;
+
+      &.v-date-picker-month__weekday {
+        color: var(--grey-d-1);
+      }
+    }
+
+    &:not(.ld-calendar--range) {
+      .ld-calendar-day {
+        border-radius: var(--border-radius);
+
+        &--selected {
+          @include selected();
+        }
+      }
+    }
+
+    .ld-calendar-day {
+      @include calendarbutton();
+
+      width: $button-width;
+
+      &--today {
+        @include today();
+      }
+    }
+
+    .ld-calendar-month {
+      @include calendarbutton();
+
+      &--today {
+        @include today();
+      }
+
+      &--selected {
+        @include selected();
+      }
+    }
+
+    .ld-calendar-year {
+      @include calendarbutton();
+
+      &--today {
+        @include today();
+      }
+
+      &--selected {
+        @include selected();
+      }
+    }
+  }
+}

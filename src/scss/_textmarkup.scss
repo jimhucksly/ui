@@ -1,0 +1,47 @@
+body {
+  .md-editor {
+    &-toolbar {
+      margin-bottom: 8px;
+    }
+    &-toolbar-left {
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: start;
+      gap: 4px;
+    }
+    &-content {
+      position: relative;
+      font-size: var(--text-body-s);
+      padding: 12px 16px !important;
+
+      &-wrapper {
+        position: relative;
+        z-index: 1;
+      }
+
+      .cm-focused {
+        outline: none !important;
+      }
+
+      &:hover {
+        &:after {
+          border: 1px solid var(--input-border-color-hover);
+        }
+      }
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid var(--input-border-color-default);
+        border-radius: var(--border-radius);
+        transition: all 0.1s;
+        z-index: 0;
+      }
+    }
+  }
+}

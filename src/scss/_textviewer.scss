@@ -1,0 +1,13 @@
+body {
+  .ld-text-viewer {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    white-space: break-spaces;
+    font-size: var(--font-size);
+
+    .column {
+      flex-flow: column;
+    }
+  }
+}

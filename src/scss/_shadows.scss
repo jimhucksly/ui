@@ -1,0 +1,47 @@
+$shadow-xs: 0px 1px 4px 0px hsla(218, 87%, 6%, 0.05);
+$shadow-s: 0px 1px 4px 0px hsla(218, 87%, 6%, 0.1);
+$shadow-sm: 0px 4px 8px -2px hsla(218, 87%, 6%, 0.1);
+$shadow-m: 0px 12px 16px -4px hsla(218, 87%, 6%, 0.07);
+$shadow-l: 0px 20px 24px -4px hsla(218, 87%, 6%, 0.07);
+$shadow-xl: 0px 24px 48px -12px hsla(218, 87%, 6%, 0.1);
+$shadow-xxl: 0px 32px 64px -12px hsla(218, 87%, 6%, 0.2);
+
+:root {
+  --shadow-xs: #{$shadow-xs};
+  --shadow-s: #{$shadow-s};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-m: #{$shadow-m};
+  --shadow-l: #{$shadow-l};
+  --shadow-xl: #{$shadow-xl};
+  --shadow-xxl: #{$shadow-xxl};
+}
+
+body {
+  .shadow-xs {
+    box-shadow: var(--shadow-xs);
+  }
+
+  .shadow-s {
+    box-shadow: var(--shadow-s);
+  }
+
+  .shadow-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-m {
+    box-shadow: var(--shadow-m);
+  }
+
+  .shadow-l {
+    box-shadow: var(--shadow-l);
+  }
+
+  .shadow-xl {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .shadow-xxl {
+    box-shadow: var(--shadow-xxl);
+  }
+}

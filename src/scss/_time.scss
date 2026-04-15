@@ -1,0 +1,42 @@
+body {
+  .ld-time {
+    display: flex;
+    &__field {
+      width: 50px;
+      height: 100px;
+
+      input {
+        font-size: 22px;
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        border: 1px solid var(--grey-l-5);
+        border-radius: var(--border-radius);
+
+        &:focus {
+          outline: none;
+        }
+
+        &[disabled] {
+          background-color: var(--grey-l-6);
+        }
+      }
+
+      .v-btn {
+        color: var(--grey);
+      }
+
+      &--disabled {
+        .v-btn {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    &__sep {
+      display: flex;
+      align-items: center;
+      padding: 0 3px;
+    }
+  }
+}

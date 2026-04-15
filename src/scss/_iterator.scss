@@ -1,0 +1,89 @@
+.ld-data-iterator {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  height: 100%;
+
+  .iterator-list {
+    height: 100%;
+    overflow-y: auto;
+    overflow-anchor: auto;
+    contain: content;
+  }
+
+  .scroller {
+    position: relative;
+    transform: translateZ(0);
+    &.mobile {
+      scroll-snap-type: y mandatory;
+    }
+  }
+
+  .item {
+    position: absolute;
+    width: 100%;
+    &.mobile {
+      scroll-snap-align: start;
+    }
+
+    &.blink {
+      animation: blinker 0.5s linear;
+    }
+
+    @keyframes blinker {
+      5% {
+        left: -5%;
+      }
+      15% {
+        left: -15%;
+      }
+      25% {
+        opacity: 75%;
+        left: -25%;
+      }
+      50% {
+        opacity: 50%;
+        left: -50%;
+      }
+      75% {
+        opacity: 25%;
+        left: -75%;
+      }
+      100% {
+        opacity: 0;
+        left: -100%;
+      }
+    }
+  }
+
+  .top-fixed-item-wrapper {
+    position: relative;
+    flex: none;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 15px 0px var(--grey);
+  }
+
+  .top-fixed-item {
+    position: relative;
+    width: 100%;
+  }
+
+  .empty-item {
+    position: absolute;
+    width: 100%;
+
+    .empty {
+      display: flex;
+      flex-flow: column;
+      background-color: var(--white);
+      border: 1px solid var(--grey-l-5);
+      border-radius: 4px;
+
+      .empty-actions {
+        height: 50px;
+        margin-top: auto;
+        background-color: var(--grey-l-6);
+      }
+    }
+  }
+}

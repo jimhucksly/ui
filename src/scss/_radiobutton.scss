@@ -1,0 +1,218 @@
+@use "sass:list";
+
+$colors: (
+  "primary": (
+    // default color
+    var(--primary),
+    // hover color
+    var(--primary-d-1),
+    // active color
+    var(--primary-d-2)
+  ),
+  "error": (
+    var(--error),
+    var(--error-d-1),
+    var(--error-d-2),
+  ),
+);
+
+$sizearray: (
+  "x-small": (
+    // height
+    var(--radio-s),
+    // font size
+    var(--text-body-s),
+
+  ),
+  "small": (
+    var(--radio-m),
+    var(--text-body-m),
+  ),
+  "large": (
+    var(--radio-l),
+    var(--text-body-l),
+  ),
+);
+
+body {
+  .ld-radiobutton {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    label[for] {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.1s;
+
+      input[type='radio'] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+    }
+
+    @each $color, $values in $colors {
+      &.ld-radiobutton.text-#{$color} {
+        $d: list.nth($values, 1);
+        $h: list.nth($values, 2);
+        $a: list.nth($values, 3);
+        label[for] {
+          input[type='radio'] + .ld-radiobutton-icon {
+            background-color: var(--white);
+          }
+
+          input[type='radio']:checked + .ld-radiobutton-icon {
+            background-color: $d;
+            outline-color: $d;
+          }
+
+          &:hover {
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              background-color: $h;
+              outline-color: $h;
+            }
+          }
+
+          &:active {
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              background-color: $a;
+              outline-color: $a;
+            }
+          }
+        }
+
+        &.ld-radiobutton--hovered {
+          label[for] {
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              background-color: $h;
+              outline-color: $h;
+            }
+          }
+        }
+      }
+    }
+
+    @each $size, $values in $sizearray {
+      &.ld-radiobutton--#{$size} {
+        $h: list.nth($values, 1);
+        $f: list.nth($values, 2);
+        min-height: calc($h + 8px);
+
+        label[for] {
+          width: calc($h + 4px);
+          height: calc($h + 4px);
+          border-radius: calc($h + 4px);
+
+          .ld-radiobutton-icon {
+            width: $h;
+            height: $h;
+            border: 1px solid var(--grey-l-4);
+            border-radius: $h;
+            box-sizing: border-box;
+          }
+
+          input[type='radio']:checked + .ld-radiobutton-icon {
+            border: calc($h / 4) solid var(--white);
+            outline: 1px solid var(--primary);
+          }
+
+          &:hover {
+            background-color: var(--shade-05);
+
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              border: calc($h / 4) solid var(--white);
+              outline: 1px solid var(--primary);
+            }
+          }
+
+          &:active {
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              border: calc($h / 4) solid var(--white);
+              outline: 1px solid var(--primary);
+            }
+          }
+        }
+
+        &.ld-radiobutton--hovered {
+          label[for] {
+            background-color: var(--shade-05);
+          }
+        }
+
+        &.ld-radiobutton--focused {
+          label[for] {
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              top: -2px;
+              left: -2px;
+              width: calc(100% + 4px);
+              height: calc(100% + 4px);
+              border: 2px solid var(--focus);
+              border-radius: $h;
+            }
+          }
+        }
+
+        &.ld-radiobutton--disabled,
+        &.ld-radiobutton--readonly {
+          label[for] {
+            &:hover {
+              background-color: unset;
+            }
+
+            .ld-radiobutton-icon {
+              background-color: var(--grey-l-5);
+              border: 1px solid var(--grey-l-5);
+            }
+
+            input[type='radio']:checked + .ld-radiobutton-icon {
+              background-color: var(--white);
+            }
+          }
+        }
+
+        &.ld-radiobutton--disabled {
+          .ld-label-content {
+            color: var(--grey-l-2);
+          }
+        }
+
+        &.ld-radiobutton--readonly {
+          .ld-label-content {
+            color: var(--grey-d-3);
+          }
+        }
+
+        &:not(.ld-radiobutton--label-to-left) {
+          .ld-radiobutton-hint {
+            padding-left: calc($h + 8px + 4px);
+          }
+        }
+
+        .ld-label-content {
+          font-size: $f;
+          line-height: calc($f + 6px);
+        }
+
+        .ld-radiobutton-hint {
+          font-size: calc($f - 2px);
+          line-height: calc($f - 2px + 6px);
+        }
+      }
+    }
+
+    .ld-radiobutton-hint {
+      font-family: var(--regular);
+      color: var(--grey-d-1);
+    }
+  }
+}
+

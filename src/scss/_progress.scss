@@ -1,0 +1,282 @@
+body {
+  .ld-progress {
+
+    .ld-progress-counter {
+      color: var(--text);
+    }
+
+    .ld-progress-text {
+      color: var(--grey-d-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &--complete {
+        color: var(--text);
+      }
+    }
+
+    // --------- linear
+
+    &.ld-progress--linear {
+      &.ld-progress--no-label {
+        display: flex;
+        align-items: center;
+      }
+
+      .ld-progress-label {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        margin-bottom: 8px;
+      }
+
+      .ld-progress-text {
+        font-size: var(--text-body-s);
+        flex: 1 1 auto;
+      }
+
+      .ld-progress-counter {
+        font-size: var(--text-body-s);
+        color: var(--grey-d-1);
+        white-space: nowrap;
+        font-weight: 500;
+        margin-left: 16px;
+        flex-shrink: 0;
+      }
+
+      .ld-progress-bar {
+        flex: 1 1 auto;
+        height: 4px;
+        background-color: var(--grey-l-5);
+        border-radius: 6px;
+
+        &:after {
+          content: '';
+          display: block;
+          height: 100%;
+          width: calc(var(--n) * 1%);
+          background-color: var(--primary);
+          border-radius: 6px;
+        }
+      }
+    }
+
+    @mixin counterabsolute() {
+      .ld-progress-counter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        font-family: var(--semibold);
+        font-weight: 600;
+      }
+    }
+
+    // --------- circular
+
+    &.ld-progress--circular {
+      position: relative;
+
+      @include counterabsolute();
+
+      .ld-progress-text {
+        text-align: center;
+      }
+
+      &.ld-progress--x-small {
+        .ld-progress-counter {
+          font-size: var(--text-body-s);
+          height: 24px;
+          top: 20px;
+        }
+      }
+
+      &.ld-progress--small {
+        .ld-progress-counter {
+          font-size: var(--text-body-m);
+          height: 24px;
+          top: 32px;
+        }
+      }
+
+      &.ld-progress--default {
+        .ld-progress-counter {
+          font-size: calc(var(--font-size) * 2 + 4px);
+          font-weight: 500;
+          height: 36px;
+          top: 50px;
+        }
+
+        .ld-progress-text {
+          width: 100%;
+          position: absolute;
+          bottom: 50px;
+          left: 0;
+          line-height: 20px;
+        }
+      }
+
+      &.ld-progress--large {
+        .ld-progress-counter {
+          font-size: var(--heading-4);
+          font-weight: 500;
+          height: 44px;
+          top: 66px;
+        }
+
+        .ld-progress-text {
+          width: 100%;
+          position: absolute;
+          bottom: 66px;
+          left: 0;
+          line-height: 20px;
+        }
+      }
+
+      &.ld-progress--x-large {
+        .ld-progress-counter {
+          font-size: var(--heading-3);
+          font-weight: 500;
+          height: 48px;
+          top: 84px;
+        }
+
+        .ld-progress-text {
+          width: 100%;
+          position: absolute;
+          bottom: 84px;
+          left: 0;
+          font-size: var(--text-body-m);
+          line-height: 20px;
+        }
+      }
+
+      &.ld-progress--extra-large {
+        .ld-progress-counter {
+          font-size: var(--heading-1);
+          font-weight: 500;
+          height: 56px;
+          top: 98px;
+        }
+
+        .ld-progress-text {
+          width: 100%;
+          position: absolute;
+          bottom: 98px;
+          left: 0;
+          font-size: var(--text-body-l);
+          line-height: 24px;
+        }
+      }
+    }
+
+    // --------- half-circle
+
+    &.ld-progress--half-circle {
+      position: relative;
+
+      @include counterabsolute();
+
+      .ld-progress-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+      }
+
+      &.ld-progress--x-small {
+        .ld-progress-counter {
+          font-size: var(--text-body-s);
+          height: 20px;
+          top: 12px;
+        }
+        .ld-progress-text {
+          font-size: var(--font-size);
+          height: 16px;
+        }
+      }
+
+      &.ld-progress--small {
+        .ld-progress-counter {
+          font-size: var(--text-body-m);
+          height: 24px;
+          top: 20px;
+        }
+        .ld-progress-text {
+          font-size: var(--text-body-s);
+          height: 20px;
+        }
+      }
+
+      &.ld-progress--default {
+        .ld-progress-counter {
+          font-size: calc(var(--font-size) * 2 + 4px);
+          font-weight: 500;
+          height: 36px;
+          top: 40px;
+        }
+
+        .ld-progress-text {
+          font-size: var(--text-body-s);
+          height: 20px;
+        }
+      }
+
+      &.ld-progress--large {
+        .ld-progress-counter {
+          font-size: var(--heading-4);
+          font-weight: 500;
+          height: 44px;
+          top: 48px;
+        }
+
+        .ld-progress-text {
+          font-size: var(--text-body-s);
+          height: 20px;
+        }
+      }
+
+      &.ld-progress--x-large {
+        .ld-progress-counter {
+          font-size: var(--heading-3);
+          font-weight: 500;
+          height: 48px;
+          top: 58px;
+        }
+
+        .ld-progress-text {
+          font-size: var(--text-body-m);
+          height: 20px;
+        }
+      }
+
+      &.ld-progress--extra-large {
+        .ld-progress-counter {
+          font-size: var(--heading-1);
+          font-weight: 500;
+          height: 56px;
+          top: 70px;
+        }
+
+        .ld-progress-text {
+          font-size: var(--text-body-l);
+          height: 24px;
+        }
+      }
+    }
+
+    &.ld-progress--error {
+      .ld-progress-bar {
+        &:after {
+          background-color: var(--error);
+        }
+      }
+    }
+  }
+}

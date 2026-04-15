@@ -1,0 +1,198 @@
+@use "sass:list";
+
+:root {
+  --switch-s-w: 32px;
+  --switch-s-h: 20px;
+  --switch-m-w: 40px;
+  --switch-m-h: 24px;
+  --switch-l-w: 56px;
+  --switch-l-h: 32px;
+}
+
+$sizearray: (
+  "x-small": (
+    // width
+    var(--switch-s-w),
+    // height
+    var(--switch-s-h),
+    // hint gap
+    8px,
+    // font size
+    var(--text-body-s)
+  ),
+  "small": (
+    var(--switch-m-w),
+    var(--switch-m-h),
+    8px,
+    var(--text-body-m)
+
+  ),
+  "large": (
+    var(--switch-l-w),
+    var(--switch-l-h),
+    12px,
+    var(--text-body-l)
+  ),
+);
+
+body {
+  .ld-switch {
+    position: relative;
+
+    input[type='checkbox'] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    &:not(.ld-switch--disabled) {
+      cursor: pointer;
+
+      .ld-switch-track {
+        background-color: var(--grey-l-4);
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--grey-l-3);
+        }
+      }
+
+      .ld-switch-thumb {
+        cursor: pointer;
+      }
+
+      &.ld-switch--active {
+        .ld-switch-track {
+          background-color: var(--primary);
+
+          &:hover {
+            background-color: var(--primary-d-1);
+          }
+        }
+      }
+    }
+
+    .ld-switch-track {
+      display: block;
+      position: relative;
+      background-color: var(--grey-l-4);
+      transition: all 0.1s;
+
+      &:after {
+        content: '';
+        display: none;
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        width: calc(100% + 8px);
+        height: calc(100% + 8px);
+        border: 2px solid var(--primary-d-1);
+        border-radius: 20px;
+      }
+    }
+
+    .ld-switch-thumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      color: var(--grey-l-4);
+      background-color: var(--white);
+      transition: all 0.1s;
+    }
+
+    &.ld-switch--focused {
+      .ld-switch-track {
+        &:after {
+          display: block;
+        }
+      }
+    }
+
+    &.ld-switch--hovered {
+      .ld-switch-track {
+        background-color: var(--grey-l-3);
+      }
+    }
+
+    &.ld-switch--disabled,
+    &.ld-switch--readonly {
+      &.ld-switch--active {
+        .ld-switch-track {
+          background-color: var(--primary);
+        }
+      }
+      .ld-switch-thumb {
+        background-color: transparent;
+      }
+    }
+
+    &.ld-switch--disabled {
+      .ld-label-content {
+        color: var(--grey-l-2);
+      }
+    }
+
+    &.ld-switch--readonly {
+      .ld-label-content {
+        color: var(--grey-d-3);
+      }
+    }
+
+    @each $size, $values in $sizearray {
+      &.ld-switch--#{$size} {
+        $w: list.nth($values, 1);
+        $h: list.nth($values, 2);
+        $hintGap: list.nth($values, 3);
+        $f: list.nth($values, 4);
+        min-height: calc($h + 8px);
+        padding-top: 4px;
+
+        .ld-switch-track {
+          width: $w;
+          height: $h;
+          border-radius: 20px;
+        }
+
+        .ld-switch-thumb {
+          width: calc($h - 4px);
+          height: calc($h - 4px);
+          border-radius: calc($h - 4px);
+        }
+
+        &.ld-switch--active {
+          .ld-switch-thumb {
+            transform: translateX(calc($w - $h));
+          }
+        }
+
+        .ld-label-content {
+          font-size: $f;
+          line-height: calc($f + 6px);
+        }
+
+        .ld-switch-hint {
+          padding-left: calc($w + $hintGap);
+          font-size: calc($f - 2px);
+          line-height: calc($f - 2px + 6px);
+        }
+      }
+    }
+
+    .ld-switch-hint {
+      font-family: var(--regular);
+      color: var(--grey-d-1);
+    }
+
+    .ld-switch-label {
+      height: 20px;
+      min-height: 20px;
+      font-family: var(--medium);
+    }
+  }
+}

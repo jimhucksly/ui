@@ -1,0 +1,315 @@
+html {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden !important;
+  background: url('../img/Moscow.png') 0 0 no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .v-container {
+    padding: 12px;
+  }
+
+  #main-tabs {
+    position: relative;
+    padding: 0 0 0 24px;
+
+    #main-tabs-tabs {
+      position: relative;
+      width: 13%;
+      min-width: 140px;
+      height: calc(100% - 36px);
+      border-radius: 20px;
+      margin-top: 12px;
+      overflow: hidden;
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(6, 26, 64, 0.6);
+        filter: blur(3px);
+        z-index: 0;
+      }
+
+      & > div {
+        position: relative;
+        z-index: 1;
+      }
+
+      .v-btn {
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding-left: 24px;
+        .v-btn__content {
+          color: rgba(255, 255, 255, 0.7);
+          font-family: var(--regular);
+          font-size: var(--font-size);
+          letter-spacing: 0.5px;
+          transition: all 0.1s;
+          svg {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 16px;
+            display: none;
+          }
+        }
+
+        &:not(.v-tab-item--selected) {
+          &:hover {
+            .v-btn__content {
+              color: rgba(255, 255, 255, 1);
+            }
+            border-bottom: 2px solid transparent;
+          }
+        }
+
+        &.v-tab-item--selected {
+          background-color: rgba(255, 255, 255, 0.1);
+          border-bottom: 2px solid  transparent;
+          .v-btn__content {
+            color: var(--white) !important;
+            svg {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    #main-tabs-window {
+      background: transparent !important;
+    }
+  }
+
+  .page-header {
+    &__panel {
+      background-color: rgba(6, 26, 64, 0.6);
+      border-radius: 20px;
+      padding: 12px 24px;
+    }
+  }
+}
+
+#main-tabs-window::-webkit-scrollbar {
+  width: 16px;
+}
+
+#main-tabs-window::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(6, 26, 64, 1);
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: 0.2s;
+}
+
+#main-tabs-window::-webkit-scrollbar-thumb:hover {
+  border: 4px solid rgba(6, 26, 64, 1);
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: 0.2s;
+}
+
+#main-tabs-window::-webkit-scrollbar-track {
+  background-color: transparent;
+  transition: 0.2s;
+}
+
+#main-tabs-window::-webkit-scrollbar-track:hover {
+  background-color: transparent;
+  transition: 0.2s;
+}
+
+#main-tabs-window::-webkit-scrollbar:horizontal {
+  height: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.markdown-to-html-content {
+  font-size: 13px;
+  border-left: 2px solid #ccc;
+  padding-left: 14px;
+  h2 {
+    font-size: 26px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  ul {
+    padding: 0 12px;
+    list-style: disc;
+    margin-bottom: 8px;
+  }
+  ol {
+    list-style: decimal;
+    padding: 0 12px;
+    margin-bottom: 8px;
+  }
+  p {
+    margin-bottom: 8px;
+  }
+  pre {
+    padding: 4px;
+    margin-bottom: 4px;
+  }
+  code {
+    background: none;
+    color: var(--text);
+    padding: 0;
+    font-size: 100%;
+  }
+  table {
+    width: 100%;
+  }
+  .language-cmd {
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 18px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px;
+  }
+}
+
+.v-tabs {
+  transition: all 0.5s ease-out;
+}
+
+[aria-tab='Home'] {
+  .v-tabs {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  .ld-page-toolbar {
+    position: absolute;
+    opacity: 0;
+  }
+}
+
+.v-tabs-window-item {
+  height: 100%;
+
+  &[heading='Home'] {
+    & > .v-container {
+      height: 100%;
+      padding: 0 !important;
+
+      & > .v-row {
+        height: 100%;
+        margin: 0 !important;
+
+        & > .v-col {
+          height: 100%;
+          padding: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+#home {
+  position: relative;
+  height: 100%;
+  // background: url('../img/Moscow.png') center center no-repeat;
+  background-size: cover;
+
+  & > span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    white-space: nowrap;
+    font-family: 'Montserrat';
+    font-size: 160px;
+    font-weight: 800;
+
+    &:nth-child(1) {
+      color: rgba(255, 255, 255, 0.6);
+      z-index: 2;
+      transform: translate3d(-50%, -50%, 0);
+    }
+  }
+
+  svg {
+    position: absolute;
+    top: 52px;
+    left: 52px;
+  }
+
+  #home-button {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    z-index: 3;
+    height: var(--button-l);
+
+    .ld-button {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.slide-toolbar-enter-active {
+  animation: slide-toolbar 0.3s ease-out;
+}
+
+@keyframes slide-toolbar {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.slide-tabs-enter-active {
+  animation: slide-tabs 0.3s ease-out;
+}
+
+@keyframes slide-tabs {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@mixin mix-font-face($font_name, $font_file) {
+  font-family: $font_name;
+  src:
+    local('O'),
+    url('../fonts/#{$font_file}.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  @include mix-font-face('Montserrat', Montserrat-ExtraBold);
+}
