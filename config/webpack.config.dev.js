@@ -5,8 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VuetifyPlugin } = require('webpack-plugin-vuetify');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const devServer = require('./server');
-const versions = require('./versions.json');
-const { version } = require('../package.json');
 
 const commonConfig = require('./webpack.config.common');
 const { getIconsList, getComponentsList } = require('./helpers');
@@ -33,8 +31,6 @@ const doAsync = async () => {
       }),
       new DefinePlugin({
         '$DEV': true,
-        '$VERSION': JSON.stringify(version),
-        '$VERSIONS': JSON.stringify(versions),
         '$ICONS': JSON.stringify(icons),
         '$COMPONENTS': JSON.stringify(components),
         '__VUE_OPTIONS_API__': true,

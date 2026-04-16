@@ -13,17 +13,4 @@ module.exports = {
     }
   },
   static: path.resolve(__dirname, './public'),
-  proxy: [
-    {
-      context: ['/api'],
-      target: 'http://platforma-dev.k8s.lan.lanit.ru/landocs-backend',
-      secure: false,
-      changeOrigin: true,
-      agent: null,
-      onProxyRes: (proxyRes) => {
-        var key = 'www-authenticate';
-        proxyRes.headers[key] = proxyRes.headers[key] && proxyRes.headers[key].split(',');
-      },
-    },
-  ]
 }

@@ -23,15 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/jimhucksly/ui.git"
   },
-  "keywords": [
-    "ldm",
-    "ui"
-  ],
-  "author": "LANIT",
+  "author": "Dmitriy Nevezhin <jimhucksly@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/jimhucksly/ui/issues"
+  },
+  "homepage": "http://dn-web.ru",
   "license": "MIT",
-  "homepage": "",
   "files": [
     "dist/"
   ],
@@ -113,7 +112,7 @@
     "webpack-plugin-vuetify": "3.1.2"
   },
   "dependencies": {
-    "@dn/core": "2.0.1"
+    "@dn-web/core": "1.0.1"
   },
   "volta": {
     "node": "22.15.0",

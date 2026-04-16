@@ -1,4 +1,3 @@
-import { generatePalette } from '@ldmjs/core';
 import { App, reactive } from 'vue';
 import { reg as ldavatarReg } from '@/ld-avatar';
 import { reg as ldbadgeReg } from '@/ld-badge';
@@ -9,7 +8,6 @@ import { reg as ldcheckboxReg } from '@/ld-checkbox';
 import { reg as ldchipReg } from '@/ld-chip';
 import { reg as ldcomboboxReg } from '@/ld-combobox';
 import { reg as lditeratorReg } from '@/ld-data-iterator';
-import { reg as lddatatableReg } from '@/ld-datatable';
 import { reg as lddatepickerReg } from '@/ld-datepicker';
 import { reg as lddaterangeReg } from '@/ld-daterange';
 import { reg as lddialogReg } from '@/ld-dialog';
@@ -38,11 +36,9 @@ import { reg as ldtextviewerReg } from '@/ld-text-viewer';
 import { reg as ldtextareaReg } from '@/ld-textarea';
 import { reg as ldtimepickerReg } from '@/ld-timepicker';
 import { reg as ldtogglebuttonsReg } from '@/ld-toggle-buttons';
-import { reg as lddtreeviewReg } from '@/ld-treeview';
 import { reg as lduploaderReg } from '@/ld-uploader';
 import Toast, { PluginOptions, POSITION } from '@/lib/vue-toastification';
 import { ldmuiOptions } from '@/types/options';
-import * as utils from '@/utils';
 import { defaults } from '@/vuetify';
 
 const ldmuiPlugin = {
@@ -70,10 +66,6 @@ const ldmuiPlugin = {
       options: reactive(options),
     };
 
-    vue.config.globalProperties.$utils = {
-      ...utils,
-    };
-
     /* eslint-disable-next-line @typescript-eslint/no-var-requires */
     const library = require('./i18n/ru/ru-Ru.json')['ru'];
 
@@ -94,11 +86,6 @@ const ldmuiPlugin = {
 
     vue.use(Toast, toastedOptions);
 
-    const palette = document.createElement('style');
-    palette.innerHTML = generatePalette();
-    palette.id = 'ldmui-palette';
-    document.body.appendChild(palette);
-
     ldavatarReg(vue, options);
     ldbadgeReg(vue, options);
     ldbreadcrumbsReg(vue, options);
@@ -108,7 +95,6 @@ const ldmuiPlugin = {
     ldchipReg(vue, options);
     ldcomboboxReg(vue, options);
     lditeratorReg(vue, options);
-    lddatatableReg(vue, options);
     lddatepickerReg(vue, options);
     lddaterangeReg(vue, options);
     lddialogReg(vue, options);
@@ -137,7 +123,6 @@ const ldmuiPlugin = {
     ldtextareaReg(vue, options);
     ldtimepickerReg(vue, options);
     ldtogglebuttonsReg(vue, options);
-    lddtreeviewReg(vue, options);
     lduploaderReg(vue, options);
   },
 };
@@ -182,8 +167,6 @@ const ldmuii18n = {
 };
 
 export { ldmuii18n };
-
-export * from '@/utils';
 
 export { ValidateMixin, ValidateMixinOptions } from '@/mixins/validate.mixin';
 

@@ -34,9 +34,6 @@ const doAsync = async () => {
       'vue-screen-utils': 'vue-screen-utils',
       '@vuelidate/core': '@vuelidate/core',
       '@vuelidate/validators': '@vuelidate/validators',
-      '@ldmjs/core': '@ldmjs/core',
-      '@ldmjs/datatable': '@ldmjs/datatable',
-      '@ldmjs/treeview': '@ldmjs/treeview',
       '@/mixins/validators': './utils/validators.js', // from index.js
       '../mixins/validators': '../utils/validators.js', // from components/<file>.js
       ...libs.externals,
@@ -44,7 +41,7 @@ const doAsync = async () => {
     },
     output: {
       library: {
-        name: 'ldmui',
+        name: 'dnwebui',
         type: 'umd',
       },
       filename: (pathData) => {

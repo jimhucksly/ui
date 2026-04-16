@@ -12,18 +12,6 @@ const { getIconsList } = require('./helpers');
 
 commonConfig.resolve.modules = [path.join(__dirname, '../../'), 'node_modules'];
 
-function writeVersion() {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(path.join(__dirname, '../src/demo/version.json'), JSON.stringify({ version: version }), err => {
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-      return resolve();
-    });
-  });
-}
-
 const doAsync = async () => {
   await writeVersion();
   const icons = await getIconsList();
@@ -36,7 +24,7 @@ const doAsync = async () => {
     },
     output: {
       library: {
-        name: 'ldmuidemo',
+        name: 'dnwebuidemo',
         type: 'umd',
       },
       filename: '[name].js',
@@ -54,11 +42,7 @@ const doAsync = async () => {
       'vue-property-decorator': 'vue-property-decorator',
       'lodash-es/cloneDeep': 'lodash-es/cloneDeep',
       'markdown-it': 'markdown-it',
-      '@ldmjs/core': '@ldmjs/core',
-      '@ldmjs/datatable': '@ldmjs/datatable',
-      '@ldmjs/treeview/utils': '@ldmjs/treeview/utils',
-      '@ldmjs/editor': '@ldmjs/editor',
-      '@ldmjs/editor/dist/css/index.css': '@ldmjs/editor/dist/css/index.css',
+      '@dn-web/core': '@dn-web/core',
       '@/mixins/validate.mixin': '../dist',
       '@/utils': '../dist',
       '@/ld-dialog/dialogs': '../dist',

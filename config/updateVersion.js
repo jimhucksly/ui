@@ -4,7 +4,7 @@ const { version } = require('./package.json');
 
 function updateVersion() {
   try {
-    const paths = ['../package.json', '../src/demo/version.json', './release/version.json'];
+    const paths = ['../package.json'];
     for (const p of paths) {
       const text = fs.readFileSync(path.resolve(__dirname, p), { encoding: 'utf-8' });
       const json = JSON.parse(text);

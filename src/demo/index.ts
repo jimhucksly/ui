@@ -12,7 +12,6 @@ import Checkbox from './checkbox.vue';
 import Chip from './chip.vue';
 import Colors from './colors.vue';
 import ComboBox from './combobox.vue';
-import Datatable from './datatable.vue';
 import DatePicker from './datepicker.vue';
 import DateRange from './daterange.vue';
 import Dialogs from './dialogs.vue';
@@ -47,7 +46,6 @@ import TimePicker from './timepicker.vue';
 import Toast from './toast.vue';
 import Toggle from './toggle.vue';
 import Tooltip from './tooltip.vue';
-import TreeView from './treeview.vue';
 import Upgrade from './upgrade.vue';
 import Uploader from './uploader.vue';
 import Utils from './utils.vue';
@@ -97,8 +95,6 @@ interface ITab {
     PageToolbar,
     'loader-demo': Loader,
     Progress,
-    Datatable,
-    treeview: TreeView,
     Editor,
     Toast,
     Stepper,
@@ -166,8 +162,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Expansions' },
     { name: 'Splitter' },
     { name: 'Page Toolbar' },
-    { name: 'TreeView' },
-    { name: 'Datatable' },
     { name: 'Iterator' },
     { name: 'Interactive', disabled: true },
     { name: 'Dialog', component: 'dialogs' },

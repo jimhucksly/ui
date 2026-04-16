@@ -59,7 +59,7 @@ function watchInput(input: Vue) {
   const watcher = (_input: Vue) =>
     _input.$watch(
       'hasError',
-      val => {
+      (val: boolean) => {
         this.errorBag[(_input as unknown as IInput).uid] = val;
       },
       { immediate: true }
@@ -73,7 +73,7 @@ function watchInput(input: Vue) {
 
   if (this.lazyValidation) {
     // Only start watching inputs if we need to
-    watchers.shouldValidate = input.$watch('shouldValidate', val => {
+    watchers.shouldValidate = input.$watch('shouldValidate', (val: boolean) => {
       if (!val) {
         return;
       }
