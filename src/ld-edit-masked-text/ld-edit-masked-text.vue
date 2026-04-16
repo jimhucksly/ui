@@ -45,7 +45,7 @@
                   >
                     <template #append-inner>
                       <component
-                        :is="$ldmui.options.aliases['ld-button']"
+                        :is="$ui.options.aliases['ld-button']"
                         v-if="clearIcon && text"
                         icon
                         text

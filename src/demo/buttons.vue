@@ -74,7 +74,7 @@
       </ld-tabs>
     </content-body>
     <content-header>Buttons: Responsive</content-header>
-    <content-body h="400" v-if="!$ldmui">
+    <content-body h="400">
       <ld-tabs v-bind="tabProps">
         <ld-tab index="0" heading="Playground">
           <v-row class="pt-3">

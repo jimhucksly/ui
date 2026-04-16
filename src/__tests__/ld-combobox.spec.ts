@@ -1,7 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-class-component';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import { TElement } from '@/types/combobox';
 import vuetify from '@/vuetify.setup';
 
@@ -105,9 +106,7 @@ function setupTest(props?: Record<string, unknown>) {
       sync: false,
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
@@ -116,7 +115,7 @@ function setupTest(props?: Record<string, unknown>) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
         ],

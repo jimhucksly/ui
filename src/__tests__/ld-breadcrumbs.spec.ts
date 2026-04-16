@@ -1,8 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
-import { DefinedComponent } from '@vue/test-utils/dist/types';
-import { App, ComponentPublicInstance, defineComponent } from 'vue';
+import { App, ComponentPublicInstance, DefineComponent, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -16,7 +16,7 @@ let component: IComponent;
 
 const breadcrumbs = [
   {
-    text: 'LDM UI DEMO',
+    text: 'DN WEB UI DEMO',
     disabled: false,
     route: {
       path: '/',
@@ -72,7 +72,7 @@ const rootComponent2 = defineComponent({
   },
 });
 
-function setupTest(props?: Record<string, unknown>, cmp?: DefinedComponent) {
+function setupTest(props?: Record<string, unknown>, cmp?: DefineComponent) {
   try {
     let options = {
       global: {
@@ -80,7 +80,7 @@ function setupTest(props?: Record<string, unknown>, cmp?: DefinedComponent) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
           {
@@ -109,10 +109,10 @@ describe('BreadcrumbsComponent', () => {
   });
 
   it('Если определен $router, то выполнят метод $router.push', async () => {
-    setupTest(null, rootComponent1);
+    setupTest(null, rootComponent1 as unknown as DefineComponent);
     const spy = jest.spyOn($router, 'push');
     const ul = wrapper.find('ul');
-    const li = ul.find('li[text="LDM UI DEMO"]');
+    const li = ul.find('li[text="DN WEB UI DEMO"]');
     const div = li.find('div');
     div.trigger('click');
     await delay(300);
@@ -120,9 +120,9 @@ describe('BreadcrumbsComponent', () => {
   });
 
   it('Если передан обработчик @open, передает управление ему', async () => {
-    setupTest(null, rootComponent2);
+    setupTest(null, rootComponent2 as unknown as DefineComponent);
     const ul = wrapper.find('ul');
-    const li = ul.find('li[text="LDM UI DEMO"]');
+    const li = ul.find('li[text="DN WEB UI DEMO"]');
     const div = li.find('div');
     div.trigger('click');
     await delay(300);

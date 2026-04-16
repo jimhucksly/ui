@@ -13,7 +13,7 @@
   </v-container>
 </template>
 <script>
-import { eventBus } from '@ldmjs/core';
+import { eventBus } from '@dn-web/core';
 import { DialogManager } from '@/ld-dialog/dialog.manager';
 import { AlertDialog, PromptDialog } from '@/ld-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';

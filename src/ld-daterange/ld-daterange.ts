@@ -1,3 +1,4 @@
+import { datetime } from '@dn-web/core';
 import IMask, { InputMask } from 'imask';
 import { Inject, mixins, Options, Prop, Vue, Watch } from 'vue-property-decorator';
 import Help from '@/components/help/help.vue';
@@ -102,10 +103,10 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
       }
     }
     if (start) {
-      this.startDate = this.$utils.datetime.toDate(start, this.locale);
+      this.startDate = datetime.toDate(start, this.locale);
     }
     if (end) {
-      this.endDate = this.$utils.datetime.toDate(end, this.locale);
+      this.endDate = datetime.toDate(end, this.locale);
     }
     if (this.startDate && this.endDate) {
       const inputEl = this.$refs.inputDate;
@@ -133,7 +134,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }
     if (
       this.startDate &&
-      this.$utils.datetime.compare(
+      datetime.compare(
         new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()),
         new Date(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
       ) > -1
@@ -159,7 +160,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }
     if (
       this.endDate &&
-      this.$utils.datetime.compare(
+      datetime.compare(
         new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate()),
         new Date(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
       ) < 1
@@ -284,7 +285,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
      * dateString сбросим к текущей дате, чтобы календарь переключился на нее
      * date ставим null, чтобы обнулить модель
      */
-    this.dateString = this.$utils.datetime.localToISO(new Date().toLocaleDateString(this.locale), this.locale);
+    this.dateString = datetime.localToISO(new Date().toLocaleDateString(this.locale), this.locale);
     this.startDate = null;
     this.endDate = null;
     this.emitUpdateModelValue(null);
@@ -297,33 +298,33 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }
     if (this.startDate) {
       // кликнули еще раз на уже выделенную дату
-      if (this.$utils.datetime.compare(this.startDate, date) === 0) {
+      if (datetime.compare(this.startDate, date) === 0) {
         this.startDate = null;
         return;
       }
-      if (this.$utils.datetime.compare(this.endDate, date) === 0) {
+      if (datetime.compare(this.endDate, date) === 0) {
         this.endDate = null;
         return;
       }
       // кликнули на дату перед startDate
-      if (this.$utils.datetime.compare(this.startDate, date) === 1) {
+      if (datetime.compare(this.startDate, date) === 1) {
         this.startDate = new Date(date);
       }
       // кликнули на дату после startDate
-      if (this.$utils.datetime.compare(this.startDate, date) === -1) {
+      if (datetime.compare(this.startDate, date) === -1) {
         this.endDate = new Date(date);
       }
       return;
     }
     if (!this.startDate) {
       // клинули на уже выделенную дату endDate
-      if (this.$utils.datetime.compare(this.endDate, date) === 0) {
+      if (datetime.compare(this.endDate, date) === 0) {
         this.endDate = null;
         return;
       }
       this.startDate = new Date(date);
       // startDate идет после endDate - сбросим endDate
-      if (this.$utils.datetime.compare(this.startDate, this.endDate) === 1) {
+      if (datetime.compare(this.startDate, this.endDate) === 1) {
         this.endDate = null;
       }
     }
@@ -416,7 +417,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     if (!date) {
       return '';
     }
-    return this.$utils.datetime.dateToLocal(date, this.locale);
+    return datetime.dateToLocal(date, this.locale);
   }
 
   private parseDate(value: string): Date {
@@ -462,14 +463,13 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     if (!this.startDate || !this.endDate) {
       return '';
     }
-    return [
-      this.$utils.datetime.dateToLocal(this.startDate, this.locale),
-      this.$utils.datetime.dateToLocal(this.endDate, this.locale),
-    ].join(' - ');
+    return [datetime.dateToLocal(this.startDate, this.locale), datetime.dateToLocal(this.endDate, this.locale)].join(
+      ' - '
+    );
   }
 
   get locale(): string {
-    return this.$ldmui.options.language;
+    return this.$ui.options.language;
   }
 
   get localeRu(): boolean {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/typedef */
 import { mixins, Options, Prop, Provide } from 'vue-property-decorator';
 import { ValidateMixin } from '@/mixins/validate.mixin';
 import { IBreadcrumbsItem } from '@/types/breadcrumbs';
@@ -25,7 +24,6 @@ import Home from './home.vue';
 import Locale from './i18n.vue';
 import Icons from './icons.vue';
 import Installation from './installation.vue';
-import Iterator from './iterator.vue';
 import Loader from './loader.vue';
 import Pager from './pager.vue';
 import PageToolbar from './pagetoolbar.vue';
@@ -46,9 +44,7 @@ import TimePicker from './timepicker.vue';
 import Toast from './toast.vue';
 import Toggle from './toggle.vue';
 import Tooltip from './tooltip.vue';
-import Upgrade from './upgrade.vue';
 import Uploader from './uploader.vue';
-import Utils from './utils.vue';
 import Validation from './validation.vue';
 
 interface ITab {
@@ -100,20 +96,16 @@ interface ITab {
     Stepper,
     EventBus,
     dialogs: Dialogs,
-    Iterator,
     Pager,
-    Utils,
     'form-validation': Validation,
     locale: Locale,
     Test,
     Tooltip,
-    Upgrade,
     Expansions,
   },
 })
 export default class Index extends mixins(ValidateMixin) {
   @Prop() version: string;
-  @Prop() versions: Array<{ version: string; url: string }>;
   @Prop() icons: Array<string>;
 
   tag: string = null;
@@ -153,7 +145,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Chip' },
     { name: 'Badge' },
     { name: 'Stepper' },
-    { name: 'TextViewer' },
     { name: 'Navigation', disabled: true },
     { name: 'Breadcrumbs' },
     { name: 'Pager' },
@@ -162,7 +153,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Expansions' },
     { name: 'Splitter' },
     { name: 'Page Toolbar' },
-    { name: 'Iterator' },
     { name: 'Interactive', disabled: true },
     { name: 'Dialog', component: 'dialogs' },
     { name: 'Toast' },
@@ -171,8 +161,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Progress' },
     { name: 'Subscription', disabled: true },
     { name: 'Event Bus' },
-    { name: 'Utilities', disabled: true },
-    { name: 'Utils' },
     { name: 'Validation', disabled: true },
     { name: 'Form validation' },
     { name: 'Localization', disabled: true },
@@ -190,7 +178,6 @@ export default class Index extends mixins(ValidateMixin) {
   @Provide({ reactive: true }) iconsList: Array<string> = null;
 
   mounted() {
-    // eslint-disable-next-line no-undef
     if (this.isDev) {
       this.tabs.push({
         name: '__test__',
@@ -275,15 +262,6 @@ export default class Index extends mixins(ValidateMixin) {
     return name.replace(/[^\w]/g, '-').toLowerCase();
   }
 
-  goToVersion(value: unknown) {
-    if (value !== this.version) {
-      const found = this.versions.find(v => v.version === value);
-      if (found) {
-        window.location.href = found.url;
-      }
-    }
-  }
-
   get currentTab(): ITab {
     if (this.tag) {
       return this.tabs.find((t: ITab) => t.tag === this.tag);
@@ -294,7 +272,7 @@ export default class Index extends mixins(ValidateMixin) {
   get breadcrumbs(): Array<IBreadcrumbsItem> {
     const items = [
       {
-        text: 'LDM UI',
+        text: 'DN WEB UI',
         route: {
           path: '/',
         },

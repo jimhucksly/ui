@@ -30,7 +30,6 @@ function getComponentsList() {
 }
 
 function getExternalsList(components) {
-  const skip = ['ld-datatable', 'ld-treeview'];
   const externals = {};
 
   for (const cmp of components) {
@@ -43,7 +42,6 @@ function getExternalsList(components) {
 }
 
 function getEntryList(components) {
-  const skip = ['ld-datatable', 'ld-treeview'];
   const entry = {};
 
   for (const cmp of components) {

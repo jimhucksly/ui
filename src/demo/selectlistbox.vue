@@ -130,6 +130,7 @@
 </template>
 <script>
 /* eslint-disable @typescript-eslint/typedef */
+import { delay } from '@dn-web/core';
 import { DialogManager } from '@/ld-dialog/dialog.manager';
 import { SelectDialog } from '@/ld-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
@@ -217,7 +218,7 @@ export default {
           loading: true,
         }),
         async () => {
-          await this.$utils.delay(1000);
+          await delay(1000);
           return fetch('/mock.json')
             .then(res => res.json())
             .then(data => ({

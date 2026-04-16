@@ -28,11 +28,11 @@
                 {{ header }}
               </p>
               <component
-                :is="$ldmui.options.aliases['ld-button']"
+                :is="$ui.options.aliases['ld-button']"
                 icon
                 text
                 tooltip
-                :tooltip-text="isTabsVisibled ? $ldmuii18n.gettext('Hide tabs') : $ldmuii18n.gettext('Show tabs')"
+                :tooltip-text="isTabsVisibled ? $uii18n.gettext('Hide tabs') : $uii18n.gettext('Show tabs')"
                 class="mr-2"
                 @click="toggleCollapse"
               >
@@ -41,12 +41,12 @@
             </div>
           </div>
           <template #prev>
-            <component :is="$ldmui.options.aliases['ld-button']" icon text>
+            <component :is="$ui.options.aliases['ld-button']" icon text>
               <svg-icon>arrow left</svg-icon>
             </component>
           </template>
           <template #next>
-            <component :is="$ldmui.options.aliases['ld-button']" icon text>
+            <component :is="$ui.options.aliases['ld-button']" icon text>
               <svg-icon>arrow right</svg-icon>
             </component>
           </template>

@@ -1,5 +1,3 @@
-import '@ldmjs/editor/dist/css/index.css';
-import Editor from '@ldmjs/editor';
 import { App } from 'vue';
 import ContentBody from './demo/components/content-body.vue';
 import ContentHeader from './demo/components/content-header.vue';
@@ -15,7 +13,6 @@ export function startup(vue: App) {
   vue.use(vuetify);
   vue.use(viewport);
 
-  vue.component('editor', Editor);
   vue.component('info-component', InfoWindowComponent);
   vue.component('select-component', SelectWindowComponent);
   vue.component('create-edit-component', CreateEditWindowComponent);

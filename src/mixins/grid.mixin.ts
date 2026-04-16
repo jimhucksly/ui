@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import { mixins, Prop, Watch } from 'vue-property-decorator';
 import ViewportMixin from './viewport.mixins';
 

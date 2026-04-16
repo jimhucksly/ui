@@ -33,7 +33,7 @@
             <template #activator="{ props }">
               <div class="ld-datepicker-date-field" v-bind="props">
                 <component
-                  :is="$ldmui.options.aliases['ld-edit-text']"
+                  :is="$ui.options.aliases['ld-edit-text']"
                   :id="`input-date-${uid}`"
                   :model-value="formattedDate"
                   ref="inputDate"
@@ -51,7 +51,7 @@
                 >
                   <template #append-inner>
                     <component
-                      :is="$ldmui.options.aliases['ld-button']"
+                      :is="$ui.options.aliases['ld-button']"
                       icon
                       text
                       :disabled="disabled || readonly"
@@ -65,7 +65,7 @@
             </template>
             <v-card elevation="0" class="ld-datepicker-dropdown">
               <component
-                :is="$ldmui.options.aliases['ld-calendar']"
+                :is="$ui.options.aliases['ld-calendar']"
                 ref="datepickerRef"
                 :model-value="date"
                 v-model:month="currentMonth"
@@ -81,7 +81,7 @@
           <!-- time -->
           <div v-if="!dateonly" class="ld-datepicker-time-field">
             <component
-              :is="$ldmui.options.aliases['ld-timepicker']"
+              :is="$ui.options.aliases['ld-timepicker']"
               :model-value="timeString"
               v-bind="{
                 ...timepickerProps,

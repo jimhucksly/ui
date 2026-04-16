@@ -29,7 +29,7 @@
             <template #activator="{ props }">
               <div class="ld-daterange-date-field" v-bind="props">
                 <component
-                  :is="$ldmui.options.aliases['ld-edit-text']"
+                  :is="$ui.options.aliases['ld-edit-text']"
                   :id="`input-date-${uid}`"
                   :model-value="formattedDate"
                   ref="inputDate"
@@ -46,7 +46,7 @@
                 >
                   <template #append-inner>
                     <component
-                      :is="$ldmui.options.aliases['ld-button']"
+                      :is="$ui.options.aliases['ld-button']"
                       icon
                       text
                       :disabled="disabled || readonly"
@@ -89,9 +89,9 @@
               </v-card-text>
               <v-card-actions>
                 <ld-button variant="outlined" @click="menu = false">
-                  {{ $ldmuii18n.gettext('Dialog Cancel') }}
+                  {{ $uii18n.gettext('Dialog Cancel') }}
                 </ld-button>
-                <ld-button @click="onSave">{{ $ldmuii18n.gettext('Dialog Save') }}</ld-button>
+                <ld-button @click="onSave">{{ $uii18n.gettext('Dialog Save') }}</ld-button>
               </v-card-actions>
             </v-card>
           </v-menu>

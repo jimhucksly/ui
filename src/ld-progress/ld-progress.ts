@@ -82,6 +82,7 @@ export default class ProgressComponent extends Vue {
       [this.cx, this.cx],
       [this.r, this.r],
       [(0 / 180) * π, ((180 * (value ? value : this.internalValue)) / 100 / 180) * π],
+      /* eslint-disable-next-line sonarjs/no-identical-expressions */
       (180 / 180) * π
     );
   }

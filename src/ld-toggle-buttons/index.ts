@@ -1,12 +1,12 @@
 import { App } from 'vue';
 import component from '@/ld-toggle-buttons/ld-toggle-buttons.vue';
 import CommonService from '@/services/common.service';
-import { ldmuiAliases, ldmuiOptions } from '@/types/options';
+import { IAliases, IOptions } from '@/types/options';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
-const name: keyof ldmuiAliases = require('./metadata.js');
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
+const name: keyof IAliases = require('./metadata.js');
 
-function reg(vue: App, options: ldmuiOptions) {
+function reg(vue: App, options: IOptions) {
   CommonService.propsFactory(component, CommonService.defaults(options, name));
   vue.component(options.aliases[name], component);
   const hasExtensions = CommonService.isArray(options.extensions) && options.extensions.length > 0;

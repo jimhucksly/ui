@@ -2,7 +2,7 @@
   <v-expansion-panel static>
     <v-expansion-panel-title>
       <template #actions>
-        <component :is="$ldmui.options.aliases['ld-button']" icon text>
+        <component :is="$ui.options.aliases['ld-button']" icon text>
           <svg-icon>arrow right</svg-icon>
         </component>
       </template>

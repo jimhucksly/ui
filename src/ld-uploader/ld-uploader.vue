@@ -99,7 +99,7 @@
                 </span>
                 <component
                   v-if="item.isUploadingStatus || item.isUploadedStatus"
-                  :is="$ldmui.options.aliases['ld-progress']"
+                  :is="$ui.options.aliases['ld-progress']"
                   :value="item.progress"
                   :counter="false"
                   :label="null"
@@ -110,7 +110,7 @@
               <div class="d-flex justify-end">
                 <slot name="actions" :file="item"></slot>
                 <component
-                  :is="$ldmui.options.aliases['ld-button']"
+                  :is="$ui.options.aliases['ld-button']"
                   v-if="lazy && url && item.isNoneStatus"
                   icon
                   text
@@ -124,7 +124,7 @@
                   </svg>
                 </component>
                 <component
-                  :is="$ldmui.options.aliases['ld-button']"
+                  :is="$ui.options.aliases['ld-button']"
                   v-if="lazy && (item.isNoneStatus || item.isAbortedStatus || item.isExceptionalStatus)"
                   icon
                   text
@@ -138,7 +138,7 @@
                   </svg>
                 </component>
                 <component
-                  :is="$ldmui.options.aliases['ld-button']"
+                  :is="$ui.options.aliases['ld-button']"
                   v-if="item.isUploadingStatus"
                   icon
                   text

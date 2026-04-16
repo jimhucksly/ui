@@ -21,20 +21,14 @@
   >
     <template #controls="{ monthText, yearText, prevMonth, nextMonth, openMonths, openYears }">
       <template v-if="isMonth">
-        <button :disabled="disabled || readonly" @click="openMonths">{{ $ldmuii18n.gettext(monthText) }}</button>
+        <button :disabled="disabled || readonly" @click="openMonths">{{ $uii18n.gettext(monthText) }}</button>
         <button :disabled="disabled || readonly" class="ml-1" @click="openYears">{{ yearText }}</button>
         <v-spacer></v-spacer>
-        <component
-          :is="$ldmui.options.aliases['ld-button']"
-          icon
-          text
-          :disabled="disabled || readonly"
-          @click="prevMonth"
-        >
+        <component :is="$ui.options.aliases['ld-button']" icon text :disabled="disabled || readonly" @click="prevMonth">
           <svg-icon>arrow left</svg-icon>
         </component>
         <component
-          :is="$ldmui.options.aliases['ld-button']"
+          :is="$ui.options.aliases['ld-button']"
           icon
           text
           :disabled="disabled || readonly"
@@ -46,13 +40,13 @@
       </template>
       <template v-if="isMonths">
         <div class="w-100 d-flex justify-center">
-          <button :disabled="true">{{ $ldmuii18n.gettext(monthText) }}</button>
+          <button :disabled="true">{{ $uii18n.gettext(monthText) }}</button>
         </div>
       </template>
       <template v-if="isYear">
         <div class="w-100 d-flex justify-space-between">
           <component
-            :is="$ldmui.options.aliases['ld-button']"
+            :is="$ui.options.aliases['ld-button']"
             icon
             text
             :disabled="disabled || readonly"
@@ -62,7 +56,7 @@
           </component>
           <button :disabled="true">{{ yearText }}</button>
           <component
-            :is="$ldmui.options.aliases['ld-button']"
+            :is="$ui.options.aliases['ld-button']"
             icon
             text
             :disabled="disabled || readonly"
@@ -101,7 +95,7 @@
         @click="props.onClick"
       >
         <span>
-          {{ $ldmuii18n.gettext(month.text) }}
+          {{ $uii18n.gettext(month.text) }}
         </span>
       </button>
       <div style="display: none">{{ month }}</div>

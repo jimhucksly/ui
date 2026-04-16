@@ -46,16 +46,14 @@
             </template>
             <template #append-inner v-if="$slots['append-inner'] || type === 'password'">
               <component
-                :is="$ldmui.options.aliases['ld-button']"
+                :is="$ui.options.aliases['ld-button']"
                 v-if="type === 'password'"
                 aria-label="toggle"
                 tabindex="1"
                 icon
                 text
                 tooltip
-                :tooltip-text="
-                  passwordVisible ? $ldmuii18n.gettext('Hide password') : $ldmuii18n.gettext('Show password')
-                "
+                :tooltip-text="passwordVisible ? $uii18n.gettext('Hide password') : $uii18n.gettext('Show password')"
                 @click="passwordVisibilityToggle"
               >
                 <svg-icon v-if="passwordVisible">visibility_off</svg-icon>
@@ -69,7 +67,7 @@
               </span>
             </template>
             <template v-if="clearable" #clear="{ props }">
-              <component :is="$ldmui.options.aliases['ld-button']" text icon v-bind="props">
+              <component :is="$ui.options.aliases['ld-button']" text icon v-bind="props">
                 <svg-icon>clear</svg-icon>
               </component>
             </template>

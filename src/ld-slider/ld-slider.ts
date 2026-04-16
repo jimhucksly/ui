@@ -1,3 +1,4 @@
+import { isDefined, objects } from '@dn-web/core';
 import isEqual from 'lodash-es/isEqual';
 import { mixins, Prop, Watch } from 'vue-property-decorator';
 import { Emit } from '@/decorators/emit.decorator';
@@ -30,13 +31,13 @@ export default class SliderComponent extends mixins(InputMixin) {
     } else {
       this.internalValue = this.toValue(this.modelValue);
     }
-    if (!this.$utils.isDefined(this.internalValue)) {
+    if (!isDefined(this.internalValue)) {
       this.onModelValueChanged(null);
     }
   }
 
   @Watch('modelValue') onModelValueChanged(value: TValue) {
-    if (!this.$utils.isDefined(this.modelValue)) {
+    if (!isDefined(this.modelValue)) {
       this.emitUpdateModelValue(null);
       this.internalValue = null;
       return;
@@ -48,7 +49,7 @@ export default class SliderComponent extends mixins(InputMixin) {
   }
 
   @Watch('internalValue') onValueChanged(newVal: number | Array<number>, oldVal: number | Array<number>) {
-    if (!this.$utils.isDefined(this.internalValue)) {
+    if (!isDefined(this.internalValue)) {
       return;
     }
     if (isEqual(newVal, this.modelValue)) {
@@ -61,7 +62,7 @@ export default class SliderComponent extends mixins(InputMixin) {
     if (Array.isArray(this.ticks)) {
       return this.ticks.length > 0;
     }
-    return this.ticks && !this.$utils.isObjectEmpty(this.ticks);
+    return this.ticks && !objects.isEmpty(this.ticks);
   }
 
   private toNumber(value: TValue): number | Array<number> {
@@ -87,7 +88,7 @@ export default class SliderComponent extends mixins(InputMixin) {
   }
 
   private toArray(value: TValue): Array<number> {
-    if (!this.$utils.isDefined(value)) {
+    if (!isDefined(value)) {
       return [this.min, this.max];
     }
     const val = this.toNumber(value);
@@ -98,7 +99,7 @@ export default class SliderComponent extends mixins(InputMixin) {
   }
 
   private toValue(value: TValue): number {
-    if (!this.$utils.isDefined(value)) {
+    if (!isDefined(value)) {
       return this.min;
     }
     const val = this.toNumber(value);

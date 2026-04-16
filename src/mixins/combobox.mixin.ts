@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import isEqual from 'lodash-es/isEqual';
 import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 import { Prop, Vue, Watch } from 'vue-property-decorator';
@@ -109,7 +110,7 @@ export default class ComboboxMixin extends Vue {
   onResizeHandler: () => void;
 
   @Emit('update:model-value') emitUpdateModelValue(value: unknown = null) {
-    if (this.$utils.isDefined(value)) {
+    if (isDefined(value)) {
       return value;
     }
     if (this.multiselect) {
@@ -142,7 +143,7 @@ export default class ComboboxMixin extends Vue {
   }
 
   @Watch('modelValue', { deep: true, immediate: true }) onModelValueChanged(value: TElement | Array<TElement>) {
-    if (!this.$utils.isDefined(value)) {
+    if (!isDefined(value)) {
       if (this.hasSelectedItems) {
         this.onClear();
       }
@@ -556,7 +557,7 @@ export default class ComboboxMixin extends Vue {
   }
 
   get selectedIsDefined(): boolean {
-    return this.$utils.isDefined(this.selected);
+    return isDefined(this.selected);
   }
 
   get hasElements(): boolean {
@@ -578,12 +579,12 @@ export default class ComboboxMixin extends Vue {
 
   get messagesBucket(): IMessages {
     return {
-      loading: this.$ldmuii18n.gettext('Loading'),
-      search: this.$ldmuii18n.gettext('Search'),
-      empty: this.$ldmuii18n.gettext('No Elements'),
-      noResults: this.$ldmuii18n.gettext('No Search Result'),
-      validation: this.$ldmuii18n.gettext('Reqiured Message'),
-      nonUnique: this.$ldmuii18n.gettext('Non Unique'),
+      loading: this.$uii18n.gettext('Loading'),
+      search: this.$uii18n.gettext('Search'),
+      empty: this.$uii18n.gettext('No Elements'),
+      noResults: this.$uii18n.gettext('No Search Result'),
+      validation: this.$uii18n.gettext('Reqiured Message'),
+      nonUnique: this.$uii18n.gettext('Non Unique'),
       invalid: '',
     };
   }
@@ -597,21 +598,19 @@ export default class ComboboxMixin extends Vue {
     if (this.multiselect) {
       props['modelValue'] = this.menu;
     }
-    const menuProps = {
+    return {
       menu: this.menu,
       menuProps: props,
     };
-    return menuProps;
   }
 
   get listProps(): Record<string, unknown> {
     const props: Record<string, unknown> = {
       class: ['scroll-s', 'ld-dropdown-list', `ld-dropdown-list--${(this as unknown as { mySize: string }).mySize}`],
     };
-    const listProps = {
+    return {
       listProps: props,
     };
-    return listProps;
   }
 
   get selectBindings(): Record<string, unknown> {

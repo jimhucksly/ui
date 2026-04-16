@@ -1,7 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-class-component';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 import { IPage, IPagerOptions } from '../types/pager';
 
@@ -49,9 +50,9 @@ function setupTest(props?: Record<string, unknown>) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui, {
+              vue.use(ui, {
                 LdPager: {
-                  entityName: (_, count) => `${count} документов`,
+                  entityName: (_: unknown, count: number) => `${count} документов`,
                 },
               });
             },

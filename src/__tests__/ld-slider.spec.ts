@@ -1,7 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -49,7 +50,7 @@ function setupTest(props?: Record<string, unknown>) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
         ],

@@ -97,7 +97,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
       this.date = null;
     } else {
       this.date = new Date(newVal);
-      this.dateString = this.$utils.datetime.localToISO(this.date.toLocaleDateString(this.locale), this.locale);
+      this.dateString = datetime.localToISO(this.date.toLocaleDateString(this.locale), this.locale);
     }
     if (this.date) {
       const inputEl = this.$refs.inputDate;
@@ -129,7 +129,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
     }
     if (
       this.date &&
-      this.$utils.datetime.compare(
+      datetime.compare(
         new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()),
         new Date(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
       ) > -1
@@ -155,7 +155,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
     }
     if (
       this.date &&
-      this.$utils.datetime.compare(
+      datetime.compare(
         new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()),
         new Date(newVal.getFullYear(), newVal.getMonth(), newVal.getDate())
       ) < 1
@@ -307,7 +307,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
       if (this.timeString) {
         d = this.addTimeToDate(d);
       }
-      const dt = this.$utils.datetime.localToISO(d.toLocaleDateString(this.locale), this.locale);
+      const dt = datetime.localToISO(d.toLocaleDateString(this.locale), this.locale);
       this.onSelectDate(dt);
     }
   }
@@ -320,7 +320,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
      * dateString сбросим к текущей дате, чтобы календарь переключился на нее
      * date ставим null, чтобы обнулить модель
      */
-    this.dateString = this.$utils.datetime.localToISO(new Date().toLocaleDateString(this.locale), this.locale);
+    this.dateString = datetime.localToISO(new Date().toLocaleDateString(this.locale), this.locale);
     this.date = null;
     this.emitUpdateModelValue(null);
     this.validate();
@@ -379,7 +379,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
     if (!date) {
       return '';
     }
-    return this.$utils.datetime.dateToLocal(date, this.locale);
+    return datetime.dateToLocal(date, this.locale);
   }
 
   private parseDate(value: string): Date {
@@ -415,7 +415,7 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
         if (typeof value === 'string') {
           this.emitUpdateModelValue(value);
         } else {
-          this.emitUpdateModelValue(this.$utils.datetime.toServerString(value));
+          this.emitUpdateModelValue(datetime.toServerString(value));
         }
       }
     }
@@ -444,11 +444,11 @@ export default class DatepickerComponent extends mixins(GridMixin, ValidatableMi
     if (!this.date) {
       return '';
     }
-    return this.$utils.datetime.dateToLocal(this.date, this.locale);
+    return datetime.dateToLocal(this.date, this.locale);
   }
 
   get locale(): string {
-    return this.$ldmui.options.language;
+    return this.$ui.options.language;
   }
 
   get localeRu(): boolean {

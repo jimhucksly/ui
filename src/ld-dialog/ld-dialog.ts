@@ -1,4 +1,4 @@
-import { eventBus } from '@ldmjs/core';
+import { eventBus, isDefined, uniqueID } from '@dn-web/core';
 import { mixins, Options } from 'vue-class-component';
 import { Prop, Watch } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
@@ -66,25 +66,23 @@ export default class DialogComponent extends mixins(ViewportMixin) {
 
   mounted() {
     this.$nextTick(() => {
-      /* eslint-disable-next-line @typescript-eslint/unbound-method */
       eventBus.$on('dialog:open' + this.id, this.open);
-      /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
       eventBus.$on('dialog:props' + this.id, this.onSetProps);
-      /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
       eventBus.$on('dialog:close:all' + this.id, this.closeAll);
-      /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
       eventBus.$on('dialog:maximized' + this.id, this.onMaximize);
     });
   }
 
   beforeUnmount() {
-    /* eslint-disable-next-line @typescript-eslint/unbound-method */
     eventBus.$off('dialog:open' + this.id, this.open);
-    /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
     eventBus.$off('dialog:props' + this.id, this.onSetProps);
-    /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
     eventBus.$off('dialog:close:all' + this.id, this.closeAll);
-    /* eslint-disable-next-line @typescript-eslint/unbound-method */
+
     eventBus.$off('dialog:maximized' + this.id, this.onMaximize);
     window.removeEventListener('resize', this.onResizeHandler);
   }
@@ -101,7 +99,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (!modalInfo.hostObject) {
       modalInfo.hostObject = {
         contentType: null,
-        id: this.$utils.uidGen(4, '0-9') as number,
+        id: uniqueID(4, '0-9') as number,
         kind: null,
       };
     }
@@ -143,14 +141,14 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       okLoading: false,
       okDisabled: modalInfo.type === ModalType.Select,
       selectAsOk: modalInfo.selectAsOk,
-      hideFooter: this.$utils.isDefined(modalInfo.hideFooter),
+      hideFooter: isDefined(modalInfo.hideFooter),
       resolved: false,
       width: modalInfo.width,
       height: modalInfo.height,
       fullHeight: modalInfo.fullHeight,
       align: modalInfo.align,
       size: modalInfo.size,
-      closable: this.$utils.isDefined(modalInfo.closable) ? modalInfo.closable : true,
+      closable: isDefined(modalInfo.closable) ? modalInfo.closable : true,
       expandable: modalInfo.expandable,
       minimizable: modalInfo.minimizable,
       minimized: false,
@@ -395,6 +393,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       case ModalType.CreateEdit:
         if (modal.componentInstance && modal.componentInstance.save) {
           modal.okLoading = true;
+          /* eslint-disable-next-line no-useless-call */
           let resultSave = modal.componentInstance.save.call(modal.componentInstance);
           if (resultSave instanceof Promise) {
             try {
@@ -422,7 +421,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
     let okResult = modal.okResult;
     if (modal.type !== ModalType.Select && modal.type !== ModalType.CreateEdit) {
-      okResult = this.$utils.isDefined(modal.okResult) ? modal.okResult : okResult;
+      okResult = isDefined(modal.okResult) ? modal.okResult : okResult;
     }
     modal.okResult = okResult;
     return canUnload;
@@ -456,11 +455,10 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         modal.componentInstance.isChanged &&
         modal.componentInstance.isChanged instanceof Function
       ) {
+        /* eslint-disable-next-line no-useless-call */
         const isChanged = modal.componentInstance.isChanged.call(modal.componentInstance);
         if (isChanged) {
           canUnload = await this.askCanUnload(modal, cancelReason);
-        } else {
-          canUnload = true;
         }
       } else {
         canUnload = await this.askCanUnload(modal, cancelReason);
@@ -495,11 +493,11 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       // }
 
       modal.show = false;
-      if (this.$utils.isDefined(modal.okResult) && isSuccessReason) {
+      if (isDefined(modal.okResult) && isSuccessReason) {
         return modal.resolveFunction(modal.okResult);
       }
 
-      if (this.$utils.isDefined(modal.cancelResult) && fromCancelButtonReason) {
+      if (isDefined(modal.cancelResult) && fromCancelButtonReason) {
         return modal.resolveFunction(modal.cancelResult);
       }
 
@@ -518,8 +516,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
   async handleCancelAll() {
     const confirm = await DialogManager.id(this.id ? this.id : '').exec(
       new ConfirmDialog({
-        title: this.$ldmuii18n.gettext('Dialog Close All Confirm Title'),
-        content: this.$ldmuii18n.gettext('Dialog Close All Confirm Text'),
+        title: this.$uii18n.gettext('Dialog Close All Confirm Title'),
+        content: this.$uii18n.gettext('Dialog Close All Confirm Text'),
       })
     );
     if (!confirm) {
@@ -702,10 +700,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.isSelectDialog(modal)) {
       return !modal.selectAsOk;
     }
-    if (this.hasParent(modal)) {
-      return false;
-    }
-    return true;
+    return !this.hasParent(modal);
   }
 
   okButtonText(modal: ModalWindow) {
@@ -714,13 +709,13 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
     switch (modal.type) {
       case ModalType.Select:
-        return this.$ldmuii18n.gettext('Dialog Select');
+        return this.$uii18n.gettext('Dialog Select');
       case ModalType.Confirm:
-        return this.$ldmuii18n.gettext('Dialog Confirm');
+        return this.$uii18n.gettext('Dialog Confirm');
       case ModalType.CreateEdit:
-        return this.$ldmuii18n.gettext('Dialog Save');
+        return this.$uii18n.gettext('Dialog Save');
       default:
-        return this.$ldmuii18n.gettext('Dialog Close');
+        return this.$uii18n.gettext('Dialog Close');
     }
   }
 
@@ -729,16 +724,13 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       return modal.cancelTitle;
     }
     if (modal.type === ModalType.Confirm) {
-      return this.$ldmuii18n.gettext('Dialog Reject');
+      return this.$uii18n.gettext('Dialog Reject');
     }
-    return this.$ldmuii18n.gettext('Dialog Cancel');
+    return this.$uii18n.gettext('Dialog Cancel');
   }
 
   showScrim(modal: ModalWindow): boolean {
-    if (modal.noModal || this.hasParent(modal)) {
-      return false;
-    }
-    return true;
+    return !(modal.noModal || this.hasParent(modal));
   }
 
   onComponentInstanceCreated(modal: ModalWindow, instance: { save?(): void }): void {
@@ -808,8 +800,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         if (this.isCreateEditDialog(modal)) {
           return DialogManager.id(this.id ? this.id : '').exec(
             new ConfirmDialog({
-              title: this.$ldmuii18n.gettext('Dialog Close Confirm Title'),
-              content: this.$ldmuii18n.gettext('Dialog Close Confirm Text'),
+              title: this.$uii18n.gettext('Dialog Close Confirm Title'),
+              content: this.$uii18n.gettext('Dialog Close Confirm Text'),
             })
           );
         }
@@ -818,8 +810,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (fromCloseButtonReason) {
         return DialogManager.id(this.id ? this.id : '').exec(
           new ConfirmDialog({
-            title: this.$ldmuii18n.gettext('Dialog Close Parent Confrim Title'),
-            content: this.$ldmuii18n.gettext('Dialog Close Parent Confrim Text'),
+            title: this.$uii18n.gettext('Dialog Close Parent Confrim Title'),
+            content: this.$uii18n.gettext('Dialog Close Parent Confrim Text'),
           })
         );
       }
@@ -828,8 +820,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.isCreateEditDialog(modal)) {
       const result: boolean = await DialogManager.id(this.id ? this.id : '').exec(
         new ConfirmDialog({
-          title: this.$ldmuii18n.gettext('Dialog Close Confirm Title'),
-          content: this.$ldmuii18n.gettext('Dialog Close Confirm Text'),
+          title: this.$uii18n.gettext('Dialog Close Confirm Title'),
+          content: this.$uii18n.gettext('Dialog Close Confirm Text'),
         })
       );
       return result;

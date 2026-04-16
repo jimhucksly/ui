@@ -1,5 +1,5 @@
 import { createApp, nextTick, App } from "vue"
-import { eventBus } from "@ldmjs/core"
+import { eventBus } from "@dn-web/core"
 import ToastContainer from "../components/VtToastContainer.vue"
 import {
   ToastContent,

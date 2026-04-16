@@ -1,7 +1,7 @@
 **Usage**
 
 ```js
-import { eventBus } from '@ldmjs/core';
+import { eventBus } from '@dn-web/core';
 
 ...
 // обработчик события будет вызван каждый раз при вызове eventBus.$emit

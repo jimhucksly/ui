@@ -1,3 +1,4 @@
+import { isDefined, objects } from '@dn-web/core';
 import { mixins, Options, Prop } from 'vue-property-decorator';
 import { Emit } from '@/decorators/emit.decorator';
 import ViewportMixin from '@/mixins/viewport.mixins';
@@ -77,10 +78,10 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
   }
 
   get isMobileGlobal() {
-    if (this.$utils.isDefined(this.isDesktopView) && this.isDesktopView) {
+    if (isDefined(this.isDesktopView) && this.isDesktopView) {
       return false;
     }
-    if (this.$utils.isDefined(this.isTabletView) && this.isTabletView) {
+    if (isDefined(this.isTabletView) && this.isTabletView) {
       return false;
     }
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -88,10 +89,10 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
   }
 
   get isTabletGlobal() {
-    if (this.$utils.isDefined(this.isDesktopView) && this.isDesktopView) {
+    if (isDefined(this.isDesktopView) && this.isDesktopView) {
       return false;
     }
-    if (this.$utils.isDefined(this.isMobileView) && this.isMobileView) {
+    if (isDefined(this.isMobileView) && this.isMobileView) {
       return false;
     }
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -99,10 +100,10 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
   }
 
   get isDesktopGlobal() {
-    if (this.$utils.isDefined(this.isTabletView) && this.isTabletView) {
+    if (isDefined(this.isTabletView) && this.isTabletView) {
       return false;
     }
-    if (this.$utils.isDefined(this.isMobileView) && this.isMobileView) {
+    if (isDefined(this.isMobileView) && this.isMobileView) {
       return false;
     }
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -153,10 +154,10 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
     if (this.text === true) {
       return false;
     }
-    if (this.tooltip && this.$utils.isDefined(this.tooltipText)) {
+    if (this.tooltip && isDefined(this.tooltipText)) {
       return true;
     }
-    return this.$utils.isDefined(this.$slots['text']);
+    return isDefined(this.$slots['text']);
   }
 
   get noTooltip(): boolean {
@@ -189,7 +190,7 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
     if (Array.isArray(this.class)) {
       result.push(...this.class);
     }
-    if (!this.$utils.isObjectEmpty(this.class as Record<string, string>)) {
+    if (!objects.isEmpty(this.class as Record<string, string>)) {
       result.push(this.class as Record<string, string>);
     }
     return result;

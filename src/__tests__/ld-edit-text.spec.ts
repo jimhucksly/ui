@@ -1,8 +1,8 @@
+import { delay } from '@dn-web/core';
 import { ComponentMountingOptions, mount, VueWrapper } from '@vue/test-utils';
 import { ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui from '@/index';
-import { delay } from '@/utils/delay';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -49,14 +49,12 @@ function setupTest(props?: Record<string, unknown>) {
     let options: ComponentMountingOptions<void> = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
       global: {
-        plugins: [vuetify, ldmui],
+        plugins: [vuetify, ui],
       },
     };
     if (props) {

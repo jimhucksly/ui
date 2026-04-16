@@ -125,6 +125,6 @@ export default class RadiobuttonComponent extends mixins(InputMixin, HelpMixin) 
   }
 
   get uid(): number {
-    return this.$utils.uidGen(6, '0-9') as number;
+    return uniqueID(6, '0-9') as number;
   }
 }

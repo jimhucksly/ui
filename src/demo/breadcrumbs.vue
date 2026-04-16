@@ -57,7 +57,7 @@ export default {
     breadcrumbs() {
       const o = [
         {
-          text: 'LDM UI DEMO',
+          text: 'DN WEB UI DEMO',
           route: {
             path: '/',
           },

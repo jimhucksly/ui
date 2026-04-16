@@ -78,7 +78,7 @@ import {
 import ProgressBar from "./VtProgressBar.vue"
 import CloseButton from "./VtCloseButton.vue"
 import Icon from "./VtIcon.vue"
-import { eventBus } from '@ldmjs/core'
+import { eventBus } from '@dn-web/core'
 
 export default defineComponent({
   name: "VtToast",

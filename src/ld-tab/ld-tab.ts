@@ -13,7 +13,6 @@ export default class LdTabComponent extends mixins(ViewportMixin) {
   @Prop({ type: String, default: null }) heading: string;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) readonly: boolean;
-  // eslint-disable-next-line no-undefined
   @Prop({ type: String, default: undefined }) activeClass: string;
   @Prop({ type: Boolean, default: false }) lazy: boolean;
 

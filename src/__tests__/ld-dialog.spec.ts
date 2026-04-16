@@ -1,8 +1,8 @@
-import { eventBus } from '@ldmjs/core';
+import { delay, eventBus } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 import { DialogManager } from '../ld-dialog/dialog.manager';
 import {
@@ -26,7 +26,7 @@ document.body.innerHTML = `
 function modalId(div: HTMLElement): string {
   return Array.from(div.classList)
     .find(el => /dlg/.test(el))
-    .replace(/[\D]/g, '');
+    .replace(/\D/g, '');
 }
 
 const rootComponent = defineComponent({
@@ -110,7 +110,7 @@ function setupTest(props?: Record<string, unknown>) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
               vue.component('test-info-cmp', info);
               vue.component('test-select-cmp', select);
               vue.component('test-create-edit-cmp', createEdit);
@@ -229,6 +229,7 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog())
       .then(data => {
         result = data;
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -253,6 +254,7 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog())
       .then(data => {
         result = data;
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -278,6 +280,7 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog({ pressEnterAsOk: false }))
       .then(data => {
         result = data;
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -339,6 +342,7 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -359,6 +363,7 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -375,6 +380,7 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
+        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -738,7 +744,7 @@ describe('DialogComponent: CreateEdit', () => {
       await delay(300);
       return {
         model: {
-          name: 'ldm',
+          name: 'dnwebui',
         },
       };
     })
@@ -756,7 +762,7 @@ describe('DialogComponent: CreateEdit', () => {
     const btnOk: HTMLInputElement = content.querySelector(`#ld-dialog-btn-ok-${id}`);
     btnOk.click();
     await delay(300);
-    expect(result).toEqual({ name: 'ldm' });
+    expect(result).toEqual({ name: 'dnwebui' });
   });
 
   it('Валидация формы работает корректно', async () => {
@@ -795,7 +801,7 @@ describe('DialogComponent: CreateEdit', () => {
       await delay(300);
       return {
         model: {
-          name: 'ldm',
+          name: 'dnwebui',
         },
       };
     })
@@ -810,7 +816,7 @@ describe('DialogComponent: CreateEdit', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
     const dialog = document.querySelector('.ld-dialog-content');
-    expect(result).toEqual({ name: 'ldm' });
+    expect(result).toEqual({ name: 'dnwebui' });
     expect(dialog).toBeNull();
   });
 

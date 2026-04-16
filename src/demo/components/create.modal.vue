@@ -41,10 +41,10 @@
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/typedef */
+import { delay } from '@dn-web/core';
 import { DialogManager } from '@/ld-dialog/dialog.manager';
 import { SelectDialog } from '@/ld-dialog/dialogs';
 import { ValidateMixinOptions } from '@/mixins/validate.mixin';
-import { delay } from '@/utils';
 interface IRow {
   id: number;
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -113,7 +113,7 @@ export default {
       if (this.mockData) {
         return this.mockData;
       }
-      await this.$utils.delay(1000);
+      await delay(1000);
       return fetch('/mock.json')
         .then(response => response.json())
         .then(data => {
@@ -125,7 +125,7 @@ export default {
       if (this.mockCities) {
         return this.mockCities;
       }
-      await this.$utils.delay(1000);
+      await delay(1000);
       return this.fetchMock().then((data: Array<IRow>) => {
         const result = Array.from(new Set(data.map((el: { city: string }) => el.city))).map(el => ({ city: el }));
         this.mockCities = result;

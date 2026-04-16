@@ -3,7 +3,7 @@
     <template v-if="isManyItems">
       <div class="d-flex flex-row-reverse">
         <component
-          :is="$ldmui.options.aliases['ld-button']"
+          :is="$ui.options.aliases['ld-button']"
           v-for="item in items"
           :key="item.id"
           class="ml-4 minimize-btn"
@@ -15,21 +15,21 @@
             </span>
             <div class="pl-2">
               <component
-                :is="$ldmui.options.aliases['ld-button']"
+                :is="$ui.options.aliases['ld-button']"
                 icon
                 text
                 tooltip
-                :tooltip-text="$ldmuii18n.gettext('Expand')"
+                :tooltip-text="$uii18n.gettext('Expand')"
                 @click="onMaximize(item)"
               >
                 <svg-icon>expand</svg-icon>
               </component>
               <component
-                :is="$ldmui.options.aliases['ld-button']"
+                :is="$ui.options.aliases['ld-button']"
                 icon
                 text
                 tooltip
-                :tooltip-text="$ldmuii18n.gettext('Close')"
+                :tooltip-text="$uii18n.gettext('Close')"
                 @click.stop="onClose(item)"
               >
                 <svg-icon>close</svg-icon>
@@ -42,10 +42,10 @@
     <template v-else>
       <v-menu>
         <template #activator="{ props }">
-          <component :is="$ldmui.options.aliases['ld-button']" v-bind="props" class="minimize-btn">
+          <component :is="$ui.options.aliases['ld-button']" v-bind="props" class="minimize-btn">
             <div class="d-flex justify-center">
               <span class="body-1 white--text">
-                <span>{{ $ldmuii18n.gettext('Collapsed windows') }}</span> ({{ items.length }})
+                <span>{{ $uii18n.gettext('Collapsed windows') }}</span> ({{ items.length }})
               </span>
             </div>
           </component>
@@ -58,19 +58,19 @@
                 <div class="minimized-item__subtitle">{{ item.title }}</div>
               </v-list-item-title>
               <template #append>
-                <component :is="$ldmui.options.aliases['ld-button']" icon text @click.stop="onMaximize(item)">
+                <component :is="$ui.options.aliases['ld-button']" icon text @click.stop="onMaximize(item)">
                   <svg-icon>expand</svg-icon>
                 </component>
-                <component :is="$ldmui.options.aliases['ld-button']" icon text @click.stop="onClose(item)">
+                <component :is="$ui.options.aliases['ld-button']" icon text @click.stop="onClose(item)">
                   <svg-icon>close</svg-icon>
                 </component>
               </template>
             </v-list-item>
           </v-list>
           <div class="pa-3">
-            <component :is="$ldmui.options.aliases['ld-button']" color="grey" variant="outlined" @click="onCloseAll">
+            <component :is="$ui.options.aliases['ld-button']" color="grey" variant="outlined" @click="onCloseAll">
               <svg-icon>close</svg-icon>
-              <span>{{ $ldmuii18n.gettext('Close all') }}</span>
+              <span>{{ $uii18n.gettext('Close all') }}</span>
             </component>
           </div>
         </v-card>

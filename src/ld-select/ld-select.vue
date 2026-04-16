@@ -34,7 +34,7 @@
               <slot name="tag" :item="item.raw" :canRemove="canRemove" :onRemove="onUnselect">
                 <component
                   v-if="index < limit"
-                  :is="$ldmui.options.aliases['ld-chip']"
+                  :is="$ui.options.aliases['ld-chip']"
                   :key="JSON.stringify(item.raw)"
                   :disabled="disabled"
                   :size="isSmall ? 's' : isMedium ? 'm' : 'l'"
@@ -50,7 +50,7 @@
                   :count="selected.length"
                 >
                   <component
-                    :is="$ldmui.options.aliases['ld-chip']"
+                    :is="$ui.options.aliases['ld-chip']"
                     :closable="false"
                     clickable
                     :size="isSmall ? 's' : isMedium ? 'm' : 'l'"
@@ -70,7 +70,7 @@
               <v-list-item v-bind="props">
                 <template v-if="multiselect" #prepend>
                   <component
-                    :is="$ldmui.options.aliases['ld-checkbox']"
+                    :is="$ui.options.aliases['ld-checkbox']"
                     :model-value="checkedIds"
                     :initial-value="itemId(item.raw)"
                     :size="isSmall ? 's' : isMedium ? 'm' : 'l'"

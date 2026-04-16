@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { mixins, Options, Prop, Watch } from 'vue-property-decorator';
 import Help from '@/components/help/help.vue';
 import Label from '@/components/label/label.vue';
@@ -63,7 +64,7 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
     if (this.modelValue === this.internalValue) {
       return;
     }
-    if (this.$utils.isDefined(this.checkedValue) && this.$utils.isDefined(this.uncheckedValue)) {
+    if (isDefined(this.checkedValue) && isDefined(this.uncheckedValue)) {
       this.internalValue = this.modelValue === this.checkedValue;
     } else if (Array.isArray(this.modelValue)) {
       this.internalValue = this.modelValue.includes(this.initialValue);
@@ -73,7 +74,7 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
   }
 
   created() {
-    if (this.$utils.isDefined(this.checkedValue) && this.$utils.isDefined(this.uncheckedValue)) {
+    if (isDefined(this.checkedValue) && isDefined(this.uncheckedValue)) {
       this.internalValue = this.modelValue === this.checkedValue;
     } else if (Array.isArray(this.modelValue)) {
       this.internalValue = this.modelValue.includes(this.initialValue);
@@ -84,7 +85,7 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
 
   onChange(event: InputEvent) {
     const checked = (event.target as HTMLInputElement).checked;
-    if (this.$utils.isDefined(this.checkedValue) && this.$utils.isDefined(this.uncheckedValue)) {
+    if (isDefined(this.checkedValue) && isDefined(this.uncheckedValue)) {
       this.fireinputEvent(checked ? this.checkedValue : this.uncheckedValue);
     } else if (Array.isArray(this.modelValue)) {
       if (checked) {
@@ -116,10 +117,10 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
   }
 
   get isChecked() {
-    if (this.$utils.isDefined(this.checkedValue)) {
+    if (isDefined(this.checkedValue)) {
       return this.modelValue === this.checkedValue || this.internalValue === this.checkedValue;
     }
-    if (this.$utils.isDefined(this.initialValue) && Array.isArray(this.modelValue)) {
+    if (isDefined(this.initialValue) && Array.isArray(this.modelValue)) {
       return this.modelValue.includes(this.initialValue);
     }
     return this.modelValue === true;

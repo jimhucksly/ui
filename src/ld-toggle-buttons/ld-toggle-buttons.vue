@@ -13,11 +13,11 @@
             >
               <slot :item="item">
                 <div class="ld-toggle-button-content">
-                  <component v-if="item.icon" :is="$ldmui.options.aliases['ld-icon']" :icon="item.icon" />
+                  <component v-if="item.icon" :is="$ui.options.aliases['ld-icon']" :icon="item.icon" />
                   <span v-if="item.text">{{ item.text }}</span>
                   <component
                     v-if="$utils.isDefined(item.badge)"
-                    :is="$ldmui.options.aliases['ld-badge']"
+                    :is="$ui.options.aliases['ld-badge']"
                     :dot="false"
                     :color="modelValue === index ? 'primary' : 'grey'"
                     :fill="modelValue === index"

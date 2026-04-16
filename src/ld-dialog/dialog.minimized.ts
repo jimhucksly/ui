@@ -1,4 +1,4 @@
-import { eventBus } from '@ldmjs/core';
+import { eventBus } from '@dn-web/core';
 import { Options, Prop, Vue } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
 import { ModalWindow } from '@/types/dialogs';

@@ -16,15 +16,15 @@ export default class ViewportMixin extends Vue {
   }
 
   get globalMobileKey() {
-    return this.$ldmui?.options?.viewport?.isMobile;
+    return this.$ui?.options?.viewport?.isMobile;
   }
 
   get globalTabletKey() {
-    return this.$ldmui?.options?.viewport?.isTablet;
+    return this.$ui?.options?.viewport?.isTablet;
   }
 
   get globalDesktopKey() {
-    return this.$ldmui?.options?.viewport?.isDesktop;
+    return this.$ui?.options?.viewport?.isDesktop;
   }
 
   get isMobileGlobal() {

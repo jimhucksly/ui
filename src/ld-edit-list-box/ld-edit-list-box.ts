@@ -1,3 +1,4 @@
+import { datetime, isDefined, uniqueID } from '@dn-web/core';
 import isEqual from 'lodash-es/isEqual';
 import { mixins, Options, Vue } from 'vue-class-component';
 import { Inject, Prop, Watch } from 'vue-property-decorator';
@@ -77,7 +78,7 @@ export default class EditListBoxComponent extends mixins(
   }
 
   @Watch('modelValue', { immediate: true, deep: true }) onModelChanged(value: Element | Array<Element>) {
-    if (!this.$utils.isDefined(value)) {
+    if (!isDefined(value)) {
       this.clear();
       return;
     }
@@ -108,7 +109,7 @@ export default class EditListBoxComponent extends mixins(
     if (!this.isTextType) {
       return;
     }
-    if (this.$utils.isDefined(this.format)) {
+    if (isDefined(this.format)) {
       try {
         this.regexp = new RegExp(this.format);
       } catch (e) {
@@ -161,7 +162,7 @@ export default class EditListBoxComponent extends mixins(
     this.editableIndex = index;
     this.value = item;
     if (this.isDateType) {
-      this.date = new Date(this.$utils.datetime.localToISO(item, this.locale));
+      this.date = new Date(datetime.localToISO(item, this.locale));
       this.time = this.getTime(this.date);
     }
     this.onAddItem();
@@ -196,22 +197,22 @@ export default class EditListBoxComponent extends mixins(
   onDateSelect(date: string) {
     const d = this.setTime(date);
     if (this.type === 'date') {
-      this.value = this.$utils.datetime.dateToLocal(d, this.locale);
+      this.value = datetime.dateToLocal(d, this.locale);
       this.onEnter();
     }
     if (this.type === 'datetime') {
-      this.value = this.$utils.datetime.formatDate(d, 'DD.MM.YYYY, hh:mm');
+      this.value = datetime.formatDate(d, 'DD.MM.YYYY, hh:mm');
       this.onEnter();
     }
   }
 
   onTimeInput() {
     this.date = this.setTime(this.date);
-    this.value = this.$utils.datetime.formatDate(this.date, 'DD.MM.YYYY, hh:mm');
+    this.value = datetime.formatDate(this.date, 'DD.MM.YYYY, hh:mm');
   }
 
   getKey() {
-    return this.$utils.uidGen(6, '0-9');
+    return uniqueID(6, '0-9');
   }
 
   validate(): boolean {
@@ -243,7 +244,7 @@ export default class EditListBoxComponent extends mixins(
     if (!value) {
       return;
     }
-    if (this.$utils.isDefined(this.editableIndex)) {
+    if (isDefined(this.editableIndex)) {
       const insert = Array.isArray(value) ? value[0] : value;
       this.selected.splice(this.editableIndex, 1, insert as string | number);
     } else if (Array.isArray(value)) {
@@ -311,10 +312,7 @@ export default class EditListBoxComponent extends mixins(
   }
 
   get canEdit(): boolean {
-    if (this.readonly || this.disabled) {
-      return false;
-    }
-    return true;
+    return !(this.readonly || this.disabled);
   }
 
   get hasSelected(): boolean {
@@ -334,6 +332,6 @@ export default class EditListBoxComponent extends mixins(
   }
 
   get locale(): string {
-    return this.$ldmui.options.language;
+    return this.$ui.options.language;
   }
 }

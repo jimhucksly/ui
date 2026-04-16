@@ -32,11 +32,8 @@
 @use "slider";
 @use "editor";
 @use "textviewer";
-@use "treeview";
 @use "textmarkup";
 @use "expansions";
-
-@use "@ldmjs/datatable/styles";
 
 @use 'vuetify' with (
   $color-pack: false,

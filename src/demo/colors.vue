@@ -76,7 +76,7 @@ export default {
   inject: ['tabProps'],
   mixins: [markdownToHTML],
   mounted() {
-    const palette = document.getElementById('ldmui-palette');
+    const palette = document.getElementById('ui-palette');
     const html = palette.innerHTML;
     const arr = html
       .split('\n')

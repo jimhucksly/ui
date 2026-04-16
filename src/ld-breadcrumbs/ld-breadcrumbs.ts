@@ -1,3 +1,4 @@
+import { uniqueID } from '@dn-web/core';
 import { Prop, Vue, Watch } from 'vue-property-decorator';
 import { IBreadcrumbsItem, IRoute } from '@/types/breadcrumbs';
 
@@ -19,7 +20,7 @@ export default class BreadcrumbsComponent extends Vue {
       this.items = [
         ...this.breadcrumbs.map((item, index) => {
           item.disabled = item.disabled === true ? item.disabled : index === this.breadcrumbs.length - 1;
-          item.uid = this.$utils.uidGen(6, '0-9') as number;
+          item.uid = uniqueID(6, '0-9') as number;
           return item;
         }),
       ];

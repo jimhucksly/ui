@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { mixins, Options } from 'vue-class-component';
 import { Inject, Prop, Watch } from 'vue-property-decorator';
 import Help from '@/components/help/help.vue';
@@ -134,10 +135,7 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
   }
 
   checkMinutes(m: number) {
-    if (isNaN(m) || m < 0 || m > 59) {
-      return false;
-    }
-    return true;
+    return !(isNaN(m) || m < 0 || m > 59);
   }
 
   checkValue(value: string): boolean {
@@ -160,7 +158,7 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
   }
 
   setMinutes(i: number) {
-    if (!this.$utils.isDefined(this.hours)) {
+    if (!isDefined(this.hours)) {
       this.hours = 0;
     }
     this.minutes = i;
@@ -235,14 +233,14 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
   }
 
   get _hours() {
-    if (!this.$utils.isDefined(this.hours)) {
+    if (!isDefined(this.hours)) {
       return '';
     }
     return this.leaderZero(this.hours);
   }
 
   get _minutes() {
-    if (!this.$utils.isDefined(this.minutes)) {
+    if (!isDefined(this.minutes)) {
       return '';
     }
     return this.leaderZero(this.minutes);
@@ -264,6 +262,6 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
     if (this.placeholder) {
       return this.placeholder;
     }
-    return this.$ldmuii18n.gettext('Timepicker Placeholder');
+    return this.$uii18n.gettext('Timepicker Placeholder');
   }
 }

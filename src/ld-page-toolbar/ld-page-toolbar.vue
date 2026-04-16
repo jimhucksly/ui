@@ -8,7 +8,7 @@
         <!-- Заголовок страницы -->
         <div v-if="!preview" class="d-flex align-center" style="position: relative">
           <component
-            :is="$ldmui.options.aliases['ld-button']"
+            :is="$ui.options.aliases['ld-button']"
             icon
             variant="tonal"
             color="primary"

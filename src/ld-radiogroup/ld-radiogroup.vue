@@ -15,7 +15,7 @@
       <v-col :class="[inputSizeClasses]" class="d-flex flex-column">
         <div class="ld-radiogroup-radiobuttons">
           <slot>
-            <component :is="$ldmui.options.aliases['ld-radiobutton']" v-for="el in values" v-bind="{ ...el, size }" />
+            <component :is="$ui.options.aliases['ld-radiobutton']" v-for="el in values" v-bind="{ ...el, size }" />
           </slot>
         </div>
         <div v-if="!hideDetails" class="validate">

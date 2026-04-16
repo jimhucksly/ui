@@ -39,7 +39,7 @@ export default class StepComponent extends Vue {
       return [];
     }
     return this.items.map(i => {
-      i.uid = this.$utils.uidGen(6) as string;
+      i.uid = uniqueID(6) as string;
       return i;
     });
   }

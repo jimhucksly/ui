@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "utils";
+
 :root {
   --button-xxs: 24px;
   --button-xs: 32px;
@@ -5,6 +8,37 @@
   --button-m: 48px;
   --button-l: 56px;
 }
+
+$sizearray: (
+  '--size-x-small': (
+    // font size
+    var(--text-body-s),
+    // height
+    var(--button-xs),
+    // padding x
+    14px,
+    // icon view size
+    var(--button-xxs)
+  ),
+  '--size-small': (
+    var(--text-body-s),
+    var(--button-s),
+    16px,
+    var(--button-xs)
+  ),
+  '--size-large': (
+    var(--text-body-m),
+    var(--button-m),
+    20px,
+    var(--button-s)
+  ),
+  '--size-x-large': (
+    var(--text-body-l),
+    var(--button-l),
+    24px,
+    var(--button-m)
+  )
+);
 
 body {
   button:focus,
@@ -81,74 +115,27 @@ body {
       }
     }
 
-    &.v-btn--size-x-small {
-      font-size: var(--text-body-s) !important;
-      min-height: unset;
-      height: var(--button-xs) !important;
-      padding: 0 14px !important;
+    @each $s, $values in $sizearray {
+      &#{utils.getSelector('.v-btn', $s)} {
+        $f: list.nth($values, 1);
+        $h: list.nth($values, 2);
+        $p: list.nth($values, 3);
+        $i: list.nth($values, 4);
 
-      &.ld-button-square {
-        min-width: unset;
-        width: var(--button-xs) !important;
-        padding: 0 !important;
+        font-size: $f !important;
+        min-height: unset;
+        height: $h !important;
+        padding: 0 $p !important;
 
-        &.v-btn--icon {
-          width: var(--button-xxs) !important;
-          height: var(--button-xxs) !important;
-        }
-      }
-    }
+        &.ld-button-square {
+          min-width: unset;
+          width: $h !important;
+          padding: 0 !important;
 
-    &.v-btn--size-small {
-      font-size: var(--text-body-s) !important;
-      min-height: unset;
-      height: var(--button-s) !important;
-      padding: 0 16px !important;
-
-      &.ld-button-square {
-        min-width: unset;
-        width: var(--button-s) !important;
-        padding: 0 !important;
-
-        &.v-btn--icon {
-          width: var(--button-xs) !important;
-          height: var(--button-xs) !important;
-        }
-      }
-    }
-
-    &.v-btn--size-large {
-      font-size: var(--text-body-m) !important;
-      min-height: unset;
-      height: var(--button-m) !important;
-      padding: 0 20px !important;
-
-      &.ld-button-square {
-        min-width: unset;
-        width: var(--button-m) !important;
-        padding: 0 !important;
-
-        &.v-btn--icon {
-          width: var(--button-s) !important;
-          height: var(--button-s) !important;
-        }
-      }
-    }
-
-    &.v-btn--size-x-large {
-      font-size: var(--text-body-l) !important;
-      min-height: unset;
-      height: var(--button-l) !important;
-      padding: 0 24px !important;
-
-      &.ld-button-square {
-        min-width: unset;
-        width: var(--button-l) !important;
-        padding: 0 !important;
-
-        &.v-btn--icon {
-          width: var(--button-m) !important;
-          height: var(--button-m) !important;
+          &.v-btn--icon {
+            width: $i !important;
+            height: $i !important;
+          }
         }
       }
     }

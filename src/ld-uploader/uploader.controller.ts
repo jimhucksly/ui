@@ -1,4 +1,4 @@
-import { files, uidGen } from '@/utils';
+import { files, uniqueID } from '@dn-web/core';
 
 export interface IFile {
   file: File;
@@ -57,7 +57,7 @@ export class FileController implements IFile {
     this.size = file.size;
     this.name = file.name;
     this.progress = 0;
-    this.uid = uidGen(8, '0-9') as number;
+    this.uid = uniqueID(8, '0-9') as number;
   }
 
   setError(error: Error) {
@@ -284,7 +284,7 @@ export class UploaderController {
 
     promise
       .then((body: FormData) => {
-        xhr.send(body);
+        return xhr.send(body);
       })
       .catch(e => {
         item.error = e;

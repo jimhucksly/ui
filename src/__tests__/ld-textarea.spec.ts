@@ -1,7 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -21,7 +22,9 @@ const rootComponent = defineComponent({
       <ld-textarea v-bind="$props" v-model="text" ref="cmp" />
     </div>
   `,
-  data() {
+  data(): {
+    text: string;
+  } {
     return {
       text: null,
     };
@@ -33,9 +36,7 @@ function setupTest(props?: Record<string, unknown>) {
     let options = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
@@ -44,7 +45,7 @@ function setupTest(props?: Record<string, unknown>) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
         ],

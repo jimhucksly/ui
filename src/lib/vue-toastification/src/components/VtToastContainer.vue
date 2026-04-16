@@ -31,7 +31,7 @@ import {
 
 import Toast from "./VtToast.vue"
 import VtTransition from "./VtTransition.vue"
-import { eventBus } from '@ldmjs/core'
+import { eventBus } from '@dn-web/core'
 
 export default defineComponent({
   name: "VueToastification",

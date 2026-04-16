@@ -18,6 +18,6 @@ export default class HelpMixin extends Vue {
   };
 
   get isShowHelp() {
-    return this.$utils.isDefined(this.help) && (this.help.tooltip || this.help.link);
+    return isDefined(this.help) && (this.help.tooltip || this.help.link);
   }
 }

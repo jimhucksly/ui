@@ -1,6 +1,6 @@
+import { strings } from '@dn-web/core';
 import { DefineComponent } from 'vue';
-import { ldmuiOptions } from '@/types/options';
-import { strings } from '../utils';
+import { IOptions } from '@/types/options';
 
 export default class CommonService {
   static isObject(value: unknown): boolean {
@@ -18,12 +18,12 @@ export default class CommonService {
   static componentName(name: string): string {
     return name
       .split('-')
-      .map(e => strings.capitalize(e))
+      .map(e => strings.upperFirst(e))
       .join('');
   }
-  static defaults(options: ldmuiOptions, name: string): Record<string, unknown> {
+  static defaults(options: IOptions, name: string): Record<string, unknown> {
     const key = Symbol.keyFor(Symbol.for(CommonService.componentName(name)));
-    const defaults = options[key as keyof ldmuiOptions] as Record<string, unknown>;
+    const defaults = options[key as keyof IOptions] as Record<string, unknown>;
     return CommonService.hasKeys(defaults) ? defaults : {};
   }
   static propsFactory(cmp: DefineComponent, defaults: Record<string, unknown>) {

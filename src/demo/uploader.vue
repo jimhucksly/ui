@@ -100,6 +100,7 @@
 </template>
 <script>
 /* eslint-disable @typescript-eslint/typedef */
+import { delay } from '@dn-web/core';
 import { ValidateMixinOptions } from '@/mixins/validate.mixin';
 import markdownToHTML from './mixins/markdownToHTML';
 export default {
@@ -160,7 +161,7 @@ export default {
         /* eslint-disable no-console */
         console.log('on before send!');
         console.log({ item, body });
-        await this.$utils.delay(2000);
+        await delay(2000);
         // throw new Error('file format is forbidden');
         return body;
       } catch (e) {

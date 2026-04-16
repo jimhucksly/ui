@@ -1,8 +1,9 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { VueBase } from 'vue-class-component';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IRadio extends VueBase {
@@ -39,7 +40,9 @@ const rootComponent = defineComponent({
       </ld-radiogroup>
     </div>
   `,
-  data() {
+  data(): {
+    value: unknown;
+  } {
     return {
       value: null,
     };
@@ -58,7 +61,9 @@ const rootComponent2 = defineComponent({
       <ld-radiogroup v-model="value" ref="cmp2" :values="values" />
     </div>
   `,
-  data() {
+  data(): {
+    value: unknown;
+  } {
     return {
       value: null,
     };
@@ -70,9 +75,7 @@ function setupTest(props?: Record<string, unknown>, order: number = 0) {
     let options = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
@@ -81,7 +84,7 @@ function setupTest(props?: Record<string, unknown>, order: number = 0) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
         ],

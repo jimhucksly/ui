@@ -1,20 +1,3 @@
-/* eslint-disable no-nested-ternary */
-import {
-  alpha,
-  alphaNum,
-  between,
-  decimal,
-  email,
-  integer,
-  ipAddress,
-  macAddress,
-  maxLength,
-  maxValue,
-  minValue,
-  numeric,
-  required,
-  url,
-} from '@vuelidate/validators';
 import { ValidateFunction } from './validation';
 
 /** requiredRule(name?: string) - Обязательность заполнения поля */

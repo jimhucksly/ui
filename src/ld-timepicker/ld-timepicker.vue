@@ -29,7 +29,7 @@
             <template #activator="{ props }">
               <div class="d-flex align-center w-100" v-bind="props" style="position: relative">
                 <component
-                  :is="$ldmui.options.aliases['ld-edit-text']"
+                  :is="$ui.options.aliases['ld-edit-text']"
                   ref="inputTime"
                   :model-value="_time"
                   v-bind="{
@@ -47,7 +47,7 @@
                 >
                   <template #append-inner>
                     <component
-                      :is="$ldmui.options.aliases['ld-button']"
+                      :is="$ui.options.aliases['ld-button']"
                       icon
                       text
                       style="color: var(--grey-d-1)"
@@ -78,7 +78,7 @@
                 <v-row no-gutters class="mb-1">
                   <v-col class="ld-timepicker-inputs">
                     <component
-                      :is="$ldmui.options.aliases['ld-edit-text']"
+                      :is="$ui.options.aliases['ld-edit-text']"
                       :id="`timeinput-h-${uid}`"
                       ref="timeinput-h"
                       :model-value="_hours"
@@ -91,7 +91,7 @@
                     />
                     <div class="d-flex align-center">:</div>
                     <component
-                      :is="$ldmui.options.aliases['ld-edit-text']"
+                      :is="$ui.options.aliases['ld-edit-text']"
                       :id="`timeinput-m-${uid}`"
                       ref="timeinput-m"
                       :model-value="_minutes"
@@ -108,7 +108,7 @@
                   <v-col class="ld-timepicker-options">
                     <div class="d-flex flex-column scroll-s">
                       <component
-                        :is="$ldmui.options.aliases['ld-button']"
+                        :is="$ui.options.aliases['ld-button']"
                         :color="buttonText(i) === _hours ? 'primary' : 'grey'"
                         variant="text"
                         icon
@@ -122,7 +122,7 @@
                     </div>
                     <div class="d-flex flex-column scroll-s">
                       <component
-                        :is="$ldmui.options.aliases['ld-button']"
+                        :is="$ui.options.aliases['ld-button']"
                         :color="buttonText(i) === _minutes ? 'primary' : 'grey'"
                         variant="text"
                         icon

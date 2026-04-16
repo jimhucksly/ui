@@ -144,6 +144,7 @@
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/typedef, @typescript-eslint/naming-convention  */
+import { delay } from '@dn-web/core';
 import { DialogManager } from '@/ld-dialog/dialog.manager';
 import {
   AlertDialog,
@@ -297,7 +298,7 @@ export default {
           fullHeight: true,
         }),
         async () => {
-          await this.$utils.delay(1500);
+          await delay(1500);
           return fetch('/mock.json')
             .then(result => result.json())
             .then(data => ({
@@ -339,7 +340,7 @@ export default {
           help: true,
         }),
         async () => {
-          await this.$utils.delay(1000);
+          await delay(1000);
           return {
             model: this.edit.model,
           };

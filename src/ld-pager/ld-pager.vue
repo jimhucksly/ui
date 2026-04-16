@@ -11,7 +11,7 @@
     <template v-if="unlimited && sizes && sizes.length">
       <div style="width: 85px; margin-right: 24px">
         <component
-          :is="$ldmui.options.aliases['ld-select']"
+          :is="$ui.options.aliases['ld-select']"
           v-model="size"
           :items="sizes"
           hide-details

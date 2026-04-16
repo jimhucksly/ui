@@ -17,7 +17,6 @@
         scroll-strategy="none"
         v-bind="dialogBindings(modal)"
         :hide-header-close="!modal.closable"
-        :hide-overlay="modal.noModal"
         :no-click-animation="modal.noModal"
         :retain-focus="modal.retainFocus"
         :scrim="showScrim(modal)"
@@ -28,7 +27,7 @@
 
           <v-card-title :class="{ 'v-card-title--dark': isTitleDark(modal) }">
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="hasParent(modal)"
               icon
               text
@@ -44,11 +43,11 @@
             <v-spacer></v-spacer>
 
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               icon
               text
               :tooltip="true"
-              :tooltip-text="$ldmuii18n.gettext('Help')"
+              :tooltip-text="$uii18n.gettext('Help')"
               v-if="modal.help"
               @click="onHelp(modal)"
             >
@@ -56,7 +55,7 @@
             </component>
 
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="modal.minimizable && !isMobileGlobal"
               icon
               text
@@ -66,7 +65,7 @@
             </component>
 
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="isExpanded(modal) && !isMobileGlobal"
               icon
               text
@@ -76,7 +75,7 @@
             </component>
 
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="isCollapsed(modal) && !isMobileGlobal"
               icon
               text
@@ -86,7 +85,7 @@
             </component>
 
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="modal.closable || isMobileGlobal"
               icon
               text
@@ -105,7 +104,7 @@
           />
 
           <v-card-text v-else-if="isPromptDialog(modal)">
-            <component :is="$ldmui.options.aliases['ld-textarea']" v-model="modal.content" rows="3" />
+            <component :is="$ui.options.aliases['ld-textarea']" v-model="modal.content" rows="3" />
           </v-card-text>
 
           <v-card-text
@@ -114,7 +113,7 @@
               visibility: setVisibility(modal.id),
             }"
           >
-            <component :is="$ldmui.options.aliases['ld-loader']" :transparent="true" :visible="modal.loading" />
+            <component :is="$ui.options.aliases['ld-loader']" :transparent="true" :visible="modal.loading" />
 
             <component
               v-if="!modal.loading && (isInfoDialog(modal) || isSelectDialog(modal))"
@@ -144,7 +143,7 @@
 
           <v-card-actions v-if="!modal.hideFooter">
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               v-if="hasParent(modal)"
               :id="`ld-dialog-btn-goback-${modal.id}`"
               variant="outlined"
@@ -152,10 +151,10 @@
               size="s"
               @click.native="handleCancel(modal, cancelReason.FromBackButton)"
             >
-              {{ $ldmuii18n.gettext('Dialog Go Back') }}
+              {{ $uii18n.gettext('Dialog Go Back') }}
             </component>
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               :id="`ld-dialog-btn-cancel-${modal.id}`"
               v-if="showCancelBtn(modal)"
               :disabled="modal.okOnly || modal.okLoading"
@@ -167,7 +166,7 @@
               {{ cancelButtonText(modal) }}
             </component>
             <component
-              :is="$ldmui.options.aliases['ld-button']"
+              :is="$ui.options.aliases['ld-button']"
               :id="`ld-dialog-btn-ok-${modal.id}`"
               v-if="showOkBtn(modal)"
               :disabled="modal.okDisabled"

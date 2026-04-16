@@ -1,3 +1,4 @@
+import { isDefined, uniqueID } from '@dn-web/core';
 import { mixins, Options, Prop, Provide, Watch } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
@@ -54,7 +55,7 @@ export default class LdTabsComponent extends mixins(ViewportMixin) {
   }
 
   @Watch('activeTab', { immediate: true }) onIsActiveChanged() {
-    if (this.$utils.isDefined(this.activeTab)) {
+    if (isDefined(this.activeTab)) {
       this.active = this.activeTab;
     }
   }
@@ -114,6 +115,6 @@ export default class LdTabsComponent extends mixins(ViewportMixin) {
   }
 
   get uid(): string {
-    return this.id ? this.id : (this.$utils.uidGen(6) as string);
+    return this.id ? this.id : (uniqueID(6) as string);
   }
 }

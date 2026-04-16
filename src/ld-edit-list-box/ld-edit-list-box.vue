@@ -54,7 +54,7 @@
                     }"
                   >
                     <component
-                      :is="$ldmui.options.aliases['ld-chip']"
+                      :is="$ui.options.aliases['ld-chip']"
                       :key="getKey()"
                       :color="canEdit ? 'primary' : 'grey'"
                       :closable="canEdit"
@@ -70,7 +70,7 @@
                 </template>
                 <template #append-inner>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     text
                     @click.stop="onAddItem"
@@ -90,7 +90,7 @@
               <div class="d-flex flex-column" :style="{ width: isTextType || isMaskType ? '100%' : '252px' }">
                 <component
                   v-if="isTextType"
-                  :is="$ldmui.options.aliases['ld-edit-text']"
+                  :is="$ui.options.aliases['ld-edit-text']"
                   ref="edit"
                   v-model="value"
                   :only-numbers="type === 'number'"
@@ -102,7 +102,7 @@
                 />
                 <component
                   v-if="isMaskType"
-                  :is="$ldmui.options.aliases['ld-edit-masked-text']"
+                  :is="$ui.options.aliases['ld-edit-masked-text']"
                   ref="edit"
                   v-model="value"
                   autofocus
@@ -114,7 +114,7 @@
                 />
                 <component
                   v-if="isDateType"
-                  :is="$ldmui.options.aliases['ld-datepicker']"
+                  :is="$ui.options.aliases['ld-datepicker']"
                   v-model="date"
                   hide-details
                   :dateonly="type === 'date'"

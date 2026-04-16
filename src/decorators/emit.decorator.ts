@@ -10,8 +10,8 @@ function makeDecoratorEmit(event: string) {
       componentOptions.emits.push(emitName);
       const original = componentOptions.methods[propertyKey];
       componentOptions.methods[propertyKey] = function emitter(...args: Array<unknown>) {
+        /* eslint-disable-next-line sonarjs/no-nested-functions */
         const emit = (returnValue: unknown) => {
-          /* eslint-disable no-undefined */
           if (returnValue === undefined) {
             if (args.length === 0) {
               this.$emit(emitName);

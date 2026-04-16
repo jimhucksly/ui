@@ -22,7 +22,7 @@
         <slot name="hidden"></slot>
         <template #loader>
           <component
-            :is="$ldmui.options.aliases['ld-loader']"
+            :is="$ui.options.aliases['ld-loader']"
             :color="isFlat ? 'white' : color"
             :visible="true"
             :transparent="true"
@@ -58,7 +58,7 @@
     <slot name="hidden"></slot>
     <template #loader>
       <component
-        :is="$ldmui.options.aliases['ld-loader']"
+        :is="$ui.options.aliases['ld-loader']"
         :color="isFlat ? 'white' : color"
         :visible="true"
         :transparent="true"

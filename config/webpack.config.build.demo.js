@@ -44,7 +44,6 @@ const doAsync = async () => {
       'markdown-it': 'markdown-it',
       '@dn-web/core': '@dn-web/core',
       '@/mixins/validate.mixin': '../dist',
-      '@/utils': '../dist',
       '@/ld-dialog/dialogs': '../dist',
       '@/ld-dialog/dialog.manager': '../dist',
     },

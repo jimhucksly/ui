@@ -2,10 +2,10 @@
   "compilerOptions": {
     "lib": ["DOM", "esnext"],
     "types": ["node", "@types/jest"],
-    "moduleResolution": "node",
-    "module": "esnext",
+    "rootDir": "./src",
+    "module": "nodenext",
     "target": "esnext",
-    "baseUrl": ".",
+    "strict": false,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -20,11 +20,9 @@
     "noImplicitThis": false,
     "strictPropertyInitialization": false,
     "allowJs": false,
-    "ignoreDeprecations": "6.0",
-    "strict": false,
     "useUnknownInCatchVariables": false,
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["./src/*"],
     },
     "resolveJsonModule": true
   },

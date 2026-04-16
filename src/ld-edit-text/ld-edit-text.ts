@@ -124,7 +124,7 @@ export default class EditTextComponent extends mixins(ValidatableMixin, GridMixi
     if (newVal === '') {
       return;
     }
-    const emitData = this.$utils.isDefined(newVal) ? Number(newVal) : null;
+    const emitData = isDefined(newVal) ? Number(newVal) : null;
     if (this.nonZero && emitData === 0) {
       this.value = null;
     }

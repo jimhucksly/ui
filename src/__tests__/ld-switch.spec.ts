@@ -1,8 +1,8 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
-import { DefinedComponent } from '@vue/test-utils/dist/types';
-import { App, ComponentPublicInstance, defineComponent } from 'vue';
+import { App, ComponentPublicInstance, DefineComponent, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -42,14 +42,13 @@ const rootComponent2 = defineComponent({
   },
 });
 
-function setupTest(props: Record<string, unknown>, cmp: DefinedComponent) {
+function setupTest(props: Record<string, unknown>, cmp: DefineComponent) {
   try {
     let options = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
+
           unregister: () => {},
         },
       },
@@ -58,7 +57,7 @@ function setupTest(props: Record<string, unknown>, cmp: DefinedComponent) {
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui);
+              vue.use(ui);
             },
           },
         ],
@@ -78,7 +77,7 @@ function setupTest(props: Record<string, unknown>, cmp: DefinedComponent) {
 
 describe('SwitchComponent 1', () => {
   beforeEach(() => {
-    setupTest(null, rootComponent1);
+    setupTest(null, rootComponent1 as unknown as DefineComponent);
   });
 
   afterEach(() => {
@@ -105,7 +104,7 @@ describe('SwitchComponent 1', () => {
 
 describe('SwitchComponent 2', () => {
   beforeEach(() => {
-    setupTest(null, rootComponent2);
+    setupTest(null, rootComponent2 as unknown as DefineComponent);
   });
 
   afterEach(() => {

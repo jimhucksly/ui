@@ -1,3 +1,4 @@
+import { datetime, isDefined } from '@dn-web/core';
 import { mixins, Options, Prop, Vue, Watch } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
@@ -99,7 +100,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
       this.emitUpdateYear(new Date().getFullYear());
       return;
     }
-    if (this.$utils.datetime.compare(value, this.internalValue) === 0) {
+    if (datetime.compare(value, this.internalValue) === 0) {
       return;
     }
     this.internalValue = new Date(value);
@@ -132,7 +133,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
   }
 
   @Watch('currentMonth', { immediate: true }) onCurrentMonthChanged() {
-    if (this.$utils.isDefined(this.currentMonth)) {
+    if (isDefined(this.currentMonth)) {
       return;
     }
     if (this.month) {
@@ -143,7 +144,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
   }
 
   @Watch('currentYear', { immediate: true }) onCurrentYearChanged() {
-    if (this.$utils.isDefined(this.currentYear)) {
+    if (isDefined(this.currentYear)) {
       return;
     }
     this.currentYear = (this.internalValue ?? this.now).getFullYear();
@@ -174,14 +175,14 @@ export default class CalendarComponent extends mixins(InputMixin) {
     this.$nextTick(() => {
       this.fixWeekdayTitle();
     });
-    this.emitUpdateMonth(this.$utils.isDefined(current) ? current : new Date().getMonth());
+    this.emitUpdateMonth(isDefined(current) ? current : new Date().getMonth());
   }
 
   onUpdateYear(current: number) {
     this.$nextTick(() => {
       this.fixWeekdayTitle();
     });
-    this.emitUpdateYear(this.$utils.isDefined(current) ? current : new Date().getFullYear());
+    this.emitUpdateYear(isDefined(current) ? current : new Date().getFullYear());
   }
 
   onUpdateViewMode(val: TViewMode) {
@@ -203,17 +204,14 @@ export default class CalendarComponent extends mixins(InputMixin) {
 
   getAllowedDates(date: Date): boolean {
     if (Array.isArray(this.disabledDates) && this.disabledDates.length) {
-      const index = this.disabledDates.findIndex(d => this.$utils.datetime.compare(date, d) === 0);
+      const index = this.disabledDates.findIndex(d => datetime.compare(date, d) === 0);
       if (index > -1) {
         return false;
       }
     }
     if (Array.isArray(this.allowedDates) && this.allowedDates.length) {
-      const index = this.allowedDates.findIndex(d => this.$utils.datetime.compare(date, d) === 0);
-      if (index > -1) {
-        return true;
-      }
-      return false;
+      const index = this.allowedDates.findIndex(d => datetime.compare(date, d) === 0);
+      return index > -1;
     }
     return true;
   }
@@ -278,7 +276,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
       const arr = Array.from(weekdays);
       if (Array.isArray(arr) && arr.length > 0) {
         for (const i of arr) {
-          i.innerHTML = this.$ldmuii18n.gettext(i.textContent);
+          i.innerHTML = this.$uii18n.gettext(i.textContent);
         }
       }
     }
@@ -289,7 +287,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
   }
 
   get locale(): string {
-    return this.$ldmui.options.language;
+    return this.$ui.options.language;
   }
 
   get isMonth(): boolean {
@@ -314,22 +312,19 @@ export default class CalendarComponent extends mixins(InputMixin) {
         if (!this.range || !Array.isArray(this.range) || !this.range[0]) {
           return false;
         }
-        return this.$utils.datetime.compare(value, this.range[0]) === 0;
+        return datetime.compare(value, this.range[0]) === 0;
       },
       isEnd: (value: string | Date): boolean => {
         if (!this.range || !Array.isArray(this.range) || !this.range[1]) {
           return false;
         }
-        return this.$utils.datetime.compare(value, this.range[1]) === 0;
+        return datetime.compare(value, this.range[1]) === 0;
       },
       inRange: (value: string | Date): boolean => {
         if (!this.range || !Array.isArray(this.range) || !this.range[0] || !this.range[1]) {
           return false;
         }
-        return (
-          this.$utils.datetime.compare(value, this.range[0]) === 1 &&
-          this.$utils.datetime.compare(value, this.range[1]) === -1
-        );
+        return datetime.compare(value, this.range[0]) === 1 && datetime.compare(value, this.range[1]) === -1;
       },
     };
   }

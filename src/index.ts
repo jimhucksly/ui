@@ -7,7 +7,6 @@ import { reg as ldcalendarReg } from '@/ld-calendar';
 import { reg as ldcheckboxReg } from '@/ld-checkbox';
 import { reg as ldchipReg } from '@/ld-chip';
 import { reg as ldcomboboxReg } from '@/ld-combobox';
-import { reg as lditeratorReg } from '@/ld-data-iterator';
 import { reg as lddatepickerReg } from '@/ld-datepicker';
 import { reg as lddaterangeReg } from '@/ld-daterange';
 import { reg as lddialogReg } from '@/ld-dialog';
@@ -32,18 +31,16 @@ import { reg as ldswitchReg } from '@/ld-switch';
 import { reg as ldtabReg } from '@/ld-tab';
 import { reg as ldtabsReg } from '@/ld-tabs';
 import { reg as ldtextmarkupReg } from '@/ld-text-markup';
-import { reg as ldtextviewerReg } from '@/ld-text-viewer';
 import { reg as ldtextareaReg } from '@/ld-textarea';
 import { reg as ldtimepickerReg } from '@/ld-timepicker';
 import { reg as ldtogglebuttonsReg } from '@/ld-toggle-buttons';
 import { reg as lduploaderReg } from '@/ld-uploader';
 import Toast, { PluginOptions, POSITION } from '@/lib/vue-toastification';
-import { ldmuiOptions } from '@/types/options';
+import { IOptions } from '@/types/options';
 import { defaults } from '@/vuetify';
 
-const ldmuiPlugin = {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  install(vue: App, options?: ldmuiOptions) {
+const uiPlugin = {
+  install(vue: App, options?: IOptions) {
     if (!options) {
       options = {};
     }
@@ -55,21 +52,21 @@ const ldmuiPlugin = {
       options.aliases = {};
     }
 
-    $COMPONENTS.forEach((alias: keyof ldmuiOptions['aliases']) => {
+    $COMPONENTS.forEach((alias: keyof IOptions['aliases']) => {
       if (options.aliases?.[alias]) {
         return;
       }
       options.aliases[alias] = alias.replace(/^ld/, options.prefix);
     });
 
-    vue.config.globalProperties.$ldmui = {
+    vue.config.globalProperties.$ui = {
       options: reactive(options),
     };
 
-    /* eslint-disable-next-line @typescript-eslint/no-var-requires */
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
     const library = require('./i18n/ru/ru-Ru.json')['ru'];
 
-    vue.config.globalProperties.$ldmuii18n = {
+    vue.config.globalProperties.$i18n = {
       library,
       gettext: (value: string): string => library[value] ?? value,
     };
@@ -94,7 +91,6 @@ const ldmuiPlugin = {
     ldcheckboxReg(vue, options);
     ldchipReg(vue, options);
     ldcomboboxReg(vue, options);
-    lditeratorReg(vue, options);
     lddatepickerReg(vue, options);
     lddaterangeReg(vue, options);
     lddialogReg(vue, options);
@@ -119,7 +115,6 @@ const ldmuiPlugin = {
     ldtabReg(vue, options);
     ldtabsReg(vue, options);
     ldtextmarkupReg(vue, options);
-    ldtextviewerReg(vue, options);
     ldtextareaReg(vue, options);
     ldtimepickerReg(vue, options);
     ldtogglebuttonsReg(vue, options);
@@ -127,16 +122,18 @@ const ldmuiPlugin = {
   },
 };
 
-export default ldmuiPlugin;
+export default uiPlugin;
 
 const localesMap = new Map();
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 localesMap.set('en', () => require('./i18n/en/en-En.json'));
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 localesMap.set('ru', () => require('./i18n/ru/ru-Ru.json'));
 
-const ldmuii18n = {
+const i18n = {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   install(vue: any, value?: string) {
-    let language = vue.config?.globalProperties?.$ldmui?.options?.language || 'en';
+    let language = vue.config?.globalProperties?.$ui?.options?.language || 'en';
     let library: Record<string, string> = {};
     try {
       if (!value) {
@@ -157,16 +154,16 @@ const ldmuii18n = {
       return this.library[v] || v;
     }
 
-    vue.config.globalProperties.$ldmuii18n = {
+    vue.config.globalProperties.$uii18n = {
       library,
       gettext: null,
     };
 
-    vue.config.globalProperties.$ldmuii18n.gettext = gettext.bind(vue.config.globalProperties.$ldmuii18n);
+    vue.config.globalProperties.$uii18n.gettext = gettext.bind(vue.config.globalProperties.$uii18n);
   },
 };
 
-export { ldmuii18n };
+export { i18n };
 
 export { ValidateMixin, ValidateMixinOptions } from '@/mixins/validate.mixin';
 

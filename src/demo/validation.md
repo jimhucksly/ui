@@ -13,7 +13,7 @@ myRules: Array<ValidateFunction> = []
 * **for options-style component**
 ```js
 /* Form Model (options-style component) */
-import { ValidateMixinOptions } from '@ldmjs/ui';
+import { ValidateMixinOptions } from '@dn-web/ui';
 export default {
   mixins: [ValidateMixinOptions],
   data() {
@@ -44,7 +44,7 @@ export default {
 # cols[6]
 * **for class-style component**
 ```js
-import { ValidateMixin, ValidateFunction } from '@ldmjs/ui';
+import { ValidateMixin, ValidateFunction } from '@dn-web/ui';
 import { mixins } from 'vue-class-component';
 export default class Form extends mixins(ValidateMixin) {
   text: string = '';

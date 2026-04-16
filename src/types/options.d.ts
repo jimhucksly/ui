@@ -1,5 +1,4 @@
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
-export interface ldmuiExtension {
+export interface IExtension {
   name: string;
   alias: string;
   props?: {
@@ -7,8 +6,7 @@ export interface ldmuiExtension {
   };
 }
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
-export interface ldmuiAliases {
+export interface IAliases {
   'ld-button'?: string;
   'ld-icon'?: string;
   'ld-chip'?: string;
@@ -34,7 +32,6 @@ export interface ldmuiAliases {
   'ld-select'?: string;
   'ld-combobox'?: string;
   'ld-timepicker'?: string;
-  'ld-text-viewer'?: string;
   'ld-edit-masked-text'?: string;
   'ld-text-markup'?: string;
   'ld-switch'?: string;
@@ -50,11 +47,10 @@ export interface ldmuiAliases {
   'ld-expansion-panel'?: string;
 }
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
-export interface ldmuiOptions {
+export interface IOptions {
   prefix?: string;
-  aliases?: ldmuiAliases;
-  extensions?: Array<ldmuiExtension>;
+  aliases?: IAliases;
+  extensions?: Array<IExtension>;
   language?: string;
   viewport?: {
     isMobile: string;
@@ -158,9 +154,6 @@ export interface ldmuiOptions {
     [key: string]: unknown;
   };
   LdTextMarkup?: {
-    [key: string]: unknown;
-  };
-  LdTextViewer?: {
     [key: string]: unknown;
   };
   LdTextarea?: {

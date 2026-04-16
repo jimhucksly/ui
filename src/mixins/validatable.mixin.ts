@@ -1,6 +1,6 @@
+import { uniqueID } from '@dn-web/core';
 import { Prop, Vue, Watch } from 'vue-property-decorator';
 import { ValidateFunction } from '@/types/validation';
-import { uidGen } from '../utils/UIDGenerator';
 import { requiredRule } from './validators';
 
 export default class ValidatableMixin extends Vue {
@@ -22,10 +22,10 @@ export default class ValidatableMixin extends Vue {
   myRules: Array<ValidateFunction> = [];
 
   validationMessage = '';
-  uid = uidGen(6, '0-9') as number;
+  uid = uniqueID(6, '0-9') as number;
 
   get requiredMessage(): string {
-    return this.$ldmuii18n.gettext('Reqiured Message');
+    return this.$uii18n.gettext('Reqiured Message');
   }
 
   get validRules(): Array<ValidateFunction> {

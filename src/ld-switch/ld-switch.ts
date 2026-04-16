@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { mixins, Options, Prop, Watch } from 'vue-property-decorator';
 import Help from '@/components/help/help.vue';
 import Label from '@/components/label/label.vue';
@@ -71,10 +72,10 @@ export default class SwitchComponent extends mixins(InputMixin, HelpMixin) {
   }
 
   private getValue(value: boolean | string | number) {
-    if (!this.$utils.isDefined(value)) {
+    if (!isDefined(value)) {
       return false;
     }
-    if (this.$utils.isDefined(this.trueValue) && this.$utils.isDefined(this.falseValue)) {
+    if (isDefined(this.trueValue) && isDefined(this.falseValue)) {
       if (value === this.trueValue) {
         return this.trueValue;
       }
@@ -84,25 +85,22 @@ export default class SwitchComponent extends mixins(InputMixin, HelpMixin) {
   }
 
   get positiveValue(): boolean | string | number {
-    if (this.$utils.isDefined(this.trueValue) && this.$utils.isDefined(this.falseValue)) {
+    if (isDefined(this.trueValue) && isDefined(this.falseValue)) {
       return this.trueValue;
     }
     return true;
   }
 
   get negativeValue(): boolean | string | number {
-    if (this.$utils.isDefined(this.trueValue) && this.$utils.isDefined(this.falseValue)) {
+    if (isDefined(this.trueValue) && isDefined(this.falseValue)) {
       return this.falseValue;
     }
     return false;
   }
 
   get checked(): boolean {
-    if (this.$utils.isDefined(this.trueValue) && this.$utils.isDefined(this.falseValue)) {
-      if (this.internalValue === this.trueValue) {
-        return true;
-      }
-      return false;
+    if (isDefined(this.trueValue) && isDefined(this.falseValue)) {
+      return this.internalValue === this.trueValue;
     }
     return Boolean(this.internalValue);
   }

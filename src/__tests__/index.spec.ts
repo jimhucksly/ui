@@ -1,13 +1,14 @@
+import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui, { delay } from '@/index';
-import { ldmuiOptions } from '@/types/options';
+import ui from '@/index';
+import { IOptions } from '@/types/options';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  $ldmui: any;
+  $ui: any;
   $el: HTMLElement;
 }
 
@@ -26,14 +27,12 @@ const rootComponent = defineComponent({
   },
 });
 
-function setupTest(props?: Record<string, unknown>, options: ldmuiOptions = {}) {
+function setupTest(props?: Record<string, unknown>, options: IOptions = {}) {
   try {
     let config = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
@@ -42,7 +41,7 @@ function setupTest(props?: Record<string, unknown>, options: ldmuiOptions = {}) 
           vuetify,
           {
             install(vue: App) {
-              vue.use(ldmui, options);
+              vue.use(ui, options);
             },
           },
         ],
@@ -78,7 +77,7 @@ describe('Index', () => {
   });
 
   it('Библиотека компонентов успешно подключается', () => {
-    expect(component.$ldmui).toBeDefined();
+    expect(component.$ui).toBeDefined();
   });
 
   it('Работает переопределение дефолтных параметров компонентов', async () => {

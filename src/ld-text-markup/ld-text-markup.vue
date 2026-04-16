@@ -12,7 +12,7 @@
           <div class="d-flex flex-column w-100">
             <div class="d-flex align-center">
               <component
-                :is="$ldmui.options.aliases['ld-toggle-buttons']"
+                :is="$ui.options.aliases['ld-toggle-buttons']"
                 :model-value="preview"
                 :items="items"
                 :disabled="disabled || readonly"
@@ -39,11 +39,11 @@
               >
                 <template #defToolbars>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
-                    :title="$ldmuii18n.gettext('Bold')"
+                    :title="$uii18n.gettext('Bold')"
                     @click="handlers.bold"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">
@@ -66,11 +66,11 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
-                    :title="$ldmuii18n.gettext('Italic')"
+                    :title="$uii18n.gettext('Italic')"
                     @click="handlers.italic"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">
@@ -110,11 +110,11 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
-                    :title="$ldmuii18n.gettext('Underline')"
+                    :title="$uii18n.gettext('Underline')"
                     @click="handlers.underline"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">
@@ -130,7 +130,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
@@ -144,7 +144,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
@@ -158,7 +158,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
@@ -172,7 +172,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
@@ -246,7 +246,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"
@@ -322,7 +322,7 @@
                     </svg>
                   </component>
                   <component
-                    :is="$ldmui.options.aliases['ld-button']"
+                    :is="$ui.options.aliases['ld-button']"
                     icon
                     color="grey"
                     variant="text"

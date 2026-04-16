@@ -1,14 +1,14 @@
+import { isDefined, objects } from '@dn-web/core';
 import { Ref } from 'vue';
 import { Vue } from 'vue-class-component';
 import { LocationStrategyData, StrategyProps } from 'vuetify/lib/components/VOverlay/locationStrategies';
 import { TElement } from '../types/combobox';
-import { deepValueGetter, isDefined, isObjectEmpty } from '../utils';
 import UnitService from './unit.service';
 
 export default class ComboboxService {
-  static MIN_MENU_HEIGHT = 200;
-  static MAX_MENU_HEIGHT = 310;
-  static VIEWPORT_GAP = 28;
+  static readonly MIN_MENU_HEIGHT = 200;
+  static readonly MAX_MENU_HEIGHT = 310;
+  static readonly VIEWPORT_GAP = 28;
 
   locationStrategy(data: LocationStrategyData, _: StrategyProps, contentStyles: Ref<Record<string, string>>) {
     const pixelRound = UnitService.pixelRound.bind(this);
@@ -107,7 +107,7 @@ export default class ComboboxService {
       return (value as Array<unknown>).length === 0;
     }
     if (this.isObject(value)) {
-      return isObjectEmpty(value as Record<string, unknown>);
+      return objects.isEmpty(value as Record<string, unknown>);
     }
     return true;
   }
@@ -127,7 +127,7 @@ export default class ComboboxService {
       return item as string | number;
     }
     if (this.isObject(item)) {
-      return deepValueGetter(item as Record<string, unknown>, prop) as number | string;
+      return objects.deepValueGetter(item as Record<string, unknown>, prop) as number | string;
     }
     return null;
   }

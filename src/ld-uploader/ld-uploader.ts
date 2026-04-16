@@ -1,3 +1,4 @@
+import { files } from '@dn-web/core';
 import { mixins, Options } from 'vue-class-component';
 import { Inject, Prop, Watch } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
@@ -6,7 +7,6 @@ import { Emit } from '@/decorators/emit.decorator';
 import InputMixin from '@/mixins/input.mixin';
 import ValidatableMixin from '@/mixins/validatable.mixin';
 import { IInjectionForm } from '@/types/form';
-import { files } from '@/utils';
 import { FileStatus, IFile, UploaderController } from './uploader.controller';
 
 type InjectionForm = IInjectionForm;
@@ -122,12 +122,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (this.disabled) {
-      return;
-    }
-    this.isDrag = true;
+    this.onDragEnter(event);
   }
 
   onDragLeave(event: DragEvent) {
@@ -215,13 +210,13 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
 
   getItemStatus(item: IFile) {
     if (item.status === FileStatus.Overflow) {
-      return this.$ldmuii18n.gettext('Uploader File Size Overflow');
+      return this.$uii18n.gettext('Uploader File Size Overflow');
     }
     if (item.status === FileStatus.Aborted) {
-      return this.$ldmuii18n.gettext('Uploader Load Abort');
+      return this.$uii18n.gettext('Uploader Load Abort');
     }
     if (item.status === FileStatus.Canceled) {
-      return this.$ldmuii18n.gettext('Uploader Load Timed Out');
+      return this.$uii18n.gettext('Uploader Load Timed Out');
     }
     if (item.status === FileStatus.Error) {
       let message = '';
@@ -231,7 +226,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
       if (message) {
         return message;
       }
-      return this.$ldmuii18n.gettext('Uploader Load Error');
+      return this.$uii18n.gettext('Uploader Load Error');
     }
   }
 
@@ -251,7 +246,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   get myPlaceholder(): string {
-    return this.placeholder || this.$ldmuii18n.gettext('Uploader Placeholder');
+    return this.placeholder || this.$uii18n.gettext('Uploader Placeholder');
   }
 
   get maxValue(): string {
@@ -309,7 +304,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   get requiredMessage(): string {
-    return this.$ldmuii18n.gettext('Uploader Required Message');
+    return this.$uii18n.gettext('Uploader Required Message');
   }
 
   get hasItems(): boolean {

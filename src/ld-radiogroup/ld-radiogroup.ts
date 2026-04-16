@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { nextTick } from 'vue';
 import { mixins, Options, Vue } from 'vue-class-component';
 import { Inject, Prop, Provide, Watch } from 'vue-property-decorator';
@@ -38,7 +39,7 @@ export default class RadioGroupComponent extends mixins(InputMixin, GridMixin, H
   @Prop({ type: String, default: 's' }) size: 's' | 'm' | 'l';
   @Prop({ type: String, default: 'ltr' }) direction: 'ltr' | 'rtl';
 
-  @Inject({ from: 'form', default: null }) form: InjectionForm;
+  @Inject({ from: 'form', default: null }) declare form: InjectionForm;
 
   @Provide({
     to: 'radio',
@@ -82,7 +83,6 @@ export default class RadioGroupComponent extends mixins(InputMixin, GridMixin, H
   }
 
   @Watch('modelValue', { immediate: true }) onValueChange() {
-    // eslint-disable-next-line no-undefined
     if (this.modelValue === undefined || this.modelValue === null) {
       return;
     }
@@ -93,7 +93,7 @@ export default class RadioGroupComponent extends mixins(InputMixin, GridMixin, H
     if (!this.radios || !this.radios.length) {
       return;
     }
-    if (this.required && !this.$utils.isDefined(this.modelValue)) {
+    if (this.required && !isDefined(this.modelValue)) {
       this.internalValue = this.radios[0].value;
       this.emitUpdateModelValue(this.internalValue);
     }

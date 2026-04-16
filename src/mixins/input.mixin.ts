@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { Inject, Prop, Vue, Watch } from 'vue-property-decorator';
 import { IInjectionForm } from '../types/form';
 
@@ -45,7 +46,7 @@ export default class InputMixin extends Vue {
   }
 
   mounted() {
-    if (this.$utils.isDefined(this.autofocus) && this.$el instanceof HTMLElement) {
+    if (isDefined(this.autofocus) && this.$el instanceof HTMLElement) {
       const input: HTMLInputElement = this.$el.querySelector('input[type="text"]');
       if (input) {
         input.setAttribute('autofocus', `${Boolean(this.autofocus)}`);

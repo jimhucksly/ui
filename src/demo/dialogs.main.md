@@ -16,7 +16,7 @@ import {
   SelectDialog,
   CreateEditDialog,
   DialogManager
-} from "@ldmjs/ui"
+} from "@dn-web/ui"
 
 DialogManager.exec()
 ```

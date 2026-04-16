@@ -45,7 +45,7 @@
               </div>
             </template>
             <template v-if="clearable" #clear="{ props }">
-              <component :is="$ldmui.options.aliases['ld-button']" v-bind="props" icon text>
+              <component :is="$ui.options.aliases['ld-button']" v-bind="props" icon text>
                 <svg-icon>close</svg-icon>
               </component>
             </template>

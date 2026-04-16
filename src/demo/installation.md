@@ -3,12 +3,12 @@
 
  - npm
 ```cmd
- PS D:\yourProject> npm install @ldmjs/core@latest @ldmjs/ui
+ PS D:\yourProject> npm install @dn-web/core@latest @dn-web/ui
 ```
 
  - yarn
 ```cmd
- PS D:\yourProject> yarn add @ldmjs/core@latest @ldmjs/ui
+ PS D:\yourProject> yarn add @dn-web/core@latest @dn-web/ui
 ```
 
  - install dependencies
@@ -24,31 +24,31 @@ vuetify vue-screen-utils@1.0.0-beta.13 lodash-es md-editor-v3 @vuelidate/core
 {
   "compilerOptions":
   {
-    "include": ["node_modules/@ldmjs/ui/index.d.ts"]
+    "include": ["node_modules/@dn-web/ui/index.d.ts"]
   }
 }
 ```
 
 **NPM page**
 
-* [https://www.npmjs.com/package/@ldmjs/ui](https://www.npmjs.com/package/@ldmjs/ui)
+* [https://www.npmjs.com/package/@dn-web/ui](https://www.npmjs.com/package/@dn-web/ui)
  # end of cols
  # cols[5]
  **Usage**
 
 ```js
-import '@ldmjs/ui/dist/scss';
-import ldmui, { defaults } from '@ldmjs/ui';
+import '@dn-web/ui/dist/scss';
+import ui, { defaults } from '@dn-web/ui';
 import { createApp, defineComponent } from 'vue';
 const root = defineComponent({
   template: '<v-app></v-app>',
 });
 const app = createApp(root);
 /**
- * Types of options, see @ldmjs/ui/dist/types/options
+ * Types of options, see @dn-web/ui/dist/types/options
  */
 const options = {};
-app.use(ldmui, options);
+app.use(ui, options);
 const vuetify = createVuetify({
   defaults: {
     ...defaults,
@@ -73,7 +73,7 @@ aliases?: Record<string, string>;
 /**
  * можно зарегистрировать новые компоненты на основе дефолтных с передачей каких-то своих конкретных дефолтных параметров
  */
-extensions?: Array<ldmuiExtension>;
+extensions?: Array<IExtension>;
 /**
  * переопределить язык (по умолчанию ru)
 */

@@ -1,4 +1,4 @@
-import { eventBus } from '@ldmjs/core';
+import { eventBus, uniqueID } from '@dn-web/core';
 import {
   AlertDialog,
   ConfirmDialog,
@@ -11,7 +11,6 @@ import {
   PromptDialog,
   SelectDialog,
 } from '@/types/dialogs';
-import { uidGen } from '@/utils';
 
 export enum ModalButton {
   Ok,
@@ -36,6 +35,7 @@ export class DialogManager {
   private _minimized: Array<IModalWindow> = [];
   private _viewPortWidth: number;
 
+  /* eslint-disable-next-line sonarjs/public-static-readonly */
   static _id = '';
 
   constructor() {
@@ -210,7 +210,7 @@ export class DialogManager {
   }
 
   setParentDialog(info: IModalInfo) {
-    for (const m of this._visibled.reverse()) {
+    for (const m of this._visibled.toReversed()) {
       if (!m.visible) {
         continue;
       }
@@ -395,7 +395,7 @@ export class DialogManager {
     };
     if (!modalInfo.hostObject) {
       modalInfo.hostObject = {
-        id: uidGen(6, '0-9'),
+        id: uniqueID(6, '0-9'),
         contentType: 0,
         kind: 1,
       };
@@ -412,7 +412,7 @@ export class DialogManager {
     };
     if (!modalInfo.hostObject) {
       modalInfo.hostObject = {
-        id: uidGen(6, '0-9'),
+        id: uniqueID(6, '0-9'),
         contentType: 0,
         kind: 1,
       };
@@ -429,7 +429,7 @@ export class DialogManager {
     };
     if (!modalInfo.hostObject) {
       modalInfo.hostObject = {
-        id: uidGen(6, '0-9'),
+        id: uniqueID(6, '0-9'),
         contentType: 0,
         kind: 1,
       };

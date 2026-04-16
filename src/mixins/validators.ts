@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import {
   alpha,
   alphaNum,

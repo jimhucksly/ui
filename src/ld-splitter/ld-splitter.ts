@@ -83,7 +83,7 @@ export default class SplitterComponent extends Vue {
     if (this.resizeDisabled) {
       return;
     }
-    if (e.buttons === 0 || e.which === 0) {
+    if (e.buttons === 0) {
       this.active = false;
     }
     this.onMove(e);
@@ -98,7 +98,7 @@ export default class SplitterComponent extends Vue {
   }
 
   get mainClass() {
-    return this.$ldmui.options?.aliases?.['ld-splitter'] ? this.$ldmui.options?.aliases?.['ld-splitter'] : '';
+    return this.$ui.options?.aliases?.['ld-splitter'] ? this.$ui.options?.aliases?.['ld-splitter'] : '';
   }
 
   get leftPaneStyle(): StyleValue {

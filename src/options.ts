@@ -1,6 +1,6 @@
-import { ldmuiOptions } from '@/types/options';
+import { IOptions } from '@/types/options';
 
-export const options: ldmuiOptions = {
+export const options: IOptions = {
   aliases: {
     'ld-loader': 'loader',
   },
