@@ -1,3 +1,4 @@
+import { uniqueID } from '@dn-web/core';
 import isEqual from 'lodash-es/isEqual';
 import { mixins, Options } from 'vue-class-component';
 import { Inject, Prop, Vue } from 'vue-property-decorator';

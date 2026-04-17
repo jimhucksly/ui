@@ -1,3 +1,4 @@
+import { isDefined } from '@dn-web/core';
 import { Vue } from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 

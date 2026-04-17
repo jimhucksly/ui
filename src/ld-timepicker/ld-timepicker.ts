@@ -262,6 +262,6 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
     if (this.placeholder) {
       return this.placeholder;
     }
-    return this.$uii18n.gettext('Timepicker Placeholder');
+    return this.$i18n.gettext('Timepicker Placeholder');
   }
 }

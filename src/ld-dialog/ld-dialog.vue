@@ -47,7 +47,7 @@
               icon
               text
               :tooltip="true"
-              :tooltip-text="$uii18n.gettext('Help')"
+              :tooltip-text="$i18n.gettext('Help')"
               v-if="modal.help"
               @click="onHelp(modal)"
             >
@@ -151,7 +151,7 @@
               size="s"
               @click.native="handleCancel(modal, cancelReason.FromBackButton)"
             >
-              {{ $uii18n.gettext('Dialog Go Back') }}
+              {{ $i18n.gettext('Dialog Go Back') }}
             </component>
             <component
               :is="$ui.options.aliases['ld-button']"

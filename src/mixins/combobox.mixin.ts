@@ -579,12 +579,12 @@ export default class ComboboxMixin extends Vue {
 
   get messagesBucket(): IMessages {
     return {
-      loading: this.$uii18n.gettext('Loading'),
-      search: this.$uii18n.gettext('Search'),
-      empty: this.$uii18n.gettext('No Elements'),
-      noResults: this.$uii18n.gettext('No Search Result'),
-      validation: this.$uii18n.gettext('Reqiured Message'),
-      nonUnique: this.$uii18n.gettext('Non Unique'),
+      loading: this.$i18n.gettext('Loading'),
+      search: this.$i18n.gettext('Search'),
+      empty: this.$i18n.gettext('No Elements'),
+      noResults: this.$i18n.gettext('No Search Result'),
+      validation: this.$i18n.gettext('Reqiured Message'),
+      nonUnique: this.$i18n.gettext('Non Unique'),
       invalid: '',
     };
   }

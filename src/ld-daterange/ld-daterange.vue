@@ -89,9 +89,9 @@
               </v-card-text>
               <v-card-actions>
                 <ld-button variant="outlined" @click="menu = false">
-                  {{ $uii18n.gettext('Dialog Cancel') }}
+                  {{ $i18n.gettext('Dialog Cancel') }}
                 </ld-button>
-                <ld-button @click="onSave">{{ $uii18n.gettext('Dialog Save') }}</ld-button>
+                <ld-button @click="onSave">{{ $i18n.gettext('Dialog Save') }}</ld-button>
               </v-card-actions>
             </v-card>
           </v-menu>

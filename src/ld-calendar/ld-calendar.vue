@@ -21,7 +21,7 @@
   >
     <template #controls="{ monthText, yearText, prevMonth, nextMonth, openMonths, openYears }">
       <template v-if="isMonth">
-        <button :disabled="disabled || readonly" @click="openMonths">{{ $uii18n.gettext(monthText) }}</button>
+        <button :disabled="disabled || readonly" @click="openMonths">{{ $i18n.gettext(monthText) }}</button>
         <button :disabled="disabled || readonly" class="ml-1" @click="openYears">{{ yearText }}</button>
         <v-spacer></v-spacer>
         <component :is="$ui.options.aliases['ld-button']" icon text :disabled="disabled || readonly" @click="prevMonth">
@@ -40,7 +40,7 @@
       </template>
       <template v-if="isMonths">
         <div class="w-100 d-flex justify-center">
-          <button :disabled="true">{{ $uii18n.gettext(monthText) }}</button>
+          <button :disabled="true">{{ $i18n.gettext(monthText) }}</button>
         </div>
       </template>
       <template v-if="isYear">
@@ -95,7 +95,7 @@
         @click="props.onClick"
       >
         <span>
-          {{ $uii18n.gettext(month.text) }}
+          {{ $i18n.gettext(month.text) }}
         </span>
       </button>
       <div style="display: none">{{ month }}</div>

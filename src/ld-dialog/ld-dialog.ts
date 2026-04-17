@@ -249,6 +249,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
 
   dialogClass(modal: ModalWindow): Array<string> {
     const result: Array<string> = [this.modalType(modal)];
+    if (this.id) {
+      result.push(this.modalType(modal) + `-${this.id}`);
+    }
     if (modal.align) {
       result.push('v-dialog--align-' + modal.align);
     }
@@ -516,8 +519,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
   async handleCancelAll() {
     const confirm = await DialogManager.id(this.id ? this.id : '').exec(
       new ConfirmDialog({
-        title: this.$uii18n.gettext('Dialog Close All Confirm Title'),
-        content: this.$uii18n.gettext('Dialog Close All Confirm Text'),
+        title: this.$i18n.gettext('Dialog Close All Confirm Title'),
+        content: this.$i18n.gettext('Dialog Close All Confirm Text'),
       })
     );
     if (!confirm) {
@@ -709,13 +712,13 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
     switch (modal.type) {
       case ModalType.Select:
-        return this.$uii18n.gettext('Dialog Select');
+        return this.$i18n.gettext('Dialog Select');
       case ModalType.Confirm:
-        return this.$uii18n.gettext('Dialog Confirm');
+        return this.$i18n.gettext('Dialog Confirm');
       case ModalType.CreateEdit:
-        return this.$uii18n.gettext('Dialog Save');
+        return this.$i18n.gettext('Dialog Save');
       default:
-        return this.$uii18n.gettext('Dialog Close');
+        return this.$i18n.gettext('Dialog Close');
     }
   }
 
@@ -724,9 +727,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       return modal.cancelTitle;
     }
     if (modal.type === ModalType.Confirm) {
-      return this.$uii18n.gettext('Dialog Reject');
+      return this.$i18n.gettext('Dialog Reject');
     }
-    return this.$uii18n.gettext('Dialog Cancel');
+    return this.$i18n.gettext('Dialog Cancel');
   }
 
   showScrim(modal: ModalWindow): boolean {
@@ -800,8 +803,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         if (this.isCreateEditDialog(modal)) {
           return DialogManager.id(this.id ? this.id : '').exec(
             new ConfirmDialog({
-              title: this.$uii18n.gettext('Dialog Close Confirm Title'),
-              content: this.$uii18n.gettext('Dialog Close Confirm Text'),
+              title: this.$i18n.gettext('Dialog Close Confirm Title'),
+              content: this.$i18n.gettext('Dialog Close Confirm Text'),
             })
           );
         }
@@ -810,8 +813,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (fromCloseButtonReason) {
         return DialogManager.id(this.id ? this.id : '').exec(
           new ConfirmDialog({
-            title: this.$uii18n.gettext('Dialog Close Parent Confrim Title'),
-            content: this.$uii18n.gettext('Dialog Close Parent Confrim Text'),
+            title: this.$i18n.gettext('Dialog Close Parent Confrim Title'),
+            content: this.$i18n.gettext('Dialog Close Parent Confrim Text'),
           })
         );
       }
@@ -820,8 +823,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.isCreateEditDialog(modal)) {
       const result: boolean = await DialogManager.id(this.id ? this.id : '').exec(
         new ConfirmDialog({
-          title: this.$uii18n.gettext('Dialog Close Confirm Title'),
-          content: this.$uii18n.gettext('Dialog Close Confirm Text'),
+          title: this.$i18n.gettext('Dialog Close Confirm Title'),
+          content: this.$i18n.gettext('Dialog Close Confirm Text'),
         })
       );
       return result;

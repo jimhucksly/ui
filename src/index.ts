@@ -1,5 +1,4 @@
 import { App, reactive } from 'vue';
-import { reg as ldavatarReg } from '@/ld-avatar';
 import { reg as ldbadgeReg } from '@/ld-badge';
 import { reg as ldbreadcrumbsReg } from '@/ld-breadcrumbs';
 import { reg as ldbuttonReg } from '@/ld-button';
@@ -10,14 +9,11 @@ import { reg as ldcomboboxReg } from '@/ld-combobox';
 import { reg as lddatepickerReg } from '@/ld-datepicker';
 import { reg as lddaterangeReg } from '@/ld-daterange';
 import { reg as lddialogReg } from '@/ld-dialog';
-import { reg as ldeditlistboxReg } from '@/ld-edit-list-box';
-import { reg as ldeditmaskedtextReg } from '@/ld-edit-masked-text';
 import { reg as ldedittextReg } from '@/ld-edit-text';
 import { reg as ldexpansionpanelReg } from '@/ld-expansion-panel';
 import { reg as ldexpansionpanelsReg } from '@/ld-expansion-panels';
 import { reg as ldiconReg } from '@/ld-icon';
 import { reg as ldloaderReg } from '@/ld-loader';
-import { reg as ldpagetoolbarReg } from '@/ld-page-toolbar';
 import { reg as ldpagerReg } from '@/ld-pager';
 import { reg as ldprogressReg } from '@/ld-progress';
 import { reg as ldradiobuttonReg } from '@/ld-radiobutton';
@@ -83,7 +79,6 @@ const uiPlugin = {
 
     vue.use(Toast, toastedOptions);
 
-    ldavatarReg(vue, options);
     ldbadgeReg(vue, options);
     ldbreadcrumbsReg(vue, options);
     ldbuttonReg(vue, options);
@@ -94,14 +89,11 @@ const uiPlugin = {
     lddatepickerReg(vue, options);
     lddaterangeReg(vue, options);
     lddialogReg(vue, options);
-    ldeditlistboxReg(vue, options);
-    ldeditmaskedtextReg(vue, options);
     ldedittextReg(vue, options);
     ldexpansionpanelReg(vue, options);
     ldexpansionpanelsReg(vue, options);
     ldiconReg(vue, options);
     ldloaderReg(vue, options);
-    ldpagetoolbarReg(vue, options);
     ldpagerReg(vue, options);
     ldprogressReg(vue, options);
     ldradiobuttonReg(vue, options);
@@ -154,12 +146,12 @@ const i18n = {
       return this.library[v] || v;
     }
 
-    vue.config.globalProperties.$uii18n = {
+    vue.config.globalProperties.$i18n = {
       library,
       gettext: null,
     };
 
-    vue.config.globalProperties.$uii18n.gettext = gettext.bind(vue.config.globalProperties.$uii18n);
+    vue.config.globalProperties.$i18n.gettext = gettext.bind(vue.config.globalProperties.$i18n);
   },
 };
 

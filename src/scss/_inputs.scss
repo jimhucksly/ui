@@ -510,20 +510,6 @@ body {
     @include inputdetails();
   }
 
-  .ld-edit-masked-text {
-    @extend %custom-edit;
-
-    @include inputsize();
-
-    @include vfield();
-
-    @include vfieldborder();
-
-    @include vfielddisabled();
-
-    @include inputdetails();
-  }
-
   .ld-datepicker {
     @extend %custom-edit;
 
@@ -634,47 +620,6 @@ body {
     @include inputdetails();
 
     @include spinbutton('v-select');
-  }
-
-  .ld-edit-list-box {
-    @extend %custom-edit;
-
-    @include inputsize();
-
-    @include vfield();
-
-    &:not(.ld-edit-list-box--readonly) {
-      .v-autocomplete {
-        & > .v-input__control > .v-field.v-field--variant-outlined {
-          @include vfieldoutline($input-border-color-default);
-        }
-
-        &:hover {
-          & > .v-input__control > .v-field.v-field--variant-outlined {
-            @include vfieldoutline($input-border-color-hover);
-          }
-
-          & > .v-input__append {
-            &:after {
-              border-color: $input-border-color-hover;
-              border-width: 1px;
-            }
-          }
-        }
-      }
-    }
-
-    &.ld-edit-list-box--readonly {
-      .v-autocomplete {
-        & > .v-input__control > .v-field.v-field--variant-outlined {
-          @include vfieldoutline($input-border-color-readonly);
-        }
-      }
-    }
-
-    @include vfielddisabled();
-
-    @include inputdetails();
   }
 
   .ld-combobox {

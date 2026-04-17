@@ -19,7 +19,7 @@
                 icon
                 text
                 tooltip
-                :tooltip-text="$uii18n.gettext('Expand')"
+                :tooltip-text="$i18n.gettext('Expand')"
                 @click="onMaximize(item)"
               >
                 <svg-icon>expand</svg-icon>
@@ -29,7 +29,7 @@
                 icon
                 text
                 tooltip
-                :tooltip-text="$uii18n.gettext('Close')"
+                :tooltip-text="$i18n.gettext('Close')"
                 @click.stop="onClose(item)"
               >
                 <svg-icon>close</svg-icon>
@@ -45,7 +45,7 @@
           <component :is="$ui.options.aliases['ld-button']" v-bind="props" class="minimize-btn">
             <div class="d-flex justify-center">
               <span class="body-1 white--text">
-                <span>{{ $uii18n.gettext('Collapsed windows') }}</span> ({{ items.length }})
+                <span>{{ $i18n.gettext('Collapsed windows') }}</span> ({{ items.length }})
               </span>
             </div>
           </component>
@@ -70,7 +70,7 @@
           <div class="pa-3">
             <component :is="$ui.options.aliases['ld-button']" color="grey" variant="outlined" @click="onCloseAll">
               <svg-icon>close</svg-icon>
-              <span>{{ $uii18n.gettext('Close all') }}</span>
+              <span>{{ $i18n.gettext('Close all') }}</span>
             </component>
           </div>
         </v-card>

@@ -25,7 +25,7 @@ export default class ValidatableMixin extends Vue {
   uid = uniqueID(6, '0-9') as number;
 
   get requiredMessage(): string {
-    return this.$uii18n.gettext('Reqiured Message');
+    return this.$i18n.gettext('Reqiured Message');
   }
 
   get validRules(): Array<ValidateFunction> {

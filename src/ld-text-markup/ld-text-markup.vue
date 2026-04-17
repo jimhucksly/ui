@@ -43,7 +43,7 @@
                     icon
                     color="grey"
                     variant="text"
-                    :title="$uii18n.gettext('Bold')"
+                    :title="$i18n.gettext('Bold')"
                     @click="handlers.bold"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">
@@ -70,7 +70,7 @@
                     icon
                     color="grey"
                     variant="text"
-                    :title="$uii18n.gettext('Italic')"
+                    :title="$i18n.gettext('Italic')"
                     @click="handlers.italic"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">
@@ -114,7 +114,7 @@
                     icon
                     color="grey"
                     variant="text"
-                    :title="$uii18n.gettext('Underline')"
+                    :title="$i18n.gettext('Underline')"
                     @click="handlers.underline"
                   >
                     <svg width="20" height="20" viewBox="0 0 18 18">

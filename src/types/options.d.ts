@@ -11,7 +11,6 @@ export interface IAliases {
   'ld-icon'?: string;
   'ld-chip'?: string;
   'ld-badge'?: string;
-  'ld-avatar'?: string;
   'ld-splitter'?: string;
   'ld-loader'?: string;
   'ld-progress'?: string;
@@ -23,7 +22,6 @@ export interface IAliases {
   'ld-calendar'?: string;
   'ld-tab'?: string;
   'ld-tabs'?: string;
-  'ld-page-toolbar'?: string;
   'ld-select-list-box'?: string;
   'ld-checkbox'?: string;
   'ld-radiobutton'?: string;
@@ -32,17 +30,14 @@ export interface IAliases {
   'ld-select'?: string;
   'ld-combobox'?: string;
   'ld-timepicker'?: string;
-  'ld-edit-masked-text'?: string;
   'ld-text-markup'?: string;
   'ld-switch'?: string;
   'ld-dialog'?: string;
   'ld-data-iterator'?: string;
   'ld-pager'?: string;
-  'ld-edit-list-box'?: string;
   'ld-uploader'?: string;
   'ld-step'?: string;
   'ld-slider'?: string;
-  'ld-datatable'?: string;
   'ld-expansion-panels'?: string;
   'ld-expansion-panel'?: string;
 }
@@ -56,9 +51,6 @@ export interface IOptions {
     isMobile: string;
     isTablet: string;
     isDesktop: string;
-  };
-  LdAvatar?: {
-    [key: string]: unknown;
   };
   LdBadge?: {
     [key: string]: unknown;
@@ -84,19 +76,10 @@ export interface IOptions {
   LdDataIterator?: {
     [key: string]: unknown;
   };
-  LdDatatable?: {
-    [key: string]: unknown;
-  };
   LdDatepicker?: {
     [key: string]: unknown;
   };
   LdDialog?: {
-    [key: string]: unknown;
-  };
-  LdEditListBox?: {
-    [key: string]: unknown;
-  };
-  LdEditMaskedText?: {
     [key: string]: unknown;
   };
   LdEditText?: {
@@ -112,9 +95,6 @@ export interface IOptions {
     [key: string]: unknown;
   };
   LdLoader?: {
-    [key: string]: unknown;
-  };
-  LdPageToolbar?: {
     [key: string]: unknown;
   };
   LdPager?: {

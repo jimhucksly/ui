@@ -32,7 +32,7 @@
                 icon
                 text
                 tooltip
-                :tooltip-text="isTabsVisibled ? $uii18n.gettext('Hide tabs') : $uii18n.gettext('Show tabs')"
+                :tooltip-text="isTabsVisibled ? $i18n.gettext('Hide tabs') : $i18n.gettext('Show tabs')"
                 class="mr-2"
                 @click="toggleCollapse"
               >

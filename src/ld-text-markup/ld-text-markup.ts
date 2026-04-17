@@ -172,11 +172,11 @@ export default class TextMarkupComponent extends mixins(ValidatableMixin, GridMi
     return [
       {
         id: 0,
-        text: this.$uii18n.gettext('Text'),
+        text: this.$i18n.gettext('Text'),
       },
       {
         id: 1,
-        text: this.$uii18n.gettext('Preview'),
+        text: this.$i18n.gettext('Preview'),
       },
     ];
   }

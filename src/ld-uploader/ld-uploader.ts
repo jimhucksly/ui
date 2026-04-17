@@ -210,13 +210,13 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
 
   getItemStatus(item: IFile) {
     if (item.status === FileStatus.Overflow) {
-      return this.$uii18n.gettext('Uploader File Size Overflow');
+      return this.$i18n.gettext('Uploader File Size Overflow');
     }
     if (item.status === FileStatus.Aborted) {
-      return this.$uii18n.gettext('Uploader Load Abort');
+      return this.$i18n.gettext('Uploader Load Abort');
     }
     if (item.status === FileStatus.Canceled) {
-      return this.$uii18n.gettext('Uploader Load Timed Out');
+      return this.$i18n.gettext('Uploader Load Timed Out');
     }
     if (item.status === FileStatus.Error) {
       let message = '';
@@ -226,7 +226,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
       if (message) {
         return message;
       }
-      return this.$uii18n.gettext('Uploader Load Error');
+      return this.$i18n.gettext('Uploader Load Error');
     }
   }
 
@@ -246,7 +246,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   get myPlaceholder(): string {
-    return this.placeholder || this.$uii18n.gettext('Uploader Placeholder');
+    return this.placeholder || this.$i18n.gettext('Uploader Placeholder');
   }
 
   get maxValue(): string {
@@ -304,7 +304,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   get requiredMessage(): string {
-    return this.$uii18n.gettext('Uploader Required Message');
+    return this.$i18n.gettext('Uploader Required Message');
   }
 
   get hasItems(): boolean {

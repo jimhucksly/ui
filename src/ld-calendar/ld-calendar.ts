@@ -276,7 +276,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
       const arr = Array.from(weekdays);
       if (Array.isArray(arr) && arr.length > 0) {
         for (const i of arr) {
-          i.innerHTML = this.$uii18n.gettext(i.textContent);
+          i.innerHTML = this.$i18n.gettext(i.textContent);
         }
       }
     }

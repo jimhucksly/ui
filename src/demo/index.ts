@@ -2,7 +2,6 @@ import { mixins, Options, Prop, Provide } from 'vue-property-decorator';
 import { ValidateMixin } from '@/mixins/validate.mixin';
 import { IBreadcrumbsItem } from '@/types/breadcrumbs';
 import Test from './__test.vue';
-import Avatar from './avatar.vue';
 import Badge from './badge.vue';
 import Breadcrumbs from './breadcrumbs.vue';
 import Buttons from './buttons.vue';
@@ -14,7 +13,6 @@ import ComboBox from './combobox.vue';
 import DatePicker from './datepicker.vue';
 import DateRange from './daterange.vue';
 import Dialogs from './dialogs.vue';
-import EditListBox from './editlistbox.vue';
 import Editor from './editor.vue';
 import Edittext from './edittext.vue';
 import EventBus from './eventBus.vue';
@@ -26,7 +24,6 @@ import Icons from './icons.vue';
 import Installation from './installation.vue';
 import Loader from './loader.vue';
 import Pager from './pager.vue';
-import PageToolbar from './pagetoolbar.vue';
 import Progress from './progress.vue';
 import Radiobutton from './radiobutton.vue';
 import Scroll from './scroll.vue';
@@ -63,7 +60,6 @@ interface ITab {
     Colors,
     Fonts,
     Scroll,
-    Avatar,
     Breadcrumbs,
     Buttons,
     Chip,
@@ -75,7 +71,6 @@ interface ITab {
     'select-demo': SelectBox,
     combobox: ComboBox,
     selectlistbox: SelectListBox,
-    editlistbox: EditListBox,
     'text-area': Textarea,
     'text-markup': TextMarkup,
     datepicker: DatePicker,
@@ -88,7 +83,6 @@ interface ITab {
     Splitter,
     Tabs,
     Toggle,
-    PageToolbar,
     'loader-demo': Loader,
     Progress,
     Editor,

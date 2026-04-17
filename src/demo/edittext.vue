@@ -244,61 +244,6 @@
         </ld-tab>
       </ld-tabs>
     </content-body>
-    <content-header>Edit Masked Text</content-header>
-    <content-body h="400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
-          <v-row class="pt-3">
-            <v-col cols="6">
-              <ld-edit-masked-text
-                v-model="maskedText.value"
-                :disabled="editMaskedText.disabled"
-                :readonly="editMaskedText.readonly"
-                mask="000-000-000 00"
-                label="Ld Edit Masked Text"
-                input-hint="Mask: 000-000-000 00"
-                persistent-hint
-                :size="editMaskedText.size"
-                :color="editMaskedText.color"
-                :help="
-                  editMaskedText.help
-                    ? {
-                        tooltip: editMaskedText.help === 1 ? 'input tooltip' : '',
-                        link: editMaskedText.help === 2 ? 'yandex.ru' : '',
-                      }
-                    : null
-                "
-              />
-            </v-col>
-            <v-col cols="3">
-              <ld-switch v-model="editMaskedText.disabled" label="disabled" hide-details />
-              <ld-switch v-model="editMaskedText.readonly" label="readonly" hide-details />
-              <ld-radiogroup v-model="editMaskedText.help" label="help" label-on-top hide-details>
-                <ld-radiobutton :value="0" label="None"></ld-radiobutton>
-                <ld-radiobutton :value="1" label="Tooltip"></ld-radiobutton>
-                <ld-radiobutton :value="2" label="Link"></ld-radiobutton>
-              </ld-radiogroup>
-            </v-col>
-            <v-col cols="3">
-              <ld-radiogroup v-model="editMaskedText.size" label="size" label-on-top hide-details>
-                <ld-radiobutton value="s" label="x-small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="small"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="editMaskedText.color" label="color" label-on-top hide-details>
-                <ld-radiobutton value="grey" label="grey"></ld-radiobutton>
-                <ld-radiobutton value="success" label="success"></ld-radiobutton>
-                <ld-radiobutton value="error" label="error"></ld-radiobutton>
-              </ld-radiogroup>
-            </v-col>
-            <v-col cols="12"> Input Value: {{ maskedText.value }} </v-col>
-          </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
-          <markdown-to-html v-if="!templatesLoading" :template="templates['edittext.mask.md']" />
-        </ld-tab>
-      </ld-tabs>
-    </content-body>
   </v-container>
 </template>
 <script>
@@ -361,7 +306,7 @@ export default {
   mixins: [markdownToHTML],
   computed: {
     library() {
-      return ['edittext.main.md', 'edittext.numbers.md', 'edittext.password.md', 'edittext.mask.md'];
+      return ['edittext.main.md', 'edittext.numbers.md', 'edittext.password.md'];
     },
   },
 };

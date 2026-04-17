@@ -53,7 +53,7 @@
                 icon
                 text
                 tooltip
-                :tooltip-text="passwordVisible ? $uii18n.gettext('Hide password') : $uii18n.gettext('Show password')"
+                :tooltip-text="passwordVisible ? $i18n.gettext('Hide password') : $i18n.gettext('Show password')"
                 @click="passwordVisibilityToggle"
               >
                 <svg-icon v-if="passwordVisible">visibility_off</svg-icon>

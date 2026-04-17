@@ -3,7 +3,6 @@ import { IOptions } from '@/index';
 import { IToasted } from '@/types/toasted';
 
 declare module 'vue/types/options' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ComponentOptions<V extends Vue> {
     functional?: boolean;
   }
@@ -14,7 +13,7 @@ declare module '@vue/runtime-core' {
     $ui: {
       options: IOptions;
     };
-    $uii18n: {
+    $i18n: {
       library: Record<string, string>;
       gettext: (value: string) => string;
     };
@@ -24,7 +23,6 @@ declare module '@vue/runtime-core' {
 }
 
 declare module 'vue/types/options' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ComponentOptions<V extends Vue> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     $options?: any;
