@@ -30,13 +30,13 @@ $sizearray: (
 );
 
 body {
-  .ld-badge {
+  .b-badge {
     font-family: var(--medium);
-    &.ld-badge--rounded {
+    &.b-badge--rounded {
       border-radius: var(--badge-rounded-border-radius);
     }
 
-    &.ld-badge--square {
+    &.b-badge--square {
       border-radius: var(--badge-square-border-radius);
     }
 
@@ -49,7 +49,7 @@ body {
         border: 1px solid transparent;
         color: var(--white);
 
-        .ld-badge-dot {
+        .b-badge-dot {
           background-color: var(--white);
         }
       }
@@ -64,7 +64,7 @@ body {
         border: 1px solid $border;
         color: $border;
 
-        .ld-badge-dot {
+        .b-badge-dot {
           background-color: $border;
         }
       }
@@ -80,7 +80,7 @@ body {
         border: 1px solid transparent;
         color: $color;
 
-        .ld-badge-dot {
+        .b-badge-dot {
           background-color: $color;
         }
       }
@@ -184,7 +184,7 @@ body {
           line-height: calc($f + 4px);
         }
 
-        &.ld-badge--circle {
+        &.b-badge--circle {
           width: $h;
           max-width: $h;
           min-width: $h;
@@ -193,7 +193,7 @@ body {
       }
     }
 
-    .ld-badge-dot {
+    .b-badge-dot {
       display: block;
       width: 6px;
       height: 6px;

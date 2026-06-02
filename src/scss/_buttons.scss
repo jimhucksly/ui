@@ -53,6 +53,7 @@ body {
   .v-btn {
     text-transform: none !important;
     letter-spacing: 0 !important;
+    overflow: hidden;
 
     .v-btn__overlay {
       display: none;
@@ -70,7 +71,9 @@ body {
     &.v-btn--size-default,
     &.v-btn--size-large,
     &.v-btn--size-x-large {
-      min-width: unset;
+      &:not(.v-btn--block) {
+        min-width: unset;
+      }
     }
 
     &.v-btn--disabled {
@@ -78,12 +81,12 @@ body {
     }
   }
 
-  .ld-button {
+  .b-button {
     font-family: var(--semibold);
     font-weight: 400 !important;
     border-radius: var(--border-radius) !important;
 
-    &:not(.ld-button-square) {
+    &:not(.b-button-square) {
       .v-btn__content {
         svg:nth-child(1) {
           margin-right: 4px;
@@ -127,7 +130,7 @@ body {
         height: $h !important;
         padding: 0 $p !important;
 
-        &.ld-button-square {
+        &.b-button-square {
           min-width: unset;
           width: $h !important;
           padding: 0 !important;
@@ -156,7 +159,7 @@ body {
           color: var(--white) !important;
         }
 
-        &.ld-button-text {
+        &.b-button-text {
           background-color: transparent !important;
           color: $iconcolor !important;
 
@@ -207,7 +210,7 @@ body {
           color: $colorDefault !important;
         }
 
-        &.ld-button-text {
+        &.b-button-text {
           background-color: transparent !important;
           border-color: transparent !important;
           color: $colorDefault !important;
@@ -275,7 +278,7 @@ body {
           color: $colorDefault !important;
         }
 
-        &.ld-button-text {
+        &.b-button-text {
           background-color: transparent !important;
           color: $colorDefault !important;
 
@@ -337,7 +340,7 @@ body {
           color: $colorDefault !important;
         }
 
-        &.ld-button-text {
+        &.b-button-text {
           background-color: transparent !important;
         }
 
@@ -361,7 +364,6 @@ body {
 
         &[disabled] {
           color: var(--grey-l-2) !important;
-          background-color: var(--white);
 
           svg {
             color: var(--grey-l-2) !important;

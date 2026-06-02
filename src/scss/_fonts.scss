@@ -9,7 +9,7 @@
 }
 
 @font-face {
-  @include mix-font-face('Roboto', Roboto-Regular);
+  @include mix-font-face('Roboto Regular', Roboto-Regular);
 }
 
 @font-face {
@@ -22,9 +22,9 @@
 
 $font-size: 12px !default; // основной шрифт приложения
 
-$regular: "Roboto Regular", Arial, Helvetica, sans-serif;
-$semibold: "Roboto Semi Bold", Arial, Helvetica, sans-serif;
-$medium: "Roboto Medium", Arial, Helvetica, sans-serif;
+$regular: "Roboto Regular";
+$medium: "Roboto Medium";
+$semibold: "Roboto Semi Bold";
 
 :root {
   --font-size: #{$font-size}; // 12px
@@ -43,8 +43,8 @@ $medium: "Roboto Medium", Arial, Helvetica, sans-serif;
   --heading-2: calc(#{$font-size} * 4 - 4px); // 44px
   --heading-1: calc(#{$font-size} * 4 + 2px); // 50px
   --regular: #{$regular};
-  --semibold: #{$semibold};
   --medium: #{$medium};
+  --semibold: #{$semibold};
 }
 
 html,
@@ -117,6 +117,18 @@ body {
 
   .text-body-x {
     font-size: var(--text-body-x);
+  }
+
+  .font-reqular {
+    font-family: var(--regular);
+  }
+
+  .font-semibold {
+    font-family: var(--semibold);
+  }
+
+  .font-medium {
+    font-family: var(--medium);
   }
 
   .text-ellipsis {

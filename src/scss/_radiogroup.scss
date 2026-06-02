@@ -20,14 +20,14 @@ $sizearray: (
 );
 
 body {
-  .ld-radiogroup {
+  .b-radiogroup {
     padding: 0 !important;
 
-    .ld-radiogroup-radiobuttons {
+    .b-radiogroup-radiobuttons {
       display: flex;
     }
 
-    .ld-radiogroup-label {
+    .b-radiogroup-label {
       min-height: unset;
       font-family: var(--medium);
     }
@@ -37,35 +37,35 @@ body {
       height: 20px;
     }
 
-    &.ld-radiogroup--row {
-      &.ld-radiogroup--ltr {
-        .ld-radiogroup-radiobuttons {
+    &.b-radiogroup--row {
+      &.b-radiogroup--ltr {
+        .b-radiogroup-radiobuttons {
           flex-direction: row;
         }
-        .ld-radiobutton:not(:first-child) {
+        .b-radiobutton:not(:first-child) {
           margin-left: 8px;
         }
       }
-      &.ld-radiogroup--rtl {
-        .ld-radiogroup-radiobuttons {
+      &.b-radiogroup--rtl {
+        .b-radiogroup-radiobuttons {
           flex-direction: row-reverse;
         }
-        .ld-radiobutton:not(:first-child) {
+        .b-radiobutton:not(:first-child) {
           margin-right: 8px;
         }
       }
     }
 
-    &.ld-radiogroup--column {
-      :deep(.ld-radiogroup-label) {
+    &.b-radiogroup--column {
+      :deep(.b-radiogroup-label) {
         margin-bottom: 16px;
       }
-      .ld-radiogroup-radiobuttons {
+      .b-radiogroup-radiobuttons {
         flex-direction: column;
-        :deep(.ld-radiobutton) {
+        :deep(.b-radiobutton) {
           margin-bottom: 14px;
         }
-        :deep(.ld-label) {
+        :deep(.b-label) {
           min-height: unset;
         }
       }
@@ -74,9 +74,9 @@ body {
     @each $size, $values in $sizearray {
       $f: list.nth($values, 1);
 
-      &.ld-radiogroup--#{$size} {
-        .ld-radiogroup-label {
-          .ld-label-content {
+      &.b-radiogroup--#{$size} {
+        .b-radiogroup-label {
+          .b-label-content {
             font-size: $f;
             line-height: calc($f + 6px);
           }

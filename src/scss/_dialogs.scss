@@ -30,7 +30,7 @@ body {
     &--align-left {
       justify-content: flex-start !important;
 
-      .ld-dialog-content.v-overlay__content {
+      .b-dialog-content.v-overlay__content {
         border-radius: 0 !important;
 
         & > .v-card {
@@ -42,7 +42,7 @@ body {
     &--align-right {
       justify-content: flex-end !important;
 
-      .ld-dialog-content.v-overlay__content {
+      .b-dialog-content.v-overlay__content {
         border-radius: 0 !important;
 
         & > .v-card {
@@ -51,12 +51,7 @@ body {
       }
     }
 
-    &.ld-dialog--hidden {
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-
-    .ld-dialog-content.v-overlay__content {
+    .b-dialog-content.v-overlay__content {
       max-width: unset;
       max-height: unset;
       border-radius: var(--modal-border-radius);
@@ -69,30 +64,36 @@ body {
 
         & > .v-card-title {
           display: flex;
-          align-items: center;
+          align-items: start;
           flex-wrap: nowrap;
           position: relative;
           flex-shrink: 0;
           padding: 24px 24px 20px 24px;
           border-bottom: 1px solid var(--grey-l-5);
 
-          & > span:first-child {
+          .b-dialog__title {
+            display: block;
+            overflow: hidden;
+            white-space: pre-line;
             color: var(--text);
             font-family: var(--semibold);
             font-size: var(--text-body-x);
             font-weight: 600;
-            line-height: calc(var(--text-body-x) + 8px);
+            line-height: calc(var(--text-body-x) + 4px);
           }
         }
 
         & > .v-card-text {
-          color: var(--text);
-          font-family: var(--regular);
-          font-size: var(--text-body-m);
-          line-height: 20px;
           padding: 20px 24px;
           overflow-x: hidden;
           overflow-y: auto;
+
+          .b-dialog__text {
+            color: var(--text);
+            font-family: var(--regular);
+            font-size: var(--text-body-m);
+            line-height: 20px;
+          }
         }
 
         & > .v-card-actions {
@@ -107,7 +108,7 @@ body {
         }
       }
 
-      &.ld-dialog-content--without-content {
+      &.b-dialog-content--without-content {
         & > .v-card {
           & > .v-card-title {
             border-color: transparent;
@@ -117,7 +118,7 @@ body {
           }
         }
       }
-      &.ld-dialog-content--mobile {
+      &.b-dialog-content--mobile {
         & > .v-card {
           & > .v-card-actions {
             display: grid;
@@ -127,9 +128,12 @@ body {
           }
         }
       }
-      &.ld-dialog-content--hidden {
-        visibility: hidden !important;
-        opacity: 0 !important;
+      &.b-dialog-content--hidden {
+        position: absolute;
+        clip: rect(0 0 0 0);
+        width: 1px;
+        height: 1px;
+        margin: -1px;
       }
     }
   }

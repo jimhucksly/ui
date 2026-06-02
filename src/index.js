@@ -16,6 +16,23 @@ const fs = require('fs');
     return data;
   }
 
+  const copyScss = () => {
+    const files = fs.readdirSync(path.resolve(fromPath, './scss'));
+    const dir = path.resolve(toPath, './scss');
+    for (const f of files) {
+      const data = replaceByMap(path.resolve(fromPath, './scss' + '/' + f));
+      const exist = fs.existsSync(dir);
+      if (!exist) {
+        fs.mkdirSync(dir);
+      }
+      fs.writeFile(path.resolve(toPath, './scss' + '/' + f), data, err => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  }
+
   const copyDir = (src, dest) => {
     let entries = fs.readdirSync(src, { recursive: true, withFileTypes: true });
 
@@ -71,9 +88,26 @@ const fs = require('fs');
 
   fs.readdir(fromPath, async (err, files) => {
     for (f of files) {
+      // copy scss
+      if (f === 'scss') {
+        const dir = path.resolve(toPath, './' + f);
+        const exist = fs.existsSync(dir);
+        if (exist) {
+          fs.rm(dir, { recursive: true, force: true }, err => {
+            if (err) {
+              throw err;
+            }
+            copyScss();
+          });
+        } else {
+          copyScss();
+        }
+        return;
+      }
       if (!/^ld-/.test(f)) {
         return;
       }
+      // copy ld-
       const dir = path.resolve(toPath, './' + f);
       const exist = fs.existsSync(dir);
       if (exist) {

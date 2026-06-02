@@ -65,7 +65,7 @@ $colors: (
           margin-left: calc($size / 2 * -1);
         }
 
-        &#{utils.getSelector($parent, '--dotts')} {
+        &#{utils.getSelector($parent, '--dots')} {
           i {
             &:after {
               border-radius: calc($size / 11);
@@ -97,7 +97,7 @@ $colors: (
           }
         }
 
-        $selector: utils.getSelector($parent, '--dotts');
+        $selector: utils.getSelector($parent, '--dots');
 
         &#{$selector} {
           i {
@@ -112,7 +112,7 @@ $colors: (
 }
 
 body {
-  .ld-loader {
+  .b-loader {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -133,11 +133,11 @@ body {
 
     @include loadersize();
 
-    &.ld-loader--transparent {
-      background-color: rgba(255, 255, 255, var(--ld-loader-opacity));
+    &.b-loader--transparent {
+      background-color: rgba(255, 255, 255, var(--b-loader-opacity));
     }
 
-    &.ld-loader--dotts {
+    &.b-loader--dots {
       i {
         overflow: hidden;
         &:after {

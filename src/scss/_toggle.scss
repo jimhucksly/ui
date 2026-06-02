@@ -26,7 +26,7 @@ $sizearray: (
 );
 
 body {
-  .ld-toggle-buttons {
+  .b-toggle-buttons {
     width: max-content;
     & > div {
       display: grid;
@@ -92,7 +92,7 @@ body {
       $h: list.nth($values, 2);
       $r: list.nth($values, 3);
       $p: list.nth($values, 4);
-      &.ld-toggle-buttons--#{$size} {
+      &.b-toggle-buttons--#{$size} {
         & > div {
           border-radius: calc($r + 4px);
 
@@ -107,7 +107,7 @@ body {
             }
           }
         }
-        &.ld-toggle-buttons--rounded {
+        &.b-toggle-buttons--rounded {
           & > div {
             border-radius: $h;
             .ld-toggle-button {

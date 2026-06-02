@@ -73,17 +73,17 @@ $colors: (
 @mixin inputlabel($parent, $size) {
   $label-on-top: utils.getSelector($parent, '--label-on-top');
   @include utils.not-class(utils.getSelector($parent, '--label-on-top')) {
-    .ld-label {
-      height: $size;
+    .b-label {
+      min-height: $size;
     }
   }
   &#{utils.getSelector($parent, '--label-on-top')} {
-    .ld-label {
+    .b-label {
       margin-bottom: 4px;
     }
   }
 
-  .ld-label {
+  .b-label {
     font-size: var(--text-body-s);
     &-content {
       color: var(--grey-d-1);
@@ -130,7 +130,7 @@ $colors: (
             padding-bottom: 3px;
           }
 
-          @if $parent == '.ld-edit-text' {
+          @if $parent == '.b-edit-text' {
             .v-field__input {
               height: $size;
               max-height: $size;
@@ -490,7 +490,7 @@ body {
     }
   }
 
-  .ld-edit-text {
+  .b-edit-text {
     @extend %custom-edit;
 
     @include inputsize();
@@ -501,7 +501,7 @@ body {
 
     @include vfielddisabled();
 
-    .ld-edit-text--type-password {
+    .b-edit-text--type-password {
       .v-field__input {
         font-size: calc(var(--font-size) + 6px) !important;
       }
@@ -510,7 +510,21 @@ body {
     @include inputdetails();
   }
 
-  .ld-datepicker {
+  .ld-edit-masked-text {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    @include vfieldborder();
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+  }
+
+  .b-datepicker {
     @extend %custom-edit;
 
     @include inputsize();
@@ -523,22 +537,22 @@ body {
 
     @include inputdetails();
 
-    .ld-datepicker-date-field {
+    .b-datepicker-date-field {
       position: relative;
       display: flex;
       align-items: center;
       flex-basis: 100%;
     }
 
-    .ld-datepicker-time-field {
+    .b-datepicker-time-field {
       position: relative;
       display: flex;
       align-items: center;
       flex-basis: 100%;
     }
 
-    &:not(.ld-datepicker--dateonly) {
-      .ld-datepicker-date-field {
+    &:not(.b-datepicker--dateonly) {
+      .b-datepicker-date-field {
         @include inputnoborderradius('right');
 
         @include inputnoborder('right');
@@ -553,7 +567,7 @@ body {
           }
         }
       }
-      .ld-datepicker-time-field {
+      .b-datepicker-time-field {
         @include inputnoborderradius('left');
 
         .v-input {
@@ -567,9 +581,57 @@ body {
         }
       }
     }
+
+    $index: 0;
+    @each $color, $values in $colors {
+      $index: $index + 1;
+      $prefix: #{selector.append('--', $color)};
+
+      &:not(.b-datepicker--readonly) {
+        .b-datepicker-time-field {
+          .b-timepicker {
+            $parent: utils.getParent(&);
+            &#{utils.getSelector($parent, $prefix)} {
+              $default: '';
+              $hover : '';
+              @each $key, $value in $values {
+              @if $key == "default" {
+                $default: $value;
+              }
+              @if $key == "hover" {
+                $hover: $value;
+              }
+            }
+
+              .v-input.v-input--readonly {
+                .v-field.v-field--variant-outlined {
+                  .v-field__outline__start {
+                    border-color: $default !important;
+                  }
+                  .v-field__outline__end {
+                    border-color: $default !important;
+                  }
+                }
+
+                &:hover {
+                  .v-field.v-field--variant-outlined {
+                    .v-field__outline__start {
+                      border-color: $hover !important;
+                    }
+                    .v-field__outline__end {
+                      border-color: $hover !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  .ld-daterange {
+  .b-daterange {
     @extend %custom-edit;
 
     @include inputsize();
@@ -582,7 +644,7 @@ body {
 
     @include inputdetails();
 
-    .ld-daterange-date-field {
+    .b-daterange-date-field {
       position: relative;
       display: flex;
       align-items: center;
@@ -590,7 +652,7 @@ body {
     }
   }
 
-  .ld-timepicker {
+  .b-timepicker {
     @extend %custom-edit;
 
     @include inputsize();
@@ -604,7 +666,7 @@ body {
     @include inputdetails();
   }
 
-  .ld-select {
+  .b-select {
     @extend %custom-edit;
 
     padding: 0 !important;
@@ -622,7 +684,48 @@ body {
     @include spinbutton('v-select');
   }
 
-  .ld-combobox {
+  .ld-edit-list-box {
+    @extend %custom-edit;
+
+    @include inputsize();
+
+    @include vfield();
+
+    &:not(.ld-edit-list-box--readonly) {
+      .v-autocomplete {
+        & > .v-input__control > .v-field.v-field--variant-outlined {
+          @include vfieldoutline($input-border-color-default);
+        }
+
+        &:hover {
+          & > .v-input__control > .v-field.v-field--variant-outlined {
+            @include vfieldoutline($input-border-color-hover);
+          }
+
+          & > .v-input__append {
+            &:after {
+              border-color: $input-border-color-hover;
+              border-width: 1px;
+            }
+          }
+        }
+      }
+    }
+
+    &.ld-edit-list-box--readonly {
+      .v-autocomplete {
+        & > .v-input__control > .v-field.v-field--variant-outlined {
+          @include vfieldoutline($input-border-color-readonly);
+        }
+      }
+    }
+
+    @include vfielddisabled();
+
+    @include inputdetails();
+  }
+
+  .b-combobox {
     @extend %custom-edit;
 
     @include inputsize();
@@ -640,7 +743,7 @@ body {
     @include spinbutton('v-combobox');
   }
 
-  .ld-select-list-box {
+  .b-select-list-box {
     @extend %custom-edit;
 
     @include inputsize();
@@ -665,6 +768,9 @@ body {
         margin-inline-start: unset;
         padding-left: 8px;
         padding-right: 12px;
+        border-top-right-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+        background-color: var(--white);
 
         &:after {
           content: '';
@@ -702,9 +808,21 @@ body {
         }
       }
     }
+
+    &.b-select-list-box--grey {
+      .v-input {
+        &.v-input--readonly {
+          .v-input__append {
+            &:after {
+              border-color: var(--grey-l-6);
+            }
+          }
+        }
+      }
+    }
   }
 
-  .ld-textarea {
+  .b-textarea {
     @extend %custom-edit;
 
     ::-webkit-resizer{
@@ -713,7 +831,7 @@ body {
       border-bottom-right-radius: var(--border-radius);
     }
 
-    $parent: '.ld-textarea';
+    $parent: '.b-textarea';
 
     $props: (
       '--x-small': (
@@ -755,14 +873,14 @@ body {
 
         @include inputlabel($parent, $size);
 
-        .ld-textarea-help {
+        .b-textarea-help {
           height: $size;
           display: flex;
           align-items: center;
           margin-left: 8px;
         }
 
-        &.ld-textarea--clearable {
+        &.b-textarea--clearable {
           .v-field {
             .v-field__input {
               $px: list.nth($p, 2);
@@ -783,6 +901,7 @@ body {
 
     .v-field {
       position: relative;
+      background-color: var(--white);
 
       .v-field__clearable {
         position: absolute;
@@ -793,7 +912,7 @@ body {
     }
   }
 
-  .ld-text-markup {
+  .b-text-markup {
     @extend %custom-edit;
 
     &--focused {
@@ -805,7 +924,7 @@ body {
     }
 
     &--disabled {
-      .ld-text-markup-preview {
+      .b-text-markup-preview {
         background-color: var(--input-disabled-background-color);
         border-color: var(--input-disabled-background-color);
         color: var(--input-disabled-color);
@@ -854,6 +973,16 @@ body {
     @include inputdetails();
   }
 
+  .v-select {
+    .v-field {
+      .v-field__input {
+        & > input {
+          align-self: unset;
+        }
+      }
+    }
+  }
+
   .v-select__content,
   .v-combobox__content,
   .v-autocomplete__content {
@@ -868,14 +997,20 @@ body {
     }
   }
 
-  .v-menu.ld-datepicker-menu {
-    .ld-datepicker-dropdown {
+  .v-combobox {
+    .v-combobox__selection {
+      height: auto !important;
+    }
+  }
+
+  .v-menu.b-datepicker-menu {
+    .b-datepicker-dropdown {
       padding: 0 !important;
     }
   }
 
-  .v-menu.ld-daterange-menu {
-    .v-card.ld-daterange-dropdown {
+  .v-menu.b-daterange-menu {
+    .v-card.b-daterange-dropdown {
       padding: 0 !important;
       .v-card-text  {
         display: flex;
@@ -890,12 +1025,12 @@ body {
     }
   }
 
-  .v-menu.ld-timepicker-menu {
-    .ld-timepicker-dropdown {
+  .v-menu.b-timepicker-menu {
+    .b-timepicker-dropdown {
       padding: 16px !important;
       overflow: hidden;
 
-      .ld-timepicker-ampm {
+      .b-timepicker-ampm {
         display: flex;
 
         .v-btn {
@@ -925,7 +1060,7 @@ body {
         }
       }
 
-      .ld-timepicker-placeholder {
+      .b-timepicker-placeholder {
         display: grid;
         grid-template-columns: 1fr 3px 1fr;
         color: var(--grey-d-1);
@@ -939,13 +1074,13 @@ body {
         }
       }
 
-      .ld-timepicker-inputs {
+      .b-timepicker-inputs {
         display: grid;
         grid-template-columns: 1fr 3px 1fr;
         border: 1px solid var(--grey-l-5);
         border-radius: var(--border-radius);
 
-        .ld-edit-text {
+        .b-edit-text {
           flex: 1 1 auto;
         }
 
@@ -966,7 +1101,7 @@ body {
         }
       }
 
-      .ld-timepicker-options {
+      .b-timepicker-options {
         display: grid;
         grid-template-columns: 1fr 1fr;
 
@@ -989,19 +1124,23 @@ body {
   }
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--grey-d-1) !important;
 }
 
-input::-ms-input-placeholder { /* Для Microsoft Edge */
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
   color: var(--grey-d-1) !important;
 }
 
-input::-webkit-input-placeholder { /* Для WebKit-браузеров (Chrome, Safari) */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: var(--grey-d-1) !important;
 }
 
-input:-moz-placeholder { /* Для Firefox 19+ */
+input:-moz-placeholder,
+textarea:-moz-placeholder {
   color: var(--grey-d-1) !important;
 }
 
@@ -1011,11 +1150,25 @@ input[disabled] {
   color: var(--grey-l-2);
 }
 
+textarea.disabled,
+textarea[disabled] {
+  background-color: var(--grey-l-6);
+  color: var(--grey-l-2);
+}
+
 input {
   outline: none;
 }
 
+textarea {
+  outline: none;
+}
+
 input:focus {
+  outline: none;
+}
+
+textarea:focus {
   outline: none;
 }
 
@@ -1025,7 +1178,10 @@ input:-webkit-autofill:focus textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
+select:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
   -webkit-background-clip: text;
   background-clip: text;
 }

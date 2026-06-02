@@ -111,7 +111,7 @@ $button-width: 36px;
 }
 
 body {
-  .ld-calendar {
+  .b-calendar {
     width: 284px;
     padding-top: 16px;
 
@@ -132,6 +132,12 @@ body {
       }
     }
 
+    &--static {
+      .v-date-picker-controls {
+        justify-content: center;
+      }
+    }
+
     .v-date-picker-month__days {
       column-gap: 0;
       justify-content: start;
@@ -147,8 +153,8 @@ body {
       }
     }
 
-    &:not(.ld-calendar--range) {
-      .ld-calendar-day {
+    &:not(.b-calendar--range) {
+      .b-calendar-day {
         border-radius: var(--border-radius);
 
         &--selected {
@@ -157,7 +163,7 @@ body {
       }
     }
 
-    .ld-calendar-day {
+    .b-calendar-day {
       @include calendarbutton();
 
       width: $button-width;
@@ -167,7 +173,7 @@ body {
       }
     }
 
-    .ld-calendar-month {
+    .b-calendar-month {
       @include calendarbutton();
 
       &--today {
@@ -179,7 +185,7 @@ body {
       }
     }
 
-    .ld-calendar-year {
+    .b-calendar-year {
       @include calendarbutton();
 
       &--today {

@@ -1,9 +1,15 @@
 body {
-  .ld-uploader {
+  .b-uploader {
     position: relative;
 
     .v-card-text {
       padding: 0 !important;
+
+      &.h-100 {
+        .b-uploader-droparea {
+          flex-basis: 100%;
+        }
+      }
     }
 
     input[type="file"] {
@@ -15,22 +21,23 @@ body {
       opacity: 0;
     }
 
-    .ld-label-content {
+    .b-label-content {
       color: var(--grey-d-1) !important;
     }
 
-    .ld-uploader-droparea {
+    .b-uploader-droparea {
       position: relative;
       border: 1px dashed var(--grey-l-3);
       border-radius: 8px;
       margin-bottom: 8px;
       transition: all 0.2s;
+      cursor: pointer;
 
       &:hover {
         background-color: var(--primary-l-6);
         border-color: var(--primary-l-2);
 
-        .ld-uploader-placeholder {
+        .b-uploader-placeholder {
           svg {
             color: var(--primary-d-1);
           }
@@ -38,14 +45,14 @@ body {
       }
     }
 
-    .ld-uploader-max {
+    .b-uploader-max {
       display: flex;
       justify-content: center;
       font-size: var(--font-size);
       color: var(--grey-d-1);
     }
 
-    .ld-uploader-placeholder {
+    .b-uploader-placeholder {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -58,19 +65,19 @@ body {
       }
     }
 
-    .ld-uploader-validate {
+    .b-uploader-validate {
       font-size: var(--font-size);
       height: 20px;
     }
 
-    .ld-uploader-items {
+    .b-uploader-items {
       display: flex;
       flex-direction: column;
       padding-top: 24px;
       max-width: 90%;
     }
 
-    .ld-uploader-item {
+    .b-uploader-item {
       display: flex;
       margin-bottom: 24px;
 
@@ -86,15 +93,17 @@ body {
       }
     }
 
-    .ld-uploader-progress {
+    .b-uploader-progress {
       margin-top: 6px;
     }
 
     // ------------- x-small
 
-    &.ld-uploader--x-small {
-      .ld-uploader-droparea {
-        padding: 20px 0;
+    &.b-uploader--x-small {
+      .b-uploader-droparea {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         svg {
           margin-right: 8px;
@@ -104,9 +113,9 @@ body {
 
     // ------------- small
 
-    &.ld-uploader--small {
-      .ld-uploader-droparea {
-        padding: 32px 0;
+    &.b-uploader--small {
+      .b-uploader-droparea {
+        padding: 32px 12px;
 
         svg {
           margin-bottom: 16px;
@@ -116,12 +125,12 @@ body {
 
     // ------------- large
 
-    &.ld-uploader--large {
-      .ld-uploader-droparea {
+    &.b-uploader--large {
+      .b-uploader-droparea {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 0;
+        padding: 0 12px;
 
         svg {
           margin-bottom: 24px;
@@ -129,20 +138,20 @@ body {
       }
     }
 
-    &.ld-uploader--drag {
-      .ld-uploader-droparea {
+    &.b-uploader--drag {
+      .b-uploader-droparea {
         background-color: var(--primary-l-5);
         border-color: var(--peimary-l-2);
       }
     }
 
-    &.ld-uploader--disabled {
-      .ld-uploader-droparea {
+    &.b-uploader--disabled {
+      .b-uploader-droparea {
         background-color: var(--grey-l-6);
         border-color: var(--grey-l-3);
 
         &:hover {
-          .ld-uploader-placeholder {
+          .b-uploader-placeholder {
             color: var(--grey-l-2);
 
             svg {
@@ -151,7 +160,7 @@ body {
           }
         }
       }
-      .ld-uploader-placeholder {
+      .b-uploader-placeholder {
         color: var(--grey-l-2);
 
         svg {
@@ -159,7 +168,7 @@ body {
         }
       }
 
-      .ld-uploader-max {
+      .b-uploader-max {
         color: var(--grey-l-2);
       }
     }

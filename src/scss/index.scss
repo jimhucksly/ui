@@ -34,11 +34,16 @@
 
 @use 'vuetify' with (
   $color-pack: false,
+  $body-font-family: "Roboto Regular",
 );
 
 body {
   .v-card {
     background-color: var(--white);
+
+    .v-card-title {
+      font-size: inherit;
+    }
   }
 
   .v-menu {
@@ -62,15 +67,17 @@ body {
       }
 
       .v-card {
-        &.v-card--variant-elevated {
-          box-shadow: var(--shadow-xl);
+        &.v-card--variant-elevated:not(.elevation-0) {
+          box-shadow: var(--shadow-xl) !important;
         }
       }
     }
   }
 
   .v-list {
-    border-radius: var(--border-radius);
+    &.v-list--rounded {
+      border-radius: var(--border-radius);
+    }
 
     .v-list-item__overlay,
     .v-list-item__underlay {
@@ -80,11 +87,13 @@ body {
     .v-list-item {
       color: var(--grey-d-3);
       transition: all 0.1s;
-      &:hover {
-        background-color: var(--grey-l-6);
-        color: var(--text);
+      min-height: var(--input-s);
+      &:not(.v-list-item--variant-plain) {
+        &:hover {
+          background-color: var(--grey-l-6);
+          color: var(--text);
+        }
       }
-
       &--active {
         color: var(--primary-d-1);
         &:hover {
@@ -95,12 +104,17 @@ body {
       .v-list-item__content {
         .v-list-item-title {
           font-family: var(--regular);
+          font-size: var(--text-body-s);
           font-weight: 500;
         }
         .v-list-item-subtitle {
           font-family: var(--regular);
           color: var(--grey-d-1);
         }
+      }
+
+      &.v-list-item--variant-plain {
+        opacity: 1;
       }
     }
 
@@ -123,17 +137,17 @@ body {
     }
   }
 
-  .ld-label {
+  .b-label {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
-    .ld-label-content {
+    .b-label-content {
       color: var(--text);
       line-height: 20px;
     }
 
-    .ld-label-reqiured::after {
+    .b-label-reqiured::after {
       content: '*';
       display: inline-block;
       color: var(--error);

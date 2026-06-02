@@ -29,7 +29,7 @@ $sizearray: (
 );
 
 body {
-  .ld-chip {
+  .b-chip {
     font-family: var(--medium);
     position: relative;
     border-radius: var(--chip-border-radius) !important;
@@ -45,7 +45,7 @@ body {
         height: $h;
         padding: 0 $p !important;
 
-        &.ld-chip--focused {
+        &.b-chip--focused {
           &:after {
             height: calc($h + 8px);
           }
@@ -53,7 +53,7 @@ body {
       }
     }
 
-    &.ld-chip--focused {
+    &.b-chip--focused {
       &:after {
         content: '';
         display: block;
@@ -71,7 +71,7 @@ body {
       overflow: hidden;
     }
 
-    .ld-chip__content {
+    .b-chip__content {
       display: block;
       white-space: nowrap;
       overflow: hidden;
@@ -276,7 +276,7 @@ body {
       var(--grey-l-3),
     );
 
-    .ld-chip-close {
+    .b-chip-close {
       display: flex;
       align-items: center;
     }

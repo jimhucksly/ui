@@ -1,12 +1,12 @@
 body {
-  .ld-step {
+  .b-step {
     display: grid;
 
     &--vertical {
       grid-auto-flow: row;
       grid-auto-rows: 1fr;
 
-      .ld-step-item {
+      .b-step-item {
         display: flex;
         align-items: start;
         min-height: 88px;
@@ -34,7 +34,7 @@ body {
       grid-auto-flow: column;
       grid-auto-columns: 1fr;
 
-      .ld-step-item {
+      .b-step-item {
         max-height: 88px;
         overflow: hidden;
         &-icon {
@@ -54,7 +54,7 @@ body {
 
     &-item {
       &:last-child {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           &:after {
             display: none;
           }
@@ -90,7 +90,7 @@ body {
       }
 
       &--success {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           color: var(--primary);
 
           &:after {
@@ -100,7 +100,7 @@ body {
       }
 
       &--warning {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           color: var(--warning);
 
           &:after {
@@ -110,7 +110,7 @@ body {
       }
 
       &--error {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           color: var(--error);
 
           &:after {
@@ -120,7 +120,7 @@ body {
       }
 
       &--active {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           color: var(--primary);
 
           &:after {
@@ -128,8 +128,8 @@ body {
           }
         }
 
-        &.ld-step-item--disabled {
-          .ld-step-item-icon {
+        &.b-step-item--disabled {
+          .b-step-item-icon {
             color: var(--primary-l-4);
 
             &:after {
@@ -137,18 +137,18 @@ body {
             }
           }
 
-          .ld-step-item-title {
+          .b-step-item-title {
             color: var(--grey-l-2);
           }
 
-          .ld-step-item-subtitle {
+          .b-step-item-subtitle {
             color: var(--grey-l-2);
           }
         }
       }
 
       &--scheduled {
-        .ld-step-item-icon {
+        .b-step-item-icon {
           color: var(--grey-d-1);
 
           &:after {
@@ -156,8 +156,8 @@ body {
           }
         }
 
-        &.ld-step-item--disabled {
-          .ld-step-item-icon {
+        &.b-step-item--disabled {
+          .b-step-item-icon {
             color: var(--grey-l-4);
 
             &:after {
@@ -165,11 +165,11 @@ body {
             }
           }
 
-          .ld-step-item-title {
+          .b-step-item-title {
             color: var(--grey-l-2);
           }
 
-          .ld-step-item-subtitle {
+          .b-step-item-subtitle {
             color: var(--grey-l-2);
           }
         }

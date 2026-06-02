@@ -1,10 +1,10 @@
 <template>
-  <div class="ld-label" :class="{ 'justify-end': alignLabelToRight, 'ld-label--hint': hint }">
+  <div class="b-label" :class="{ 'justify-end': alignLabelToRight, 'b-label--hint': hint }">
     <v-tooltip location="top" :disabled="!labelHint">
       <template #activator="{ props }">
-        <span class="ld-label-content" :class="{ 'cursor-help': labelHint }" v-bind="props" @click.stop="onClick">
+        <span class="b-label-content" :class="{ 'cursor-help': labelHint }" v-bind="props" @click.stop="onClick">
           <span>{{ label }}</span>
-          <span v-if="required" class="ld-label-reqiured mx-1"></span>
+          <span v-if="required" class="b-label-reqiured mx-1"></span>
         </span>
       </template>
       <span class="text-body">{{ labelHint }}</span>
