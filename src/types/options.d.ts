@@ -7,39 +7,39 @@ export interface IExtension {
 }
 
 export interface IAliases {
-  'ld-button'?: string;
-  'ld-icon'?: string;
-  'ld-chip'?: string;
-  'ld-badge'?: string;
-  'ld-splitter'?: string;
-  'ld-loader'?: string;
-  'ld-progress'?: string;
-  'ld-toggle-buttons'?: string;
-  'ld-breadcrumbs'?: string;
-  'ld-edit-text'?: string;
-  'ld-datepicker'?: string;
-  'ld-daterange'?: string;
-  'ld-calendar'?: string;
-  'ld-tab'?: string;
-  'ld-tabs'?: string;
-  'ld-select-list-box'?: string;
-  'ld-checkbox'?: string;
-  'ld-radiobutton'?: string;
-  'ld-radiogroup'?: string;
-  'ld-textarea'?: string;
-  'ld-select'?: string;
-  'ld-combobox'?: string;
-  'ld-timepicker'?: string;
-  'ld-text-markup'?: string;
-  'ld-switch'?: string;
-  'ld-dialog'?: string;
-  'ld-data-iterator'?: string;
-  'ld-pager'?: string;
-  'ld-uploader'?: string;
-  'ld-step'?: string;
-  'ld-slider'?: string;
-  'ld-expansion-panels'?: string;
-  'ld-expansion-panel'?: string;
+  'b-button'?: string;
+  'b-icon'?: string;
+  'b-chip'?: string;
+  'b-badge'?: string;
+  'b-splitter'?: string;
+  'b-loader'?: string;
+  'b-progress'?: string;
+  'b-toggle-buttons'?: string;
+  'b-breadcrumbs'?: string;
+  'b-edit-text'?: string;
+  'b-datepicker'?: string;
+  'b-daterange'?: string;
+  'b-calendar'?: string;
+  'b-tab'?: string;
+  'b-tabs'?: string;
+  'b-select-list-box'?: string;
+  'b-checkbox'?: string;
+  'b-radiobutton'?: string;
+  'b-radiogroup'?: string;
+  'b-textarea'?: string;
+  'b-select'?: string;
+  'b-combobox'?: string;
+  'b-timepicker'?: string;
+  'b-text-markup'?: string;
+  'b-switch'?: string;
+  'b-dialog'?: string;
+  'b-data-iterator'?: string;
+  'b-pager'?: string;
+  'b-uploader'?: string;
+  'b-step'?: string;
+  'b-slider'?: string;
+  'b-expansion-panels'?: string;
+  'b-expansion-panel'?: string;
 }
 
 export interface IOptions {
@@ -52,100 +52,100 @@ export interface IOptions {
     isTablet: string;
     isDesktop: string;
   };
-  LdBadge?: {
+  BBadge?: {
     [key: string]: unknown;
   };
-  LdBreadcrumbs?: {
+  BBreadcrumbs?: {
     [key: string]: unknown;
   };
-  LdButton?: {
+  BButton?: {
     [key: string]: unknown;
   };
-  LdCalendar?: {
+  BCalendar?: {
     [key: string]: unknown;
   };
-  LdCheckbox?: {
+  BCheckbox?: {
     [key: string]: unknown;
   };
-  LdChip?: {
+  BChip?: {
     [key: string]: unknown;
   };
-  LdCombobox?: {
+  BCombobox?: {
     [key: string]: unknown;
   };
-  LdDataIterator?: {
+  BDataIterator?: {
     [key: string]: unknown;
   };
-  LdDatepicker?: {
+  BDatepicker?: {
     [key: string]: unknown;
   };
-  LdDialog?: {
+  BDialog?: {
     [key: string]: unknown;
   };
-  LdEditText?: {
+  BEditText?: {
     [key: string]: unknown;
   };
-  LdExpansionPanel?: {
+  BExpansionPanel?: {
     [key: string]: unknown;
   };
-  LdExpansionPanels?: {
+  BExpansionPanels?: {
     [key: string]: unknown;
   };
-  LdIcon?: {
+  BIcon?: {
     [key: string]: unknown;
   };
-  LdLoader?: {
+  BLoader?: {
     [key: string]: unknown;
   };
-  LdPager?: {
+  BPager?: {
     [key: string]: unknown;
   };
-  LdProgress?: {
+  BProgress?: {
     [key: string]: unknown;
   };
-  LdRadioButton?: {
+  BRadioButton?: {
     [key: string]: unknown;
   };
-  LdRadioGroup?: {
+  BRadioGroup?: {
     [key: string]: unknown;
   };
-  LdSelect?: {
+  BSelect?: {
     [key: string]: unknown;
   };
-  LdSelectListBox?: {
+  BSelectListBox?: {
     [key: string]: unknown;
   };
-  LdSlider?: {
+  BSlider?: {
     [key: string]: unknown;
   };
-  LdSplitter?: {
+  BSplitter?: {
     [key: string]: unknown;
   };
-  LdStep?: {
+  BStep?: {
     [key: string]: unknown;
   };
-  LdSwitch?: {
+  BSwitch?: {
     [key: string]: unknown;
   };
-  LdTab?: {
+  BTab?: {
     [key: string]: unknown;
   };
-  LdTabs?: {
+  BTabs?: {
     [key: string]: unknown;
   };
-  LdTextMarkup?: {
+  BTextMarkup?: {
     [key: string]: unknown;
   };
-  LdTextarea?: {
+  BTextarea?: {
     [key: string]: unknown;
   };
-  LdTimepicker?: {
+  BTimepicker?: {
     [key: string]: unknown;
   };
-  LdToggleButtons?: {
+  BToggleButtons?: {
     [key: string]: unknown;
   };
-  LdUploader?: {
+  BUploader?: {
     [key: string]: unknown;
   };
 }
