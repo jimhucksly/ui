@@ -1,30 +1,42 @@
 <template>
   <v-container class="d-flex flex-column">
-    <content-header>Date picker</content-header>
-    <content-body h="700">
+    <content-header>
+      <template #default> Edit List Box </template>
+      <template #description>
+        Компонент предназначен для добавления в поле ввода произвольных значений определенного типа
+      </template>
+    </content-header>
+    <content-body h="950">
       <b-tabs v-bind="tabProps">
         <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
               <v-row>
                 <v-col cols="12">
-                  <b-datepicker
+                  <ld-edit-list-box
                     v-model="value"
-                    label="Ld Datepicker"
-                    persistent-hint
-                    input-hint="Datepicker input hint"
-                    :dateonly="dateonly"
-                    :label-on-top="labelOnTop"
+                    :autofocus="true"
+                    :type="type"
+                    label="ld edit list box"
                     :readonly="readonly"
                     :disabled="disabled"
-                    :datepicker-props="{
-                      minDate: minDate ? getMinDate() : null,
-                      maxDate: maxDate ? getMaxDate() : null,
-                    }"
-                    :clearable="clearable"
                     :required="required"
+                    :format="format ? /^\d\d\d$/ : null"
+                    :only-unique="onlyUnique"
+                    input-hint="Input Hint"
+                    :persistent-hint="true"
                     :size="size"
                     :color="color"
+                    prefix="Prefix"
+                    suffix="Suffix"
+                    :calendar-props="{
+                      minDate: new Date('2025-05-11'),
+                    }"
+                    :mask-props="{
+                      mask: '00-00-00',
+                      inputHint: 'Mask: 00-00-00',
+                      beautify: true,
+                    }"
                     :help="
                       help
                         ? {
@@ -37,18 +49,22 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12"> Input Value: {{ value }} </v-col>
+                <v-col cols="12"> Input: {{ JSON.stringify(value) }} </v-col>
               </v-row>
             </v-col>
-            <v-col cols="3" class="d-flex flex-column">
-              <b-switch label="dateonly" v-model="dateonly" hide-details />
-              <b-switch label="label on top" v-model="labelOnTop" hide-details />
+            <v-col cols="3">
+              <b-radiogroup v-model="type" :column="true" hide-details label="type:" label-on-top>
+                <b-radiobutton label="text" value="text" />
+                <b-radiobutton label="number" value="number" />
+                <b-radiobutton label="date" value="date" />
+                <b-radiobutton label="datetime" value="datetime" />
+                <b-radiobutton label="mask" value="mask" />
+              </b-radiogroup>
+              <b-switch label="format (/\d\d\d/)" v-model="format" hide-details />
               <b-switch label="readonly" v-model="readonly" hide-details />
               <b-switch label="disabled" v-model="disabled" hide-details />
-              <b-switch label="minDate (-1 month)" v-model="minDate" hide-details />
-              <b-switch label="maxDate (+1 month)" v-model="maxDate" hide-details />
-              <b-switch label="clearable" v-model="clearable" hide-details />
               <b-switch label="required" v-model="required" hide-details />
+              <b-switch label="only unique" v-model="onlyUnique" hide-details />
             </v-col>
             <v-col cols="3">
               <b-radiogroup v-model="help" label="help" label-on-top hide-details>
@@ -70,58 +86,53 @@
           </v-row>
         </b-tab>
         <b-tab index="1" heading="Code">
-          <markdown-to-html v-if="!templatesLoading" :template="templates['datepicker.md']" />
+          <v-row class="pt-3">
+            <v-col>
+              <markdown-to-html v-if="!templatesLoading" :template="templates['editlistbox.md']" />
+            </v-col>
+          </v-row>
         </b-tab>
       </b-tabs>
     </content-body>
   </v-container>
 </template>
-<script>
-/* eslint-disable @typescript-eslint/typedef */
+<script lang="ts">
 import markdownToHTML from './mixins/markdownToHTML';
 export default {
-  data() {
+  data(): {
+    value: Array<unknown>;
+    type: string;
+    format: boolean;
+    readonly: boolean;
+    disabled: boolean;
+    required: boolean;
+    onlyUnique: boolean;
+    help: number;
+    size: string;
+    color: string;
+  } {
     return {
-      value: null,
-      dateonly: false,
-      labelOnTop: false,
+      value: [],
+      type: 'text',
+      format: false,
       readonly: false,
       disabled: false,
-      minDate: false,
-      maxDate: false,
-      clearable: true,
-      showDatePicker: true,
       required: false,
+      onlyUnique: false,
       help: 0,
       size: 's',
       color: 'grey',
     };
   },
-  inject: ['tabProps'],
+  inject: {
+    tabProps: {
+      type: Object,
+    },
+  },
   mixins: [markdownToHTML],
   computed: {
     library() {
-      return ['datepicker.md'];
-    },
-  },
-  methods: {
-    getMinDate() {
-      const d = new Date();
-      d.setDate(d.getDate() - 1);
-      d.setHours(0);
-      d.setMinutes(0);
-      d.setSeconds(0);
-      d.setMilliseconds(0);
-      return d;
-    },
-    getMaxDate() {
-      const d = new Date();
-      d.setMonth(d.getMonth() + 1);
-      d.setHours(0);
-      d.setMinutes(0);
-      d.setSeconds(0);
-      d.setMilliseconds(0);
-      return d;
+      return ['editlistbox.md'];
     },
   },
 };

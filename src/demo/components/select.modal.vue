@@ -60,11 +60,9 @@ export default {
     multiselect: Boolean,
   },
   data(): {
-    isChanged: boolean;
     selected: Array<IRow>;
   } {
     return {
-      isChanged: false,
       selected: [],
     };
   },

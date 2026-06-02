@@ -1,7 +1,7 @@
 # cols[12]
 ```html
-<ld-edit-text label="Edit Text" :rules="myRules" v-model="text" required />
-<ld-button @click="validate">Validate</ld-button>
+<b-edit-text label="Edit Text" :rules="myRules" v-model="text" required />
+<b-button @click="validate">Validate</b-button>
 ```
 
 ```ts

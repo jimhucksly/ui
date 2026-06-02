@@ -18,7 +18,7 @@
       />
     </svg>
     <div id="home-button">
-      <ld-button variant="flat" size="l" @click="go"> Get Started </ld-button>
+      <b-button variant="flat" size="l" @click="go"> Get Started </b-button>
     </div>
   </div>
 </template>

@@ -38,6 +38,11 @@
     line-height: 32px;
   }
 
+  .caption-xs {
+    font-size: var(--caption-xs); // 8px
+    line-height: 14px;
+  }
+
   .caption-s {
     font-size: var(--caption-s); // 10px
     line-height: 14px;
@@ -66,5 +71,17 @@
 
   .text-body-x {
     font-style: var(--text-body-x); // 20px
+  }
+
+  .font-reqular {
+    font-family: var(--regular);
+  }
+
+  .font-medium {
+    font-family: var(--medium);
+  }
+
+  .font-semibold {
+    font-family: var(--semibold);
   }
 ```

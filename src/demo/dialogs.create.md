@@ -25,8 +25,6 @@ params: {
   fullHeight?: boolean;
   /* скрыть управляющие кнопки модального окна */
   hideFooter?: boolean;
-  /* темный фон заголовка модального окна */
-  darkTitle?: boolean;
   /* отображение иконки закрытия модального окна */
   closable?: boolean;
   /* иконка развернуть */
@@ -52,6 +50,10 @@ params: {
   okTitle?: string;
   /* текст на кнопке Cancel */
   cancelTitle?: string;
+  /* цвет кнопки Ok */
+  okColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  /* цвет кнопки Cancel */
+  cancelColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   /* default: true, если false - выключает действие по нажатию Enter */
   pressEnterAsOk?: boolean
   /* default: true, если false - выключает действие по нажатию Escape */

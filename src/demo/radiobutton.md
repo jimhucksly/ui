@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-radiogroup
+<b-radiogroup
   v-model="value"
   :row="!column"
   :column="column"
@@ -12,13 +12,13 @@
   :size="size"
   :help="{ tooltip: 'tooltip text' }"
 >
-  <ld-radiobutton
+  <b-radiobutton
     label="Radio Button 1"
     :label-to-left="labelToLeft"
     value="1"
     :color="color"
     hint="radiobutton hint" />
-</ld-radiogroup>
+</b-radiogroup>
 ```
 # end of cols
 # cols[6]

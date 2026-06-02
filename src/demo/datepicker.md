@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-datepicker
+<b-datepicker
   v-model="value"
   :dateonly="dateonly"
   label="Ld Datepicker"

@@ -2,12 +2,12 @@
   <v-container class="d-flex flex-column">
     <content-header>Form Validation</content-header>
     <content-body h="800">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
-              <ld-edit-text label="Edit Text" :rules="myRules" v-model="text" required />
-              <ld-select
+              <b-edit-text label="Edit Text" :rules="myRules" v-model="text" required />
+              <b-select
                 :items="[
                   { id: 1, value: 'Value 1' },
                   { id: 2, value: 'Value 2' },
@@ -20,7 +20,7 @@
           </v-row>
           <v-row>
             <v-col class="d-flex align-center">
-              <ld-button @click="save">Validate</ld-button>
+              <b-button @click="save">Validate</b-button>
               <transition name="fade">
                 <span v-if="success" class="px-3" style="font-size: var(--font-size); color: var(--success)"
                   >form is valid</span
@@ -28,11 +28,11 @@
               </transition>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['validation.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

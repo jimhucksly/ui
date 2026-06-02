@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-switch
+<b-switch
   label="Ld Switch"
   v-model="value"
   :disabled="disabled"

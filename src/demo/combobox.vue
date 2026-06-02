@@ -9,21 +9,21 @@
       </template>
     </content-header>
     <content-body h="1400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
               <v-row>
                 <v-col class="d-flex justify-end">
-                  <ld-radiogroup v-model="listType" row :column="false" direction="rtl" label-on-top hide-details>
-                    <ld-radiobutton value="strings" label="list of strings" />
-                    <ld-radiobutton value="objects" label="list of objects" />
-                  </ld-radiogroup>
+                  <b-radiogroup v-model="listType" row :column="false" direction="rtl" label-on-top hide-details>
+                    <b-radiobutton value="strings" label="list of strings" />
+                    <b-radiobutton value="objects" label="list of objects" />
+                  </b-radiogroup>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col v-if="ready">
-                  <ld-combobox
+                  <b-combobox
                     v-model="value"
                     v-model:model-items="selected"
                     label="Ld Combobox"
@@ -33,6 +33,7 @@
                     item-subtitle="email"
                     :multiselect="multiselect"
                     :chips="chips"
+                    :closable-chips="closableChips"
                     :readonly="readonly"
                     :disabled="disabled"
                     :required="required"
@@ -50,6 +51,7 @@
                     :size="size"
                     :color="color"
                     :limit="limit ? 4 : undefined"
+                    :placeholder="placeholder ? 'Выберите из списка' : undefined"
                     :help="
                       help
                         ? {
@@ -60,19 +62,19 @@
                     "
                   >
                     <template v-if="customTag" #tag="{ item, canRemove, onRemove }">
-                      <ld-chip
+                      <b-chip
                         :key="item.id"
                         :closable="canRemove"
                         :color="canRemove ? 'primary' : 'grey'"
                         @click:close="onRemove(item)"
                       >
                         {{ 'custom tag: ' + item.first_name }}
-                      </ld-chip>
+                      </b-chip>
                     </template>
                     <template v-if="customTagOverflow" #tag-overflow="{ limit, count }">
-                      <ld-chip color="primary">
+                      <b-chip color="primary">
                         <span> more then {{ limit }}: {{ count - limit }}</span>
-                      </ld-chip>
+                      </b-chip>
                     </template>
                     <template v-if="customOption || avatar" #option="{ item, isSelected, searchText }">
                       <ld-avatar v-if="avatar" size="m">
@@ -89,9 +91,9 @@
                       </span>
                     </template>
                     <template v-if="optionIcon" #option-icon="{ item, isSelected }">
-                      <ld-icon :color="isSelected ? 'primary' : 'grey'">user</ld-icon>
+                      <b-icon :color="isSelected ? 'primary' : 'grey'">user</b-icon>
                     </template>
-                  </ld-combobox>
+                  </b-combobox>
                 </v-col>
               </v-row>
               <v-row>
@@ -100,55 +102,56 @@
               </v-row>
             </v-col>
             <v-col cols="3">
-              <ld-switch label="readonly" v-model="readonly" hide-details />
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="multiselect" v-model="multiselect" hide-details />
-              <ld-switch label="required" v-model="required" hide-details />
-              <ld-switch label="clearable" v-model="clearable" hide-details />
-              <ld-switch label="return object" v-model="returnObject" hide-details />
-              <ld-switch label="chips" v-model="chips" hide-details />
-              <ld-switch label="closableChips" v-model="closableChips" hide-details />
-              <ld-switch label="hideDetails" v-model="hideDetails" hide-details />
-              <ld-switch label="input hint" v-model="inputHint" hide-details />
-              <ld-switch label="internal search" v-model="internalSearch" hide-details />
-              <ld-switch label="highlight" v-model="highlight" hide-details />
-              <ld-switch label="limit (4)" v-model="limit" hide-details />
-              <ld-switch label="lazyLoad" v-model="lazyLoad" hide-details />
-              <ld-switch label="custom tags" v-model="customTag" hide-details />
-              <ld-switch label="custom overflow tag" v-model="customTagOverflow" hide-details />
-              <ld-switch label="custom option" v-model="customOption" hide-details />
-              <ld-switch label="option icon" v-model="optionIcon" hide-details />
-              <ld-switch label="option hint" v-model="optionHint" hide-details />
-              <ld-switch label="avatar as list item" v-model="avatar" hide-details />
-              <ld-switch label="label on top" v-model="labelOnTop" hide-details />
+              <b-switch label="readonly" v-model="readonly" hide-details />
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="multiselect" v-model="multiselect" hide-details />
+              <b-switch label="required" v-model="required" hide-details />
+              <b-switch label="clearable" v-model="clearable" hide-details />
+              <b-switch label="return object" v-model="returnObject" hide-details />
+              <b-switch label="chips" v-model="chips" hide-details />
+              <b-switch label="closableChips" v-model="closableChips" hide-details />
+              <b-switch label="hideDetails" v-model="hideDetails" hide-details />
+              <b-switch label="input hint" v-model="inputHint" hide-details />
+              <b-switch label="internal search" v-model="internalSearch" hide-details />
+              <b-switch label="highlight" v-model="highlight" hide-details />
+              <b-switch label="limit (4)" v-model="limit" hide-details />
+              <b-switch label="lazyLoad" v-model="lazyLoad" hide-details />
+              <b-switch label="custom tags" v-model="customTag" hide-details />
+              <b-switch label="custom overflow tag" v-model="customTagOverflow" hide-details />
+              <b-switch label="custom option" v-model="customOption" hide-details />
+              <b-switch label="option icon" v-model="optionIcon" hide-details />
+              <b-switch label="option hint" v-model="optionHint" hide-details />
+              <b-switch label="avatar as list item" v-model="avatar" hide-details />
+              <b-switch label="label on top" v-model="labelOnTop" hide-details />
+              <b-switch label="placeholder" v-model="placeholder" hide-details />
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="help" label="help" label-on-top hide-details>
-                <ld-radiobutton :value="0" label="None"></ld-radiobutton>
-                <ld-radiobutton :value="1" label="Tooltip"></ld-radiobutton>
-                <ld-radiobutton :value="2" label="Link"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="size" label="size" label-on-top hide-details>
-                <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="color" label="color" label-on-top hide-details>
-                <ld-radiobutton value="grey" label="grey"></ld-radiobutton>
-                <ld-radiobutton value="success" label="success"></ld-radiobutton>
-                <ld-radiobutton value="error" label="error"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="help" label="help" label-on-top hide-details>
+                <b-radiobutton :value="0" label="None"></b-radiobutton>
+                <b-radiobutton :value="1" label="Tooltip"></b-radiobutton>
+                <b-radiobutton :value="2" label="Link"></b-radiobutton>
+              </b-radiogroup>
+              <b-radiogroup v-model="size" label="size" label-on-top hide-details>
+                <b-radiobutton value="s" label="small"></b-radiobutton>
+                <b-radiobutton value="m" label="medium"></b-radiobutton>
+                <b-radiobutton value="l" label="large"></b-radiobutton>
+              </b-radiogroup>
+              <b-radiogroup v-model="color" label="color" label-on-top hide-details>
+                <b-radiobutton value="grey" label="grey"></b-radiobutton>
+                <b-radiobutton value="success" label="success"></b-radiobutton>
+                <b-radiobutton value="error" label="error"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <v-row>
             <v-col>
               <markdown-to-html v-if="!templatesLoading" :template="templates['combobox.md']" />
             </v-col>
           </v-row>
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
@@ -159,7 +162,7 @@ export default {
   data() {
     return {
       listType: 'objects',
-      value: null,
+      value: 1,
       selected: null,
       items: null,
       multiselect: false,
@@ -187,6 +190,7 @@ export default {
       highlight: true,
       avatar: false,
       labelOnTop: false,
+      placeholder: false,
     };
   },
   inject: ['tabProps'],

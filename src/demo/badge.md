@@ -1,5 +1,5 @@
 ```html
-<ld-badge :color="color" :size="size" :rounded="rounded" :circle="circle" :dot="dot">Badge</ld-badge>
+<b-badge :color="color" :size="size" :rounded="rounded" :circle="circle" :dot="dot">Badge</b-badge>
 ```
 
 * Props

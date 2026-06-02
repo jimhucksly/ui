@@ -2,11 +2,11 @@
   <v-container class="d-flex flex-column">
     <content-header>Breadcrumbs</content-header>
     <content-body h="600">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pa-3">
             <v-col cols="6" :style="{ 'background-color': theme === 'dark' ? 'white' : 'var(--grey-d-1)' }">
-              <ld-breadcrumbs
+              <b-breadcrumbs
                 :label="label ? 'Home' : ''"
                 :breadcrumbs="breadcrumbs"
                 :size="size"
@@ -15,24 +15,24 @@
               />
             </v-col>
             <v-col cols="6">
-              <ld-radiogroup v-model="size" label="size" label-on-top hide-details>
-                <ld-radiobutton label="small" value="s" />
-                <ld-radiobutton label="medium" value="m" />
-                <ld-radiobutton label="large" value="l" />
-              </ld-radiogroup>
-              <ld-radiogroup v-model="theme" label="theme" label-on-top hide-details>
-                <ld-radiobutton label="dark" value="dark" />
-                <ld-radiobutton label="light" value="light" />
-              </ld-radiogroup>
-              <ld-switch v-model="label" label="label" hide-details />
-              <ld-switch v-model="overflow" label="overflow items" hide-details />
+              <b-radiogroup v-model="size" label="size" label-on-top hide-details>
+                <b-radiobutton label="small" value="s" />
+                <b-radiobutton label="medium" value="m" />
+                <b-radiobutton label="large" value="l" />
+              </b-radiogroup>
+              <b-radiogroup v-model="theme" label="theme" label-on-top hide-details>
+                <b-radiobutton label="dark" value="dark" />
+                <b-radiobutton label="light" value="light" />
+              </b-radiogroup>
+              <b-switch v-model="label" label="label" hide-details />
+              <b-switch v-model="overflow" label="overflow items" hide-details />
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['breadcrumbs.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
@@ -57,7 +57,7 @@ export default {
     breadcrumbs() {
       const o = [
         {
-          text: 'DN WEB UI DEMO',
+          text: 'LDM UI DEMO',
           route: {
             path: '/',
           },

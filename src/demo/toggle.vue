@@ -2,13 +2,13 @@
   <v-container class="d-flex flex-column">
     <content-header>Toggle Buttons</content-header>
     <content-body h="400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
               <v-row>
                 <v-col>
-                  <ld-toggle-buttons
+                  <b-toggle-buttons
                     v-model="value"
                     :items="items"
                     :disabled="disabled"
@@ -24,23 +24,23 @@
               </v-row>
             </v-col>
             <v-col cols="6">
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="rounded" v-model="rounded" hide-details />
-              <ld-radiogroup v-model="size" label="size" class="mb-2" label-on-top hide-details>
-                <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-switch label="icon" v-model="icon" hide-details />
-              <ld-switch label="text" v-model="text" hide-details />
-              <ld-switch label="tooltip" v-model="tooltip" hide-details />
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="rounded" v-model="rounded" hide-details />
+              <b-radiogroup v-model="size" label="size" class="mb-2" label-on-top hide-details>
+                <b-radiobutton value="s" label="small"></b-radiobutton>
+                <b-radiobutton value="m" label="medium"></b-radiobutton>
+                <b-radiobutton value="l" label="large"></b-radiobutton>
+              </b-radiogroup>
+              <b-switch label="icon" v-model="icon" hide-details />
+              <b-switch label="text" v-model="text" hide-details />
+              <b-switch label="tooltip" v-model="tooltip" hide-details />
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['toggle.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

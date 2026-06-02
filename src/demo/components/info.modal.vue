@@ -1,11 +1,11 @@
 <template>
-  <div>Info Window Content</div>
-  <div v-if="data"><strong>Model Value:</strong> {{ data }}</div>
-  <div style="height: 45px" v-for="i in count" class="my-2">
+  <div class="text-body-s">Info Window Content</div>
+  <div v-if="data" class="text-body-s"><strong>Model Value:</strong> {{ data }}</div>
+  <div style="height: 45px" v-for="i in count" class="my-2 text-body-s">
     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
   </div>
   <div class="my-2">
-    <ld-button @click="count++"> Add div </ld-button>
+    <b-button @click="count++"> Add div </b-button>
   </div>
 </template>
 <script lang="ts">

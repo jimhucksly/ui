@@ -2,8 +2,8 @@
   <v-container class="d-flex flex-column">
     <content-header>Color Scheme</content-header>
     <content-body h="600">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-container>
             <v-row class="flex-nowrap">
               <v-col v-for="arr in colorVars">
@@ -21,16 +21,16 @@
               </v-col>
             </v-row>
           </v-container>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['colors-shadows.colors.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
     <content-header>Shadows</content-header>
     <content-body h="400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col class="d-flex">
               <div style="width: 120px; height: 80px" class="shadow-xs d-flex justify-center align-center mx-3">
@@ -56,11 +56,11 @@
               </div>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['colors-shadows.shadows.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
@@ -76,7 +76,7 @@ export default {
   inject: ['tabProps'],
   mixins: [markdownToHTML],
   mounted() {
-    const palette = document.getElementById('ui-palette');
+    const palette = document.getElementById('ldmui-palette');
     const html = palette.innerHTML;
     const arr = html
       .split('\n')

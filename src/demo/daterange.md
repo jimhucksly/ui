@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-daterange
+<b-daterange
   v-model="value"
   label="Ld Daterange"
   :label-on-top="labelOnTop"
@@ -25,7 +25,7 @@
 # cols[6]
 
 ```ts
-value: Date | string
+value: Array<Date | string>
 /* отображение подсказки */
 persistentHint: boolean
 /* подсказка */

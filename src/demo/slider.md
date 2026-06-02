@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-slider
+<b-slider
   v-model="value"
   :disabled="disabled"
   :range="range"
@@ -16,7 +16,7 @@
   <template #tick-label="{ value, label }">
     ...
   </template>
-</ld-slider>
+</b-slider>
 ```
 # end of cols
 # cols[6]

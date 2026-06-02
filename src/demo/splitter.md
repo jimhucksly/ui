@@ -1,7 +1,7 @@
 # cols[6]
 
 ```html
-<ld-splitter
+<b-splitter
   :resize-disabled="resizeDisabled"
   :left-size-min="30"
   :right-size-min="30"
@@ -15,7 +15,7 @@
   <template #right-pane>
     <div>Right Panel</div>
   </template>
-</ld-splitter>
+</b-splitter>
 ```
 
 # end of cols

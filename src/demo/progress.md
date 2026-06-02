@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-progress
+<b-progress
   :label="''"
   :value="Number(counter)"
   :counter="showCounter"
@@ -10,7 +10,7 @@
   @complete="onComplete"
 >
   {{ label }}
-</ld-progress>
+</b-progress>
 ```
 # end of cols
 # cols[6]

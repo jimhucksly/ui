@@ -1,6 +1,6 @@
  # cols[6]
  ```html
-<ld-textarea
+<b-textarea
   label="Ld Textarea"
   required
   :size="size"

@@ -2,16 +2,20 @@
   <v-container class="d-flex flex-column">
     <content-header>Test page</content-header>
     <content-body h="300">
-      <ld-button @click="dialog"> Call Dialog </ld-button>
+      <b-button :tooltip="tooltip" :is-tablet-view="true" :responsive="true">
+        <template #text> aaaaaaaaaaaaa </template>
+      </b-button>
+      <b-button @click="tooltip = false">tooltip cancel</b-button>
+      <!-- <b-button @click="dialog"> Call Dialog </b-button> -->
     </content-body>
-    <v-dialog v-model="show" persistent width="1100px">
+    <!-- <v-dialog v-model="show" persistent width="1100px">
       <v-card height="100%" elevation="0" class="pa-2">
         <v-card-title class="d-flex align-center justify-between">
           <span> Dialog </span>
           <v-spacer></v-spacer>
-          <ld-button icon text @click="show = false">
-            <ld-icon>close</ld-icon>
-          </ld-button>
+          <b-button icon text @click="show = false">
+            <b-icon>close</b-icon>
+          </b-button>
         </v-card-title>
         <v-card-text class="d-flex overflow-x-hidden" style="height: 155px">
           <div class="d-flex flex-column overflow-hidden" style="width: 100%; height: 100%">
@@ -29,7 +33,7 @@
           </div>
         </v-card-text>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 <script lang="ts">
@@ -51,6 +55,7 @@ export default {
   data() {
     return {
       show: false,
+      tooltip: true,
     };
   },
   methods: {

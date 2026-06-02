@@ -3,12 +3,12 @@
 
  - npm
 ```cmd
- PS D:\yourProject> npm install @dn-web/core@latest @dn-web/ui
+ PS D:\yourProject> npm install @dn-web/core@latest @dn-web/ui@latest @dn-web/datatable@latest @dn-web/treeview@latest
 ```
 
  - yarn
 ```cmd
- PS D:\yourProject> yarn add @dn-web/core@latest @dn-web/ui
+ PS D:\yourProject> yarn add @dn-web/core@latest @dn-web/ui@latest @dn-web/datatable@latest @dn-web/treeview@lates
 ```
 
  - install dependencies
@@ -38,7 +38,7 @@ vuetify vue-screen-utils@1.0.0-beta.13 lodash-es md-editor-v3 @vuelidate/core
 
 ```js
 import '@dn-web/ui/dist/scss';
-import ui, { defaults } from '@dn-web/ui';
+import ldmui, { defaults } from '@dn-web/ui';
 import { createApp, defineComponent } from 'vue';
 const root = defineComponent({
   template: '<v-app></v-app>',
@@ -48,7 +48,7 @@ const app = createApp(root);
  * Types of options, see @dn-web/ui/dist/types/options
  */
 const options = {};
-app.use(ui, options);
+app.use(ldmui, options);
 const vuetify = createVuetify({
   defaults: {
     ...defaults,
@@ -73,7 +73,7 @@ aliases?: Record<string, string>;
 /**
  * можно зарегистрировать новые компоненты на основе дефолтных с передачей каких-то своих конкретных дефолтных параметров
  */
-extensions?: Array<IExtension>;
+extensions?: Array<ldmuiExtension>;
 /**
  * переопределить язык (по умолчанию ru)
 */

@@ -4,9 +4,9 @@
     <content-body h="200">
       <div style="display: grid; grid-auto-flow: column; gap: 4px; justify-content: left">
         <template v-for="i in arr">
-          <ld-button :color="i.color" @click="toast(i.name)">
+          <b-button :color="i.color" @click="toast(i.name)">
             <span> call {{ i.name }} toast</span>
-          </ld-button>
+          </b-button>
         </template>
       </div>
       <div class="pt-3">

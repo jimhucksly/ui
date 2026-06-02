@@ -3,8 +3,8 @@
     <content-header>Event Bus</content-header>
     <content-body h="300">
       <div style="display: grid; grid-auto-flow: column; gap: 4px; justify-content: left; margin-bottom: 8px">
-        <ld-button @click="createListener">Add Listener</ld-button>
-        <ld-button @click="callListener" color="success">Call Listener</ld-button>
+        <b-button @click="createListener">Add Listener</b-button>
+        <b-button @click="callListener" color="success">Call Listener</b-button>
       </div>
       <div>
         <markdown-to-html v-if="!templatesLoading" :template="templates['eventBus.md']" />
@@ -14,8 +14,8 @@
 </template>
 <script>
 import { eventBus } from '@dn-web/core';
-import { DialogManager } from '@/ld-dialog/dialog.manager';
-import { AlertDialog, PromptDialog } from '@/ld-dialog/dialogs';
+import { DialogManager } from '@/b-dialog/dialog.manager';
+import { AlertDialog, PromptDialog } from '@/b-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
 export default {
   mixins: [markdownToHTML],

@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-select
+<b-select
   v-model="selected"
   :items="items"
   label="Ld select"
@@ -18,7 +18,7 @@
   :color="color"
   :help="{ tooltip: 'tooltip text' }"
 >
-  <template #tag="{ item, canRemove, onRemove }">
+  <template #tag="{ item, index, limit, canRemove, onRemove }">
     ...
   </template>
   <template #tag-overflow="{ limit, count }">
@@ -33,10 +33,11 @@
   <template #option-hint="{ item, isSelected, searchText }">
     ...
   </template>
-</ld-select>
+</b-select>
 ```
 # end of cols
 # cols[6]
+
 * Props
 
 ```ts

@@ -2,11 +2,11 @@
   <v-container class="d-flex flex-column">
     <content-header>Splitter</content-header>
     <content-body h="450">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3 h-100">
             <v-col cols="8">
-              <ld-splitter
+              <b-splitter
                 class="h-100 grey--border"
                 style="border-width: 1px; border-style: solid"
                 :resize-disabled="resizeDisabled"
@@ -22,22 +22,22 @@
                 <template #right-pane>
                   <div>{{ horizontal ? 'Bottom' : 'Right' }} Panel</div>
                 </template>
-              </ld-splitter>
+              </b-splitter>
             </v-col>
             <v-col cols="4" class="d-flex flex-column">
-              <ld-switch label="resizeDisabled" v-model="resizeDisabled" hide-details />
-              <ld-switch label="leftSizeMin (30%)" v-model="leftSizeMin" hide-details />
-              <ld-switch label="rightSizeMin (30%)" v-model="rightSizeMin" hide-details />
-              <ld-switch label="leftVisibled" v-model="leftVisibled" hide-details />
-              <ld-switch label="rightVisibled" v-model="rightVisibled" hide-details />
-              <ld-switch label="horizontal" v-model="horizontal" hide-details />
+              <b-switch label="resizeDisabled" v-model="resizeDisabled" hide-details />
+              <b-switch label="leftSizeMin (30%)" v-model="leftSizeMin" hide-details />
+              <b-switch label="rightSizeMin (30%)" v-model="rightSizeMin" hide-details />
+              <b-switch label="leftVisibled" v-model="leftVisibled" hide-details />
+              <b-switch label="rightVisibled" v-model="rightVisibled" hide-details />
+              <b-switch label="horizontal" v-model="horizontal" hide-details />
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['splitter.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

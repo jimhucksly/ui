@@ -2,14 +2,14 @@
   <v-container class="d-flex flex-column">
     <content-header>Slider</content-header>
     <content-body h="450">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-container>
             <v-row class="pt-5">
               <v-col cols="6">
                 <v-row>
                   <v-col>
-                    <ld-slider
+                    <b-slider
                       v-model="value"
                       :disabled="disabled"
                       :range="range"
@@ -25,7 +25,7 @@
                       <template v-if="showTicksLabels" #tick-label="{ value, label }">
                         {{ `Progress ${value}%` }}
                       </template>
-                    </ld-slider>
+                    </b-slider>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -33,23 +33,23 @@
                 </v-row>
               </v-col>
               <v-col cols="3">
-                <ld-switch label="disabled" v-model="disabled" hide-details />
-                <ld-edit-text v-model="value" label="value" hide-details :debounced="500" class="mb-1" />
-                <ld-edit-text onlyNumbers v-model="min" label="Min" hide-details class="mb-1" />
-                <ld-edit-text onlyNumbers v-model="max" label="Max" hide-details class="mb-1" />
-                <ld-edit-text onlyNumbers v-model="step" label="Step" hide-details class="mb-1" />
-                <ld-switch label="ticks" v-model="showTicks" hide-details />
-                <ld-switch label="ticks labels" v-model="showTicksLabels" hide-details />
-                <ld-switch label="ticks popup" v-model="showTicksPopup" hide-details />
-                <ld-switch label="range mode" v-model="range" hide-details />
+                <b-switch label="disabled" v-model="disabled" hide-details />
+                <b-edit-text v-model="value" label="value" hide-details :debounced="500" class="mb-1" />
+                <b-edit-text onlyNumbers v-model="min" label="Min" hide-details class="mb-1" />
+                <b-edit-text onlyNumbers v-model="max" label="Max" hide-details class="mb-1" />
+                <b-edit-text onlyNumbers v-model="step" label="Step" hide-details class="mb-1" />
+                <b-switch label="ticks" v-model="showTicks" hide-details />
+                <b-switch label="ticks labels" v-model="showTicksLabels" hide-details />
+                <b-switch label="ticks popup" v-model="showTicksPopup" hide-details />
+                <b-switch label="range mode" v-model="range" hide-details />
               </v-col>
             </v-row>
           </v-container>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['slider.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

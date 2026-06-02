@@ -35,6 +35,10 @@ params: {
   okTitle?: string;
   /* надпись кнопки Cancel */
   cancelTitle?: string;
+  /* цвет кнопки Ok */
+  okColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  /* цвет кнопки Cancel */
+  cancelColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   /* default: true, если false - выключает действие по нажатию Enter */
   pressEnterAsOk?: boolean;
   /* default: true, если false - выключает действие по нажатию Escape */

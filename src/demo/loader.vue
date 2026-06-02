@@ -2,8 +2,8 @@
   <v-container class="d-flex flex-column">
     <content-header>Loader</content-header>
     <content-body h="450">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col
               cols="6"
@@ -24,35 +24,35 @@
               />
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="size" label="size" label-on-top hide-details>
-                <ld-radiobutton value="xs" label="x-small"></ld-radiobutton>
-                <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-                <ld-radiobutton value="xl" label="x-large"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-switch v-model="transparent" label="transparent" class="mb-2" hide-details />
-              <ld-edit-text label="opacity" v-model="opacity" :label-on-top="false" />
+              <b-radiogroup v-model="size" label="size" label-on-top hide-details>
+                <b-radiobutton value="xs" label="x-small"></b-radiobutton>
+                <b-radiobutton value="s" label="small"></b-radiobutton>
+                <b-radiobutton value="m" label="medium"></b-radiobutton>
+                <b-radiobutton value="l" label="large"></b-radiobutton>
+                <b-radiobutton value="xl" label="x-large"></b-radiobutton>
+              </b-radiogroup>
+              <b-switch v-model="transparent" label="transparent" class="mb-2" hide-details />
+              <b-edit-text label="opacity" v-model="opacity" :label-on-top="false" />
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="view" label="view" label-on-top hide-details>
-                <ld-radiobutton value="circle" label="circle"></ld-radiobutton>
-                <ld-radiobutton value="dotts" label="dotts"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="color" label="color" label-on-top hide-details>
-                <ld-radiobutton value="primary" label="primary"></ld-radiobutton>
-                <ld-radiobutton value="success" label="success"></ld-radiobutton>
-                <ld-radiobutton value="warning" label="warning"></ld-radiobutton>
-                <ld-radiobutton value="error" label="error"></ld-radiobutton>
-                <ld-radiobutton value="white" label="white"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="view" label="view" label-on-top hide-details>
+                <b-radiobutton value="circle" label="circle"></b-radiobutton>
+                <b-radiobutton value="dots" label="dots"></b-radiobutton>
+              </b-radiogroup>
+              <b-radiogroup v-model="color" label="color" label-on-top hide-details>
+                <b-radiobutton value="primary" label="primary"></b-radiobutton>
+                <b-radiobutton value="success" label="success"></b-radiobutton>
+                <b-radiobutton value="warning" label="warning"></b-radiobutton>
+                <b-radiobutton value="error" label="error"></b-radiobutton>
+                <b-radiobutton value="white" label="white"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['loader.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

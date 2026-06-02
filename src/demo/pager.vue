@@ -2,8 +2,8 @@
   <v-container class="d-flex flex-column">
     <content-header>Pager</content-header>
     <content-body h="800">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3 overflow-hidden" style="height: 500px">
             <v-col cols="8" class="d-flex flex-column h-100 overflow-hidden">
               <div class="overflow-hidden" style="flex-basis: 100%">
@@ -25,7 +25,7 @@
                   @page="onPage"
                 />
               </div>
-              <ld-pager
+              <b-pager
                 class="my-2 py-2"
                 style="border-top: 1px solid var(--grey-l-5)"
                 :options="pagerOptions"
@@ -49,28 +49,28 @@
                 <template #selection>
                   <span>Выбрано элементов: {{ selected.length }}</span>
                 </template>
-              </ld-pager>
+              </b-pager>
             </v-col>
             <v-col cols="4">
-              <ld-switch v-model="toFirst" label="toFist" hide-details />
-              <ld-switch v-model="toLast" label="toLast" hide-details />
-              <ld-switch v-model="lastPageUnknown" label="lastPageUnknown" hide-details />
-              <ld-switch v-model="unlimited" label="unlimited" hide-details />
-              <ld-switch v-model="countSlot" label="count slot" hide-details />
-              <ld-switch v-model="selectionSlot" label="selection slot" hide-details />
-              <ld-switch v-model="rounded" label="rounded" hide-details />
-              <ld-switch v-model="fluid" label="fluid" hide-details />
-              <ld-switch v-model="prevText" label="prevText" hide-details />
-              <ld-switch v-model="nextText" label="nextText" hide-details />
-              <ld-switch v-model="page" label="show page number" hide-details />
-              <ld-switch v-model="selectPage" label="select page" hide-details />
+              <b-switch v-model="toFirst" label="toFist" hide-details />
+              <b-switch v-model="toLast" label="toLast" hide-details />
+              <b-switch v-model="lastPageUnknown" label="lastPageUnknown" hide-details />
+              <b-switch v-model="unlimited" label="unlimited" hide-details />
+              <b-switch v-model="countSlot" label="count slot" hide-details />
+              <b-switch v-model="selectionSlot" label="selection slot" hide-details />
+              <b-switch v-model="rounded" label="rounded" hide-details />
+              <b-switch v-model="fluid" label="fluid" hide-details />
+              <b-switch v-model="prevText" label="prevText" hide-details />
+              <b-switch v-model="nextText" label="nextText" hide-details />
+              <b-switch v-model="page" label="show page number" hide-details />
+              <b-switch v-model="selectPage" label="select page" hide-details />
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['pager.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

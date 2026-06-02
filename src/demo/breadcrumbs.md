@@ -1,5 +1,5 @@
 ```html
-<ld-breadcrumbs :breadcrumbs="breadcrumbs" label="Home" theme="dark" size="m" @open="onOpen" />
+<b-breadcrumbs :breadcrumbs="breadcrumbs" label="Home" theme="dark" size="m" @open="onOpen" />
 ```
 * Props
 ```js

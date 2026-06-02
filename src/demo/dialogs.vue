@@ -2,8 +2,8 @@
   <v-container class="d-flex flex-column">
     <content-header>Dialogs</content-header>
     <content-body h="1100">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="12">
               <v-card style="border-radius: var(--border-radius); margin-bottom: 8px" elevation="2">
@@ -11,7 +11,7 @@
                   <v-container>
                     <v-row>
                       <v-col>
-                        <ld-button @click="callAlertDialog">Alert Dialog</ld-button>
+                        <b-button @click="callAlertDialog">Alert Dialog</b-button>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -22,14 +22,14 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callConfirmDialog">Confirm Dialog</ld-button>
+                        <b-button @click="callConfirmDialog">Confirm Dialog</b-button>
                       </v-col>
                       <v-col cols="3">
-                        <ld-edit-text label="okResult" v-model="confirm.okResult" />
-                        <ld-edit-text label="cancelResult" v-model="confirm.cancelResult" />
+                        <b-edit-text label="okResult" v-model="confirm.okResult" />
+                        <b-edit-text label="cancelResult" v-model="confirm.cancelResult" />
                       </v-col>
                       <v-col cols="3">
-                        <ld-switch label="text as title" v-model="confirm.textAsTitle" hide-details class="mb-2" />
+                        <b-switch label="text as title" v-model="confirm.textAsTitle" hide-details class="mb-2" />
                         <div>Confirm dialog result: {{ confirm.model }}</div>
                       </v-col>
                     </v-row>
@@ -41,7 +41,7 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callPromptDialog">Prompt Dialog</ld-button>
+                        <b-button @click="callPromptDialog">Prompt Dialog</b-button>
                       </v-col>
                       <v-col cols="3"> Prompt dialog result: {{ prompt.model }} </v-col>
                     </v-row>
@@ -53,20 +53,20 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callInfoDialog">Info Dialog</ld-button>
+                        <b-button @click="callInfoDialog">Info Dialog</b-button>
                       </v-col>
                       <v-col cols="3">
-                        <ld-edit-text label="Text to display" v-model="info.model" />
+                        <b-edit-text label="Text to display" v-model="info.model" />
                       </v-col>
                       <v-col cols="3">
-                        <ld-radiogroup v-model="info.size" label="size" label-on-top hide-details>
-                          <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                          <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                          <ld-radiobutton value="l" label="large"></ld-radiobutton>
-                        </ld-radiogroup>
-                        <ld-switch label="full height" v-model="info.fullHeight" hide-details class="mb-2" />
-                        <ld-edit-text v-model="info.width" label="width:" only-numbers />
-                        <ld-edit-text v-model="info.height" label="height:" only-numbers />
+                        <b-radiogroup v-model="info.size" label="size" label-on-top hide-details>
+                          <b-radiobutton value="s" label="small"></b-radiobutton>
+                          <b-radiobutton value="m" label="medium"></b-radiobutton>
+                          <b-radiobutton value="l" label="large"></b-radiobutton>
+                        </b-radiogroup>
+                        <b-switch label="full height" v-model="info.fullHeight" hide-details class="mb-2" />
+                        <b-edit-text v-model="info.width" label="width:" only-numbers />
+                        <b-edit-text v-model="info.height" label="height:" only-numbers />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -77,11 +77,11 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callSelectDialog">Select Dialog</ld-button>
+                        <b-button @click="callSelectDialog">Select Dialog</b-button>
                       </v-col>
                       <v-col cols="3">
-                        <ld-switch v-model="select.multiselect" label="multiselect" />
-                        <ld-switch v-model="select.selectAsOk" label="selectAsOk" />
+                        <b-switch v-model="select.multiselect" label="multiselect" />
+                        <b-switch v-model="select.selectAsOk" label="selectAsOk" />
                       </v-col>
                       <v-col cols="3"> Select Result: {{ select.model }} </v-col>
                     </v-row>
@@ -93,7 +93,7 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callCreateDialog">Create Dialog</ld-button>
+                        <b-button @click="callCreateDialog">Create Dialog</b-button>
                       </v-col>
                       <v-col cols="9"> Create Result: {{ create.model }} </v-col>
                     </v-row>
@@ -105,7 +105,7 @@
                   <v-container>
                     <v-row>
                       <v-col cols="3">
-                        <ld-button @click="callEditDialog">Edit Dialog</ld-button>
+                        <b-button @click="callEditDialog">Edit Dialog</b-button>
                       </v-col>
                       <v-col cols="9"> Edit Result: {{ edit.model }} </v-col>
                     </v-row>
@@ -114,38 +114,37 @@
               </v-card>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code" class="pa-2">
+        </b-tab>
+        <b-tab index="1" heading="Code" class="pa-2">
           <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.main.md']" />
-          <ld-expansion-panels>
-            <ld-expansion-panel title="вызов диалога типа Alert">
+          <b-expansion-panels>
+            <b-expansion-panel title="вызов диалога типа Alert">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.alert.md']" />
-            </ld-expansion-panel>
-            <ld-expansion-panel title="вызов диалога типа Prompt">
+            </b-expansion-panel>
+            <b-expansion-panel title="вызов диалога типа Prompt">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.prompt.md']" />
-            </ld-expansion-panel>
-            <ld-expansion-panel title="вызов диалога типа Confirm">
+            </b-expansion-panel>
+            <b-expansion-panel title="вызов диалога типа Confirm">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.confirm.md']" />
-            </ld-expansion-panel>
-            <ld-expansion-panel title="вызов диалога типа Info">
+            </b-expansion-panel>
+            <b-expansion-panel title="вызов диалога типа Info">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.info.md']" />
-            </ld-expansion-panel>
-            <ld-expansion-panel title="вызов диалога типа Select">
+            </b-expansion-panel>
+            <b-expansion-panel title="вызов диалога типа Select">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.select.md']" />
-            </ld-expansion-panel>
-            <ld-expansion-panel title="вызов диалога типа CreateEdit">
+            </b-expansion-panel>
+            <b-expansion-panel title="вызов диалога типа CreateEdit">
               <markdown-to-html v-if="!templatesLoading" :template="templates['dialogs.create.md']" />
-            </ld-expansion-panel>
-          </ld-expansion-panels>
-        </ld-tab>
-      </ld-tabs>
+            </b-expansion-panel>
+          </b-expansion-panels>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/typedef, @typescript-eslint/naming-convention  */
-import { delay } from '@dn-web/core';
-import { DialogManager } from '@/ld-dialog/dialog.manager';
+import { DialogManager } from '@/b-dialog/dialog.manager';
 import {
   AlertDialog,
   ConfirmDialog,
@@ -153,7 +152,7 @@ import {
   InfoDialog,
   PromptDialog,
   SelectDialog,
-} from '@/ld-dialog/dialogs';
+} from '@/b-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
 export default {
   data(): {
@@ -264,6 +263,8 @@ export default {
           content: this.confirm.textAsTitle ? null : 'Выполнить действие?',
           okResult: this.confirm.okResult || true,
           cancelResult: this.confirm.cancelResult || false,
+          okColor: 'error',
+          cancelColor: 'grey',
         })
       );
     },
@@ -298,7 +299,7 @@ export default {
           fullHeight: true,
         }),
         async () => {
-          await delay(1500);
+          await this.$utils.delay(1500);
           return fetch('/mock.json')
             .then(result => result.json())
             .then(data => ({
@@ -319,6 +320,7 @@ export default {
             model: null,
           },
           help: true,
+          okColor: 'success',
         })
       );
       if (res) {
@@ -333,14 +335,14 @@ export default {
           componentProps: {
             model: null,
           },
-          darkTitle: true,
           expandable: true,
           minimizable: true,
           loading: true,
           help: true,
+          okColor: 'success',
         }),
         async () => {
-          await delay(1000);
+          await this.$utils.delay(1000);
           return {
             model: this.edit.model,
           };

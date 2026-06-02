@@ -1,8 +1,38 @@
 <template>
   <v-app :aria-tab="currentTab ? currentTab.name : ''">
+    <!-- <transition :name="prevTab && prevTab.name === 'Home' ? 'slide-toolbar' : 'disabled'">
+      <ld-page-toolbar
+        v-if="currentTab && currentTab.name !== 'Home'"
+        :no-back-action="true"
+        style="background-color: var(--grey-d-2)"
+      >
+        <template #breadcrumbs>
+          <b-breadcrumbs :breadcrumbs="breadcrumbs" theme="light" />
+        </template>
+        <template #content>
+          <span class="font-weight-bold white--text">LDM UI</span>
+        </template>
+        <template #action-panel>
+          <div style="width: 200px">
+            <b-select
+              :model-value="version"
+              :items="versions"
+              item-title="version"
+              item-value="version"
+              hide-details
+              @update:model-value="goToVersion"
+            >
+              <template #title="{ item }">
+                <span>version: {{ item.version }}</span>
+              </template>
+            </b-select>
+          </div>
+        </template>
+      </ld-page-toolbar>
+    </transition> -->
     <div style="position: relative; flex-basis: 100%; overflow: hidden">
       <loader :visible="!currentTab" />
-      <ld-tabs
+      <b-tabs
         v-if="currentTab"
         :model-value="currentTab.id"
         :mobile="false"
@@ -12,7 +42,7 @@
         @update:model-value="onTab"
       >
         <template v-for="(tab, i) in tabs">
-          <ld-tab :index="i" :readonly="tab.disabled" :heading="tab.name">
+          <b-tab :index="i" :readonly="tab.disabled" :heading="tab.name">
             <template #header>
               <strong v-if="tab.disabled" style="letter-spacing: 1px; color: var(--secondary-l-1)">
                 - {{ tab.name }}
@@ -41,17 +71,26 @@
                 </v-row>
               </v-container>
             </template>
-          </ld-tab>
+          </b-tab>
         </template>
-      </ld-tabs>
+      </b-tabs>
       <div
         class="white--text d-flex align-center justify-center"
         style="position: absolute; bottom: 0; left: 0; height: 24px; margin-left: 24px; width: 13%"
       >
-        <ld-button text color="white" style="opacity: 0.7"> v. {{ version }} </ld-button>
+        <v-menu location="top">
+          <template #activator="{ props }">
+            <b-button text color="white" v-bind="props" style="opacity: 0.7"> v. {{ version }} </b-button>
+          </template>
+          <v-list>
+            <v-list-item v-for="item in versions" :key="item.version" @click="goToVersion(item.version)">
+              <v-list-item-title> version {{ item.version }} </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </div>
     </div>
-    <ld-dialog />
+    <b-dialog />
   </v-app>
 </template>
 <script lang="ts" src="./index.ts"></script>

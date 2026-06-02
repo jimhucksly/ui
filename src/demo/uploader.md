@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-uploader
+<b-uploader
   v-model="files"
   label="Обязательно к заполнению"
   method="POST"
@@ -22,6 +22,7 @@
   :multiple="multiple"
   :lazy="lazy"
   :as-input="asInput"
+  :full-height="fullHeight"
   @input="onInput"
   @change="onChange"
   @complete="onComplete"
@@ -32,7 +33,7 @@
   <template #actions-list="{ file }">
     <!-- для размещеня выпадающего меню с действиями -->
   </template>
-</ld-uploader>
+</b-uploader>
 ```
 # end of cols
 # cols[6]
@@ -54,6 +55,7 @@ hideDetails: boolean // скрытие подсказки под дроп-обл
 max: number // максимально допустимы размер файла в байтах
 size: 's' | 'm' | 'l' // размер компонента
 fluid: boolean // установка ширины в 100%
+fullHeight: boolean // установка высоты в 100%
 accept: string // перечисление разрешенных файлов
 multiple: boolean // выбор нескольких файлов
 lazy: boolean // выбранные файлы не будут сразу отправлены, будут ожидать нажатия кнопки

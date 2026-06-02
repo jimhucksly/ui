@@ -1,5 +1,5 @@
 ```html
-<ld-step :items="items" :direction="direction" />
+<b-step :items="items" :direction="direction" />
 ```
 * Props
 ```js

@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-select-list-box
+<b-select-list-box
   v-model="value"
   v-model:model-items="selected"
   label="Ld Select List Box"
@@ -25,7 +25,7 @@
     tooltip: 'input tooltip'
   }"
 >
-  <template #tag="{ item, canRemove, onRemove }">
+  <template #tag="{ item, index, limit, canRemove, onRemove }">
     ...
   </template>
   <template #tag-overflow="{ limit, count }">
@@ -43,7 +43,7 @@
   <template #icon="{ focus }">
     ...
   </template>
-</ld-select-list-box>
+</b-select-list-box>
 ```
 # end of cols
 # cols[6]

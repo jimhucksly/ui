@@ -2,11 +2,11 @@
   <v-container class="d-flex flex-column">
     <content-header>Switch</content-header>
     <content-body h="400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6" class="pl-4">
-              <ld-switch
+              <b-switch
                 label="Ld Switch"
                 v-model="value"
                 :disabled="disabled"
@@ -27,28 +27,28 @@
               <div class="my-7">Value: {{ value }}</div>
             </v-col>
             <v-col cols="3">
-              <ld-switch label="readonly" v-model="readonly" hide-details />
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="hint" v-model="hint" hide-details />
-              <ld-radiogroup v-model="size" label="size" label-on-top hide-details>
-                <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-switch label="readonly" v-model="readonly" hide-details />
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="hint" v-model="hint" hide-details />
+              <b-radiogroup v-model="size" label="size" label-on-top hide-details>
+                <b-radiobutton value="s" label="small"></b-radiobutton>
+                <b-radiobutton value="m" label="medium"></b-radiobutton>
+                <b-radiobutton value="l" label="large"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="help" label="help" label-on-top hide-details>
-                <ld-radiobutton :value="0" label="None"></ld-radiobutton>
-                <ld-radiobutton :value="1" label="Tooltip"></ld-radiobutton>
-                <ld-radiobutton :value="2" label="Link"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="help" label="help" label-on-top hide-details>
+                <b-radiobutton :value="0" label="None"></b-radiobutton>
+                <b-radiobutton :value="1" label="Tooltip"></b-radiobutton>
+                <b-radiobutton :value="2" label="Link"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['switch.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

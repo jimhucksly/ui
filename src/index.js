@@ -1,19 +1,102 @@
 const path = require('path');
 const fs = require('fs');
 
+const config = require('./index.config.json');
+const map = config.map;
+const exclude = config.exclude;
+
+class Utils {
+  getExtension = (filename) => {
+    if (!filename) {
+      return '';
+    }
+    return filename.slice(((filename.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase();
+  }
+
+  getFileName = (filename) => {
+    if (!filename) {
+      return '';
+    }
+    const extension = this.getExtension(filename);
+    return filename.slice(0, -extension.length - 1);
+  }
+}
+
+const replaceByMap = (file) => {
+  let data = fs.readFileSync(file, { encoding: 'utf-8' });
+  for (const m of map) {
+    const regexp = new RegExp(m[0], 'gm');
+    data = data.replace(regexp, m[1]);
+  }
+  return data;
+}
+
+const copyDir = (src, dest) => {
+  let entries = fs.readdirSync(src, { recursive: true, withFileTypes: true });
+  for (let entry of entries) {
+    let srcPath = path.join(entry.path, entry.name);
+    let destPath = srcPath.replace(src, dest);
+    let destDir = path.dirname(destPath);
+
+    if (entry.isFile()) {
+      fs.mkdirSync(destDir, { recursive: true })
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+const copyFiles = (src, dest) => {
+  let entries = fs.readdirSync(src, { recursive: true, withFileTypes: true });
+  for (let entry of entries) {
+    let srcPath = path.join(entry.path, entry.name);
+    let destPath = path.join(dest, entry.name);
+    let destDir = path.dirname(destPath);
+    if (entry.isFile()) {
+      fs.mkdirSync(destDir, { recursive: true })
+      const data = replaceByMap(srcPath);
+      fs.writeFile(destPath, data, err => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  }
+}
+
 (function () {
-  const config = require('./index.config.json');
-  const map = config.map;
   const fromPath = path.resolve(__dirname, '../__barahlo');
   const toPath = path.resolve(__dirname, './');
 
-  const replaceByMap = (file) => {
-    let data = fs.readFileSync(file, { encoding: 'utf-8' });
-    for (const m of map) {
-      const regexp = new RegExp(m[0], 'gm');
-      data = data.replace(regexp, m[1]);
+  const copyDemo = () => {
+    const files = fs.readdirSync(path.resolve(fromPath, './demo'));
+    const dir = path.resolve(toPath, './demo');
+    for (const f of files) {
+      const stat = fs.lstatSync(path.resolve(fromPath, './demo' + '/' + f));
+      if (stat.isDirectory()) {
+        const srcPath = path.resolve(fromPath, './demo' + '/' + f);
+        const destPath = path.resolve(toPath, './demo' + '/' + f)
+        if (['fonts', 'img', 'scss', 'mixins'].includes(f)) {
+          copyDir(srcPath, destPath);
+        } else {
+          copyFiles(srcPath, destPath);
+        }
+      } else {
+        const fname = new Utils().getFileName(f);
+        if (exclude.some(e => fname.indexOf(e) > -1)) {
+          continue;
+        }
+        const data = replaceByMap(path.resolve(fromPath, './demo' + '/' + f));
+        const exist = fs.existsSync(dir);
+        if (!exist) {
+          fs.mkdirSync(dir);
+        }
+        fs.writeFile(path.resolve(toPath, './demo' + '/' + f), data, err => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
     }
-    return data;
   }
 
   const copyScss = () => {
@@ -32,21 +115,6 @@ const fs = require('fs');
       });
     }
   }
-
-  const copyDir = (src, dest) => {
-    let entries = fs.readdirSync(src, { recursive: true, withFileTypes: true });
-
-    for (let entry of entries) {
-      let srcPath = path.join(entry.path, entry.name);
-      let destPath = srcPath.replace(src, dest);
-      let destDir = path.dirname(destPath);
-
-      if (entry.isFile()) {
-        fs.mkdirSync(destDir, { recursive: true })
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-}
 
   const copy = (f) => {
     const files = fs.readdirSync(path.resolve(fromPath, './' + f));
@@ -101,6 +169,22 @@ const fs = require('fs');
           });
         } else {
           copyScss();
+        }
+        return;
+      }
+      // copy demo
+      if (f === 'demo') {
+        const dir = path.resolve(toPath, './' + f);
+        const exist = fs.existsSync(dir);
+        if (exist) {
+          fs.rm(dir, { recursive: true, force: true }, err => {
+            if (err) {
+              throw err;
+            }
+            copyDemo();
+          });
+        } else {
+          copyDemo();
         }
         return;
       }

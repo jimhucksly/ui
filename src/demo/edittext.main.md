@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-edit-text
+<b-edit-text
   v-model="value"
   label="Ld Edit Text"
   input-hint="edit text input hint"
@@ -17,7 +17,14 @@
   :size="size"
   :color="color"
   :help="{ tooltip: 'tooltip text' }"
-/>
+>
+  <template #prepend-inner>
+    ...
+  </template>
+  <template #append-inner>
+    ...
+  </template>
+</b-edit-text>
 ```
 # end of cols
 # cols[6]

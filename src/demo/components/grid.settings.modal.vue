@@ -1,10 +1,10 @@
 <template>
-  <ld-expansion-panels v-model="panel" multiple>
-    <ld-expansion-panel title="Общие">
+  <b-expansion-panels v-model="panel" multiple>
+    <b-expansion-panel title="Общие">
       <v-container class="pa-0">
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch
+            <b-switch
               label="Многоуровневая сортировка"
               v-model="model.multisort"
               :disabled="isMultisortDisabled"
@@ -14,22 +14,22 @@
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch label="Отображение чекбоксов" v-model="model.checkboxable" hide-details />
+            <b-switch label="Отображение чекбоксов" v-model="model.checkboxable" hide-details />
           </v-col>
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch label="Нумерация строк" v-model="model.enumerable" hide-details />
+            <b-switch label="Нумерация строк" v-model="model.enumerable" hide-details />
           </v-col>
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch label="Раскрасить строки :)" v-model="model.colorized" hide-details />
+            <b-switch label="Раскрасить строки :)" v-model="model.colorized" hide-details />
           </v-col>
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch
+            <b-switch
               label="Иерархический список"
               v-model="model.hierarchical"
               :disabled="isHierarchicDisabled"
@@ -39,41 +39,41 @@
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-switch label="Перетаскивание строк" v-model="model.draggable" hide-details />
+            <b-switch label="Перетаскивание строк" v-model="model.draggable" hide-details />
           </v-col>
         </v-row>
         <v-row no-gutters class="mb-2">
           <v-col>
-            <ld-radiogroup v-model="model.size" label="Высота строки" hide-details>
-              <ld-radiobutton value="s" label="s (32px)"></ld-radiobutton>
-              <ld-radiobutton value="m" label="m (52px)"></ld-radiobutton>
-              <ld-radiobutton value="l" label="l (72px)"></ld-radiobutton>
-            </ld-radiogroup>
+            <b-radiogroup v-model="model.size" label="Высота строки" hide-details>
+              <b-radiobutton value="s" label="s (32px)"></b-radiobutton>
+              <b-radiobutton value="m" label="m (52px)"></b-radiobutton>
+              <b-radiobutton value="l" label="l (72px)"></b-radiobutton>
+            </b-radiogroup>
           </v-col>
         </v-row>
       </v-container>
-    </ld-expansion-panel>
-    <ld-expansion-panel title="Столбцы">
+    </b-expansion-panel>
+    <b-expansion-panel title="Столбцы">
       <ld-datatable :virtualization="false" size="s" column-mode="flex" :rows="columns" :columns="cols">
         <template #cell="{ column, row, value }">
-          <ld-switch v-if="column.prop === 'name'" :label="value" v-model="row.visible"> </ld-switch>
+          <b-switch v-if="column.prop === 'name'" :label="value" v-model="row.visible"> </b-switch>
           <div v-if="column.prop === 'a'">
-            <ld-checkbox
+            <b-checkbox
               v-model="row.group"
               :disabled="model.hierarchical"
               @update:model-value="onGroup($event, row)"
             />
           </div>
           <div v-if="column.prop === 'b'">
-            <ld-checkbox v-model="row.frozenLeft" :disabled="row.frozenRight" />
+            <b-checkbox v-model="row.frozenLeft" :disabled="row.frozenRight" />
           </div>
           <div v-if="column.prop === 'c'">
-            <ld-checkbox v-model="row.frozenRight" :disabled="row.frozenLeft" />
+            <b-checkbox v-model="row.frozenRight" :disabled="row.frozenLeft" />
           </div>
         </template>
       </ld-datatable>
-    </ld-expansion-panel>
-  </ld-expansion-panels>
+    </b-expansion-panel>
+  </b-expansion-panels>
 </template>
 <script lang="ts">
 export default {

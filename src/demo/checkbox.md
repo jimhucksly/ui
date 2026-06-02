@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-checkbox
+<b-checkbox
   v-model="checkeds"
   :checked-value="+"
   :unchecked-value="-"

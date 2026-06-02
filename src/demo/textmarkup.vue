@@ -2,11 +2,11 @@
   <v-container class="d-flex flex-column">
     <content-header>Markdown editor</content-header>
     <content-body h="350">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
-              <ld-text-markup
+              <b-text-markup
                 v-model="value"
                 label="Ld Text Markup"
                 persistent-hint
@@ -25,23 +25,23 @@
               />
             </v-col>
             <v-col cols="3" class="d-flex flex-column">
-              <ld-switch label="readonly" v-model="readonly" hide-details />
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="preview" v-model="preview" hide-details />
+              <b-switch label="readonly" v-model="readonly" hide-details />
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="preview" v-model="preview" hide-details />
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="help" label="help" label-on-top hide-details>
-                <ld-radiobutton :value="0" label="None"></ld-radiobutton>
-                <ld-radiobutton :value="1" label="Tooltip"></ld-radiobutton>
-                <ld-radiobutton :value="2" label="Link"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="help" label="help" label-on-top hide-details>
+                <b-radiobutton :value="0" label="None"></b-radiobutton>
+                <b-radiobutton :value="1" label="Tooltip"></b-radiobutton>
+                <b-radiobutton :value="2" label="Link"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['textmarkup.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

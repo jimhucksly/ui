@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-combobox
+<b-combobox
   v-model="value"
   v-model:model-items="selected"
   label="Ld Combobox"
@@ -25,7 +25,7 @@
     tooltip: 'input tooltip'
   }"
 >
-  <template #tag="{ item, canRemove, onRemove }">
+  <template #tag="{ item, index, limit, canRemove, onRemove }">
     ...
   </template>
   <template #tag-overflow="{ limit, count }">
@@ -40,7 +40,7 @@
   <template #option-hint="{ item, isSelected, searchText }">
     ...
   </template>
-</ld-combobox>
+</b-combobox>
 ```
 # end of cols
 # cols[6]

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/typedef */
 import { mixins, Options, Prop, Provide } from 'vue-property-decorator';
 import { ValidateMixin } from '@/mixins/validate.mixin';
 import { IBreadcrumbsItem } from '@/types/breadcrumbs';
 import Test from './__test.vue';
+import Avatar from './avatar.vue';
 import Badge from './badge.vue';
 import Breadcrumbs from './breadcrumbs.vue';
 import Buttons from './buttons.vue';
@@ -10,9 +12,11 @@ import Checkbox from './checkbox.vue';
 import Chip from './chip.vue';
 import Colors from './colors.vue';
 import ComboBox from './combobox.vue';
+import Datatable from './datatable.vue';
 import DatePicker from './datepicker.vue';
 import DateRange from './daterange.vue';
 import Dialogs from './dialogs.vue';
+import EditListBox from './editlistbox.vue';
 import Editor from './editor.vue';
 import Edittext from './edittext.vue';
 import EventBus from './eventBus.vue';
@@ -22,8 +26,10 @@ import Home from './home.vue';
 import Locale from './i18n.vue';
 import Icons from './icons.vue';
 import Installation from './installation.vue';
+import Iterator from './iterator.vue';
 import Loader from './loader.vue';
 import Pager from './pager.vue';
+import PageToolbar from './pagetoolbar.vue';
 import Progress from './progress.vue';
 import Radiobutton from './radiobutton.vue';
 import Scroll from './scroll.vue';
@@ -41,7 +47,10 @@ import TimePicker from './timepicker.vue';
 import Toast from './toast.vue';
 import Toggle from './toggle.vue';
 import Tooltip from './tooltip.vue';
+import TreeView from './treeview.vue';
+import Upgrade from './upgrade.vue';
 import Uploader from './uploader.vue';
+import Utils from './utils.vue';
 import Validation from './validation.vue';
 
 interface ITab {
@@ -60,6 +69,7 @@ interface ITab {
     Colors,
     Fonts,
     Scroll,
+    Avatar,
     Breadcrumbs,
     Buttons,
     Chip,
@@ -71,6 +81,7 @@ interface ITab {
     'select-demo': SelectBox,
     combobox: ComboBox,
     selectlistbox: SelectListBox,
+    editlistbox: EditListBox,
     'text-area': Textarea,
     'text-markup': TextMarkup,
     datepicker: DatePicker,
@@ -83,23 +94,30 @@ interface ITab {
     Splitter,
     Tabs,
     Toggle,
+    PageToolbar,
     'loader-demo': Loader,
     Progress,
+    Datatable,
+    treeview: TreeView,
     Editor,
     Toast,
     Stepper,
     EventBus,
     dialogs: Dialogs,
+    Iterator,
     Pager,
+    Utils,
     'form-validation': Validation,
     locale: Locale,
     Test,
     Tooltip,
+    Upgrade,
     Expansions,
   },
 })
 export default class Index extends mixins(ValidateMixin) {
   @Prop() version: string;
+  @Prop() versions: Array<{ version: string; url: string }>;
   @Prop() icons: Array<string>;
 
   tag: string = null;
@@ -139,6 +157,7 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Chip' },
     { name: 'Badge' },
     { name: 'Stepper' },
+    { name: 'TextViewer' },
     { name: 'Navigation', disabled: true },
     { name: 'Breadcrumbs' },
     { name: 'Pager' },
@@ -147,6 +166,9 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Expansions' },
     { name: 'Splitter' },
     { name: 'Page Toolbar' },
+    { name: 'TreeView' },
+    { name: 'Datatable' },
+    { name: 'Iterator' },
     { name: 'Interactive', disabled: true },
     { name: 'Dialog', component: 'dialogs' },
     { name: 'Toast' },
@@ -155,6 +177,8 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Progress' },
     { name: 'Subscription', disabled: true },
     { name: 'Event Bus' },
+    { name: 'Utilities', disabled: true },
+    { name: 'Utils' },
     { name: 'Validation', disabled: true },
     { name: 'Form validation' },
     { name: 'Localization', disabled: true },
@@ -172,7 +196,8 @@ export default class Index extends mixins(ValidateMixin) {
   @Provide({ reactive: true }) iconsList: Array<string> = null;
 
   mounted() {
-    if (this.isDev) {
+    // eslint-disable-next-line no-undef
+    if ($DEV) {
       this.tabs.push({
         name: '__test__',
         component: 'Test',
@@ -256,6 +281,15 @@ export default class Index extends mixins(ValidateMixin) {
     return name.replace(/[^\w]/g, '-').toLowerCase();
   }
 
+  goToVersion(value: unknown) {
+    if (value !== this.version) {
+      const found = this.versions.find(v => v.version === value);
+      if (found) {
+        window.location.href = found.url;
+      }
+    }
+  }
+
   get currentTab(): ITab {
     if (this.tag) {
       return this.tabs.find((t: ITab) => t.tag === this.tag);
@@ -266,7 +300,7 @@ export default class Index extends mixins(ValidateMixin) {
   get breadcrumbs(): Array<IBreadcrumbsItem> {
     const items = [
       {
-        text: 'DN WEB UI',
+        text: 'LDM UI',
         route: {
           path: '/',
         },

@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-text-markup
+<b-text-markup
   v-model="value"
   v-model:preview="preview"
   label="Ld Text Markup"

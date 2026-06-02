@@ -1,6 +1,6 @@
  # cols[6]
  ```html
-<ld-toggle-buttons
+<b-toggle-buttons
   v-model="value"
   :items="items"
   :disabled="disabled"

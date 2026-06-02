@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-timepicker
+<b-timepicker
   v-model="value"
   label="Ld Timepicker"
   :label-on-top="labelOnTop"

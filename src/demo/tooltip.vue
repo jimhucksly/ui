@@ -2,8 +2,8 @@
   <v-container class="d-flex flex-column">
     <content-header>Tooltips</content-header>
     <content-body h="400">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
               <v-tooltip
@@ -34,9 +34,9 @@
                       Popover content
                     </span>
                     <v-spacer></v-spacer>
-                    <ld-button icon text :color="theme === 'dark' ? 'white' : 'grey'" @click="show = false">
-                      <ld-icon>close</ld-icon>
-                    </ld-button>
+                    <b-button icon text :color="theme === 'dark' ? 'white' : 'grey'" @click="show = false">
+                      <b-icon>close</b-icon>
+                    </b-button>
                   </div>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae, aperiam atque voluptatibus quibusdam
                   architecto cumque. Voluptas, provident minus ducimus rem aspernatur error. Veritatis minima possimus
@@ -49,28 +49,28 @@
               </v-tooltip>
             </v-col>
             <v-col cols="3">
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="open on click" v-model="openOnClick" hide-details />
-              <ld-radiogroup v-model="location" label="location" label-on-top hide-details>
-                <ld-radiobutton value="top" label="top"></ld-radiobutton>
-                <ld-radiobutton value="bottom" label="bottom"></ld-radiobutton>
-                <ld-radiobutton value="start" label="left"></ld-radiobutton>
-                <ld-radiobutton value="end" label="right"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-button @click="show = !show">Toggle</ld-button>
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="open on click" v-model="openOnClick" hide-details />
+              <b-radiogroup v-model="location" label="location" label-on-top hide-details>
+                <b-radiobutton value="top" label="top"></b-radiobutton>
+                <b-radiobutton value="bottom" label="bottom"></b-radiobutton>
+                <b-radiobutton value="start" label="left"></b-radiobutton>
+                <b-radiobutton value="end" label="right"></b-radiobutton>
+              </b-radiogroup>
+              <b-button @click="show = !show">Toggle</b-button>
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="theme" label="theme" label-on-top hide-details>
-                <ld-radiobutton value="dark" label="dark"></ld-radiobutton>
-                <ld-radiobutton value="light" label="light"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="theme" label="theme" label-on-top hide-details>
+                <b-radiobutton value="dark" label="dark"></b-radiobutton>
+                <b-radiobutton value="light" label="light"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['tooltip.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

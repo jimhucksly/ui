@@ -7,13 +7,13 @@
       </template>
     </content-header>
     <content-body h="650">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
               <v-row>
                 <v-col>
-                  <ld-select
+                  <b-select
                     v-model="value"
                     v-model:model-items="selected"
                     :items="items"
@@ -34,6 +34,7 @@
                     :size="size"
                     :color="color"
                     :option-hint="optionHint"
+                    :placeholder="placeholder ? 'Выберите из списка' : undefined"
                     :limit="3"
                     :help="
                       help
@@ -54,7 +55,7 @@
                       </ld-avatar>
                       <template v-else>
                         <div class="d-flex align-center">
-                          <ld-icon color="grey" class="mr-1" v-if="icons">user</ld-icon>
+                          <b-icon color="grey" class="mr-1" v-if="icons">user</b-icon>
                           <span> {{ item.first_name }}</span>
                         </div>
                       </template>
@@ -62,7 +63,7 @@
                     <template #option-hint="{ item }">
                       <span :style="{ 'padding-left': icons ? '28px' : 0 }">{{ item.gender }}</span>
                     </template>
-                  </ld-select>
+                  </b-select>
                 </v-col>
               </v-row>
               <v-row>
@@ -70,43 +71,44 @@
               </v-row>
             </v-col>
             <v-col cols="3" class="d-flex flex-column">
-              <ld-switch label="readonly" v-model="readonly" hide-details />
-              <ld-switch label="disabled" v-model="disabled" hide-details />
-              <ld-switch label="multiselect" v-model="multiselect" hide-details />
-              <ld-switch label="required" v-model="required" hide-details />
-              <ld-switch label="return object" v-model="returnObject" hide-details />
-              <ld-switch label="chips" v-model="chips" hide-details />
-              <ld-switch label="closableChips" v-model="closableChips" hide-details />
-              <ld-switch label="hideDetails" v-model="hideDetails" hide-details />
-              <ld-switch label="input hint" v-model="inputHint" hide-details />
-              <ld-switch label="option hint" v-model="optionHint" hide-details />
-              <ld-switch label="avatar as list item" v-model="avatar" hide-details />
-              <ld-switch label="show icons" v-model="icons" hide-details />
-              <ld-switch label="label on top" v-model="labelOnTop" hide-details />
+              <b-switch label="readonly" v-model="readonly" hide-details />
+              <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="multiselect" v-model="multiselect" hide-details />
+              <b-switch label="required" v-model="required" hide-details />
+              <b-switch label="return object" v-model="returnObject" hide-details />
+              <b-switch label="chips" v-model="chips" hide-details />
+              <b-switch label="closableChips" v-model="closableChips" hide-details />
+              <b-switch label="hideDetails" v-model="hideDetails" hide-details />
+              <b-switch label="input hint" v-model="inputHint" hide-details />
+              <b-switch label="option hint" v-model="optionHint" hide-details />
+              <b-switch label="avatar as list item" v-model="avatar" hide-details />
+              <b-switch label="show icons" v-model="icons" hide-details />
+              <b-switch label="label on top" v-model="labelOnTop" hide-details />
+              <b-switch label="placeholder" v-model="placeholder" hide-details />
             </v-col>
             <v-col cols="3">
-              <ld-radiogroup v-model="help" label="help" label-on-top hide-details>
-                <ld-radiobutton :value="0" label="None"></ld-radiobutton>
-                <ld-radiobutton :value="1" label="Tooltip"></ld-radiobutton>
-                <ld-radiobutton :value="2" label="Link"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="size" label="size" label-on-top hide-details>
-                <ld-radiobutton value="s" label="small"></ld-radiobutton>
-                <ld-radiobutton value="m" label="medium"></ld-radiobutton>
-                <ld-radiobutton value="l" label="large"></ld-radiobutton>
-              </ld-radiogroup>
-              <ld-radiogroup v-model="color" label="color" label-on-top hide-details>
-                <ld-radiobutton value="grey" label="grey"></ld-radiobutton>
-                <ld-radiobutton value="success" label="success"></ld-radiobutton>
-                <ld-radiobutton value="error" label="error"></ld-radiobutton>
-              </ld-radiogroup>
+              <b-radiogroup v-model="help" label="help" label-on-top hide-details>
+                <b-radiobutton :value="0" label="None"></b-radiobutton>
+                <b-radiobutton :value="1" label="Tooltip"></b-radiobutton>
+                <b-radiobutton :value="2" label="Link"></b-radiobutton>
+              </b-radiogroup>
+              <b-radiogroup v-model="size" label="size" label-on-top hide-details>
+                <b-radiobutton value="s" label="small"></b-radiobutton>
+                <b-radiobutton value="m" label="medium"></b-radiobutton>
+                <b-radiobutton value="l" label="large"></b-radiobutton>
+              </b-radiogroup>
+              <b-radiogroup v-model="color" label="color" label-on-top hide-details>
+                <b-radiobutton value="grey" label="grey"></b-radiobutton>
+                <b-radiobutton value="success" label="success"></b-radiobutton>
+                <b-radiobutton value="error" label="error"></b-radiobutton>
+              </b-radiogroup>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['select.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
@@ -116,7 +118,7 @@ import markdownToHTML from './mixins/markdownToHTML';
 export default {
   data() {
     return {
-      value: 2,
+      value: null,
       selected: [],
       items: [],
       multiselect: false,
@@ -135,6 +137,7 @@ export default {
       icons: false,
       optionHint: false,
       labelOnTop: false,
+      placeholder: false,
     };
   },
   inject: ['tabProps'],

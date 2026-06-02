@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-edit-text
+<b-edit-text
   v-model="editNumbers.value"
   :only-numbers="true"
   label="Ld Edit Numbers"

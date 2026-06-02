@@ -1,20 +1,21 @@
 # cols[6]
 ```html
-<ld-button
+<b-button
   :color="color"
   :variant="variant"
   :loading="loading"
   :disabled="disabled"
-  :icon="false"
-  :text="false"
+  :icon="icon"
+  :text="text"
+  :block="block"
   :tooltip="true"
   :tooltip-text="tooltipText"
   size="s"
   @click="onClick"
 >
-  <ld-icon>add</ld-icon>
+  <b-icon>add</b-icon>
   <span>Small button</span>
-</ld-button>
+</b-button>
 ```
 # end of cols
 # cols[6]
@@ -25,6 +26,7 @@
 - loading: boolean // оторажение лоадера
 - icon: boolean // режим отображения с равными шириной и высотой
 - text: boolean // отображаение без фона
+- block: boolean // устанавливает 100% ширины
  /**
  * включение / отключение тултипа
  * работает только в режиме icon=true

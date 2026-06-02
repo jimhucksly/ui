@@ -1,6 +1,6 @@
 # cols[6]
 ```html
-<ld-chip
+<b-chip
   :closable="closable"
   :clickable="clickable"
   :disabled="disabled"
@@ -12,10 +12,10 @@
   @click:close="onClose"
 >
   <template #prepend>
-    <ld-icon>account</ld-icon>
+    <b-icon>account</b-icon>
   </template>
   <template #default>Chip</template>
-</ld-chip>
+</b-chip>
 ```
 # end of cols
 # cols[6]

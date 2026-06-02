@@ -1,5 +1,5 @@
 ```html
-<ld-edit-text
+<b-edit-text
   type="password"
   v-model="model"
   v-model:value="password"

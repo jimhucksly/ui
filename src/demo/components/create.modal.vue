@@ -2,9 +2,9 @@
   <v-container class="h-100 pb-0 px-0">
     <v-row>
       <v-col class="d-flex flex-column">
-        <ld-edit-text v-model="first_name" label="First Name" label-on-top required />
-        <ld-edit-text v-model="last_name" label="Last Name" label-on-top required />
-        <ld-select-list-box
+        <b-edit-text v-model="first_name" label="First Name" label-on-top required />
+        <b-edit-text v-model="last_name" label="Last Name" label-on-top required />
+        <b-select-list-box
           v-model="city"
           label="City"
           item-value="city"
@@ -41,10 +41,10 @@
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/typedef */
-import { delay } from '@dn-web/core';
-import { DialogManager } from '@/ld-dialog/dialog.manager';
-import { SelectDialog } from '@/ld-dialog/dialogs';
+import { DialogManager } from '@/b-dialog/dialog.manager';
+import { SelectDialog } from '@/b-dialog/dialogs';
 import { ValidateMixinOptions } from '@/mixins/validate.mixin';
+import { delay } from '@/utils';
 interface IRow {
   id: number;
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -113,7 +113,7 @@ export default {
       if (this.mockData) {
         return this.mockData;
       }
-      await delay(1000);
+      await this.$utils.delay(1000);
       return fetch('/mock.json')
         .then(response => response.json())
         .then(data => {
@@ -125,9 +125,12 @@ export default {
       if (this.mockCities) {
         return this.mockCities;
       }
-      await delay(1000);
+      await this.$utils.delay(1000);
       return this.fetchMock().then((data: Array<IRow>) => {
-        const result = Array.from(new Set(data.map((el: { city: string }) => el.city))).map(el => ({ city: el }));
+        const result = Array.from(new Set(data.map((el: { city: string }) => el.city))).map(el => ({
+          city: el,
+          id: el,
+        }));
         this.mockCities = result;
         return result;
       });
@@ -146,7 +149,7 @@ export default {
             disabledItems: [],
             multiselect: false,
           },
-          selectAsOk: true,
+          selectAsOk: false,
           fullHeight: true,
         }),
         () =>

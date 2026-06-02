@@ -2,25 +2,25 @@
   <v-container class="d-flex flex-column">
     <content-header>Stepper</content-header>
     <content-body h="800">
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="7" class="pl-4">
-              <ld-step :items="items" :direction="direction" />
+              <b-step :items="items" :direction="direction" />
             </v-col>
             <v-col cols="5">
-              <ld-radiogroup v-model="direction" label="direction" label-on-top class="mb-1" hide-details>
-                <ld-radiobutton value="v" label="vertical" />
-                <ld-radiobutton value="h" label="horizontal" />
-              </ld-radiogroup>
-              <ld-switch label="disabled" v-model="disabled" hide-details />
+              <b-radiogroup v-model="direction" label="direction" label-on-top class="mb-1" hide-details>
+                <b-radiobutton value="v" label="vertical" />
+                <b-radiobutton value="h" label="horizontal" />
+              </b-radiogroup>
+              <b-switch label="disabled" v-model="disabled" hide-details />
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['step.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>

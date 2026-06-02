@@ -1,6 +1,6 @@
 # cols[5]
 ```html
-<ld-pager
+<b-pager
   :options="pagerOptions"
   :to-first="toFirst"
   :to-last="toLast"
@@ -22,7 +22,7 @@
   <template #selection>
     <span>Выбрано элементов: {{ selected.length }}</span>
   </template>
-</ld-pager>
+</b-pager>
 ```
 # end of cols
 # cols[7]

@@ -9,6 +9,10 @@ params: {
   okTitle?: string;
   /* текст на кнопке Cancel */
   cancelTitle?: string;
+  /* цвет кнопки Ok */
+  okColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  /* цвет кнопки Cancel */
+  cancelColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   /* возвращаемый результат по кнопке Ok (default: true) */
   okResult?: number | string | boolean;
   /* возвращаемый результат по кнопке Cancel (default: false) */

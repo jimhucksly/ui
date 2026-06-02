@@ -2,25 +2,25 @@
   <v-container class="d-flex flex-column">
     <content-header>Icons</content-header>
     <content-body h="85vh" h-100>
-      <ld-tabs v-bind="tabProps">
-        <ld-tab index="0" heading="Playground">
+      <b-tabs v-bind="tabProps">
+        <b-tab index="0" heading="Playground">
           <v-row class="pt-3 h-100" style="overflow: hidden">
             <v-col col="12" class="d-flex flex-column h-100" style="overflow: hidden">
-              <div style="height: 55px; flex-shrink: 0" v-if="hasIcons">
-                <ld-edit-text v-model="search" :debounced="500">
+              <div style="height: 55px; flex-shrink: 0">
+                <b-edit-text v-model="search">
                   <template #prepend-inner>
-                    <ld-icon>search</ld-icon>
+                    <b-icon>search</b-icon>
                   </template>
-                </ld-edit-text>
+                </b-edit-text>
               </div>
               <div
                 style="display: grid; grid-template-columns: repeat(5, 1fr); grid-gap: 8px 16px; overflow-y: auto"
                 v-if="hasIcons"
               >
                 <div class="d-flex align-center" style="font-size: var(--font-size)" v-for="icon in filteredIcons">
-                  <ld-icon>
+                  <b-icon>
                     {{ getIconName(icon) }}
-                  </ld-icon>
+                  </b-icon>
                   <span class="px-2">{{ icon }}</span>
                 </div>
               </div>
@@ -30,11 +30,11 @@
               </div>
             </v-col>
           </v-row>
-        </ld-tab>
-        <ld-tab index="1" heading="Code">
+        </b-tab>
+        <b-tab index="1" heading="Code">
           <markdown-to-html v-if="!templatesLoading" :template="templates['icons.md']" />
-        </ld-tab>
-      </ld-tabs>
+        </b-tab>
+      </b-tabs>
     </content-body>
   </v-container>
 </template>
@@ -46,6 +46,7 @@ export default {
     return {
       page: 0,
       limit: 200,
+      timeout: null,
       search: '',
       filteredIcons: [],
     };
@@ -88,7 +89,12 @@ export default {
       },
     },
     search() {
-      this.page = 0;
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {
+        this.page = 0;
+      }, 500);
     },
     page(value) {
       if (value === 0) {
