@@ -44,7 +44,7 @@
 import { DialogManager } from '@/b-dialog/dialog.manager';
 import { SelectDialog } from '@/b-dialog/dialogs';
 import { ValidateMixinOptions } from '@/mixins/validate.mixin';
-import { delay } from '@/utils';
+import { delay } from '@dn-web/core';
 interface IRow {
   id: number;
   /* eslint-disable-next-line @typescript-eslint/naming-convention */

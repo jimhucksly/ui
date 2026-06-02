@@ -1,35 +1,5 @@
 <template>
   <v-app :aria-tab="currentTab ? currentTab.name : ''">
-    <!-- <transition :name="prevTab && prevTab.name === 'Home' ? 'slide-toolbar' : 'disabled'">
-      <ld-page-toolbar
-        v-if="currentTab && currentTab.name !== 'Home'"
-        :no-back-action="true"
-        style="background-color: var(--grey-d-2)"
-      >
-        <template #breadcrumbs>
-          <b-breadcrumbs :breadcrumbs="breadcrumbs" theme="light" />
-        </template>
-        <template #content>
-          <span class="font-weight-bold white--text">LDM UI</span>
-        </template>
-        <template #action-panel>
-          <div style="width: 200px">
-            <b-select
-              :model-value="version"
-              :items="versions"
-              item-title="version"
-              item-value="version"
-              hide-details
-              @update:model-value="goToVersion"
-            >
-              <template #title="{ item }">
-                <span>version: {{ item.version }}</span>
-              </template>
-            </b-select>
-          </div>
-        </template>
-      </ld-page-toolbar>
-    </transition> -->
     <div style="position: relative; flex-basis: 100%; overflow: hidden">
       <loader :visible="!currentTab" />
       <b-tabs

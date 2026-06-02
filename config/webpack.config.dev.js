@@ -42,7 +42,7 @@ const doAsync = async () => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: 'src/ld-icon/icons',
+            from: 'src/b-icon/icons',
             to: './icons'
           },
           {

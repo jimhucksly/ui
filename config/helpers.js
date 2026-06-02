@@ -5,7 +5,7 @@ function getComponentsList() {
   return new Promise((resolve, reject) => {
     const p = path.resolve(__dirname, '../src');
 
-    const regExp = new RegExp(/^ld-/);
+    const regExp = new RegExp(/^b-/);
 
     const list = [];
 
@@ -55,7 +55,7 @@ function getEntryList(components) {
 }
 
 function getIconsList() {
-  const p = path.resolve(__dirname, '../src/ld-icon/icons');
+  const p = path.resolve(__dirname, '../src/b-icon/icons');
 
   const list = [];
 

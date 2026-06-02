@@ -34,5 +34,5 @@
     ["ld-toggle-buttons", "b-toggle-buttons"],
     ["ld-uploader", "b-uploader"]
   ],
-  "exclude": ["avatar", "iterator", "toolbar", "datatable", "treeview", "editor", "utils"]
+  "exclude": ["avatar", "iterator", "toolbar", "datatable", "treeview", "editor", "utils", "upgrade"]
 }

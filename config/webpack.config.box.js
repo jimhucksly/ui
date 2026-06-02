@@ -39,7 +39,7 @@ module.exports = {
           to: './public/readme/[name].md'
         },
         {
-          from: 'src/ld-icon/icons',
+          from: 'src/b-icon/icons',
           to: './public/icons',
         },
         {
