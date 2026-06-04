@@ -28,11 +28,4 @@ export function startup(vue: App) {
       },
     },
   });
-
-  const favicon: HTMLLinkElement = document.querySelector('link[rel="icon"]');
-  if (favicon) {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      favicon.href = 'favicon-2.ico';
-    }
-  }
 }
