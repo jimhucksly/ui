@@ -1,4 +1,4 @@
-import { generatePalette } from '@dn-web/core';
+import { generatePalette, PaletteScheme } from '@dn-web/core';
 import { App, reactive } from 'vue';
 import { reg as bbadgeReg } from '@/b-badge';
 import { reg as bbreadcrumbsReg } from '@/b-breadcrumbs';
@@ -81,7 +81,106 @@ const uiPlugin = {
     vue.use(Toast, toastedOptions);
 
     const palette = document.createElement('style');
-    palette.innerHTML = generatePalette();
+    const scheme: PaletteScheme = [
+      {
+        name: 'primary',
+        lighten: {
+          steps: { l: [55, 64, 73, 82, 91, 95] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { h: [209, 215, 222, 228, 234], l: [46, 46, 38, 29, 20] },
+          prefix: 'd',
+        },
+        pivot: {
+          h: 202,
+          s: 66,
+          l: 46,
+          a: 100,
+        },
+      },
+      {
+        name: 'secondary',
+        lighten: {
+          steps: { l: [40, 56, 69, 80, 92] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { h: [294, 289, 283, 278], s: [41, 41, 42, 42], l: [36, 36, 35, 35] },
+          prefix: 'd',
+        },
+        pivot: {
+          h: 300,
+          s: 41,
+          l: 36,
+          a: 100,
+        },
+      },
+      {
+        name: 'success',
+        lighten: {
+          steps: { h: [128, 101, 88, 79, 75], l: [40, 45, 50, 50, 78] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { l: [28, 24, 20, 16, 12] },
+          prefix: 'd',
+        },
+        pivot: {
+          h: 140,
+          s: 100,
+          l: 35,
+          a: 100,
+        },
+      },
+      {
+        name: 'warning',
+        lighten: {
+          steps: { l: [80, 85, 90, 95], s: [99, 98, 97, 95] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { h: [49, 49, 50, 50, 50], l: [71, 62, 53, 44, 33] },
+          prefix: 'd',
+        },
+        pivot: {
+          h: 48,
+          s: 100,
+          l: 75,
+          a: 100,
+        },
+      },
+      {
+        name: 'error',
+        lighten: {
+          steps: { h: [353, 1, 8, 15, 21], l: [59, 67, 78, 88, 95] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { l: [50, 42, 34, 29, 20] },
+          prefix: 'd',
+        },
+        pivot: {
+          h: 346,
+          s: 100,
+          l: 57,
+          a: 100,
+        },
+      },
+      {
+        name: 'grey',
+        lighten: {
+          steps: { l: [71, 77, 83, 89, 93, 96] },
+          prefix: 'l',
+        },
+        darken: {
+          steps: { l: [56, 47, 38, 29, 20, 10] },
+          prefix: 'd',
+        },
+        pivot: { h: 220, s: 5, l: 65, a: 100 },
+      },
+    ];
+    palette.innerHTML = generatePalette(scheme);
     palette.id = 'dnwebui-palette';
     document.body.appendChild(palette);
 

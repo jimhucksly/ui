@@ -3,18 +3,18 @@
 
  - npm
 ```cmd
- PS D:\yourProject> npm install @dn-web/core@latest @dn-web/ui@latest @dn-web/datatable@latest @dn-web/treeview@latest
+ PS D:\yourProject> npm install @dn-web/core@latest @dn-web/ui@latest
 ```
 
  - yarn
 ```cmd
- PS D:\yourProject> yarn add @dn-web/core@latest @dn-web/ui@latest @dn-web/datatable@latest @dn-web/treeview@lates
+ PS D:\yourProject> yarn add @dn-web/core@latest @dn-web/ui@latest
 ```
 
  - install dependencies
 ```cmd
 PS D:\yourProject> yarn add vue vue-class-component@8.0.0-rc.1 vue-property-decorator@10.0.0-rc.3
-vuetify vue-screen-utils@1.0.0-beta.13 lodash-es md-editor-v3 @vuelidate/core
+vuetify vue-screen-utils@1.0.0-beta.13 lodash-es @vuelidate/core
 @vuelidate/validators markdown-it
 ```
 
