@@ -7,6 +7,7 @@
   view="linear"
   :size="size"
   :error="error"
+  :reversed="reversed"
   @complete="onComplete"
 >
   {{ label }}
@@ -22,5 +23,6 @@ value: number // значение в процентах или доли от е�
 view: string // linear (default), circular - вид
 size: string // xs, s, sm (default), m, l, xl - размер в режиме circular
 error: boolean // перекрасить в красный цвет если ошибка
+reversed: boolean // отображение элементов в обратном порядке (в режиме linear)
 ```
 # end of cols

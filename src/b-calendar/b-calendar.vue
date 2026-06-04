@@ -1,6 +1,6 @@
 <template>
   <v-date-picker
-    :class="['b-calendar', { 'b-calendar--range': isRange }]"
+    :class="['b-calendar', { 'b-calendar--range': isRange, 'b-calendar--static': static }]"
     ref="vInput"
     v-model="internalValue"
     v-model:month="currentMonth"
@@ -13,30 +13,41 @@
     :min="minDate"
     :max="maxDate"
     :view-mode="internalViewMode"
-    :show-adjacent-months="true"
+    :show-adjacent-months="static ? false : showAdjacentMonths"
     :allowed-dates="getAllowedDates"
+    :events="events"
     @update:month="onUpdateMonth"
     @update:year="onUpdateYear"
     @update:view-mode="onUpdateViewMode"
   >
     <template #controls="{ monthText, yearText, prevMonth, nextMonth, openMonths, openYears }">
       <template v-if="isMonth">
-        <button :disabled="disabled || readonly" @click="openMonths">{{ $i18n.gettext(monthText) }}</button>
-        <button :disabled="disabled || readonly" class="ml-1" @click="openYears">{{ yearText }}</button>
-        <v-spacer></v-spacer>
-        <component :is="$ui.options.aliases['b-button']" icon text :disabled="disabled || readonly" @click="prevMonth">
-          <svg-icon>arrow left</svg-icon>
-        </component>
-        <component
-          :is="$ui.options.aliases['b-button']"
-          icon
-          text
-          :disabled="disabled || readonly"
-          class="ml-4"
-          @click="nextMonth"
-        >
-          <svg-icon>arrow right</svg-icon>
-        </component>
+        <button :disabled="disabled || readonly || static" @click="openMonths">
+          {{ $i18n.gettext(monthText) }}
+        </button>
+        <button :disabled="disabled || readonly || static" class="ml-1" @click="openYears">{{ yearText }}</button>
+        <template v-if="!static">
+          <v-spacer></v-spacer>
+          <component
+            :is="$ui.options.aliases['b-button']"
+            icon
+            text
+            :disabled="disabled || readonly"
+            @click="prevMonth"
+          >
+            <svg-icon>arrow left</svg-icon>
+          </component>
+          <component
+            :is="$ui.options.aliases['b-button']"
+            icon
+            text
+            :disabled="disabled || readonly"
+            class="ml-4"
+            @click="nextMonth"
+          >
+            <svg-icon>arrow right</svg-icon>
+          </component>
+        </template>
       </template>
       <template v-if="isMonths">
         <div class="w-100 d-flex justify-center">
@@ -71,13 +82,16 @@
     <template #day="{ item, props }">
       <button
         class="b-calendar-day"
-        :class="{
-          'b-calendar-day--today': item.isToday,
-          'b-calendar-day--selected': item.isSelected,
-          'b-calendar-day--start': rangeService.isStart(item.date),
-          'b-calendar-day--end': rangeService.isEnd(item.date),
-          'b-calendar-day--in-range': rangeService.inRange(item.date),
-        }"
+        :class="[
+          {
+            'b-calendar-day--today': static ? false : item.isToday,
+            'b-calendar-day--selected': static ? false : item.isSelected,
+            'b-calendar-day--start': rangeService.isStart(item.date),
+            'b-calendar-day--end': rangeService.isEnd(item.date),
+            'b-calendar-day--in-range': rangeService.inRange(item.date),
+          },
+          getDayClasses(item),
+        ]"
         :disabled="item.isDisabled"
         @click="onClick($event, item.date, props.onClick)"
       >

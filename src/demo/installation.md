@@ -38,7 +38,7 @@ vuetify vue-screen-utils@1.0.0-beta.13 lodash-es @vuelidate/core
 
 ```js
 import '@dn-web/ui/dist/scss';
-import ldmui, { defaults } from '@dn-web/ui';
+import dnwebui, { defaults } from '@dn-web/ui';
 import { createApp, defineComponent } from 'vue';
 const root = defineComponent({
   template: '<v-app></v-app>',
@@ -48,7 +48,7 @@ const app = createApp(root);
  * Types of options, see @dn-web/ui/dist/types/options
  */
 const options = {};
-app.use(ldmui, options);
+app.use(dnwebui, options);
 const vuetify = createVuetify({
   defaults: {
     ...defaults,
@@ -73,7 +73,7 @@ aliases?: Record<string, string>;
 /**
  * можно зарегистрировать новые компоненты на основе дефолтных с передачей каких-то своих конкретных дефолтных параметров
  */
-extensions?: Array<ldmuiExtension>;
+extensions?: Array<dnwebuiExtension>;
 /**
  * переопределить язык (по умолчанию ru)
 */

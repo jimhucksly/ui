@@ -170,7 +170,7 @@ const copyFiles = (src, dest) => {
         } else {
           copyScss();
         }
-        return;
+        continue;
       }
       // copy demo
       if (f === 'demo') {
@@ -186,12 +186,16 @@ const copyFiles = (src, dest) => {
         } else {
           copyDemo();
         }
-        return;
+        continue;
       }
       if (!/^ld-/.test(f)) {
-        return;
+        continue;
       }
       // copy ld-
+      const exclude = !map.some(i => i[0] === f);
+      if (exclude) {
+        continue;
+      }
       const dir = path.resolve(toPath, './' + f);
       const exist = fs.existsSync(dir);
       if (exist) {

@@ -31,7 +31,7 @@ const map = {
     ...
   ]
 };
-app.use(ldmui, {
+app.use(dnwebui, {
   LdIcon: {
     map,
     path: 'path/to/your/icons', // default: 'icons'

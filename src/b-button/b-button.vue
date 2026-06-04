@@ -1,12 +1,12 @@
 <template>
-  <v-tooltip v-if="tablet" :disabled="noTooltip">
+  <v-tooltip v-if="tablet" :disabled="noTooltip" :content-class="[`bg-${tooltipTheme}`]">
     <template #activator="{ props }">
       <v-btn
         v-bind="props"
         :class="classes"
         :style="style"
         :id="String(id)"
-        :data-testid="testid"
+        :data-testid="testid || String(id) || undefined"
         :variant="variant"
         :color="defaultColor"
         :disabled="disabled"
@@ -40,7 +40,7 @@
     :id="String(id)"
     :class="classes"
     :style="style"
-    :data-testid="testid"
+    :data-testid="testid || String(id) || undefined"
     :variant="variant"
     :color="defaultColor"
     :disabled="disabled"
@@ -48,7 +48,9 @@
     :size="mySize"
     :title="title"
     :icon="mobile && text"
+    :block="desktop && block"
     :aria-label="ariaLabel"
+    :aria-describedby="ariaDescribedby"
     @click="onClick"
   >
     <slot></slot>

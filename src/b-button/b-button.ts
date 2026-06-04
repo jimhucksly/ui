@@ -32,14 +32,21 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
   @Prop({ type: Boolean, default: false }) responsive: boolean;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) loading: boolean;
+  @Prop({ type: Boolean, default: false }) block: boolean;
   @Prop({ type: Boolean, default: undefined }) tooltip: boolean;
   @Prop({ type: String, default: '' }) tooltipText: boolean;
+  @Prop({ type: String, default: 'dark' }) tooltipTheme: 'dark' | 'light';
 
   @Prop({ type: Boolean, default: null }) isDesktopView: boolean;
   @Prop({ type: Boolean, default: null }) isTabletView: boolean;
   @Prop({ type: Boolean, default: null }) isMobileView: boolean;
 
   @Prop() ariaLabel: string;
+  @Prop() ariaDescribedby: string;
+  @Prop({ default: undefined }) onFocus: () => void;
+  @Prop({ default: undefined }) onBlur: () => void;
+  @Prop({ default: undefined }) onMouseenter: () => void;
+  @Prop({ default: undefined }) onMouseleave: () => void;
 
   frozenView: string = null;
 
@@ -57,6 +64,21 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
     }
     if (this.mobile) {
       this.frozenView = 'mobile';
+    }
+  }
+
+  mounted() {
+    if (this.onFocus) {
+      (this.$el as HTMLElement).onfocus = this.onFocus.bind(this);
+    }
+    if (this.onBlur) {
+      (this.$el as HTMLElement).onblur = this.onBlur.bind(this);
+    }
+    if (this.onMouseenter) {
+      (this.$el as HTMLElement).onmouseenter = this.onMouseenter.bind(this);
+    }
+    if (this.onMouseleave) {
+      (this.$el as HTMLElement).onmouseleave = this.onMouseleave.bind(this);
     }
   }
 
@@ -152,6 +174,9 @@ export default class ResponsiveButtonComponent extends mixins(ViewportMixin) {
 
   get hasTooltip() {
     if (this.text === true) {
+      return false;
+    }
+    if (this.tooltip === false) {
       return false;
     }
     if (this.tooltip && isDefined(this.tooltipText)) {

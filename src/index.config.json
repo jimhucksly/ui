@@ -32,7 +32,11 @@
     ["ld-textarea", "b-textarea"],
     ["ld-timepicker", "b-timepicker"],
     ["ld-toggle-buttons", "b-toggle-buttons"],
-    ["ld-uploader", "b-uploader"]
+    ["ld-uploader", "b-uploader"],
+    ["@ldmjs/ui", "@dn-web/ui"],
+    ["@ldmjs/core", "@dn-web/core"],
+    ["$ldmuii18n", "$i18n"],
+    ["$ldmui", "$ui"]
   ],
-  "exclude": ["avatar", "iterator", "toolbar", "datatable", "treeview", "editor", "utils", "upgrade"]
+  "exclude": ["avatar", "iterator", "toolbar", "datatable", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
 }

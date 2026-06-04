@@ -13,6 +13,7 @@
                 :view="view"
                 :size="size"
                 :error="error"
+                :reversed="reversed"
                 @complete="onComplete"
               >
                 {{ label }}
@@ -40,6 +41,7 @@
                 <b-radiobutton value="half-circle" label="half-circle"></b-radiobutton>
               </b-radiogroup>
               <b-switch v-model="error" label="error" hide-details />
+              <b-switch v-model="reversed" label="reversed" hide-details />
             </v-col>
           </v-row>
         </b-tab>
@@ -57,11 +59,12 @@ export default {
     return {
       showLabel: true,
       showCounter: true,
-      label: 'In progress..',
+      label: 'In progress...',
       counter: 15,
       view: 'linear',
       size: 'sm',
       error: false,
+      reversed: false,
     };
   },
   inject: ['tabProps'],

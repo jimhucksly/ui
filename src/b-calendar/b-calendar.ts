@@ -3,7 +3,7 @@ import { mixins, Options, Prop, Vue, Watch } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
 import InputMixin from '@/mixins/input.mixin';
-import { ViewMode } from '@/types/calendar';
+import { IDayObject, ViewMode } from '@/types/calendar';
 import { DateRange } from '@/types/daterange';
 
 function preventDefault(e: MouseEvent) {
@@ -64,6 +64,9 @@ export default class CalendarComponent extends mixins(InputMixin) {
   @Prop({ type: Number, default: null }) month: number;
   @Prop({ type: Number, default: null }) year: number;
   @Prop({ type: Boolean, default: true }) scrolling: boolean;
+  @Prop({ type: Boolean, default: false }) static: boolean;
+  @Prop({ type: Boolean, default: true }) showAdjacentMonths: boolean;
+  @Prop({ type: Function, default: null }) events: (item: IDayObject) => string | Array<string>;
 
   internalValue: Date = null;
   internalViewMode: TViewMode = null;
@@ -95,6 +98,9 @@ export default class CalendarComponent extends mixins(InputMixin) {
   }
 
   @Watch('modelValue', { immediate: true }) onModelValueChanged(value: Date) {
+    if (this.static) {
+      return;
+    }
     if (!(value instanceof Date)) {
       this.emitUpdateMonth(new Date().getMonth());
       this.emitUpdateYear(new Date().getFullYear());
@@ -136,8 +142,9 @@ export default class CalendarComponent extends mixins(InputMixin) {
     if (isDefined(this.currentMonth)) {
       return;
     }
-    if (this.month) {
+    if (isDefined(this.month)) {
       this.currentMonth = this.month;
+      this.onMonthChanged(this.month);
       return;
     }
     this.currentMonth = (this.internalValue ?? this.now).getMonth();
@@ -161,7 +168,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
   mounted() {
     this.fixWeekdayTitle();
     this.scrollHandler = this.scroll.bind(this);
-    if (this.scrolling) {
+    if (this.scrolling && !this.static) {
       this.initScrolling();
     }
   }
@@ -169,6 +176,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
   beforeUnmount() {
     window.removeEventListener('wheel', this.scrollHandler);
     document.removeEventListener('mouseover', this.mouseOverHandler);
+    enableScroll();
   }
 
   onUpdateMonth(current: number) {
@@ -214,6 +222,13 @@ export default class CalendarComponent extends mixins(InputMixin) {
       return index > -1;
     }
     return true;
+  }
+
+  getDayClasses(item: IDayObject) {
+    if (this.events instanceof Function) {
+      return this.events(item);
+    }
+    return '';
   }
 
   scroll(event: WheelEvent) {
@@ -327,5 +342,9 @@ export default class CalendarComponent extends mixins(InputMixin) {
         return datetime.compare(value, this.range[0]) === 1 && datetime.compare(value, this.range[1]) === -1;
       },
     };
+  }
+
+  get isDev() {
+    return $DEV;
   }
 }
