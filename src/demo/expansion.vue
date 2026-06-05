@@ -53,6 +53,7 @@
 </template>
 <script>
 /* eslint-disable @typescript-eslint/typedef */
+import { isDefined } from '@dn-web/core';
 import markdownToHTML from './mixins/markdownToHTML';
 export default {
   data() {
@@ -76,7 +77,7 @@ export default {
       const target = e.target;
       const icon = target.closest('button[aria-label="expansion-panel-icon"]');
       if (icon) {
-        if (!this.$utils.isDefined(this.model)) {
+        if (!isDefined(this.model)) {
           this.model = this.multiple ? [i] : i;
           return;
         }

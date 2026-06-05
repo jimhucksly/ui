@@ -113,7 +113,7 @@ export default {
       if (this.mockData) {
         return this.mockData;
       }
-      await this.$utils.delay(1000);
+      await delay(1000);
       return fetch('/mock.json')
         .then(response => response.json())
         .then(data => {
@@ -125,7 +125,7 @@ export default {
       if (this.mockCities) {
         return this.mockCities;
       }
-      await this.$utils.delay(1000);
+      await delay(1000);
       return this.fetchMock().then((data: Array<IRow>) => {
         const result = Array.from(new Set(data.map((el: { city: string }) => el.city))).map(el => ({
           city: el,

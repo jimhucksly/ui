@@ -17,7 +17,8 @@
         scroll-strategy="none"
         v-bind="dialogBindings(modal)"
         :hide-header-close="!modal.closable"
-        :no-click-animation="modal.noModal"
+        :hide-overlay="modal.noModal"
+        :no-click-animation="true"
         :retain-focus="modal.retainFocus"
         :scrim="showScrim(modal)"
         @hide="handleHide(modal)"
@@ -25,20 +26,19 @@
         <v-card>
           <!-- Title -->
 
-          <v-card-title :class="{ 'v-card-title--dark': isTitleDark(modal) }">
+          <v-card-title>
             <component
               :is="$ui.options.aliases['b-button']"
               v-if="hasParent(modal)"
               icon
               text
-              size="s"
               class="mr-2"
               @click="handleCancel(modal, cancelReason.FromBackButton)"
             >
               <svg-icon>to left</svg-icon>
             </component>
 
-            <span> {{ modalTitle(modal) }} </span>
+            <span class="b-dialog__title"> {{ modalTitle(modal) }} </span>
 
             <v-spacer></v-spacer>
 
@@ -90,7 +90,7 @@
               icon
               text
               class="ml-1"
-              @click.native="handleCancel(modal, cancelReason.FromCloseButton)"
+              @click="handleCancel(modal, cancelReason.FromCloseButton)"
             >
               <svg-icon>close</svg-icon>
             </component>
@@ -98,10 +98,9 @@
 
           <!-- Content -->
 
-          <v-card-text
-            v-if="modal.content && (isAlertDialog(modal) || isConfirmDialog(modal))"
-            v-html="modal.content"
-          />
+          <v-card-text v-if="modal.content && (isAlertDialog(modal) || isConfirmDialog(modal))">
+            <div class="b-dialog__text" v-html="modal.content"></div>
+          </v-card-text>
 
           <v-card-text v-else-if="isPromptDialog(modal)">
             <component :is="$ui.options.aliases['b-textarea']" v-model="modal.content" rows="3" />
@@ -147,10 +146,11 @@
               v-if="hasParent(modal)"
               :id="`b-dialog-btn-goback-${modal.id}`"
               variant="outlined"
-              color="primary"
+              :color="modal.cancelColor"
               size="s"
               @click.native="handleCancel(modal, cancelReason.FromBackButton)"
             >
+              <svg-icon>to left</svg-icon>
               {{ $i18n.gettext('Dialog Go Back') }}
             </component>
             <component
@@ -159,9 +159,9 @@
               v-if="showCancelBtn(modal)"
               :disabled="modal.okOnly || modal.okLoading"
               variant="outlined"
-              color="primary"
+              :color="modal.cancelColor"
               size="s"
-              @click.native="handleCancel(modal, cancelReason.FromCancelButton)"
+              @click="handleCancel(modal, cancelReason.FromCancelButton)"
             >
               {{ cancelButtonText(modal) }}
             </component>
@@ -171,9 +171,9 @@
               v-if="showOkBtn(modal)"
               :disabled="modal.okDisabled"
               :loading="modal.okLoading"
-              color="primary"
+              :color="modal.okColor"
               size="s"
-              @click.native="handleCancel(modal, cancelReason.FromOkButton)"
+              @click="handleCancel(modal, cancelReason.FromOkButton)"
             >
               {{ okButtonText(modal) }}
             </component>

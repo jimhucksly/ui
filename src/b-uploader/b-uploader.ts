@@ -33,10 +33,12 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   @Prop({ type: Number, default: undefined }) max: number;
   @Prop({ type: String, default: 'm' }) size: 's' | 'm' | 'l';
   @Prop({ type: Boolean, default: false }) fluid: boolean;
+  @Prop({ type: Boolean, default: false }) fullHeight: boolean;
   @Prop({ type: String, default: undefined }) accept: string;
   @Prop({ type: Boolean, default: false }) multiple: boolean;
   @Prop({ type: Boolean, default: false }) lazy: boolean;
   @Prop({ type: Boolean, default: false }) asInput: boolean;
+  @Prop({ type: Boolean, default: true }) drop: boolean;
 
   @Inject({ from: 'form', default: null }) declare form: InjectionForm;
 
@@ -58,6 +60,10 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
 
   @Emit('complete') onCompleteEmit() {
     return true;
+  }
+
+  @Emit('dragleave') onDragLeaveEmit(event: DragEvent) {
+    return event;
   }
 
   @Watch('url') onUrlChanged(value: string) {
@@ -108,14 +114,26 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   onChange(event: InputEvent) {
+    event.stopPropagation();
     const target = event.target as HTMLInputElement;
     this.controller.add(Array.from(target.files));
+    if (this.asInput) {
+      target.value = null;
+      this.controller.clear();
+    }
+  }
+
+  onCancel(event: InputEvent) {
+    event.stopPropagation();
   }
 
   onDragEnter(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     if (this.disabled) {
+      return;
+    }
+    if (!this.drop) {
       return;
     }
     this.isDrag = true;
@@ -131,13 +149,33 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
     if (this.disabled) {
       return;
     }
+    if (!this.drop) {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (!target) {
+      return;
+    }
+    if (target.classList.contains('b-uploader-droparea')) {
+      this.isDrag = false;
+      this.onDragLeaveEmit(event);
+      return;
+    }
+    const parent = target.closest('.b-uploader-droparea');
+    if (parent) {
+      return;
+    }
     this.isDrag = false;
+    this.onDragLeaveEmit(event);
   }
 
   onDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     if (this.disabled) {
+      return;
+    }
+    if (!this.drop) {
       return;
     }
     this.isDrag = false;
@@ -246,11 +284,13 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   get myPlaceholder(): string {
-    return this.placeholder || this.$i18n.gettext('Uploader Placeholder');
+    return this.placeholder || this.drop
+      ? this.$i18n.gettext('Uploader Placeholder')
+      : this.$i18n.gettext('Uploader Placeholder Short');
   }
 
   get maxValue(): string {
-    return files.formatSize(this.max, 2);
+    return files.formatSize(this.max);
   }
 
   get mySize(): string {
@@ -291,7 +331,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
     }
     switch (this.size) {
       case 's':
-        return 'auto';
+        return 66;
       case 'm':
         return 'auto';
       case 'l':

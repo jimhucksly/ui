@@ -44,7 +44,6 @@ export default class PagerComponent extends mixins(ViewportMixin) {
   }
 
   @Watch('options', { immediate: true, deep: true }) onOptionsChanged() {
-    let calc = false;
     if (this.unlimited) {
       this.size = this.options.pageSize ? this.options.pageSize : this.sizes[0];
       this.page = this.options.page ? this.options.page : 1;
@@ -52,22 +51,21 @@ export default class PagerComponent extends mixins(ViewportMixin) {
     }
     if (this.count !== this.options.total) {
       this.count = this.options.total;
-      calc = true;
+      this.pages = this.calcPages();
+      return;
     }
     if (this.size !== this.options.pageSize) {
       this.size = this.options.pageSize ? this.options.pageSize : this.sizes[0];
-      calc = true;
+      this.pages = this.calcPages();
+      return;
     }
     if (this.page !== this.options.page) {
       if (this.options.page >= this.totalPages + 1) {
         this.page = this.totalPages;
       } else {
         this.page = this.options.page ? this.options.page : 1;
-        calc = true;
+        this.pages = this.calcPages();
       }
-    }
-    if (calc) {
-      this.pages = this.calcPages();
     }
   }
 

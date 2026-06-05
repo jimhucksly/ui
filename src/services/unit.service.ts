@@ -1,3 +1,5 @@
+import { strings } from '@dn-web/core';
+
 export default class UnitService {
   static pixelRound(val: number) {
     return Math.round(val * devicePixelRatio) / devicePixelRatio;
@@ -8,6 +10,13 @@ export default class UnitService {
       return val;
     }
     return `${val}px`;
+  }
+
+  static unitToNumber(val: string | number): number {
+    if (strings.isNumber(val)) {
+      return Number(val);
+    }
+    return Number((val as string).replace(/\D/g, ''));
   }
 
   static leaderZero(val: string | number): string {

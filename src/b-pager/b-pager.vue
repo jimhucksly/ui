@@ -2,7 +2,6 @@
   <div
     class="b-pager"
     :class="{
-      'flex-column': isMobileGlobal,
       'b-pager--rounded': rounded,
       'b-pager--fluid': fluid,
       'b-pager--unlimited': unlimited,
@@ -26,6 +25,7 @@
         <button
           v-if="toFirst && !unlimited"
           :disabled="page === 1"
+          data-testid="pager-button-to-first"
           aria-role="navigation"
           class="b-pager-button b-pager-button--icon"
           @click="selectPage(1)"
@@ -44,6 +44,7 @@
           class="b-pager-button"
           :class="{ 'ml-1': toFirst, 'b-pager-button--icon': !prevText, 'pl-1 pr-3': prevText }"
           :disabled="!canPrevious"
+          data-testid="pager-button-prev"
           aria-role="navigation"
           @click="prevPage"
         >
@@ -67,6 +68,7 @@
           :disable="p.number === page"
           :aria-selected="p.number === page"
           aria-role="button"
+          :data-testid="`pager-button-${p.text}`"
           @click="selectPage(p.number)"
         >
           {{ p.text }}
@@ -85,6 +87,7 @@
           :class="{ 'b-pager-button--icon': !nextText, 'pl-3 pr-1': nextText }"
           :disabled="!canNext"
           aria-role="navigation"
+          data-testid="pager-button-next"
           @click="nextPage"
         >
           <span v-if="nextText" class="px-1">{{ nextText }}</span>
@@ -105,6 +108,7 @@
           class="b-pager-button b-pager-button--icon ml-1"
           :disabled="page === totalPages"
           aria-role="navigation"
+          data-testid="pager-button-to-last"
           @click="selectPage(totalPages)"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none">

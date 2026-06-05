@@ -138,6 +138,7 @@
 import { DialogManager } from '@/b-dialog/dialog.manager';
 import { SelectDialog } from '@/b-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
+import { delay } from '@dn-web/core';
 export default {
   data() {
     return {
@@ -224,7 +225,7 @@ export default {
           loading: true,
         }),
         async () => {
-          await this.$utils.delay(1000);
+          await delay(1000);
           return fetch('/mock.json')
             .then(res => res.json())
             .then(data => ({

@@ -8,6 +8,7 @@ import {
   IModalInfo,
   IModalWindow,
   InfoDialog,
+  InteractiveDialog,
   PromptDialog,
   SelectDialog,
 } from '@/types/dialogs';
@@ -214,6 +215,9 @@ export class DialogManager {
       if (!m.visible) {
         continue;
       }
+      if (!m.show) {
+        continue;
+      }
       info.hostObject.parentId = m.id;
     }
   }
@@ -291,6 +295,7 @@ export class DialogManager {
         dlg.el.style.bottom = `${MARGIN_BOTTOM}px`;
         dlg.el.style.right = `${right}px`;
         dlg.el.classList.remove('b-dialog-content--hidden');
+        dlg.el.classList.add('b-dialog-content--no-modal');
       }
     }
   }
@@ -304,6 +309,7 @@ export class DialogManager {
     info.el.style.left = 'unset';
     info.el.style.bottom = 'unset';
     info.el.style.right = 'unset';
+    info.el.classList.remove('b-dialog-content--no-modal');
   }
 
   private addToMinimized(info: IModalWindow): void {
@@ -340,7 +346,7 @@ export class DialogManager {
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  public static exec<T>(modal: Dialog, fetchData?: () => Promise<any>): Promise<T> {
+  public static exec<T>(modal: Dialog | InteractiveDialog, fetchData?: () => Promise<any>): Promise<T> {
     switch (modal.__constructor) {
       case 'AlertDialog':
         return DialogManager.alert<T>(modal as AlertDialog);

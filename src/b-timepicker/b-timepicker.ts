@@ -139,7 +139,10 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
   }
 
   checkValue(value: string): boolean {
-    if (!/\d\d:\d\d/.test(value)) {
+    if (datetime.isISO(value)) {
+      return true;
+    }
+    if (!/^(\d\d:\d\d)$/.test(value)) {
       return false;
     }
     const [h, m] = UnitService.stringToTime(value);
@@ -169,7 +172,7 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
     if (!v) {
       return;
     }
-    const [h, m] = UnitService.stringToTime(UnitService.timeToISO(v));
+    const [h, m] = this.parseValue(v);
     if (!this.is24hr) {
       if (h > 12) {
         this.setAmPm('pm');
@@ -224,6 +227,16 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
     return UnitService.timeToISO(value);
   }
 
+  private parseValue(value: string): Array<number> {
+    if (datetime.isISO(value)) {
+      const d = datetime.toDate(value, this.locale);
+      const h = d.getHours();
+      const m = d.getMinutes();
+      return [h, m];
+    }
+    return UnitService.stringToTime(UnitService.timeToISO(value));
+  }
+
   get isAM(): boolean {
     return this.ampm === 'am';
   }
@@ -263,5 +276,9 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
       return this.placeholder;
     }
     return this.$i18n.gettext('Timepicker Placeholder');
+  }
+
+  get locale(): string {
+    return this.$ui.options.language;
   }
 }

@@ -3,8 +3,12 @@
     class="b-progress"
     :class="[
       `b-progress--${view}`,
-      { 'b-progress--no-label': !label, 'b-progress--error': error },
       `b-progress--${mySize}`,
+      {
+        'b-progress--no-label': !label,
+        'b-progress--error': error,
+        'b-progress--reversed': reversed,
+      },
     ]"
     :style="{
       width: view === 'linear' ? undefined : `${dim}px`,

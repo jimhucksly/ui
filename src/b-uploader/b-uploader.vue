@@ -3,10 +3,10 @@
     class="b-uploader"
     elevation="0"
     :id="`uploader-${uid}`"
-    :class="[mySize, { 'b-uploader--disabled': disabled, 'b-uploader--drag': isDrag }]"
-    :style="{ 'max-width': myWidthValue }"
+    :class="[mySize, { 'b-uploader--disabled': disabled, 'b-uploader--drag': isDrag, 'h-100': fullHeight }]"
+    :style="{ 'max-width': myWidthValue, width: myWidthValue }"
   >
-    <v-card-text>
+    <v-card-text class="d-flex flex-column" :class="{ 'h-100': fullHeight }">
       <b-label v-if="label" :label="label" :required="required"></b-label>
       <div
         class="b-uploader-droparea"
@@ -27,9 +27,10 @@
           :multiple="multiple"
           @focus="onFocus"
           @blur="onBlur"
+          @cancel="onCancel"
           @change="onChange"
         />
-        <div class="d-flex mb-1" :class="{ 'flex-column align-center': size !== 's', 'justify-center': size === 's' }">
+        <div class="d-flex" :class="{ 'flex-column align-center mb-1': size !== 's', 'justify-center': size === 's' }">
           <svg
             v-if="size === 's'"
             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +71,7 @@
             <span class="text-body-s">{{ myPlaceholder }}</span>
           </div>
         </div>
-        <div v-if="max" class="b-uploader-max">
+        <div v-if="max && size !== 's'" class="b-uploader-max">
           <span>max. {{ maxValue }}</span>
         </div>
       </div>

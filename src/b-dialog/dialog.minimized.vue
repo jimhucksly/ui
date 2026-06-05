@@ -19,6 +19,7 @@
                 icon
                 text
                 tooltip
+                color="white"
                 :tooltip-text="$i18n.gettext('Expand')"
                 @click="onMaximize(item)"
               >
@@ -29,6 +30,7 @@
                 icon
                 text
                 tooltip
+                color="white"
                 :tooltip-text="$i18n.gettext('Close')"
                 @click.stop="onClose(item)"
               >

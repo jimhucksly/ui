@@ -5,7 +5,7 @@ import Help from '@/components/help/help.vue';
 import Icon from '@/components/icon/icon.vue';
 import Label from '@/components/label/label.vue';
 import { Emit } from '@/decorators/emit.decorator';
-import ComboboxMixin, { InternalError } from '@/mixins/combobox.mixin';
+import ComboboxMixin, { ComponentName, InternalError } from '@/mixins/combobox.mixin';
 import EditMixin from '@/mixins/edit.mixin';
 import GridMixin from '@/mixins/grid.mixin';
 import HelpMixin from '@/mixins/help.mixin';
@@ -54,6 +54,9 @@ export default class ComboboxComponent extends mixins(
   noDataMessage = '';
   getItems: DebouncedFunc<(...args: unknown[]) => unknown> = null;
 
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
+  instanceType = ComponentName.Combobox;
+
   @Emit('blur') emitBlur(value: unknown) {
     return value;
   }
@@ -73,9 +76,14 @@ export default class ComboboxComponent extends mixins(
 
   onFocus(e: FocusEvent) {
     this.validationMessage = '';
+    this.hasBeenFocused = true;
   }
 
   onFocused(value: boolean) {
+    if (this.skipFocus) {
+      this.skipFocus = false;
+      return;
+    }
     this.onMenu(value);
     if (value) {
       this.goSearch();
@@ -89,7 +97,11 @@ export default class ComboboxComponent extends mixins(
         this.optionsList = this.filterOptions(searchTerm);
       } else {
         if (this.hasElements) {
-          this.noDataMessage = this.myMessages.search;
+          if (searchTerm) {
+            this.noDataMessage = this.myMessages.search;
+          } else {
+            this.optionsList = this.elements;
+          }
         } else if (this.fetchData instanceof Function) {
           this.noDataMessage = this.myMessages.loading;
         } else if (searchTerm) {
@@ -101,7 +113,7 @@ export default class ComboboxComponent extends mixins(
           await this.fetchElements(searchTerm);
         }
       }
-      if (!this.menu) {
+      if (!this.menu && this.isFocused) {
         this.onMenu(true);
       }
       if (!this.hasOptions) {
@@ -158,6 +170,9 @@ export default class ComboboxComponent extends mixins(
 
   get canRemove(): boolean {
     if (this.readonly || this.disabled) {
+      return false;
+    }
+    if (!this.closableChips) {
       return false;
     }
     if (!this.allowEmpty && this.multiselect && Array.isArray(this.selected)) {

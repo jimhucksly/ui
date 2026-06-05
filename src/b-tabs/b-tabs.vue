@@ -23,8 +23,8 @@
         >
           <!-- vertical -->
           <div v-if="vertical && !noHeader" :class="{ 'w-100': !isMobileGlobal, 'tab-mobile': isMobileGlobal }">
-            <div class="d-flex align-center justify-end" style="height: var(--b-tab-height)">
-              <p class="b-tab-header header-text flex-1-1 px-4 font-weight-bold" v-if="isTabsVisibled">
+            <div class="b-tab-header d-flex align-center justify-end">
+              <p class="flex-1-1 px-4" v-if="isTabsVisibled">
                 {{ header }}
               </p>
               <component
@@ -36,7 +36,8 @@
                 class="mr-2"
                 @click="toggleCollapse"
               >
-                <svg-icon>arrow left</svg-icon>
+                <svg-icon v-if="isTabsVisibled">arrow left</svg-icon>
+                <svg-icon v-else>arrow right</svg-icon>
               </component>
             </div>
           </div>
@@ -56,10 +57,7 @@
         <v-tabs-window
           v-if="isBodyVisibled"
           class="h-100"
-          :class="{ mobile: isMobileGlobal, 'vertical-window': vertical, 'v-window--no-padding': noPadding }"
-          :style="{
-            border: isTabsVisibled ? 'unset' : '1px solid var(--grey-l-5)',
-          }"
+          :class="{ mobile: isMobileGlobal, 'v-window--no-padding': noPadding }"
           v-model="active"
           :id="id ? `${id}-window` : undefined"
         >

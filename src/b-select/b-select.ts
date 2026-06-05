@@ -3,7 +3,7 @@ import Help from '@/components/help/help.vue';
 import Icon from '@/components/icon/icon.vue';
 import Label from '@/components/label/label.vue';
 import { Emit } from '@/decorators/emit.decorator';
-import ComboboxMixin from '@/mixins/combobox.mixin';
+import ComboboxMixin, { ComponentName } from '@/mixins/combobox.mixin';
 import EditMixin from '@/mixins/edit.mixin';
 import GridMixin from '@/mixins/grid.mixin';
 import HelpMixin from '@/mixins/help.mixin';
@@ -35,6 +35,9 @@ export default class SelectComponent extends mixins(
   ComboboxMixin
 ) {
   @Inject({ from: 'form', default: null }) declare form: IInjectionForm;
+
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
+  instanceType = ComponentName.Select;
 
   @Emit('blur') emitBlur(value: FocusEvent) {
     return value;

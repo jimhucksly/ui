@@ -14,7 +14,14 @@
     </slot>
     <slot name="icon" />
   </v-tab>
-  <v-tabs-window-item v-else v-bind="$props" :key="`${index}-v-window`" :value="Number(index)">
+  <v-tabs-window-item
+    v-else
+    v-bind="$props"
+    :key="`${index}-v-window`"
+    :value="Number(index)"
+    :transition="tab.transition ? undefined : false"
+    :reverse-transition="tab.transition ? undefined : false"
+  >
     <slot />
   </v-tabs-window-item>
 </template>

@@ -154,6 +154,7 @@ import {
   SelectDialog,
 } from '@/b-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
+import { delay } from '@dn-web/core';
 export default {
   data(): {
     prompt: {
@@ -299,7 +300,7 @@ export default {
           fullHeight: true,
         }),
         async () => {
-          await this.$utils.delay(1500);
+          await delay(1500);
           return fetch('/mock.json')
             .then(result => result.json())
             .then(data => ({
@@ -342,7 +343,7 @@ export default {
           okColor: 'success',
         }),
         async () => {
-          await this.$utils.delay(1000);
+          await delay(1000);
           return {
             model: this.edit.model,
           };

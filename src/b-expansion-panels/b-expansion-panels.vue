@@ -3,6 +3,8 @@
     v-model="internalValue"
     variant="accordion"
     :multiple="multiple"
+    :key="uid"
+    :data-uid="uid"
     @update:model-value="onUpdateModelValue"
   >
     <slot></slot>

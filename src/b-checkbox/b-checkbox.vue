@@ -3,12 +3,12 @@
     class="b-checkbox"
     :class="[
       {
-        'b-checkbox--focused': isFocused && !disabled,
+        'b-checkbox--focused': isFocused && !disabled && !readonly,
         'b-checkbox--disabled': disabled,
         'b-checkbox--readonly': readonly,
-        'b-checkbox--hovered': isLabelHover && !disabled,
+        'b-checkbox--hovered': isLabelHover && !disabled && !readonly,
         'b-checkbox--label-to-left': labelToLeft,
-        'cursor-pointer': !disabled,
+        'cursor-pointer': !disabled && !readonly,
       },
       `text-${disabled ? 'default' : color}`,
       mySize,
@@ -38,7 +38,7 @@
           :checked="internalValue"
           :data-testid="dataTestid"
           :tabindex="tabindex"
-          :disabled="disabled"
+          :disabled="disabled || readonly"
           @focus="onFocus"
           @blur="onBlur"
           @input="onChange"

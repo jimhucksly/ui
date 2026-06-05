@@ -84,6 +84,9 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
   }
 
   onChange(event: InputEvent) {
+    if (this.disabled || this.readonly) {
+      return;
+    }
     const checked = (event.target as HTMLInputElement).checked;
     if (isDefined(this.checkedValue) && isDefined(this.uncheckedValue)) {
       this.fireinputEvent(checked ? this.checkedValue : this.uncheckedValue);

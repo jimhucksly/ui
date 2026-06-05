@@ -36,7 +36,7 @@
         </clipPath>
       </defs>
     </svg>
-    <div v-if="view === 'dotts'" :style="{ width: `${iconSize}px`, height: `${iconSize}px`, position: 'relative' }">
+    <div v-if="view === 'dots'" :style="{ width: `${iconSize}px`, height: `${iconSize}px`, position: 'relative' }">
       <i
         v-for="i in [0, 1, 2, 3, 4, 5, 6, 7]"
         :style="{

@@ -5,6 +5,7 @@
     "rootDir": "./src",
     "module": "nodenext",
     "target": "esnext",
+    "moduleResolution": "nodenext",
     "strict": false,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -21,6 +22,7 @@
     "strictPropertyInitialization": false,
     "allowJs": false,
     "useUnknownInCatchVariables": false,
+    "moduleDetection": "force",
     "paths": {
       "@/*": ["./src/*"],
     },

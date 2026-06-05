@@ -8,7 +8,7 @@ export default class LoaderComponent extends Vue {
   @Prop({ type: Boolean, default: false }) transparent: boolean;
   @Prop({ type: Number, default: 0.5 }) opacity: number;
   @Prop({ type: String, default: 'm' }) size: 'xs' | 's' | 'm' | 'l' | 'xl';
-  @Prop({ type: String, default: 'circle' }) view: 'circle' | 'dotts';
+  @Prop({ type: String, default: 'circle' }) view: 'circle' | 'dots';
   @Prop({ type: String, default: 'primary' }) color: 'primary' | 'white';
 
   mounted() {

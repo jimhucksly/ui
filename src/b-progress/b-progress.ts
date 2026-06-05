@@ -12,6 +12,7 @@ export default class ProgressComponent extends Vue {
   @Prop({ type: String, default: 'linear' }) view: 'linear' | 'circular' | 'half-circle';
   @Prop({ type: String, default: '' }) size: 'xs' | 's' | 'sm' | 'm' | 'l' | 'xl';
   @Prop({ type: Boolean, default: false }) error: boolean;
+  @Prop({ type: Boolean, default: false }) reversed: boolean;
 
   internalValue = 0;
 
@@ -82,7 +83,6 @@ export default class ProgressComponent extends Vue {
       [this.cx, this.cx],
       [this.r, this.r],
       [(0 / 180) * π, ((180 * (value ? value : this.internalValue)) / 100 / 180) * π],
-      /* eslint-disable-next-line sonarjs/no-identical-expressions */
       (180 / 180) * π
     );
   }

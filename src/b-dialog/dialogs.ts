@@ -6,9 +6,10 @@ export class Dialog {
   pressEnterAsOk: boolean;
   pressEscAsCancel: boolean;
   hostObject: IHostObject;
-  size: string;
+  size: 's' | 'm' | 'l';
   width: string | number;
   height: string | number;
+  css: string;
   align: 'left' | 'right';
   constructor(data: IDialogProps) {
     this.title = data.title;
@@ -20,6 +21,7 @@ export class Dialog {
     this.width = data.width;
     this.height = data.height;
     this.align = data.align;
+    this.css = data.css;
   }
 }
 
@@ -54,6 +56,10 @@ export class InteractiveDialog extends Dialog {
   fullHeight: boolean;
   closable: boolean;
   hideFooter: boolean;
+  okTitle: string;
+  cancelTitle: string;
+  okColor: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  cancelColor: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   constructor(data: IInterativeDialogProps) {
     super({
       ...data,
@@ -62,6 +68,10 @@ export class InteractiveDialog extends Dialog {
     this.fullHeight = data.fullHeight;
     this.closable = data.closable;
     this.hideFooter = data.hideFooter;
+    this.okTitle = data.okTitle;
+    this.cancelTitle = data.cancelTitle;
+    this.okColor = data.okColor || 'primary';
+    this.cancelColor = data.cancelColor || 'primary';
   }
 }
 
@@ -176,7 +186,6 @@ export class CreateEditDialog<T> extends InteractiveDialog {
     [key: string]: unknown;
   };
 
-  darkTitle?: boolean;
   expandable?: boolean;
   minimizable?: boolean;
   collapsedSize?: {
@@ -200,7 +209,6 @@ export class CreateEditDialog<T> extends InteractiveDialog {
         model: T;
         [key: string]: unknown;
       };
-      darkTitle?: boolean;
       expandable?: boolean;
       minimizable?: boolean;
       collapsedSize?: {
@@ -225,7 +233,6 @@ export class CreateEditDialog<T> extends InteractiveDialog {
     this.__constructor = 'CreateEditDialog';
     this.component = data.component;
     this.componentProps = data.componentProps;
-    this.darkTitle = data.darkTitle;
     this.expandable = data.expandable;
     this.minimizable = data.minimizable;
     this.collapsedSize = data.collapsedSize;

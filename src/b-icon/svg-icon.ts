@@ -5,6 +5,6 @@ export default class SvgIconComponent extends Vue {
   @Prop() path: string;
 
   get href(): string {
-    return `${this.path}/${this.icon}.svg`;
+    return `${this.path}/${this.icon}.svg#${this.icon}`;
   }
 }

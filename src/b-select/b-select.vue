@@ -31,7 +31,14 @@
             @update:menu="onMenu"
           >
             <template #chip="{ item, index }" v-if="multiselect || chips">
-              <slot name="tag" :item="item.raw" :canRemove="canRemove" :onRemove="onUnselect">
+              <slot
+                name="tag"
+                :item="item.raw"
+                :index="index"
+                :limit="limit"
+                :canRemove="canRemove"
+                :onRemove="onUnselect"
+              >
                 <component
                   v-if="index < limit"
                   :is="$ui.options.aliases['b-chip']"
@@ -67,7 +74,7 @@
               </slot>
             </template>
             <template #item="{ item, props }">
-              <v-list-item v-bind="props">
+              <v-list-item v-bind="{ ...props, title: titleOfItem(item.raw), subtitle: subtitleOfItem(item.raw) }">
                 <template v-if="multiselect" #prepend>
                   <component
                     :is="$ui.options.aliases['b-checkbox']"
@@ -80,12 +87,12 @@
                 </template>
                 <template #title="{ title }">
                   <slot name="option" :item="item.raw" :is-selected="itemSelected(item.raw)">
-                    <span>{{ title || titleOfItem(item.raw) }}</span>
+                    <span>{{ title }}</span>
                   </slot>
                 </template>
                 <template v-if="optionHint" #subtitle="{ subtitle }">
                   <slot name="option-hint" :item="item.raw" :is-selected="itemSelected(item.raw)">
-                    <span>{{ subtitle || subtitleOfItem(item.raw) }}</span>
+                    <span>{{ subtitle }}</span>
                   </slot>
                 </template>
               </v-list-item>

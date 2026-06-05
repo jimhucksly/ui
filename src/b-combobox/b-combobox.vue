@@ -10,6 +10,7 @@
       <v-col :class="inputSizeClasses">
         <div class="d-flex align-start">
           <v-combobox
+            ref="vCombobox"
             v-model="selected"
             v-bind="{
               ...inputBindings,
@@ -33,7 +34,14 @@
             @update:search="getItems"
           >
             <template #chip="{ item, index }" v-if="multiselect || chips">
-              <slot name="tag" :item="item.raw" :canRemove="canRemove" :onRemove="onUnselect">
+              <slot
+                name="tag"
+                :item="item.raw"
+                :index="index"
+                :limit="limit"
+                :canRemove="canRemove"
+                :onRemove="onUnselect"
+              >
                 <component
                   v-if="index < limit"
                   :is="$ui.options.aliases['b-chip']"
@@ -68,7 +76,7 @@
               </slot>
             </template>
             <template #item="{ item, props }">
-              <v-list-item v-bind="props">
+              <v-list-item v-bind="{ ...props, title: titleOfItem(item.raw), subtitle: subtitleOfItem(item.raw) }">
                 <template v-if="multiselect" #prepend>
                   <component
                     :is="$ui.options.aliases['b-checkbox']"
@@ -82,11 +90,8 @@
                 </template>
                 <template #title="{ title }">
                   <slot name="option" :item="item.raw" :is-selected="itemSelected(item.raw)" :search-text="searchTerm">
-                    <span
-                      v-if="highlight"
-                      v-html="highlightedText(title ? String(title) : titleOfItem(item.raw), searchTerm)"
-                    ></span>
-                    <span v-else>{{ title || titleOfItem(item.raw) }}</span>
+                    <span v-if="highlight" v-html="highlightedText(title, searchTerm)"></span>
+                    <span v-else>{{ title }}</span>
                   </slot>
                 </template>
                 <template v-if="optionHint" #subtitle="{ subtitle }">
@@ -96,11 +101,8 @@
                     :is-selected="itemSelected(item.raw)"
                     :search-text="searchTerm"
                   >
-                    <span
-                      v-if="highlight"
-                      v-html="highlightedText(subtitle ? String(subtitle) : subtitleOfItem(item.raw), searchTerm)"
-                    ></span>
-                    <span v-else>{{ subtitle || subtitleOfItem(item.raw) }}</span>
+                    <span v-if="highlight" v-html="highlightedText(subtitle, searchTerm)"></span>
+                    <span v-else>{{ subtitle }}</span>
                   </slot>
                 </template>
               </v-list-item>

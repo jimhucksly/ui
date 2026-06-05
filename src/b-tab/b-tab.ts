@@ -16,7 +16,7 @@ export default class LdTabComponent extends mixins(ViewportMixin) {
   @Prop({ type: String, default: undefined }) activeClass: string;
   @Prop({ type: Boolean, default: false }) lazy: boolean;
 
-  @Inject({ from: 'tab' }) tab: { visibled: boolean };
+  @Inject({ from: 'tab' }) tab: { transition: boolean; visibled: boolean };
 
   get onlyWindows(): boolean {
     return this.$parent.$options.name === 'VWindow';

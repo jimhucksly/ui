@@ -5,7 +5,7 @@ import Help from '@/components/help/help.vue';
 import Icon from '@/components/icon/icon.vue';
 import Label from '@/components/label/label.vue';
 import { Emit } from '@/decorators/emit.decorator';
-import ComboboxMixin, { InternalError } from '@/mixins/combobox.mixin';
+import ComboboxMixin, { ComponentName, InternalError } from '@/mixins/combobox.mixin';
 import EditMixin from '@/mixins/edit.mixin';
 import GridMixin from '@/mixins/grid.mixin';
 import HelpMixin from '@/mixins/help.mixin';
@@ -52,7 +52,8 @@ export default class SelectListBoxComponent extends mixins(
   noDataMessage = '';
   getItems: DebouncedFunc<(...args: unknown[]) => unknown> = null;
 
-  isFocused = false;
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
+  instanceType = ComponentName.SelectListBox;
 
   @Emit('blur') emitBlur(value: unknown) {
     return value;

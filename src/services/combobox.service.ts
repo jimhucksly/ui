@@ -9,11 +9,12 @@ export default class ComboboxService {
   static readonly MIN_MENU_HEIGHT = 200;
   static readonly MAX_MENU_HEIGHT = 310;
   static readonly VIEWPORT_GAP = 28;
+  static readonly VLIST_PADDING_Y = 8;
 
   locationStrategy(data: LocationStrategyData, _: StrategyProps, contentStyles: Ref<Record<string, string>>) {
     const pixelRound = UnitService.pixelRound.bind(this);
     const convertToUnit = UnitService.convertToUnit.bind(this);
-    function updateLocation() {
+    function updateLocation(originalElementsCount: number = 0) {
       if (!document) {
         return;
       }
@@ -38,7 +39,7 @@ export default class ComboboxService {
         maxHeight: '',
       };
 
-      /* вычисляем доступное просранство между элементов и нижней границей окна */
+      /* вычисляем доступное пространство между списком элементов и нижней границей окна */
       const min = Math.min(available.bottom, ComboboxService.MAX_MENU_HEIGHT);
       /* берем доступную высоту или минимальную высоту выпадающего меню */
       const max = Math.max(min, ComboboxService.MIN_MENU_HEIGHT);
@@ -49,7 +50,18 @@ export default class ComboboxService {
       } else {
         /* если области под элементов не достаточно для выдадающего меню, раскрываем его над элементом */
         /* берем минимальное между высотой доступной области над элементом и максимальной высотой выпадающего меню */
-        const _min = Math.min(available.top, content.clientHeight, ComboboxService.MAX_MENU_HEIGHT);
+        let contentHeight = content.clientHeight;
+        if (originalElementsCount) {
+          const list = content.querySelector('.ld-dropdown-list');
+          if (list) {
+            const item = list.querySelector('.v-list-item');
+            if (item) {
+              contentHeight = originalElementsCount * item.clientHeight + ComboboxService.VLIST_PADDING_Y * 2;
+              contentHeight = Math.min(contentHeight, ComboboxService.MAX_MENU_HEIGHT);
+            }
+          }
+        }
+        const _min = Math.min(available.top, contentHeight, ComboboxService.MAX_MENU_HEIGHT);
         /* если вычисленная высота равна доступной области до верхней границы окна, то вычтем gap */
         const h = pixelRound(_min) - (_min === available.top ? ComboboxService.VIEWPORT_GAP : 0);
         props.maxHeight = convertToUnit(h);
@@ -67,6 +79,21 @@ export default class ComboboxService {
         });
       });
     });
+
+    (this as unknown as Vue).$watch(
+      'optionsList',
+      (value: Array<unknown>) => {
+        (this as unknown as Vue).$nextTick(() => {
+          requestAnimationFrame(() => {
+            updateLocation(value?.length);
+            requestAnimationFrame(() => {
+              updateLocation(value?.length);
+            });
+          });
+        });
+      },
+      { deep: true }
+    );
 
     return {
       updateLocation,

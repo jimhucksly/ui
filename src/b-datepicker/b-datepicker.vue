@@ -7,6 +7,7 @@
       {
         'b-datepicker--focused': isFocused,
         'b-datepicker--dateonly': dateonly,
+        'b-datepicker--readonly': readonly,
         'b-datepicker--label-on-top': labelOnTop,
       },
     ]"

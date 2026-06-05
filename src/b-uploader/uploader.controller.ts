@@ -171,7 +171,7 @@ export class UploaderController {
       for (const item of payload) {
         this.add(item);
       }
-      this.fileEventInput();
+      this.fireEventInput();
       return;
     }
     const item = new FileController(payload, this.options);
@@ -317,7 +317,13 @@ export class UploaderController {
     if (index > -1) {
       this.items.splice(index, 1);
       this.fireEventUpdate();
-      this.fileEventInput();
+      this.fireEventInput();
+    }
+  }
+
+  clear() {
+    while (this.items.length > 0) {
+      this.items.splice(0, 1);
     }
   }
 
@@ -337,7 +343,7 @@ export class UploaderController {
     return this.items.findIndex(item => item.uid === uid);
   }
 
-  private fileEventInput() {
+  private fireEventInput() {
     if (this.events.has('input')) {
       const callback = this.events.get('input');
       callback(this.items);

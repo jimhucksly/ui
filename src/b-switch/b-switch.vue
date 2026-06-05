@@ -20,7 +20,7 @@
           name="cheсkbox"
           :checked="checked"
           :tabindex="tabindex"
-          :disabled="disabled"
+          :disabled="disabled || readonly"
           @focus="onFocus"
           @blur="onBlur"
           @input="onChange"

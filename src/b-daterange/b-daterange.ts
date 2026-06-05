@@ -463,9 +463,10 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     if (!this.startDate || !this.endDate) {
       return '';
     }
-    return [datetime.dateToLocal(this.startDate, this.locale), datetime.dateToLocal(this.endDate, this.locale)].join(
-      ' - '
-    );
+    return [
+      datetime.dateToLocal(this.startDate, this.locale),
+      datetime.dateToLocal(this.endDate, this.locale),
+    ].join(' - ');
   }
 
   get locale(): string {

@@ -22,6 +22,7 @@ export default class LdTabsComponent extends mixins(ViewportMixin) {
   @Prop({ type: Boolean, default: false }) noHeader: boolean;
   @Prop({ type: Boolean, default: false }) noPadding: boolean;
   @Prop({ type: String, default: 's' }) size: 's' | 'l';
+  @Prop({ type: Boolean, default: false }) noAnimation: boolean;
 
   @Provide({
     to: 'tab',
@@ -29,8 +30,10 @@ export default class LdTabsComponent extends mixins(ViewportMixin) {
   })
   tab: {
     visibled: boolean;
+    transition: boolean;
   } = {
     visibled: true,
+    transition: true,
   };
 
   active = -1;
@@ -79,6 +82,10 @@ export default class LdTabsComponent extends mixins(ViewportMixin) {
 
   @Watch('isTabsVisibled') onTabsVisibledChanged(value: boolean) {
     this.tab.visibled = value;
+  }
+
+  @Watch('noAnimation', { immediate: true }) onTransitionChanged() {
+    this.tab.transition = !this.noAnimation;
   }
 
   mounted() {

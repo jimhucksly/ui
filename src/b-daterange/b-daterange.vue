@@ -60,7 +60,8 @@
             </template>
             <v-card elevation="0" class="b-daterange-dropdown">
               <v-card-text>
-                <b-calendar
+                <component
+                  :is="$ui.options.aliases['b-calendar']"
                   ref="startDatepickerRef"
                   v-model="a"
                   v-bind="{
@@ -73,7 +74,8 @@
                   @pick-day="onSelectDate($event)"
                   @update:month="onUpdateMonth(0, $event)"
                 />
-                <b-calendar
+                <component
+                  :is="$ui.options.aliases['b-calendar']"
                   ref="endDatepickerRef"
                   v-model="b"
                   v-bind="{

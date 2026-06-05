@@ -4,9 +4,10 @@ export interface IDialogProps {
   pressEnterAsOk?: boolean;
   pressEscAsCancel?: boolean;
   hostObject?: IHostObject;
-  size?: string;
+  size?: 's' | 'm' | 'l';
   width?: string | number;
   height?: string | number;
+  css?: string;
   align?: 'left' | 'right';
 }
 
@@ -15,6 +16,8 @@ export interface IInterativeDialogProps extends IDialogProps {
   fullHeight?: boolean;
   okTitle?: string;
   cancelTitle?: string;
+  okColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  cancelColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   closable?: boolean;
   hideFooter?: boolean;
 }
@@ -59,7 +62,6 @@ export interface IModalInfo {
    * ограничивая пользователя в действиях, пока окно не будет закрыто
    */
   noModal?: boolean;
-  darkTitle?: boolean;
   content?: string;
   loading?: boolean;
   component?: string;
@@ -67,14 +69,18 @@ export interface IModalInfo {
   selectAsOk?: boolean;
   okTitle?: string;
   cancelTitle?: string;
+  okColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
+  cancelColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'grey';
   okResult?: number | string | boolean | IModalResult<IViewModel<number | string>>;
   cancelResult?: number | string | boolean | IModalResult<IViewModel<number | string>>;
+  settedResult?: boolean;
   hideFooter?: boolean;
   size?: DialogSize;
   width?: number | string;
   height?: number | string;
   fullHeight?: boolean;
   align?: 'left' | 'right';
+  css?: string;
   closable?: boolean;
   expandable?: boolean;
   minimizable?: boolean;
@@ -97,6 +103,15 @@ export interface IModalInfo {
    *  ф-ция, вызываемая для определения того, были ли изменения в диалоге
    */
   isChanged?: () => boolean;
+}
+
+enum ModalType {
+  Alert,
+  Prompt,
+  Info,
+  Confirm,
+  Select,
+  CreateEdit,
 }
 
 export interface IModalWindow extends IModalInfo {
@@ -127,81 +142,63 @@ export class Dialog {
     public content?: string,
     public pressEnterAsOk?: boolean,
     public pressEscAsCancel?: boolean,
-    public hostObject?: IHostObject
+    public hostObject?: IHostObject,
+    public size?: 's' | 'm' | 'l',
+    public width?: string | number,
+    public height?: string | number,
+    public css?: string,
+    public align?: 'left' | 'right'
   ) {}
 }
 
+export class InteractiveDialog extends Dialog {
+  loading: boolean;
+  fullHeight: boolean;
+  closable: boolean;
+  hideFooter: boolean;
+  constructor(data: IInterativeDialogProps) {}
+}
+
 export class AlertDialog extends Dialog {
-  constructor(data: {
-    title: string;
-    content: string;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-  });
+  constructor(data: IDialogProps) {}
 }
 
 export class PromptDialog extends Dialog {
-  width?: string;
-  constructor(data: {
-    title: string;
-    width?: string;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-  });
+  constructor(data: IDialogProps);
 }
 
-export class ConfirmDialog extends Dialog {
-  okTitle?: string;
-  cancelTitle?: string;
+export class ConfirmDialog extends InteractiveDialog {
   okResult?: number | string | boolean;
   cancelResult?: number | string | boolean;
-  constructor(data: {
-    title: string;
-    text: string;
-    okTitle?: string;
-    cancelTitle?: string;
-    okResult?: number | string | boolean;
-    cancelResult?: number | string | boolean;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-  });
+  constructor(
+    data: IInterativeDialogProps & {
+      okResult?: number | string | boolean;
+      cancelResult?: number | string | boolean;
+    }
+  ) {}
 }
 
-export class InfoDialog extends Dialog {
+export class InfoDialog extends InteractiveDialog {
   component: string;
   componentProps: Record<string, unknown>;
-  width?: string;
-  height?: string;
   fullHeight?: boolean;
-  loading?: boolean;
-  closable?: boolean;
   hideFooter?: boolean;
   minimizable?: boolean;
   description?: string;
   help?: boolean;
-  constructor(data: {
-    title: string;
-    component: string;
-    componentProps: Record<string, unknown>;
-    width?: string;
-    height?: string;
-    fullHeight?: boolean;
-    loading?: boolean;
-    closable?: boolean;
-    hideFooter?: boolean;
-    minimizable?: boolean;
-    description?: string;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-    help?: boolean;
-  });
+  constructor(
+    data: IInterativeDialogProps & {
+      component: string;
+      componentProps: Record<string, unknown>;
+      fullHeight?: boolean;
+      minimizable?: boolean;
+      description?: string;
+      help?: boolean;
+    }
+  );
 }
 
-export class SelectDialog<T> extends Dialog {
+export class SelectDialog<T> extends InteractiveDialog {
   component: string;
   componentProps: {
     disabledItems: Array<T | number | string>;
@@ -219,53 +216,32 @@ export class SelectDialog<T> extends Dialog {
     multiselect?: boolean;
     [key: string]: unknown;
   };
-  loading?: boolean;
-  fullHeight?: boolean;
-  width?: string | number;
-  height?: string | number;
   selectAsOk?: boolean;
-  okTitle?: string;
-  cancelTitle?: string;
   help?: boolean;
-  constructor(data: {
-    title: string;
-    component: string;
-    componentProps: {
-      disabledItems: Array<T | number | string>;
-      selectedItems: Array<T | number | string>;
-      searchable?: boolean;
-      searchFields?: Array<string>;
-      isTree?: boolean;
-      multiselect?: boolean;
-      [key: string]: unknown;
-    };
-    loading?: boolean;
-    fullHeight?: boolean;
-    width?: string | number;
-    height?: string | number;
-    selectAsOk?: boolean;
-    okTitle?: string;
-    cancelTitle?: string;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-    help?: boolean;
-  });
+  constructor(
+    data: IInterativeDialogProps & {
+      component: string;
+      componentProps: {
+        disabledItems: Array<T | number | string>;
+        selectedItems: Array<T | number | string>;
+        searchable?: boolean;
+        searchFields?: Array<string>;
+        isTree?: boolean;
+        multiselect?: boolean;
+        [key: string]: unknown;
+      };
+      selectAsOk?: boolean;
+      help?: boolean;
+    }
+  );
 }
 
-export class CreateEditDialog<T> extends Dialog {
+export class CreateEditDialog<T> extends InteractiveDialog {
   component: string;
   componentProps: {
     model: T;
     [key: string]: unknown;
   };
-  loading?: boolean;
-  fullHeight?: boolean;
-  width?: string | number;
-  height?: string | number;
-  hideFooter?: boolean;
-  darkTitle?: boolean;
-  closable?: boolean;
   expandable?: boolean;
   minimizable?: boolean;
   collapsedSize?: {
@@ -281,43 +257,30 @@ export class CreateEditDialog<T> extends Dialog {
   expanded?: boolean;
   description?: string;
   noModal?: boolean;
-  okTitle?: string;
-  cancelTitle?: string;
   help?: boolean;
-  constructor(data: {
-    title: string;
-    component: string;
-    componentProps: {
-      model: T;
-      [key: string]: unknown;
-    };
-    loading?: boolean;
-    fullHeight?: boolean;
-    width?: string | number;
-    height?: string | number;
-    hideFooter?: boolean;
-    darkTitle?: boolean;
-    closable?: boolean;
-    expandable?: boolean;
-    minimizable?: boolean;
-    collapsedSize?: {
-      width: string | number;
-      height: string | number;
+  constructor(
+    data: IInterativeDialogProps & {
+      component: string;
+      componentProps: {
+        model: T;
+        [key: string]: unknown;
+      };
+      expandable?: boolean;
+      minimizable?: boolean;
+      collapsedSize?: {
+        width: string | number;
+        height: string | number;
+        noModal?: boolean;
+      };
+      expandedSize?: {
+        width: string | number;
+        height: string | number;
+        noModal?: boolean;
+      };
+      expanded?: boolean;
+      description?: string;
       noModal?: boolean;
-    };
-    expandedSize?: {
-      width: string | number;
-      height: string | number;
-      noModal?: boolean;
-    };
-    expanded?: boolean;
-    description?: string;
-    noModal?: boolean;
-    okTitle?: string;
-    cancelTitle?: string;
-    pressEnterAsOk?: boolean;
-    pressEscAsCancel?: boolean;
-    hostObject?: IHostObject;
-    help?: boolean;
-  });
+      help?: boolean;
+    }
+  );
 }

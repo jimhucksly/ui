@@ -128,11 +128,12 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       noModal: modalInfo.noModal,
       type: modalInfo.type,
       title: modalInfo.title,
-      darkTitle: modalInfo.darkTitle,
       content: modalInfo.content,
       resolveFunction: modalInfo.resolveFunction,
       okTitle: modalInfo.okTitle,
       cancelTitle: modalInfo.cancelTitle,
+      okColor: modalInfo.okColor,
+      cancelColor: modalInfo.cancelColor,
       okResult: modalInfo.okResult,
       cancelResult: modalInfo.cancelResult,
       okOnly: modalInfo.type === ModalType.Alert || modalInfo.type === ModalType.Info,
@@ -141,13 +142,18 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       okLoading: false,
       okDisabled: modalInfo.type === ModalType.Select,
       selectAsOk: modalInfo.selectAsOk,
-      hideFooter: isDefined(modalInfo.hideFooter),
+      hideFooter: isDefined(modalInfo.hideFooter)
+        ? modalInfo.hideFooter
+        : isDefined(modalInfo.selectAsOk)
+          ? modalInfo.selectAsOk
+          : false,
       resolved: false,
       width: modalInfo.width,
       height: modalInfo.height,
       fullHeight: modalInfo.fullHeight,
       align: modalInfo.align,
       size: modalInfo.size,
+      css: modalInfo.css,
       closable: isDefined(modalInfo.closable) ? modalInfo.closable : true,
       expandable: modalInfo.expandable,
       minimizable: modalInfo.minimizable,
@@ -231,11 +237,17 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.id) {
       result.push(`${ModalType[modal.type]}-${this.id}`);
     }
+    if (modal.noModal) {
+      result.push('b-dialog--no-modal');
+    }
     if (modal.noModal || !modal.visible) {
       result.push('b-dialog-content--hidden');
     }
     if (!modal.content && (this.isAlertDialog(modal) || this.isConfirmDialog(modal))) {
       result.push('b-dialog-content--without-content');
+    }
+    if (modal.css) {
+      result.push(modal.css);
     }
     if (this.isMobileGlobal) {
       result.push('b-dialog-content--mobile');
@@ -273,8 +285,14 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (!modal.el) {
       modal.el = document.querySelector(`.${this.uniqKey(modal)}`);
     }
+    if (!modal.el) {
+      return;
+    }
+
     const LIMIT_HEIGHT = 600;
+    const MODAL_WINDOW_GAP = 24;
     const viewportH = this.viewport().h;
+
     const getWidth = () => {
       if (this.isMobileGlobal) {
         return '100%';
@@ -285,6 +303,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       }
       return UnitService.convertToUnit(w);
     };
+
+    modal.el.style.width = getWidth();
 
     const getHeight = () => {
       if (modal.fullHeight) {
@@ -297,6 +317,10 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       return UnitService.convertToUnit(h);
     };
 
+    modal.el.style.height = getHeight();
+
+    let mxH = 0;
+
     const getMaxHeight = () => {
       if (modal.align === 'left' || modal.align === 'right') {
         return '100%';
@@ -304,47 +328,72 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (this.isMobileGlobal) {
         return '100%';
       }
-      return viewportH >= LIMIT_HEIGHT ? `calc(100% - 2 * ${this.modalWindowGap}` : 'unset';
+      if (viewportH >= LIMIT_HEIGHT) {
+        mxH = viewportH - 2 * MODAL_WINDOW_GAP;
+        return `calc(100% - 2 * ${this.modalWindowGap})`;
+      }
+      return 'unset';
     };
+
+    modal.el.style.maxHeight = getMaxHeight();
+
+    let modalH = 0;
 
     const getPaddingTop = () => {
       if (modal.align === 'left' || modal.align === 'right') {
+        return '0';
+      }
+      if (modal.noModal) {
         return '0';
       }
       if (modal.fullHeight) {
         return this.modalWindowGap;
       }
       if (this.isMobileGlobal) {
-        return 'var(--modal-window-gap)';
+        return this.modalWindowGap;
       }
       if (this.isAlertDialog(modal) || this.isConfirmDialog(modal)) {
-        return 'unset';
+        return '0';
+      }
+      if (modal.expandable) {
+        modalH = modal.expanded ? modal.expandedSize?.height : modal.collapsedSize?.height;
+        modalH = UnitService.unitToNumber(modalH);
+        if (modalH > viewportH) {
+          return '0';
+        }
+        return modalH >= LIMIT_HEIGHT ? 'unset' : `calc(${Math.floor(viewportH * 0.1)}px + ${this.modalWindowGap})`;
       }
       return viewportH >= LIMIT_HEIGHT ? `calc(${Math.floor(viewportH * 0.1)}px + ${this.modalWindowGap})` : 'unset';
     };
+
+    modal.el.style.paddingTop = getPaddingTop();
 
     const getPaddingBottom = () => {
       if (modal.align === 'left' || modal.align === 'right') {
         return '0';
       }
+      if (modal.noModal) {
+        return '0';
+      }
       return viewportH >= LIMIT_HEIGHT ? 'unset' : this.modalWindowGap;
     };
+
+    modal.el.style.paddingBottom = getPaddingBottom();
 
     const getMargin = () => {
       if (modal.align === 'left' || modal.align === 'right') {
         return '0';
       }
-      return this.modalWindowGap;
+      let mt = this.modalWindowGap;
+      if (modal.expandable && modal.expanded && modalH < viewportH) {
+        mt = UnitService.convertToUnit(
+          MODAL_WINDOW_GAP + Math.min(Math.abs(Number(mxH) - Number(modalH)), Math.floor(viewportH * 0.1))
+        );
+      }
+      return `${mt} ${this.modalWindowGap} ${this.modalWindowGap} ${this.modalWindowGap}`;
     };
 
-    if (modal.el) {
-      modal.el.style.margin = getMargin();
-      modal.el.style.height = getHeight();
-      modal.el.style.width = getWidth();
-      modal.el.style.maxHeight = getMaxHeight();
-      modal.el.style.paddingTop = getPaddingTop();
-      modal.el.style.paddingBottom = getPaddingBottom();
-    }
+    modal.el.style.margin = getMargin();
   }
 
   alignButtons(modal: ModalWindow) {
@@ -394,7 +443,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         modal.okResult = modal.content;
         break;
       case ModalType.CreateEdit:
-        if (modal.componentInstance && modal.componentInstance.save) {
+        if (!modal.settedResult && modal.componentInstance && modal.componentInstance.save) {
           modal.okLoading = true;
           /* eslint-disable-next-line no-useless-call */
           let resultSave = modal.componentInstance.save.call(modal.componentInstance);
@@ -403,6 +452,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
               resultSave = await resultSave;
               if (resultSave) {
                 modal.okResult = resultSave;
+                modal.settedResult = true;
               } else {
                 canUnload = false;
               }
@@ -472,7 +522,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       }
 
       if (this.hasParent(modal)) {
-        if (fromCloseButtonReason) {
+        if (fromCloseButtonReason || fromCancelButtonReason) {
           const parents = this.dialogManager.getParents(modal);
           for (const m of parents) {
             this.closeModal(m);
@@ -540,37 +590,36 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
   }
 
-  async onSetResult(modal: ModalWindow, result: IViewModel<string | number>): Promise<void> {
-    modal.okLoading = false;
-    modal.okResult = result;
-    if (result) {
-      if (modal.selectAsOk || this.isCreateEditDialog(modal)) {
-        modal.okDisabled = false;
-        const canUnload = await this.handleOk(modal);
-        if (canUnload) {
-          this.handleCancel(modal, ModalCancelReason.FromOkButton);
+  onSetResult(modal: ModalWindow, result: IViewModel<string | number>): void {
+    setTimeout(() => {
+      modal.okLoading = false;
+      modal.okResult = result;
+      modal.settedResult = true;
+      if (result) {
+        if (modal.selectAsOk || this.isCreateEditDialog(modal)) {
+          modal.okDisabled = false;
+          return this.handleCancel(modal, ModalCancelReason.FromOkButton);
         }
-      }
-      if (Array.isArray(result)) {
-        modal.okDisabled = result.length === 0;
+        if (Array.isArray(result)) {
+          modal.okDisabled = result.length === 0;
+        } else {
+          modal.okDisabled = false;
+        }
       } else {
-        modal.okDisabled = false;
+        modal.okDisabled = true;
       }
-    } else {
-      modal.okDisabled = true;
-    }
+    }, 1);
   }
 
-  async onSetResultAndClose(modal: ModalWindow, result: IViewModel<string | number>): Promise<void> {
-    if (result) {
+  onSetResultAndClose(modal: ModalWindow, result: IViewModel<string | number>): void {
+    setTimeout(() => {
       modal.okResult = result;
-      const canUnload = await this.handleOk(modal);
-      if (canUnload) {
-        this.handleCancel(modal, ModalCancelReason.FromOkButton);
-        return;
+      modal.settedResult = true;
+      if (result) {
+        modal.okDisabled = false;
+        return this.handleCancel(modal, ModalCancelReason.FromOkButton);
       }
-    }
-    modal.okDisabled = true;
+    }, 1);
   }
 
   onExpandCollapse(modal: ModalWindow) {
@@ -693,9 +742,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.isSelectDialog(modal)) {
       return !modal.selectAsOk;
     }
-    if (this.hasParent(modal)) {
-      return false;
-    }
+    // if (this.hasParent(modal)) {
+    //   return false;
+    // }
     return true;
   }
 
@@ -703,7 +752,10 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (this.isSelectDialog(modal)) {
       return !modal.selectAsOk;
     }
-    return !this.hasParent(modal);
+    // if (this.hasParent(modal)) {
+    //   return false;
+    // }
+    return true;
   }
 
   okButtonText(modal: ModalWindow) {
@@ -745,10 +797,6 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       width: this.modalWidth(modal),
       height: 'auto',
     };
-  }
-
-  isTitleDark(modal: ModalWindow) {
-    return modal.darkTitle;
   }
 
   private defaultWidth(modal: ModalWindow): string | number {
@@ -810,11 +858,11 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         }
         return true;
       }
-      if (fromCloseButtonReason) {
+      if (fromCloseButtonReason || fromCancelButtonReason) {
         return DialogManager.id(this.id ? this.id : '').exec(
           new ConfirmDialog({
-            title: this.$i18n.gettext('Dialog Close Parent Confrim Title'),
-            content: this.$i18n.gettext('Dialog Close Parent Confrim Text'),
+            title: this.$i18n.gettext('Dialog Close Parent Confirm Title'),
+            content: this.$i18n.gettext('Dialog Close Parent Confirm Text'),
           })
         );
       }
