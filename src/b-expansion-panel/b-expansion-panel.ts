@@ -1,3 +1,4 @@
+import { uniqueID } from '@dn-web/core';
 import { Inject, Options, Prop, Vue } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
@@ -37,6 +38,6 @@ export default class ExpansionPanelComponent extends Vue {
   }
 
   get uid(): string {
-    return this.$utils.uidGen(6) as string;
+    return uniqueID(6) as string;
   }
 }

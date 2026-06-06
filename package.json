@@ -44,6 +44,7 @@
     "@babel/plugin-transform-typescript": "7.28.6",
     "@babel/preset-env": "7.29.2",
     "@babel/preset-typescript": "7.28.5",
+    "@dn-web/datatable": "1.0.0",
     "@popperjs/core": "2.11.8",
     "@stylistic/eslint-plugin": "5.10.0",
     "@types/babel__core": "7.20.5",

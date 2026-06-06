@@ -6,8 +6,9 @@ import { Emit } from '@/decorators/emit.decorator';
 import ViewportMixin from '@/mixins/viewport.mixins';
 import UnitService from '@/services/unit.service';
 import { IHostObject, IModalInfo, IModalWindow, IViewModel, ModalWindow } from '@/types/dialogs';
+import { ModalType } from '@/types/modalType';
 import { DialogListeners } from './dialog.listeners';
-import { DialogManager, ModalType } from './dialog.manager';
+import { DialogManager } from './dialog.manager';
 import DialogMinimizedComponent from './dialog.minimized.vue';
 import { ConfirmDialog } from './dialogs';
 

@@ -7,10 +7,10 @@
           <v-row class="pt-3 overflow-hidden" style="height: 500px">
             <v-col cols="8" class="d-flex flex-column h-100 overflow-hidden">
               <div class="overflow-hidden" style="flex-basis: 100%">
-                <ld-datatable
+                <b-datatable
                   id="datatable"
                   ref="table"
-                  class="material ngx-flex elevation-0 scroll-s"
+                  class="scroll-s"
                   column-mode="flex"
                   selection-type="multiClick"
                   :loading-indicator="loading"

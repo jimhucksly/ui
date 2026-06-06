@@ -166,7 +166,7 @@ $colors: (
       $s: list.nth($values, 5);
       $mt: list.nth($values, 6);
 
-      &#{utils.getSelector('.ld-dropdown-list', $size)} {
+      &#{utils.getSelector('.b-dropdown-list', $size)} {
         .v-list-item {
           padding: $p !important;
           .v-list-item__content {

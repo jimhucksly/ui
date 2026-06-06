@@ -52,7 +52,7 @@ export default class ComboboxService {
         /* берем минимальное между высотой доступной области над элементом и максимальной высотой выпадающего меню */
         let contentHeight = content.clientHeight;
         if (originalElementsCount) {
-          const list = content.querySelector('.ld-dropdown-list');
+          const list = content.querySelector('.b-dropdown-list');
           if (list) {
             const item = list.querySelector('.v-list-item');
             if (item) {

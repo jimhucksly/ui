@@ -7,6 +7,7 @@ import { reg as bcalendarReg } from '@/b-calendar';
 import { reg as bcheckboxReg } from '@/b-checkbox';
 import { reg as bchipReg } from '@/b-chip';
 import { reg as bcomboboxReg } from '@/b-combobox';
+import { reg as bdatatableReg } from '@/b-datatable';
 import { reg as bdatepickerReg } from '@/b-datepicker';
 import { reg as bdaterangeReg } from '@/b-daterange';
 import { reg as bdialogReg } from '@/b-dialog';
@@ -191,6 +192,7 @@ const dnwebui = {
     bcheckboxReg(vue, options);
     bchipReg(vue, options);
     bcomboboxReg(vue, options);
+    bdatatableReg(vue, options);
     bdatepickerReg(vue, options);
     bdaterangeReg(vue, options);
     bdialogReg(vue, options);

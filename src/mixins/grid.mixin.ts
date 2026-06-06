@@ -73,6 +73,7 @@ export default class GridMixin extends mixins(ViewportMixin) {
       'v-col-10': this.myInputSize === 10,
       'v-col-11': this.myInputSize === 11,
       'v-col-12': this.myInputSize === 12,
+      'd-flex flex-column justify-center': true,
     };
   }
 }

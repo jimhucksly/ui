@@ -8,6 +8,7 @@
     ["ld-chip", "b-chip"],
     ["ld-combobox", "b-combobox"],
     ["ld-datepicker", "b-datepicker"],
+    ["ld-datatable", "b-datatable"],
     ["ld-daterange", "b-daterange"],
     ["ld-dialog", "b-dialog"],
     ["ld-edit-text", "b-edit-text"],
@@ -38,5 +39,5 @@
     ["$ldmuii18n", "$i18n"],
     ["$ldmui", "$ui"]
   ],
-  "exclude": ["avatar", "iterator", "toolbar", "datatable", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
+  "exclude": ["avatar", "iterator", "toolbar", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
 }

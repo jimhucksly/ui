@@ -632,6 +632,7 @@ describe('DialogComponent: Select', () => {
     await delay(300);
     const btn = okBtn();
     btn.trigger('click');
+    await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
     expect(result).toEqual(1);

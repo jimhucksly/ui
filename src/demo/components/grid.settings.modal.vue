@@ -54,7 +54,7 @@
       </v-container>
     </b-expansion-panel>
     <b-expansion-panel title="Столбцы">
-      <ld-datatable :virtualization="false" size="s" column-mode="flex" :rows="columns" :columns="cols">
+      <b-datatable :virtualization="false" size="s" column-mode="flex" :rows="columns" :columns="cols">
         <template #cell="{ column, row, value }">
           <b-switch v-if="column.prop === 'name'" :label="value" v-model="row.visible"> </b-switch>
           <div v-if="column.prop === 'a'">
@@ -71,7 +71,7 @@
             <b-checkbox v-model="row.frozenRight" :disabled="row.frozenLeft" />
           </div>
         </template>
-      </ld-datatable>
+      </b-datatable>
     </b-expansion-panel>
   </b-expansion-panels>
 </template>

@@ -1,6 +1,5 @@
 import { isDefined } from '@dn-web/core';
 import isEqual from 'lodash-es/isEqual';
-import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 import { Prop, Vue, Watch } from 'vue-property-decorator';
 import { Emit } from '@/decorators/emit.decorator';
 import ComboboxService from '@/services/combobox.service';
@@ -8,12 +7,6 @@ import { IComboboxItem, IMessages } from '../types/combobox';
 
 type Messages = IMessages;
 type TElement = string | number | IComboboxItem;
-
-enum ComponentName {
-  Combobox = 'ComboboxComponent',
-  Select = 'SelectComponent',
-  SelectListBox = 'SelectListBoxComponent',
-}
 
 export class InternalError extends Error {
   constructor(err: Error | string = 'internal error') {
@@ -25,12 +18,11 @@ export class InternalError extends Error {
   }
 }
 
-class InstanceService {
-  componentName: ComponentName = null;
-
-  constructor(public instance: ComponentInternalInstance) {
-    this.componentName = instance?.type?.name as ComponentName;
-  }
+export enum ComponentName {
+  None = '',
+  Combobox = 'ComboboxComponent',
+  Select = 'SelectComponent',
+  SelectListBox = 'SelectListBoxComponent',
 }
 
 export default class ComboboxMixin extends Vue {
@@ -82,6 +74,8 @@ export default class ComboboxMixin extends Vue {
 
   menu = false;
 
+  isFocused = false;
+
   menuCallback: {
     state: boolean;
     callback: () => void;
@@ -107,6 +101,8 @@ export default class ComboboxMixin extends Vue {
 
   readonly debounceDelay = 600;
 
+  instanceType = ComponentName.None;
+
   onResizeHandler: () => void;
 
   @Emit('update:model-value') emitUpdateModelValue(value: unknown = null) {
@@ -130,8 +126,13 @@ export default class ComboboxMixin extends Vue {
     return true;
   }
 
-  @Watch('items', { immediate: true, deep: true }) omItemsChanged() {
-    this.elements = this.items;
+  @Watch('items', { immediate: true, deep: true }) onItemsChanged(value: Array<TElement>) {
+    if (Array.isArray(value)) {
+      this.elements = value;
+    }
+    if (!value) {
+      this.elements = [];
+    }
   }
 
   @Watch('returnObject') onReturnObjectChanged() {
@@ -154,6 +155,9 @@ export default class ComboboxMixin extends Vue {
       this.setSelected(array);
     } else {
       if (isEqual(array, this.selectedIds)) {
+        if (this.isCombobox || this.isSelect) {
+          this.setOptions();
+        }
         return;
       }
       this.setSelected(array);
@@ -164,14 +168,14 @@ export default class ComboboxMixin extends Vue {
     if (isEqual(newVal, oldVal)) {
       return;
     }
-    if (this.multiselect) {
+    if (this.multiselect && this.isFocused) {
       this.$fireEventSelect();
     }
     this.selected = this.selectedValidation(newVal, oldVal);
     this.emitUpdate();
   }
 
-  @Watch('elements') onItemsChanged() {
+  @Watch('elements', { deep: true }) onElementsChanged() {
     if (this.hasElements) {
       const valid = this.elementsType.arrayOfSimple || this.elementsType.arrayOfObject;
       if (!valid) {
@@ -342,6 +346,9 @@ export default class ComboboxMixin extends Vue {
   }
 
   subtitleOfItem(item: TElement): string {
+    if (!this.optionHint) {
+      return null;
+    }
     if (this.comboboxService.isSimple(item)) {
       return String(item);
     }
@@ -370,8 +377,10 @@ export default class ComboboxMixin extends Vue {
         this.loading = true;
         this.optionsList = [];
         const items = await this.fetchData(searchTerm);
-        this.updateElements(items);
-        this.optionsList = items;
+        if (items?.length) {
+          this.updateElements(items);
+          this.optionsList = items;
+        }
       } catch (e) {
         /* eslint-disable no-console */
         console.error(e);
@@ -450,11 +459,14 @@ export default class ComboboxMixin extends Vue {
   }
 
   private selectedValidation(_new: unknown, _old: unknown) {
-    if (!this.comboboxService.isArray(_new) || !this.comboboxService.isArray(_old)) {
-      return _new;
+    if (!this.comboboxService.isArray(_new)) {
+      _new = this.comboboxService.toArray(_new as TElement);
+    }
+    if (!this.comboboxService.isArray(_old)) {
+      _old = this.comboboxService.toArray(_old as TElement);
     }
     if (this.comboboxService.isEmpty(_new) || this.comboboxService.isEmpty(_old)) {
-      return _new;
+      return (_new as Array<unknown>).filter(i => i !== this.searchTerm);
     }
     if ((_new as Array<unknown>).length < (_old as Array<unknown>).length) {
       return _new;
@@ -478,7 +490,10 @@ export default class ComboboxMixin extends Vue {
         }
       }
     }
-    return _buff;
+    if (this.multiselect) {
+      return _buff.length ? _buff : [];
+    }
+    return isDefined(_buff[0]) ? _buff[0] : null;
   }
 
   private updateElements(_new: Array<TElement>): Array<TElement> {
@@ -486,14 +501,16 @@ export default class ComboboxMixin extends Vue {
       this.elements = _new;
       return;
     }
-    const _buff: Array<TElement> = [];
-    for (const i of _new) {
-      const index = this.elements.findIndex(item => this.isIdentity(item, i));
-      if (index < 0) {
-        _buff.push(i);
+    if (this.comboboxService.isArray(_new)) {
+      const _buff: Array<TElement> = [];
+      for (const i of _new) {
+        const index = this.elements.findIndex(item => this.isIdentity(item, i));
+        if (index < 0) {
+          _buff.push(i);
+        }
       }
+      this.elements.push(..._buff);
     }
-    this.elements.push(..._buff);
   }
 
   private $fireEventSelect() {
@@ -606,7 +623,7 @@ export default class ComboboxMixin extends Vue {
 
   get listProps(): Record<string, unknown> {
     const props: Record<string, unknown> = {
-      class: ['scroll-s', 'ld-dropdown-list', `ld-dropdown-list--${(this as unknown as { mySize: string }).mySize}`],
+      class: ['scroll-s', 'b-dropdown-list', `b-dropdown-list--${(this as unknown as { mySize: string }).mySize}`],
     };
     return {
       listProps: props,
@@ -631,20 +648,16 @@ export default class ComboboxMixin extends Vue {
     return new ComboboxService();
   }
 
-  get instanceService(): InstanceService {
-    return new InstanceService(getCurrentInstance());
-  }
-
   get isSelect(): boolean {
-    return this.instanceService.componentName === ComponentName.Select;
+    return this.instanceType === ComponentName.Select;
   }
 
   get isCombobox(): boolean {
-    return this.instanceService.componentName === ComponentName.Combobox;
+    return this.instanceType === ComponentName.Combobox;
   }
 
   get isSelectListBox(): boolean {
-    return this.instanceService.componentName === ComponentName.SelectListBox;
+    return this.instanceType === ComponentName.SelectListBox;
   }
 
   get canRemove(): boolean {

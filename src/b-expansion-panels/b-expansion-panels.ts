@@ -1,3 +1,4 @@
+import { uniqueID } from '@dn-web/core';
 import { Prop, Provide, Vue, Watch } from 'vue-property-decorator';
 import { Emit } from '@/decorators/emit.decorator';
 
@@ -68,6 +69,6 @@ export default class ExpansionPanelsComponent extends Vue {
   }
 
   get uid(): string {
-    return this.$utils.uidGen(6) as string;
+    return uniqueID(6) as string;
   }
 }

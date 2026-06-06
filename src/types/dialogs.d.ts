@@ -1,3 +1,5 @@
+import { ModalType } from './modalType';
+
 export interface IDialogProps {
   title: string;
   content?: string;
@@ -103,15 +105,6 @@ export interface IModalInfo {
    *  ф-ция, вызываемая для определения того, были ли изменения в диалоге
    */
   isChanged?: () => boolean;
-}
-
-enum ModalType {
-  Alert,
-  Prompt,
-  Info,
-  Confirm,
-  Select,
-  CreateEdit,
 }
 
 export interface IModalWindow extends IModalInfo {

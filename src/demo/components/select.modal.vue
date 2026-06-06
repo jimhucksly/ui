@@ -2,7 +2,7 @@
   <v-container class="h-100 pa-0">
     <v-row class="h-100 overflow-hidden">
       <v-col class="h-100 overflow-hidden">
-        <ld-datatable
+        <b-datatable
           id="datatable"
           ref="table"
           :rows="rows"

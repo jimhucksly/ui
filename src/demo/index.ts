@@ -10,6 +10,7 @@ import Checkbox from './checkbox.vue';
 import Chip from './chip.vue';
 import Colors from './colors.vue';
 import ComboBox from './combobox.vue';
+import Datatable from './datatable.vue';
 import DatePicker from './datepicker.vue';
 import DateRange from './daterange.vue';
 import Dialogs from './dialogs.vue';
@@ -89,6 +90,7 @@ interface ITab {
     Toast,
     Stepper,
     EventBus,
+    Datatable,
     dialogs: Dialogs,
     Pager,
     'form-validation': Validation,
@@ -145,6 +147,7 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Tabs' },
     { name: 'Expansions' },
     { name: 'Splitter' },
+    { name: 'Datatable' },
     { name: 'Interactive', disabled: true },
     { name: 'Dialog', component: 'dialogs' },
     { name: 'Toast' },

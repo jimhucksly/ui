@@ -5,7 +5,7 @@
     "rootDir": "./src",
     "module": "nodenext",
     "target": "esnext",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "strict": false,
     "sourceMap": true,
     "emitDecoratorMetadata": true,

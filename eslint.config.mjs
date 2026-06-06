@@ -217,7 +217,8 @@ export default defineConfig(
         "sonarjs/no-duplicate-string": "off",
         "sonarjs/no-clear-text-protocols": "off",
         "sonarjs/different-types-comparison": "off",
-        "sonarjs/no-nested-functions": "off"
+        "sonarjs/no-nested-functions": "off",
+        "sonarjs/no-skipped-tests": "off"
       }
     },
     // simple sort

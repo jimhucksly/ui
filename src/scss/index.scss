@@ -32,6 +32,8 @@
 @use "textmarkup";
 @use "expansions";
 
+@use "@dn-web/datatable/styles";
+
 @use 'vuetify' with (
   $color-pack: false,
   $body-font-family: "Roboto Regular",

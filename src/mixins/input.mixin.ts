@@ -39,6 +39,9 @@ export default class InputMixin extends Vue {
     }
   }
 
+  hasBeenFocused = false;
+  skipFocus = false;
+
   created() {
     if (this.form) {
       this.form.register(this, null);
@@ -46,7 +49,25 @@ export default class InputMixin extends Vue {
   }
 
   mounted() {
-    if (isDefined(this.autofocus) && this.$el instanceof HTMLElement) {
+    if (isDefined(this.autofocus)) {
+      this.setAutofocus();
+      setTimeout(() => {
+        if (!this.hasBeenFocused) {
+          this.removeAutofocus();
+          this.skipFocus = true;
+        }
+      }, 1000);
+    }
+  }
+
+  unmounted() {
+    if (this.form) {
+      this.form.unregister(this, null);
+    }
+  }
+
+  private setAutofocus() {
+    if (this.$el instanceof HTMLElement) {
       const input: HTMLInputElement = this.$el.querySelector('input[type="text"]');
       if (input) {
         input.setAttribute('autofocus', `${Boolean(this.autofocus)}`);
@@ -59,9 +80,17 @@ export default class InputMixin extends Vue {
     }
   }
 
-  unmounted() {
-    if (this.form) {
-      this.form.unregister(this, null);
+  private removeAutofocus() {
+    if (this.$el instanceof HTMLElement) {
+      const input: HTMLInputElement = this.$el.querySelector('input[type="text"]');
+      if (input) {
+        input.removeAttribute('autofocus');
+        return;
+      }
+      const textarea: HTMLTextAreaElement = this.$el.querySelector('textarea');
+      if (textarea) {
+        textarea.removeAttribute('autofocus');
+      }
     }
   }
 
