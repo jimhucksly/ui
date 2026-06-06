@@ -32,7 +32,7 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-slider v-model="value" v-bind="$props" ref="cmp" />
+      <b-slider v-model="value" v-bind="$props" ref="cmp" />
     </div>
   `,
   data() {

@@ -19,7 +19,7 @@ let testComponent: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-textarea v-bind="$props" v-model="text" ref="cmp" />
+      <b-textarea v-bind="$props" v-model="text" ref="cmp" />
     </div>
   `,
   data(): {

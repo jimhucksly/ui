@@ -24,7 +24,7 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-progress :value="value" ref="cmp" />
+      <b-progress :value="value" ref="cmp" />
     </div>
   `,
 });

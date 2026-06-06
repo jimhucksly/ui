@@ -10,7 +10,7 @@ let wrapper: VueWrapper<Vue, ComponentPublicInstance>;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-button responsive></ld-button>
+      <b-button responsive></b-button>
     </div>
   `,
 });
@@ -70,20 +70,20 @@ describe('ButtonComponent', () => {
 
   it('Корректно работает с глобальный переменными viewport: isDesktop', () => {
     setupTest();
-    const btn = wrapper.find('.v-btn.ld-button--desktop-view');
+    const btn = wrapper.find('.v-btn.b-button--desktop-view');
     expect(btn.exists()).toBeTruthy();
   });
 
   it('Корректно работает с глобальный переменными viewport: isTablet', async () => {
     setupTest(null, false, true, false);
     await delay(300);
-    const btn = wrapper.find('.v-btn.ld-button--tablet-view');
+    const btn = wrapper.find('.v-btn.b-button--tablet-view');
     expect(btn.exists()).toBeTruthy();
   });
 
   it('Корректно работает с глобальный переменными viewport: isMobile', () => {
     setupTest(null, true, false, false);
-    const btn = wrapper.find('.v-btn.ld-button--mobile-view');
+    const btn = wrapper.find('.v-btn.b-button--mobile-view');
     expect(btn.exists()).toBeTruthy();
   });
 });

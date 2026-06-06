@@ -30,7 +30,7 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-edit-text v-bind="$props" v-model="text" v-model:value="password" ref="cmp" />
+      <b-edit-text v-bind="$props" v-model="text" v-model:value="password" ref="cmp" />
     </div>
   `,
   data(): {

@@ -36,7 +36,7 @@ import Toast, { PluginOptions, POSITION } from '@/lib/vue-toastification';
 import { IOptions } from '@/types/options';
 import { defaults } from '@/vuetify';
 
-const uiPlugin = {
+const dnwebui = {
   install(vue: App, options?: IOptions) {
     if (!options) {
       options = {};
@@ -53,7 +53,7 @@ const uiPlugin = {
       if (options.aliases?.[alias]) {
         return;
       }
-      options.aliases[alias] = alias.replace(/^ld/, options.prefix);
+      options.aliases[alias] = alias.replace(/^b/, options.prefix);
     });
 
     vue.config.globalProperties.$ui = {
@@ -219,7 +219,7 @@ const uiPlugin = {
   },
 };
 
-export default uiPlugin;
+export default dnwebui;
 
 const localesMap = new Map();
 /* eslint-disable-next-line @typescript-eslint/no-require-imports */

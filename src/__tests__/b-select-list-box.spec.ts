@@ -56,7 +56,7 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-select-list-box
+      <b-select-list-box
         v-model="value"
         v-model:model-items="selected"
         v-bind="$props"

@@ -20,7 +20,7 @@ let testComponent: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-pager :options="options" ref="cmp" />
+      <b-pager :options="options" ref="cmp" />
     </div>
   `,
   props: {

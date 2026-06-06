@@ -3,7 +3,7 @@ import { ComponentMountingOptions, mount, VueWrapper } from '@vue/test-utils';
 import { ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
 import ui from '@/index';
-import EditTextComponent from '@/ld-edit-text/ld-edit-text.vue';
+import EditTextComponent from '@/b-edit-text/b-edit-text.vue';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
@@ -20,11 +20,11 @@ let testComponent: IComponent;
 
 const rootComponent = defineComponent({
   components: {
-    'ld-edit-text': EditTextComponent,
+    'b-edit-text': EditTextComponent,
   },
   template: `
     <div>
-      <ld-timepicker v-bind="$props" v-model="time" :is24hr="is24hr" ref="cmp" />
+      <b-timepicker v-bind="$props" v-model="time" :is24hr="is24hr" ref="cmp" />
     </div>
   `,
   data(): {

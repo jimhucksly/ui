@@ -6,10 +6,9 @@ import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent {
-  modelValue: string | Date;
-  date: string | Date;
+  modelValue: Array<string | Date>;
+  date: Array<string | Date>;
   $refs: Record<string, IComponent>;
-  $el: HTMLElement;
 }
 
 let wrapper: VueWrapper<Vue, ComponentPublicInstance>;
@@ -18,17 +17,11 @@ let component: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-calendar v-model="date" v-bind="$props" ref="cmp" />
+      <b-daterange v-model="date" v-bind="$props" ref="cmp" />
     </div>
   `,
-  props: {
-    month: {
-      type: Number,
-      default: undefined,
-    },
-  },
   data(): {
-    date: string | Date;
+    date: Array<string | Date>;
   } {
     return {
       date: null,
@@ -51,13 +44,6 @@ async function setupTest(props?: Record<string, unknown>) {
           {
             install(vue: App) {
               vue.use(ui);
-              vue.mixin({
-                computed: {
-                  isDev() {
-                    return $DEV;
-                  },
-                },
-              });
             },
           },
         ],
@@ -75,7 +61,7 @@ async function setupTest(props?: Record<string, unknown>) {
   }
 }
 
-describe('CalendarComponent', () => {
+describe('DaterangeComponent', () => {
   beforeEach(async () => {
     await setupTest();
   });
@@ -85,19 +71,13 @@ describe('CalendarComponent', () => {
     component = null;
   });
 
-  it('Корректно обрабатывает ввод', async () => {
-    const d = new Date();
-    d.setDate(15);
-    const month = ('0' + (d.getMonth() + 1)).slice(-2);
-    const day = wrapper.find(`[data-v-date="${d.getFullYear()}-${month}-15"]`);
-    expect(day.exists()).toBeTruthy();
-    const button = day.find('button');
-    expect(button.exists()).toBeTruthy();
-    button.trigger('click');
+  it('Если на вход приходит массив строк, должен правильно преобразовывать их в даты', async () => {
+    component.date = ['03.05.2026', '15.05.2026'];
     await delay(300);
-    expect(component.date instanceof Date).toBeTruthy();
-    expect((component.date as Date).getFullYear()).toEqual(d.getFullYear());
-    expect((component.date as Date).getMonth()).toEqual(d.getMonth());
-    expect((component.date as Date).getDate()).toEqual(d.getDate());
+    const [a, b] = component.date as Array<Date>;
+    expect(a instanceof Date).toBeTruthy();
+    expect(b instanceof Date).toBeTruthy();
+    expect(a.toISOString()).toEqual('2026-05-03T00:00:00.000Z');
+    expect(b.toISOString()).toEqual('2026-05-15T00:00:00.000Z');
   });
 });

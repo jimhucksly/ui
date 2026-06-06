@@ -4,7 +4,7 @@ import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
 import ui from '@/index';
 import vuetify from '@/vuetify.setup';
-import { DialogManager } from '../ld-dialog/dialog.manager';
+import { DialogManager } from '../b-dialog/dialog.manager';
 import {
   AlertDialog,
   ConfirmDialog,
@@ -12,7 +12,7 @@ import {
   InfoDialog,
   PromptDialog,
   SelectDialog,
-} from '../ld-dialog/dialogs';
+} from '../b-dialog/dialogs';
 import { ValidateMixinOptions } from '../mixins/validate.mixin';
 
 let wrapper: VueWrapper<Vue, ComponentPublicInstance>;
@@ -32,8 +32,8 @@ function modalId(div: HTMLElement): string {
 const rootComponent = defineComponent({
   template: `
     <v-app>
-      <ld-dialog></ld-dialog>
-      <ld-dialog id="1"></ld-dialog>
+      <b-dialog></b-dialog>
+      <b-dialog id="1"></b-dialog>
     </v-app>
   `,
 });
@@ -49,8 +49,8 @@ const select = defineComponent({
   emits: ['set-result', 'cancel'],
   template: `
     <div id="test-select-element">
-      <ld-button @click="select(1)" id="select-btn-ok">ok</ld-button>
-      <ld-button @click="cancel()" id="select-btn-cancel">cancel</ld-button>
+      <b-button @click="select(1)" id="select-btn-ok">ok</b-button>
+      <b-button @click="cancel()" id="select-btn-cancel">cancel</b-button>
     </div>
   `,
   methods: {
@@ -74,7 +74,7 @@ const createEdit = defineComponent({
   },
   template: `
     <div id="test-create-edit-element">
-      <ld-edit-text v-model="name" required />
+      <b-edit-text v-model="name" required />
     </div>
   `,
   data(): {
@@ -158,9 +158,9 @@ describe('DialogComponent: Alert', () => {
     await delay(300);
     const dialog = document.querySelector('.v-dialog');
     expect(dialog.classList.contains('Alert')).toBeTruthy();
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    const btnOk: HTMLInputElement = content.querySelector(`#ld-dialog-btn-ok-${id}`);
+    const btnOk: HTMLInputElement = content.querySelector(`#b-dialog-btn-ok-${id}`);
     expect(btnOk).toBeTruthy();
     btnOk.click();
     await delay(300);
@@ -171,7 +171,7 @@ describe('DialogComponent: Alert', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeNull();
   });
 
@@ -180,7 +180,7 @@ describe('DialogComponent: Alert', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeNull();
   });
 
@@ -189,7 +189,7 @@ describe('DialogComponent: Alert', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 
@@ -198,7 +198,7 @@ describe('DialogComponent: Alert', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 });
@@ -238,11 +238,11 @@ describe('DialogComponent: Prompt', () => {
     await delay(300);
     const dialog = document.querySelector('.v-dialog');
     expect(dialog.classList.contains('Prompt')).toBeTruthy();
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
     const textarea = content.querySelector('textarea');
     expect(textarea).toBeTruthy();
-    const btnOk: HTMLInputElement = content.querySelector(`#ld-dialog-btn-ok-${id}`);
+    const btnOk: HTMLInputElement = content.querySelector(`#b-dialog-btn-ok-${id}`);
     expect(btnOk).toBeTruthy();
     btnOk.click();
     await delay(300);
@@ -271,7 +271,7 @@ describe('DialogComponent: Prompt', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeNull();
   });
 
@@ -289,7 +289,7 @@ describe('DialogComponent: Prompt', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
     expect(result).toBeNull();
   });
@@ -299,7 +299,7 @@ describe('DialogComponent: Prompt', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 });
@@ -326,15 +326,15 @@ describe('DialogComponent: Confirm', () => {
     });
 
   const okBtn = (dialog: HTMLElement): HTMLElement => {
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    return content.querySelector(`#ld-dialog-btn-ok-${id}`);
+    return content.querySelector(`#b-dialog-btn-ok-${id}`);
   };
 
   const cancelBtn = (dialog: HTMLElement): HTMLElement => {
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    return content.querySelector(`#ld-dialog-btn-cancel-${id}`);
+    return content.querySelector(`#b-dialog-btn-cancel-${id}`);
   };
 
   it('Корректно создает диалог типа Confirm', async () => {
@@ -405,7 +405,7 @@ describe('DialogComponent: Confirm', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
     expect(result).toBeNull();
   });
@@ -497,12 +497,12 @@ describe('DialogComponent: Info', () => {
       });
     await delay(300);
     const dialog = document.querySelector('.v-dialog');
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
     expect(dialog.classList.contains('Info')).toBeTruthy();
     const testElement = dialog.querySelector('#test-info-element');
     expect(testElement).toBeDefined();
-    const btn = wrapper.findComponent(`#ld-dialog-btn-ok-${id}`);
+    const btn = wrapper.findComponent(`#b-dialog-btn-ok-${id}`);
     expect(btn).toBeTruthy();
     btn.trigger('click');
     await delay(300);
@@ -530,7 +530,7 @@ describe('DialogComponent: Info', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeNull();
   });
 
@@ -539,7 +539,7 @@ describe('DialogComponent: Info', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 
@@ -548,7 +548,7 @@ describe('DialogComponent: Info', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 });
@@ -650,7 +650,7 @@ describe('DialogComponent: Select', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
     expect(result).toBeNull();
   });
@@ -660,7 +660,7 @@ describe('DialogComponent: Select', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeNull();
   });
 
@@ -669,7 +669,7 @@ describe('DialogComponent: Select', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 
@@ -678,7 +678,7 @@ describe('DialogComponent: Select', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 
@@ -697,9 +697,9 @@ describe('DialogComponent: Select', () => {
     btn.trigger('click');
     await delay(300);
     const dialog = document.querySelector('.v-dialog');
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    const btnCancel: HTMLElement = content.querySelector(`#ld-dialog-btn-cancel-${id}`);
+    const btnCancel: HTMLElement = content.querySelector(`#b-dialog-btn-cancel-${id}`);
     expect(btnCancel).toBeDefined();
     btnCancel.click();
     await delay(300);
@@ -757,9 +757,9 @@ describe('DialogComponent: CreateEdit', () => {
       });
     await delay(600);
     const dialog = document.querySelector('.v-dialog');
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    const btnOk: HTMLInputElement = content.querySelector(`#ld-dialog-btn-ok-${id}`);
+    const btnOk: HTMLInputElement = content.querySelector(`#b-dialog-btn-ok-${id}`);
     btnOk.click();
     await delay(300);
     expect(result).toEqual({ name: 'dnwebui' });
@@ -774,9 +774,9 @@ describe('DialogComponent: CreateEdit', () => {
     await delay(300);
     expect(host).toBeDefined();
     const dialog = document.querySelector('.v-dialog');
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    const btnOk: HTMLInputElement = content.querySelector(`#ld-dialog-btn-ok-${id}`);
+    const btnOk: HTMLInputElement = content.querySelector(`#b-dialog-btn-ok-${id}`);
     btnOk.click();
     await delay(300);
     const details = content.querySelector('.v-input__details');
@@ -789,7 +789,7 @@ describe('DialogComponent: CreateEdit', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     const details = dialog.querySelector('.v-input__details');
     expect(details).toBeDefined();
     expect(details.textContent).toEqual('Это поле обязательно');
@@ -815,7 +815,7 @@ describe('DialogComponent: CreateEdit', () => {
     await delay(600);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(result).toEqual({ name: 'dnwebui' });
     expect(dialog).toBeNull();
   });
@@ -825,7 +825,7 @@ describe('DialogComponent: CreateEdit', () => {
   //   await delay(300);
   //   window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
   //   await delay(300);
-  //   const dialog = document.querySelector('.ld-dialog-content');
+  //   const dialog = document.querySelector('.b-dialog-content');
   //   expect(dialog).toBeNull();
   // });
 
@@ -834,7 +834,7 @@ describe('DialogComponent: CreateEdit', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 
@@ -843,7 +843,7 @@ describe('DialogComponent: CreateEdit', () => {
     await delay(300);
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
     await delay(300);
-    const dialog = document.querySelector('.ld-dialog-content');
+    const dialog = document.querySelector('.b-dialog-content');
     expect(dialog).toBeDefined();
   });
 });
@@ -872,9 +872,9 @@ describe('DialogComponent: Localized by id', () => {
     await delay(300);
     const dialog = document.querySelector('.v-dialog');
     expect(dialog.classList.contains('Alert-1')).toBeTruthy();
-    const content: HTMLElement = dialog.querySelector('.ld-dialog-content');
+    const content: HTMLElement = dialog.querySelector('.b-dialog-content');
     const id = modalId(content);
-    const btnOk: HTMLInputElement = dialog.querySelector(`#ld-dialog-btn-ok-${id}`);
+    const btnOk: HTMLInputElement = dialog.querySelector(`#b-dialog-btn-ok-${id}`);
     expect(btnOk).toBeTruthy();
     btnOk.click();
     await delay(300);

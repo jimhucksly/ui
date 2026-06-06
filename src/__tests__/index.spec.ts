@@ -18,7 +18,7 @@ let component: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-button>Button</ld-button>
+      <b-button>Button</b-button>
       <icon-button>Icon</icon-button>
     </div>
   `,
@@ -53,7 +53,7 @@ function setupTest(props?: Record<string, unknown>, options: IOptions = {}) {
     wrapper = mount(rootComponent, config);
     component = wrapper.vm as unknown as IComponent;
   } catch (e) {
-    // eslint-disable-next-line no-console
+    /* eslint-disable-next-line no-console */
     console.error(e);
   }
 }
@@ -61,13 +61,13 @@ function setupTest(props?: Record<string, unknown>, options: IOptions = {}) {
 describe('Index', () => {
   beforeEach(() => {
     setupTest(null, {
-      LdButton: {
+      BButton: {
         variant: 'outlined',
       },
       extensions: [
         {
           name: 'icon-button',
-          alias: 'ld-button',
+          alias: 'b-button',
           props: {
             icon: true,
           },
@@ -82,13 +82,13 @@ describe('Index', () => {
 
   it('Работает переопределение дефолтных параметров компонентов', async () => {
     await delay(300);
-    const btn = wrapper.find('.v-btn.v-btn--variant-outlined:not(.ld-button-square)');
+    const btn = wrapper.find('.v-btn.v-btn--variant-outlined:not(.b-button-square)');
     expect(btn.exists()).toBeTruthy();
   });
 
   it('Работает создание расширений из дефолтных компонентов', async () => {
     await delay(300);
-    const btn = wrapper.find('.v-btn.v-btn--variant-outlined.ld-button-square');
+    const btn = wrapper.find('.v-btn.v-btn--variant-outlined.b-button-square');
     expect(btn.exists()).toBeTruthy();
   });
 });

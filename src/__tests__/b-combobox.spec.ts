@@ -27,7 +27,7 @@ let testComponent: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-combobox
+      <b-combobox
         v-model="value"
         v-model:model-items="selected"
         v-bind="{

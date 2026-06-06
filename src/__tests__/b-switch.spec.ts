@@ -19,7 +19,7 @@ let testComponent: IComponent;
 const rootComponent1 = defineComponent({
   template: `
     <div>
-      <ld-switch v-model="value" ref="cmp" />
+      <b-switch v-model="value" ref="cmp" />
     </div>
   `,
   data() {
@@ -32,7 +32,7 @@ const rootComponent1 = defineComponent({
 const rootComponent2 = defineComponent({
   template: `
     <div>
-      <ld-switch v-model="value" ref="cmp" true-value="+" false-value="-" />
+      <b-switch v-model="value" ref="cmp" true-value="+" false-value="-" />
     </div>
   `,
   data() {

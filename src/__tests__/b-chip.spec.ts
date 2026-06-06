@@ -16,7 +16,7 @@ let component: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-chip v-if="model.includes(1)" @click:close="onClose">Ld Chip</ld-chip>
+      <b-chip v-if="model.includes(1)" @click:close="onClose">Ld Chip</b-chip>
     </div>
   `,
   data() {
@@ -66,13 +66,13 @@ describe('ChipComponent', () => {
   });
 
   it('Корректно работает событие @click:close', async () => {
-    let chip = component.$el.querySelector('ld-chip');
+    let chip = component.$el.querySelector('b-chip');
     expect(chip).toBeDefined();
     const btn: HTMLInputElement = component.$el.querySelector('[aria-label="close"]');
     expect(btn).toBeDefined();
     btn.click();
     await delay(300);
-    chip = component.$el.querySelector('ld-chip');
+    chip = component.$el.querySelector('b-chip');
     expect(chip).toBeNull();
   });
 });

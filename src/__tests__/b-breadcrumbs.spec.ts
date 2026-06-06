@@ -39,7 +39,7 @@ const $router = {
 const rootComponent1 = defineComponent({
   template: `
     <div>
-      <ld-breadcrumbs :breadcrumbs="breadcrumbs" />
+      <b-breadcrumbs :breadcrumbs="breadcrumbs" />
     </div>
   `,
   computed: {
@@ -52,7 +52,7 @@ const rootComponent1 = defineComponent({
 const rootComponent2 = defineComponent({
   template: `
     <div>
-      <ld-breadcrumbs :breadcrumbs="breadcrumbs" @open="onOpen" />
+      <b-breadcrumbs :breadcrumbs="breadcrumbs" @open="onOpen" />
     </div>
   `,
   data() {

@@ -19,7 +19,7 @@ let testComponent: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-checkbox v-model="value" v-bind="$props" ref="cmp"></ld-checkbox>
+      <b-checkbox v-model="value" v-bind="$props" ref="cmp"></b-checkbox>
     </div>
   `,
   props: ['checkedValue', 'uncheckedValue', 'initialValue'],

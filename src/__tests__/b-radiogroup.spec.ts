@@ -33,11 +33,11 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-radiogroup v-model="value" ref="cmp">
+      <b-radiogroup v-model="value" ref="cmp">
         <template v-for="val of values">
-          <ld-radiobutton :value="val" />
+          <b-radiobutton :value="val" />
         </template>
-      </ld-radiogroup>
+      </b-radiogroup>
     </div>
   `,
   data(): {
@@ -58,7 +58,7 @@ const rootComponent2 = defineComponent({
   },
   template: `
     <div>
-      <ld-radiogroup v-model="value" ref="cmp2" :values="values" />
+      <b-radiogroup v-model="value" ref="cmp2" :values="values" />
     </div>
   `,
   data(): {
@@ -194,9 +194,9 @@ describe('RadioGroupComponent 2', () => {
       initialWithChildren: false,
     });
     await delay(300);
-    const items = wrapper.findAll('.ld-radiobutton');
+    const items = wrapper.findAll('.b-radiobutton');
     expect(items.length).toEqual(2);
-    const item = wrapper.find('.ld-radiobutton');
+    const item = wrapper.find('.b-radiobutton');
     expect(item.element.textContent).toEqual('radibutton1');
   });
 });

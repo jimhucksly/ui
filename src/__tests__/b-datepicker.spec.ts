@@ -21,7 +21,7 @@ let testComponent: IComponent;
 const rootComponent = defineComponent({
   template: `
     <div>
-      <ld-datepicker v-model="date" v-bind="$props" ref="cmp" />
+      <b-datepicker v-model="date" v-bind="$props" ref="cmp" />
     </div>
   `,
   props: {

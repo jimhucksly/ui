@@ -52,7 +52,7 @@ const rootComponent = defineComponent({
   },
   template: `
     <div>
-      <ld-select v-bind="$props" v-model="value" ref="cmp"></ld-select>
+      <b-select v-bind="$props" v-model="value" ref="cmp"></b-select>
     </div>
   `,
   data(): {

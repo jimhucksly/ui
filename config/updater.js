@@ -20,16 +20,25 @@ class Utils {
     const extension = this.getExtension(filename);
     return filename.slice(0, -extension.length - 1);
   }
+  replaceDataByMap = (filePath) => {
+    let data = fs.readFileSync(filePath, { encoding: 'utf-8' });
+    for (const m of map) {
+      const regexp = new RegExp(m[0], 'gm');
+      data = data.replace(regexp, m[1]);
+    }
+    return data;
+  }
+  replaceFileByMap = (filename) => {
+    const m = map.find(i => filename.indexOf(i[0]) > -1);
+    if (!m) {
+      return filename;
+    }
+    const regexp = new RegExp(m[0], 'gm');
+    return filename.replace(regexp, m[1]);
+  }
 }
 
-const replaceByMap = (file) => {
-  let data = fs.readFileSync(file, { encoding: 'utf-8' });
-  for (const m of map) {
-    const regexp = new RegExp(m[0], 'gm');
-    data = data.replace(regexp, m[1]);
-  }
-  return data;
-}
+const $utils = new Utils();
 
 const copyDir = (src, dest) => {
   let entries = fs.readdirSync(src, { recursive: true, withFileTypes: true });
@@ -53,7 +62,7 @@ const copyFiles = (src, dest) => {
     let destDir = path.dirname(destPath);
     if (entry.isFile()) {
       fs.mkdirSync(destDir, { recursive: true })
-      const data = replaceByMap(srcPath);
+      const data = $utils.replaceDataByMap(srcPath);
       fs.writeFile(destPath, data, err => {
         if (err) {
           console.log(err);
@@ -70,6 +79,10 @@ const copyFiles = (src, dest) => {
   const copyDemo = () => {
     const files = fs.readdirSync(path.resolve(fromPath, './demo'));
     const dir = path.resolve(toPath, './demo');
+    const exist = fs.existsSync(dir);
+    if (!exist) {
+      fs.mkdirSync(dir);
+    }
     for (const f of files) {
       const stat = fs.lstatSync(path.resolve(fromPath, './demo' + '/' + f));
       if (stat.isDirectory()) {
@@ -81,15 +94,11 @@ const copyFiles = (src, dest) => {
           copyFiles(srcPath, destPath);
         }
       } else {
-        const fname = new Utils().getFileName(f);
+        const fname = $utils.getFileName(f);
         if (exclude.some(e => fname.indexOf(e) > -1)) {
           continue;
         }
-        const data = replaceByMap(path.resolve(fromPath, './demo' + '/' + f));
-        const exist = fs.existsSync(dir);
-        if (!exist) {
-          fs.mkdirSync(dir);
-        }
+        const data = $utils.replaceDataByMap(path.resolve(fromPath, './demo' + '/' + f));
         fs.writeFile(path.resolve(toPath, './demo' + '/' + f), data, err => {
           if (err) {
             console.log(err);
@@ -102,13 +111,31 @@ const copyFiles = (src, dest) => {
   const copyScss = () => {
     const files = fs.readdirSync(path.resolve(fromPath, './scss'));
     const dir = path.resolve(toPath, './scss');
+    const exist = fs.existsSync(dir);
+    if (!exist) {
+      fs.mkdirSync(dir);
+    }
     for (const f of files) {
-      const data = replaceByMap(path.resolve(fromPath, './scss' + '/' + f));
-      const exist = fs.existsSync(dir);
-      if (!exist) {
-        fs.mkdirSync(dir);
-      }
+      const data = $utils.replaceDataByMap(path.resolve(fromPath, './scss' + '/' + f));
       fs.writeFile(path.resolve(toPath, './scss' + '/' + f), data, err => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  }
+
+  copyTests = () => {
+    const files = fs.readdirSync(path.resolve(fromPath, './__tests__'));
+    const dir = path.resolve(toPath, './__tests__');
+    const exist = fs.existsSync(dir);
+    if (!exist) {
+      fs.mkdirSync(dir);
+    }
+    for (const f of files) {
+      const data = $utils.replaceDataByMap(path.resolve(fromPath, './__tests__' + '/' + f));
+      const newFile = $utils.replaceFileByMap(f);
+      fs.writeFile(path.resolve(toPath, './__tests__' + '/' + newFile), data, err => {
         if (err) {
           console.log(err);
         }
@@ -140,7 +167,7 @@ const copyFiles = (src, dest) => {
         copyDir(from.file, to.file);
       } else {
         const dir = path.resolve(toPath, './' + to.path);
-        const data = replaceByMap(from.file);
+        const data = $utils.replaceDataByMap(from.file);
         const exist = fs.existsSync(dir);
         if (!exist) {
           fs.mkdirSync(dir);
@@ -185,6 +212,22 @@ const copyFiles = (src, dest) => {
           });
         } else {
           copyDemo();
+        }
+        continue;
+      }
+      // copy tests
+      if (f === '__tests__') {
+        const dir = path.resolve(toPath, './' + f);
+        const exist = fs.existsSync(dir);
+        if (exist) {
+          fs.rm(dir, { recursive: true, force: true }, err => {
+            if (err) {
+              throw err;
+            }
+            copyTests();
+          });
+        } else {
+          copyTests();
         }
         continue;
       }
