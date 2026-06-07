@@ -3,9 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const path = require('path');
-const fs = require('fs');
 const { minimizer } = require('./minimizer');
-const { version } = require('../package.json');
 
 const commonConfig = require('./webpack.config.common');
 const { getIconsList } = require('./helpers');
@@ -13,7 +11,6 @@ const { getIconsList } = require('./helpers');
 commonConfig.resolve.modules = [path.join(__dirname, '../../'), 'node_modules'];
 
 const doAsync = async () => {
-  await writeVersion();
   const icons = await getIconsList();
 
   return {
@@ -43,9 +40,11 @@ const doAsync = async () => {
       'lodash-es/cloneDeep': 'lodash-es/cloneDeep',
       'markdown-it': 'markdown-it',
       '@dn-web/core': '@dn-web/core',
+      '@dn-web/datatable': '@dn-web/datatable',
       '@/mixins/validate.mixin': '../dist',
-      '@/ld-dialog/dialogs': '../dist',
-      '@/ld-dialog/dialog.manager': '../dist',
+      '@/utils': '../dist',
+      '@/b-dialog/dialogs': '../dist',
+      '@/b-dialog/dialog.manager': '../dist',
     },
     optimization: {
       minimize: true,
@@ -67,10 +66,6 @@ const doAsync = async () => {
           {
             from: 'src/demo/fonts',
             to: './fonts'
-          },
-          {
-            from: 'src/demo/img',
-            to: './img'
           },
           {
             from: 'src/demo/*.md',

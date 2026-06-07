@@ -1,9 +1,9 @@
 import datatable from '@dn-web/datatable';
 import { App, DefineComponent } from 'vue';
 import CommonService from '@/services/common.service';
-import { IAliases, IOptions, } from '@/types/options';
+import { IAliases, IOptions } from '@/types/options';
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
+/* eslint-disable-next-line @typescript-eslint/no-require-imports */
 const name: keyof IAliases = require('./metadata.js');
 
 function reg(vue: App, options: IOptions) {

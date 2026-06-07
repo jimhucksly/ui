@@ -51,7 +51,7 @@ const doAsync = async () => {
         if (pathData.chunk.name === 'validators') {
           return 'utils/[name].js';
         }
-        if (pathData.chunk.name.indexOf('ld') > -1) {
+        if (/^b-/.test(pathData.chunk.name)) {
           return 'components/[name].js';
         }
         return 'lib/[name].js';

@@ -29,8 +29,9 @@ function getComponentsList() {
   });
 }
 
+const skip = ['b-datatable'];
+
 function getExternalsList(components) {
-  const skip = ['ld-datatable'];
   const externals = {};
 
   for (const cmp of components) {
@@ -43,7 +44,6 @@ function getExternalsList(components) {
 }
 
 function getEntryList(components) {
-  const skip = ['ld-datatable'];
   const entry = {};
 
   for (const cmp of components) {

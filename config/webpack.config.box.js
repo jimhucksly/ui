@@ -31,10 +31,6 @@ module.exports = {
           to: './public/fonts',
         },
         {
-          from: 'build/release/img',
-          to: './public/img',
-        },
-        {
           from: 'build/release/readme/*.md',
           to: './public/readme/[name].md'
         },
@@ -63,10 +59,6 @@ module.exports = {
           to: './package.json',
         },
         {
-          from: 'README.md',
-          to: './README.md',
-        },
-        {
           from: '.yarnrc.yml',
           to: './.yarnrc.yml',
         },
@@ -89,10 +81,6 @@ module.exports = {
         {
           from: 'config/loaders.js',
           to: './loaders.js',
-        },
-        {
-          from: 'config/versions.json',
-          to: './versions.json',
         },
       ]
     }),

@@ -44,6 +44,7 @@
     "@babel/plugin-transform-typescript": "7.28.6",
     "@babel/preset-env": "7.29.2",
     "@babel/preset-typescript": "7.28.5",
+    "@dn-web/core": "1.0.4",
     "@dn-web/datatable": "1.0.0",
     "@popperjs/core": "2.11.8",
     "@stylistic/eslint-plugin": "5.10.0",
@@ -113,9 +114,6 @@
     "webpack-cli": "7.0.2",
     "webpack-dev-server": "5.2.3",
     "webpack-plugin-vuetify": "3.1.2"
-  },
-  "dependencies": {
-    "@dn-web/core": "1.0.3"
   },
   "volta": {
     "node": "22.15.0",
