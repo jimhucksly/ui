@@ -41,7 +41,7 @@ export default class ProgressComponent extends Vue {
     this.onCompleteEmit();
   }
 
-  /* eslint-disable @typescript-eslint/naming-convention */
+  /* eslint-disable @typescript-eslint/naming-convention, sonarjs/no-identical-expressions */
   private f_svg_ellipse_arc(value?: number) {
     const cos = Math.cos;
     const sin = Math.sin;
@@ -62,15 +62,15 @@ export default class ProgressComponent extends Vue {
     const f_vec_add = ([a1, a2]: Array<number>, [b1, b2]: Array<number>) => [a1 + b1, a2 + b2];
     const f_svg_ellipse_arc = ([cx, cy]: Array<number>, [rx, ry]: Array<number>, [t1, Δ]: Array<number>, φ: number) => {
       /*
-      returns a SVG path element that represent a ellipse.
-      cx,cy → center of ellipse
-      rx,ry → major minor radius
-      t1 → start angle, in radian.
-      Δ → angle to sweep, in radian. positive.
-      φ → rotation on the whole, in radian
-      URL: SVG Circle Arc http://xahlee.info/js/svg_circle_arc.html
-      Version: 2019-06-19
-     */
+        returns a SVG path element that represent a ellipse.
+        cx,cy → center of ellipse
+        rx,ry → major minor radius
+        t1 → start angle, in radian.
+        Δ → angle to sweep, in radian. positive.
+        φ → rotation on the whole, in radian
+        URL: SVG Circle Arc http://xahlee.info/js/svg_circle_arc.html
+        Version: 2019-06-19
+      */
       Δ = Δ % (2 * π);
       const rotMatrix = f_rotate_matrix(φ);
       const [sX, sY] = f_vec_add(f_matrix_times(rotMatrix, [rx * cos(t1), ry * sin(t1)]), [cx, cy]);
