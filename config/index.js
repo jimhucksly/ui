@@ -4,11 +4,11 @@ const fs = require('fs');
 fs.writeFile(
   path.join(__dirname, '../build/Dockerfile'),
   [
-    'FROM 172.19.93.160/node:22.17.1-slim',
+    'FROM node:22.17.1-slim',
     'WORKDIR /src',
     'COPY . .',
     'ENV TZ="Europe/Moscow"',
-    'RUN yarn install --registry http://172.19.91.38:8081/repository/npm-central/',
+    'RUN yarn install',
     'ENV HOST 0.0.0.0',
     'EXPOSE 4000',
     'CMD [ "npm", "run", "demo" ]'

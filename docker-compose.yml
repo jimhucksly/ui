@@ -1,0 +1,6 @@
+services:
+  ui:
+    container_name: ui
+    build: ./build
+    ports:
+      - 5000:4000
