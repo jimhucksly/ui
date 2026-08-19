@@ -106,6 +106,10 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }
     if (start) {
       this.startDate = datetime.toDate(start, this.locale);
+      this.startMonth = this.startDate.getMonth();
+      this.startYear = this.startDate.getFullYear();
+      this.endMonth = this.startMonth;
+      this.endYear = this.startYear;
     }
     if (end) {
       this.endDate = datetime.toDate(end, this.locale);
@@ -118,7 +122,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
       }
       this.emitInput([this.startDate, this.endDate]);
       setTimeout(() => {
-        this.onUpdateMonth(0, this.startDate.getMonth());
+        this.onUpdateMonth();
       }, 100);
     }
     setTimeout(() => {
@@ -377,7 +381,10 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }, 100);
   }
 
-  onUpdateMonth(index: number, month: number) {
+  onUpdateMonth(index: number = 0, month: number = null) {
+    if (month === null) {
+      month = this.startDate.getMonth();
+    }
     if (this.updatingMonth) {
       return;
     }
@@ -397,7 +404,7 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
         switch (direction) {
           // forward
           case 1:
-            if (this.startYear === this.endYear && month === 11) {
+            if (month === 11 && this.startYear === this.endYear) {
               this.endMonth = 0;
               this.endYear = this.endYear + 1;
               return;

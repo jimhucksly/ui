@@ -62,6 +62,7 @@
               <v-card-text>
                 <component
                   :is="$ui.options.aliases['b-calendar']"
+                  :id="`start-calendar-${uid}`"
                   ref="startDatepickerRef"
                   v-model="a"
                   v-bind="{
@@ -76,6 +77,7 @@
                 />
                 <component
                   :is="$ui.options.aliases['b-calendar']"
+                  :id="`end-calendar-${uid}`"
                   ref="endDatepickerRef"
                   v-model="b"
                   v-bind="{

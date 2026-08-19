@@ -20,10 +20,15 @@ class Utils {
     const extension = this.getExtension(filename);
     return filename.slice(0, -extension.length - 1);
   }
+
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
   replaceDataByMap = (filePath) => {
     let data = fs.readFileSync(filePath, { encoding: 'utf-8' });
     for (const m of map) {
-      const regexp = new RegExp(m[0], 'gm');
+      const regexp = new RegExp(this.escapeRegExp(m[0]), 'gm');
       data = data.replace(regexp, m[1]);
     }
     return data;

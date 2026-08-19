@@ -122,7 +122,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
     this.onUpdateViewMode(val);
   }
 
-  @Watch('month') onMonthChanged(value: number) {
+  @Watch('month', { immediate: true }) onMonthChanged(value: number) {
     if ((value + 1) % 12 === 0 && this.currentMonth > value) {
       this.currentYear--;
     }
@@ -133,7 +133,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
     this.onUpdateMonth(value);
   }
 
-  @Watch('year') onYearChanged(value: number) {
+  @Watch('year', { immediate: true }) onYearChanged(value: number) {
     this.currentYear = value;
     this.onUpdateYear(value);
   }
@@ -219,10 +219,7 @@ export default class CalendarComponent extends mixins(InputMixin) {
     }
     if (Array.isArray(this.allowedDates) && this.allowedDates.length) {
       const index = this.allowedDates.findIndex(d => datetime.compare(date, d) === 0);
-      if (index > -1) {
-        return true;
-      }
-      return false;
+      return index > -1;
     }
     return true;
   }

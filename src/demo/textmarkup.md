@@ -4,11 +4,14 @@
   v-model="value"
   v-model:preview="preview"
   label="Ld Text Markup"
+  :label-on-top="labelOnTop"
   persistent-hint
   input-hint="Markup input hint"
   :disabled="disabled"
   :readonly="readonly"
   :required="required"
+  :size="size"
+  :help="{ tooltp: 'tooltip text' }"
 />
 ```
 ```js

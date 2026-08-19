@@ -30,6 +30,7 @@
           <v-spacer></v-spacer>
           <component
             :is="$ui.options.aliases['b-button']"
+            testid="prevMonth"
             icon
             text
             :disabled="disabled || readonly"
@@ -39,6 +40,7 @@
           </component>
           <component
             :is="$ui.options.aliases['b-button']"
+            testid="nextMonth"
             icon
             text
             :disabled="disabled || readonly"

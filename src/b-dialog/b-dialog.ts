@@ -118,7 +118,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (!this.isAlertDialog(modalInfo) && !this.isConfirmDialog(modalInfo)) {
       this.dialogManager.setParentDialog(modalInfo);
       if (modalInfo.hostObject.parentId && !['left', 'right'].includes(modalInfo.align)) {
-        this.dialogManager.hideDialog(modalInfo.hostObject);
+        this.dialogManager.hideDialog({ id: modalInfo.hostObject.parentId });
       }
     }
     const modal: IModalWindow = {

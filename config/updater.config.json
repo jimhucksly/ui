@@ -45,6 +45,8 @@
     ["LdButton", "BButton"],
     ["this.$utils.datetime", "datetime"],
     ["this.$utils.isDefined", "isDefined"],
+    ["this.$utils.delay", "delay"],
+    ["this.$utils.uidGen", "uniqueID"],
     ["uidGen", "uniqueID"]
   ],
   "exclude": ["avatar", "iterator", "text-viewer", "toolbar", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
