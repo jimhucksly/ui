@@ -29,11 +29,9 @@ rows: Array<Record<string, unknown>> // список элементов
 loadingIndicator: boolean // индикатор загрузки
 columnMode: 'flex' | 'standard' // режим отображения колонок
 groupRowsBy: Array<{ prop: string; title: string }> // группировка колонок
-groupExpansionDefault: boolean // раскрывать группы по умолчанию или нет
 v-model:group-expanded-state="value", value:  [key: string]: boolean } // состояние раскрытия групп
-v-model:group-expansion="value", value: 0 | 1 // переключатель состояния всех групп
+v-model:group-expansion="value", value: 0 | 1 // переключатель состояния всех групп (имеет приоритет над groupExpandedState)
 sortType: 'single' | 'multi' // режим сортировки
-
 selectionType: 'single' | 'multi' | 'multiClick' | 'checkbox' //  режим выделения элементов
 checkMode:  'checkNoSelect' | 'checkIsSelect' // режим выделения чекбоксом
 checkboxable: boolean // отображене чекбоксов
@@ -77,4 +75,5 @@ dragData: {
   dragstart: (e: DragEvent, row: Record<string, unknown>) => void
   drop: (e: DragEvent, row: Record<string, unknown>) => void
 }
+popupMenuDisplayMode: 'click' | 'hover' // показывать popup-меню строки по ховеру или по клику
 ```

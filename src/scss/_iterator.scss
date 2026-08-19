@@ -4,54 +4,57 @@
   position: relative;
   height: 100%;
 
-  .iterator-list {
+
+
+  & > .iterator-list {
     height: 100%;
     overflow-y: auto;
     overflow-anchor: auto;
     contain: content;
-  }
 
-  .scroller {
-    position: relative;
-    transform: translateZ(0);
-    &.mobile {
-      scroll-snap-type: y mandatory;
-    }
-  }
+    & > .scroller {
+      position: relative;
+      transform: translateZ(0);
+      &.mobile {
+        scroll-snap-type: y mandatory;
+      }
 
-  .item {
-    position: absolute;
-    width: 100%;
-    &.mobile {
-      scroll-snap-align: start;
-    }
+      & > .item {
+        position: absolute;
+        width: 100%;
+        height: max-content;
+        &.mobile {
+          scroll-snap-align: start;
+        }
 
-    &.blink {
-      animation: blinker 0.5s linear;
-    }
+        &.blink {
+          animation: blinker 0.5s linear;
+        }
 
-    @keyframes blinker {
-      5% {
-        left: -5%;
-      }
-      15% {
-        left: -15%;
-      }
-      25% {
-        opacity: 75%;
-        left: -25%;
-      }
-      50% {
-        opacity: 50%;
-        left: -50%;
-      }
-      75% {
-        opacity: 25%;
-        left: -75%;
-      }
-      100% {
-        opacity: 0;
-        left: -100%;
+        @keyframes blinker {
+          5% {
+            left: -5%;
+          }
+          15% {
+            left: -15%;
+          }
+          25% {
+            opacity: 75%;
+            left: -25%;
+          }
+          50% {
+            opacity: 50%;
+            left: -50%;
+          }
+          75% {
+            opacity: 25%;
+            left: -75%;
+          }
+          100% {
+            opacity: 0;
+            left: -100%;
+          }
+        }
       }
     }
   }

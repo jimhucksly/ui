@@ -42,7 +42,7 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/typedef */
 import { DialogManager } from '@/b-dialog/dialog.manager';
-import { SelectDialog } from '@/b-dialog/dialogs';
+import { ConfirmDialog, CreateEditDialog, SelectDialog } from '@/b-dialog/dialogs';
 import { ValidateMixinOptions } from '@/mixins/validate.mixin';
 import { delay } from '@dn-web/core';
 interface IRow {
@@ -181,10 +181,26 @@ export default {
       return false;
     },
     isChanged() {
-      if (this.model) {
-        return this.first_name !== this.model.first_name || this.last_name !== this.model.last_name;
-      }
-      return false;
+      return this.first_name !== this.model?.first_name || this.last_name !== this.model?.last_name;
+    },
+    add() {
+      const query = new CreateEditDialog({
+        title: 'Создание объекта',
+        component: 'create-edit-component',
+        componentProps: {
+          model: null,
+        },
+        help: true,
+        okColor: 'success',
+      });
+      DialogManager.exec(query);
+    },
+    async onClose() {
+      const query = new ConfirmDialog({
+        title: 'Внимание',
+        content: 'Вы действительно хотите закрыть окно?',
+      });
+      return DialogManager.exec(query);
     },
   },
 };

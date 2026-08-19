@@ -1,31 +1,40 @@
-import { isDefined, objects } from '@dn-web/core';
+import isEqual from 'lodash-es/isEqual';
+import isEqualWith from 'lodash-es/isEqualWith';
 import { Ref } from 'vue';
 import { Vue } from 'vue-class-component';
-import { LocationStrategyData, StrategyProps } from 'vuetify/lib/components/VOverlay/locationStrategies';
 import { TElement } from '../types/combobox';
+import { objects, isDefined } from '@dn-web/core';
 import UnitService from './unit.service';
 
 export default class ComboboxService {
-  static readonly MIN_MENU_HEIGHT = 200;
-  static readonly MAX_MENU_HEIGHT = 310;
-  static readonly VIEWPORT_GAP = 28;
-  static readonly VLIST_PADDING_Y = 8;
+  static MIN_MENU_HEIGHT = 200;
+  static MAX_MENU_HEIGHT = 310;
+  static VIEWPORT_GAP = 28;
+  static VLIST_PADDING_Y = 8;
 
-  locationStrategy(data: LocationStrategyData, _: StrategyProps, contentStyles: Ref<Record<string, string>>) {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  locationStrategy(data: any, _: any, contentStyles: Ref<Record<string, string>>) {
     const pixelRound = UnitService.pixelRound.bind(this);
     const convertToUnit = UnitService.convertToUnit.bind(this);
     function updateLocation(originalElementsCount: number = 0) {
       if (!document) {
         return;
       }
-      const body = document.body;
-      const content = data.contentEl.value;
+      const content: HTMLElement = data.contentEl.value;
       const activator = data.target.value as HTMLElement;
       if (!content || !activator) {
         return;
       }
       const input = activator.closest('.v-input');
-      const viewport = body.getBoundingClientRect();
+      if (!input) {
+        return;
+      }
+      const dialog: HTMLElement = input.closest('.v-dialog');
+      if (dialog) {
+        const zIndex = dialog.style.zIndex;
+        content.parentElement.style.zIndex = String(UnitService.unitToNumber(zIndex) + 10);
+      }
+      const viewport = document.body.getBoundingClientRect();
       const rect = activator.getBoundingClientRect();
       const available = {
         top: rect.y,
@@ -44,11 +53,11 @@ export default class ComboboxService {
       /* берем доступную высоту или минимальную высоту выпадающего меню */
       const max = Math.max(min, ComboboxService.MIN_MENU_HEIGHT);
       if (max > ComboboxService.MIN_MENU_HEIGHT) {
-        /* если область под элементов достаточно для выпадающего меню, разкрываем его под элементом */
+        /* если область под списоком элементов достаточно для выпадающего меню, разкрываем его под элементом */
         props.top = convertToUnit(pixelRound(rect.y + rect.height));
         props.maxHeight = convertToUnit(pixelRound(max - ComboboxService.VIEWPORT_GAP));
       } else {
-        /* если области под элементов не достаточно для выдадающего меню, раскрываем его над элементом */
+        /* если области под списоком элементов не достаточно для выпадающего меню, раскрываем его над элементом */
         /* берем минимальное между высотой доступной области над элементом и максимальной высотой выпадающего меню */
         let contentHeight = content.clientHeight;
         if (originalElementsCount) {
@@ -157,5 +166,19 @@ export default class ComboboxService {
       return objects.deepValueGetter(item as Record<string, unknown>, prop) as number | string;
     }
     return null;
+  }
+
+  isStrictEqual(array1: Array<unknown>, array2: Array<unknown>): boolean {
+    const customizer = (a: Array<unknown>, b: Array<unknown>) => {
+      let i = 0;
+      let equal = true;
+      while (equal && i < a.length) {
+        equal = isEqual(a[i], b[i]);
+        i++;
+      }
+      return equal;
+    };
+
+    return isEqualWith(array1, array2, customizer);
   }
 }

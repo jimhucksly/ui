@@ -26,7 +26,7 @@ type InjectionForm = IInjectionForm;
   name: 'ComboboxComponent',
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })

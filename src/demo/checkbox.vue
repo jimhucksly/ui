@@ -7,6 +7,18 @@
           <v-row class="pt-3">
             <v-col cols="4">
               <b-checkbox
+                :model-value="checkstate"
+                v-if="indeterminate"
+                :indeterminate="true"
+                :disabled="disabled"
+                :readonly="readonly"
+                :size="size"
+                :color="color"
+                label="Checked All"
+                class="mb-3"
+                @update:model-value="onCheckAll"
+              />
+              <b-checkbox
                 v-for="i in [1, 2, 3]"
                 v-model="checkeds"
                 class="mb-1"
@@ -45,6 +57,7 @@
               <b-switch label="label to left" v-model="labelToLeft" hide-details />
               <b-switch label="readonly" v-model="readonly" hide-details />
               <b-switch label="disabled" v-model="disabled" hide-details />
+              <b-switch label="indeterminate" v-model="indeterminate" hide-details />
               <b-radiogroup v-model="help" label="help" label-on-top hide-details>
                 <b-radiobutton :value="0" label="None"></b-radiobutton>
                 <b-radiobutton :value="1" label="Tooltip"></b-radiobutton>
@@ -72,6 +85,7 @@ export default {
       checkeds: [],
       disabled: false,
       readonly: false,
+      indeterminate: false,
       labelToLeft: false,
       help: 0,
       hint: false,
@@ -84,6 +98,30 @@ export default {
   computed: {
     library() {
       return ['checkbox.md'];
+    },
+    checkstate() {
+      if (this.allcheck) {
+        return true;
+      }
+      if (this.nocheck) {
+        return false;
+      }
+      return null;
+    },
+    nocheck() {
+      return this.checkeds.length === 0;
+    },
+    allcheck() {
+      return this.checkeds.length === 3;
+    },
+  },
+  methods: {
+    onCheckAll(state) {
+      if (state) {
+        this.checkeds = [1, 2, 3];
+      } else {
+        this.checkeds = [];
+      }
     },
   },
 };

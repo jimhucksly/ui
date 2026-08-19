@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const config = require('./index.config.json');
+const config = require('./updater.config.json');
 const map = config.map;
 const exclude = config.exclude;
 
@@ -72,9 +72,11 @@ const copyFiles = (src, dest) => {
   }
 }
 
+// demo, scss, tests, ld-
+
 (function () {
   const fromPath = path.resolve(__dirname, '../__barahlo');
-  const toPath = path.resolve(__dirname, './');
+  const toPath = path.resolve(__dirname, '../src');
 
   const copyDemo = () => {
     const files = fs.readdirSync(path.resolve(fromPath, './demo'));

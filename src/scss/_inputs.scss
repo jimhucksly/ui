@@ -95,10 +95,10 @@ $colors: (
   .v-input__details {
     position: relative;
     padding: 0 !important;
-    margin: 6px 0 0 0 !important;
+    margin: 4px 0 0 0 !important;
     z-index: 1;
-    height: 20px;
-    min-height: 20px;
+    height: 16px;
+    min-height: 16px;
     align-items: center;
 
     .v-messages {
@@ -505,12 +505,15 @@ body {
       .v-field__input {
         font-size: calc(var(--font-size) + 6px) !important;
       }
+      .v-field__append-inner {
+        padding-right: 8px;
+      }
     }
 
     @include inputdetails();
   }
 
-  .ld-edit-masked-text {
+  .b-edit-masked-text {
     @extend %custom-edit;
 
     @include inputsize();
@@ -682,47 +685,6 @@ body {
     @include inputdetails();
 
     @include spinbutton('v-select');
-  }
-
-  .ld-edit-list-box {
-    @extend %custom-edit;
-
-    @include inputsize();
-
-    @include vfield();
-
-    &:not(.ld-edit-list-box--readonly) {
-      .v-autocomplete {
-        & > .v-input__control > .v-field.v-field--variant-outlined {
-          @include vfieldoutline($input-border-color-default);
-        }
-
-        &:hover {
-          & > .v-input__control > .v-field.v-field--variant-outlined {
-            @include vfieldoutline($input-border-color-hover);
-          }
-
-          & > .v-input__append {
-            &:after {
-              border-color: $input-border-color-hover;
-              border-width: 1px;
-            }
-          }
-        }
-      }
-    }
-
-    &.ld-edit-list-box--readonly {
-      .v-autocomplete {
-        & > .v-input__control > .v-field.v-field--variant-outlined {
-          @include vfieldoutline($input-border-color-readonly);
-        }
-      }
-    }
-
-    @include vfielddisabled();
-
-    @include inputdetails();
   }
 
   .b-combobox {
@@ -902,6 +864,7 @@ body {
     .v-field {
       position: relative;
       background-color: var(--white);
+      border-radius: var(--border-radius);
 
       .v-field__clearable {
         position: absolute;
@@ -914,6 +877,8 @@ body {
 
   .b-text-markup {
     @extend %custom-edit;
+
+    $parent: '.b-text-markup';
 
     &--focused {
       .md-editor-content {
@@ -932,7 +897,6 @@ body {
     }
 
     &-preview {
-      font-size: var(--text-body-s);
       border: 1px solid var(--input-border-color-default);
       border-radius: var(--border-radius);
       padding: 12px 16px !important;
@@ -967,6 +931,25 @@ body {
         color: var(--text);
         padding: 0;
         font-size: 100%;
+      }
+    }
+
+    @each $s, $values in $sizearray {
+      $size: list.nth($values, 1);
+      $font: list.nth($values, 2);
+
+      &#{utils.getSelector($parent, $s)} {
+        @include inputlabel($parent, $size);
+
+        .md-editor {
+          &-content {
+            font-size: $font;
+          }
+        }
+
+        #{utils.getSelector($parent, '-preview')} {
+          font-size: $font;
+        }
       }
     }
 

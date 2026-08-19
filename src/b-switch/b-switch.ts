@@ -11,7 +11,7 @@ import InputMixin from '@/mixins/input.mixin';
  */
 @Options({
   components: {
-    'ld-help': Help,
+    'b-help': Help,
     'b-label': Label,
   },
 })
@@ -38,6 +38,9 @@ export default class SwitchComponent extends mixins(InputMixin, HelpMixin) {
   }
 
   @Watch('internalValue', { immediate: true }) onValueChanged(val: boolean | string | number) {
+    if (isDefined(this.modelValue) && this.internalValue === this.modelValue) {
+      return;
+    }
     this.emitValue(val);
   }
 
@@ -100,7 +103,10 @@ export default class SwitchComponent extends mixins(InputMixin, HelpMixin) {
 
   get checked(): boolean {
     if (isDefined(this.trueValue) && isDefined(this.falseValue)) {
-      return this.internalValue === this.trueValue;
+      if (this.internalValue === this.trueValue) {
+        return true;
+      }
+      return false;
     }
     return Boolean(this.internalValue);
   }

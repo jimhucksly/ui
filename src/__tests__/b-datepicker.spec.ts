@@ -44,7 +44,9 @@ async function setupTest(props?: Record<string, unknown>) {
     let options = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

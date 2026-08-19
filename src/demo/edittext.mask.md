@@ -1,5 +1,5 @@
 ```html
-<ld-edit-masked-text
+<b-edit-masked-text
   v-model="value"
   mask="000-000-000 00"
   label="Ld Edit Masked Text"

@@ -22,7 +22,7 @@ const rootComponent = defineComponent({
       <b-checkbox v-model="value" v-bind="$props" ref="cmp"></b-checkbox>
     </div>
   `,
-  props: ['checkedValue', 'uncheckedValue', 'initialValue'],
+  props: ['checkedValue', 'uncheckedValue', 'initialValue', 'disabled', 'readonly'],
   data(): {
     value: boolean;
   } {
@@ -37,7 +37,9 @@ function setupTest(props?: Record<string, unknown>) {
     let options = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
@@ -77,21 +79,21 @@ describe('CheckboxComponent', () => {
 
   it('Корректно создается с дефолтным значением false', async () => {
     component.value = false;
-    await delay(1000);
+    await delay(300);
     expect(testComponent.modelValue).toEqual(false);
   });
 
   it('Корректно создается с дефолтным значением true', async () => {
     component.value = true;
-    await delay(1000);
+    await delay(300);
     expect(testComponent.modelValue).toEqual(true);
   });
 
   it('Корректно обрабатывает изменение значения чекбокса', async () => {
     component.value = true;
-    await delay(1000);
+    await delay(300);
     component.value = false;
-    await delay(1000);
+    await delay(300);
     expect(testComponent.modelValue).toEqual(false);
   });
 
@@ -106,16 +108,16 @@ describe('CheckboxComponent', () => {
     expect(testComponent.internalValue).toEqual(false);
     const input = wrapper.find('input[type="checkbox"]');
     input.trigger('click');
-    await delay(600);
+    await delay(300);
     input.trigger('input');
-    await delay(600);
+    await delay(300);
     expect(testComponent.modelValue).toEqual(checkedValue);
     expect(testComponent.internalValue).toEqual(true);
     expect(component.value).toEqual(checkedValue);
     input.trigger('click');
-    await delay(600);
+    await delay(300);
     input.trigger('input');
-    await delay(600);
+    await delay(300);
     expect(testComponent.modelValue).toEqual(uncheckedValue);
   });
 
@@ -127,17 +129,43 @@ describe('CheckboxComponent', () => {
     expect(testComponent.internalValue).toEqual(false);
     const input = wrapper.find('input[type="checkbox"]');
     input.trigger('click');
-    await delay(600);
+    await delay(300);
     input.trigger('input');
-    await delay(600);
+    await delay(300);
     expect(testComponent.modelValue).toEqual([1]);
     input.trigger('click');
-    await delay(600);
+    await delay(300);
     input.trigger('input');
-    await delay(600);
+    await delay(300);
     expect(testComponent.modelValue).toEqual([]);
     component.value = [1];
-    await delay(600);
+    await delay(300);
+    expect(testComponent.internalValue).toEqual(true);
+  });
+
+  it('Не изменяет знечение, если передано readonly', async () => {
+    component.value = true;
+    await wrapper.setProps({
+      readonly: true,
+    });
+    const input = wrapper.find('input[type="checkbox"]');
+    input.trigger('click');
+    await delay(300);
+    input.trigger('input');
+    await delay(300);
+    expect(testComponent.internalValue).toEqual(true);
+  });
+
+  it('Не изменяет знечение, если передано disabled', async () => {
+    component.value = true;
+    await wrapper.setProps({
+      disabled: true,
+    });
+    const input = wrapper.find('input[type="checkbox"]');
+    input.trigger('click');
+    await delay(300);
+    input.trigger('input');
+    await delay(300);
     expect(testComponent.internalValue).toEqual(true);
   });
 });

@@ -42,6 +42,7 @@ async function setupTest(props?: Record<string, unknown>) {
       provide: {
         form: {
           register: () => {},
+
           unregister: () => {},
         },
       },
@@ -51,13 +52,6 @@ async function setupTest(props?: Record<string, unknown>) {
           {
             install(vue: App) {
               vue.use(ui);
-              vue.mixin({
-                computed: {
-                  isDev() {
-                    return $DEV;
-                  },
-                },
-              });
             },
           },
         ],

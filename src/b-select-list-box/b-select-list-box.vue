@@ -24,7 +24,7 @@
             :error-messages="validationMessage"
             :no-filter="true"
             :no-auto-scroll="true"
-            :auto-select-first="false"
+            :auto-select-first="true"
             :clearable="clearable"
             :menu-icon="null"
             @blur="onBlur"
@@ -132,7 +132,7 @@
             </template>
           </v-combobox>
           <div v-if="isShowHelp" class="b-select-list-box-help">
-            <ld-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
+            <b-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
           </div>
         </div>
       </v-col>

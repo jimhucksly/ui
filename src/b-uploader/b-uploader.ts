@@ -54,10 +54,6 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
     return value;
   }
 
-  @Emit('change') onItemsChangeEmit(value: Array<IFile>) {
-    return value;
-  }
-
   @Emit('complete') onCompleteEmit() {
     return true;
   }
@@ -140,7 +136,15 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
   }
 
   onDragOver(event: DragEvent) {
-    this.onDragEnter(event);
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.disabled) {
+      return;
+    }
+    if (!this.drop) {
+      return;
+    }
+    this.isDrag = true;
   }
 
   onDragLeave(event: DragEvent) {
@@ -187,7 +191,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
     if (items?.length === 0) {
       return;
     }
-    this.controller.add(Array.from(items));
+    this.controller.add(Array.from(this.multiple ? items : [items[0]]));
   }
 
   onItemsInput(items: Array<IFile>) {
@@ -195,6 +199,10 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
     const _files = items.map(i => i.file);
     this.onUpdateModelEmit(_files);
     this.onInputEmit(_files);
+    if (this.asInput) {
+      this.items = [];
+      this.controller.clear();
+    }
     if (!this.lazy && !this.asInput) {
       setTimeout(() => {
         for (const i of items) {
@@ -275,7 +283,7 @@ export default class UploaderComponent extends mixins(ValidatableMixin, InputMix
       if (this.validationMessage) {
         break;
       }
-      funcResult = func(null);
+      funcResult = func(this.items);
       if (typeof funcResult === 'string') {
         this.validationMessage = funcResult;
       }

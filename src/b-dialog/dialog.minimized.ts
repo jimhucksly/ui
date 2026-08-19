@@ -1,7 +1,9 @@
 import { eventBus } from '@dn-web/core';
 import { Options, Prop, Vue } from 'vue-property-decorator';
 import Icon from '@/components/icon/icon.vue';
-import { ModalWindow } from '@/types/dialogs';
+import { IModalWindow } from '@/types/dialogs';
+
+type ModalWindow = IModalWindow;
 
 @Options({
   emits: ['maximize', 'close', 'close-all'],
@@ -24,14 +26,11 @@ export default class DialogMinimizedComponent extends Vue {
     eventBus.$off('modal-maximize' + this.id, this.maximizeHandler);
   }
 
-  onMaximize(item: ModalWindow) {
-    const dlg = this.dialogs.find(d => d.id === item.id);
-    if (dlg) {
-      this.$emit('maximize', dlg);
-    }
+  onMaximize(modal: IModalWindow) {
+    this.$emit('maximize', modal);
   }
 
-  onClose(item: ModalWindow) {
+  onClose(item: IModalWindow) {
     const dlg = this.dialogs.find(d => d.id === item.id);
     if (dlg) {
       this.$emit('close', dlg);
@@ -42,7 +41,7 @@ export default class DialogMinimizedComponent extends Vue {
     this.$emit('close-all');
   }
 
-  itemIsChanged(item: ModalWindow): boolean {
+  itemIsChanged(item: IModalWindow): boolean {
     if (!item.isChanged || typeof item.isChanged !== 'function') {
       return false;
     }
@@ -53,7 +52,7 @@ export default class DialogMinimizedComponent extends Vue {
     return 'Свёрнутые окна';
   }
 
-  get items(): Array<ModalWindow> {
+  get items(): Array<IModalWindow> {
     return this.dialogs ?? [];
   }
 

@@ -14,7 +14,6 @@ import Datatable from './datatable.vue';
 import DatePicker from './datepicker.vue';
 import DateRange from './daterange.vue';
 import Dialogs from './dialogs.vue';
-import EditListBox from './editlistbox.vue';
 import Edittext from './edittext.vue';
 import EventBus from './eventBus.vue';
 import Expansions from './expansion.vue';
@@ -37,7 +36,6 @@ import Switch from './switch.vue';
 import Tabs from './tabs.vue';
 import Textarea from './textarea.vue';
 import TextMarkup from './textmarkup.vue';
-import TextViewer from './textviewer.vue';
 import TimePicker from './timepicker.vue';
 import Toast from './toast.vue';
 import Toggle from './toggle.vue';
@@ -72,7 +70,6 @@ interface ITab {
     'select-demo': SelectBox,
     combobox: ComboBox,
     selectlistbox: SelectListBox,
-    editlistbox: EditListBox,
     'text-area': Textarea,
     'text-markup': TextMarkup,
     datepicker: DatePicker,
@@ -81,7 +78,6 @@ interface ITab {
     Calendar,
     Slider,
     Uploader,
-    textviewer: TextViewer,
     Splitter,
     Tabs,
     Toggle,
@@ -126,7 +122,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Select', component: 'select-demo' },
     { name: 'Combobox' },
     { name: 'Select List Box', component: 'selectlistbox' },
-    { name: 'Edit List Box', component: 'editlistbox' },
     { name: 'Textarea', component: 'text-area' },
     { name: 'Text Markup', component: 'text-markup' },
     { name: 'DatePicker', component: 'datepicker' },
@@ -139,7 +134,6 @@ export default class Index extends mixins(ValidateMixin) {
     { name: 'Chip' },
     { name: 'Badge' },
     { name: 'Stepper' },
-    { name: 'TextViewer' },
     { name: 'Navigation', disabled: true },
     { name: 'Breadcrumbs' },
     { name: 'Pager' },

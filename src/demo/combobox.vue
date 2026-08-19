@@ -77,16 +77,7 @@
                       </b-chip>
                     </template>
                     <template v-if="customOption || avatar" #option="{ item, isSelected, searchText }">
-                      <ld-avatar v-if="avatar" size="m">
-                        <template #avatar>
-                          <img src="/avatar.png" alt="" />
-                        </template>
-                        <template #content>
-                          <span v-html="highlightText(item, searchText)"></span>
-                        </template>
-                        <template #hint>{{ item.email }}</template>
-                      </ld-avatar>
-                      <span v-else :class="{ 'primary--text': isSelected }">
+                      <span :class="{ 'primary--text': isSelected }">
                         {{ `custom option: ${item.first_name} ${item.last_name}` }}
                       </span>
                     </template>

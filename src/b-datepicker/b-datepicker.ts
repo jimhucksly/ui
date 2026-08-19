@@ -25,7 +25,7 @@ type ITimepickerProps = TimepickerProps;
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })

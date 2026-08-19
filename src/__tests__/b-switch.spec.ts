@@ -1,6 +1,7 @@
 import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
-import { App, ComponentPublicInstance, DefineComponent, defineComponent } from 'vue';
+import { DefinedComponent } from '@vue/test-utils/dist/types';
+import { App, ComponentPublicInstance, defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
 import ui from '@/index';
 import vuetify from '@/vuetify.setup';
@@ -42,7 +43,7 @@ const rootComponent2 = defineComponent({
   },
 });
 
-function setupTest(props: Record<string, unknown>, cmp: DefineComponent) {
+function setupTest(props: Record<string, unknown>, cmp: DefinedComponent) {
   try {
     let options = {
       provide: {
@@ -77,7 +78,7 @@ function setupTest(props: Record<string, unknown>, cmp: DefineComponent) {
 
 describe('SwitchComponent 1', () => {
   beforeEach(() => {
-    setupTest(null, rootComponent1 as unknown as DefineComponent);
+    setupTest(null, rootComponent1);
   });
 
   afterEach(() => {
@@ -104,7 +105,7 @@ describe('SwitchComponent 1', () => {
 
 describe('SwitchComponent 2', () => {
   beforeEach(() => {
-    setupTest(null, rootComponent2 as unknown as DefineComponent);
+    setupTest(null, rootComponent2);
   });
 
   afterEach(() => {

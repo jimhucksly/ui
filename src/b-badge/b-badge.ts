@@ -22,6 +22,10 @@ export default class BadgeComponent extends Vue {
         return 'small';
       case 'l':
         return 'large';
+      case 'x':
+        return 'x-large';
+      case 'xl':
+        return 'extra-large';
     }
   }
 }

@@ -9,6 +9,13 @@
   --button-l: 56px;
 }
 
+:root {
+  --icon-xs: 20px;
+  --icon-s: 24px;
+  --icon-m: 28px;
+  --icon-l: 32px;
+}
+
 $sizearray: (
   '--size-x-small': (
     // font size
@@ -18,25 +25,25 @@ $sizearray: (
     // padding x
     14px,
     // icon view size
-    var(--button-xxs)
+    var(--icon-xs)
   ),
   '--size-small': (
     var(--text-body-s),
     var(--button-s),
     16px,
-    var(--button-xs)
+    var(--icon-s)
   ),
   '--size-large': (
     var(--text-body-m),
     var(--button-m),
     20px,
-    var(--button-s)
+    var(--icon-m)
   ),
   '--size-x-large': (
     var(--text-body-l),
     var(--button-l),
     24px,
-    var(--button-m)
+    var(--icon-l)
   )
 );
 
@@ -140,6 +147,15 @@ body {
             height: $i !important;
           }
         }
+
+        svg.b-icon:nth-child(1) {
+          width: $i;
+          height: $i;
+        }
+        svg.b-icon:nth-child(3) {
+          width: $i;
+          height: $i;
+        }
       }
     }
 
@@ -202,7 +218,6 @@ body {
       $colorActive
     ) {
       &.v-btn--variant-outlined.text-#{$colorname} {
-        background-color: var(--white) !important;
         border-color: $borderDefault !important;
         color: $colorDefault !important;
 

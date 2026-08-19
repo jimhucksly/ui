@@ -1,3 +1,4 @@
+import { uniqueID } from '@dn-web/core';
 import { Prop, Vue } from 'vue-property-decorator';
 
 enum StepType {

@@ -19,7 +19,7 @@ type InjectionForm = IInjectionForm;
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })

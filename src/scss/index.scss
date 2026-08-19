@@ -28,7 +28,6 @@
 @use "step";
 @use "slider";
 @use "editor";
-@use "textviewer";
 @use "textmarkup";
 @use "expansions";
 
@@ -155,4 +154,8 @@ body {
       color: var(--error);
     }
   }
+}
+
+:root {
+  --shade-30: hsla(234, 66%, 20%, 30%);
 }

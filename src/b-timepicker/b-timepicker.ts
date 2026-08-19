@@ -21,7 +21,7 @@ type InjectionForm = IInjectionForm;
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })
@@ -135,7 +135,10 @@ export default class TimepickerComponent extends mixins(ValidatableMixin, GridMi
   }
 
   checkMinutes(m: number) {
-    return !(isNaN(m) || m < 0 || m > 59);
+    if (isNaN(m) || m < 0 || m > 59) {
+      return false;
+    }
+    return true;
   }
 
   checkValue(value: string): boolean {

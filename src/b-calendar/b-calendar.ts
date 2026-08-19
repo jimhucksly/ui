@@ -219,7 +219,10 @@ export default class CalendarComponent extends mixins(InputMixin) {
     }
     if (Array.isArray(this.allowedDates) && this.allowedDates.length) {
       const index = this.allowedDates.findIndex(d => datetime.compare(date, d) === 0);
-      return index > -1;
+      if (index > -1) {
+        return true;
+      }
+      return false;
     }
     return true;
   }

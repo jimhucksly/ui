@@ -46,19 +46,10 @@
                     "
                   >
                     <template #option="{ item }">
-                      <ld-avatar v-if="avatar" size="m">
-                        <template #avatar>
-                          <img src="/avatar.png" alt="" />
-                        </template>
-                        <template #content> {{ `${item.first_name} ${item.last_name}` }} </template>
-                        <template #hint>{{ item.email }}</template>
-                      </ld-avatar>
-                      <template v-else>
-                        <div class="d-flex align-center">
-                          <b-icon color="grey" class="mr-1" v-if="icons">user</b-icon>
-                          <span> {{ item.first_name }}</span>
-                        </div>
-                      </template>
+                      <div class="d-flex align-center">
+                        <b-icon color="grey" class="mr-1" v-if="icons">user</b-icon>
+                        <span> {{ item.first_name }}</span>
+                      </div>
                     </template>
                     <template #option-hint="{ item }">
                       <span :style="{ 'padding-left': icons ? '28px' : 0 }">{{ item.gender }}</span>

@@ -5,6 +5,7 @@ import Help from '@/components/help/help.vue';
 import Label from '@/components/label/label.vue';
 import { Emit } from '@/decorators/emit.decorator';
 import VRuntimeTemplate from '@/lib/v-runtime-template';
+import EditMixin from '@/mixins/edit.mixin';
 import GridMixin from '@/mixins/grid.mixin';
 import HelpMixin from '@/mixins/help.mixin';
 import InputMixin from '@/mixins/input.mixin';
@@ -28,13 +29,13 @@ type InjectionForm = IInjectionForm;
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'v-runtime-template': VRuntimeTemplate,
     'md-editor': MdEditor,
     'md-editor-button': NormalToolbar,
   },
 })
-export default class TextMarkupComponent extends mixins(ValidatableMixin, GridMixin, InputMixin, HelpMixin) {
+export default class TextMarkupComponent extends mixins(ValidatableMixin, GridMixin, InputMixin, EditMixin, HelpMixin) {
   @Prop() modelValue: string;
   /* инициализация компонента с включенной секцией Превью */
   @Prop({ default: false }) enablePreview: boolean;

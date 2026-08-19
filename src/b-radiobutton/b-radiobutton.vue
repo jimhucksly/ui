@@ -18,7 +18,7 @@
       :class="{ 'flex-row-reverse justify-end': !labelToLeft }"
       style="position: relative"
     >
-      <ld-help
+      <b-help
         v-if="isShowHelp"
         :tooltip="help.tooltip"
         :link="help.link"

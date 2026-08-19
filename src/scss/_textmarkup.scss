@@ -2,7 +2,7 @@ body {
   .b-text-markup {
     .md-editor {
       &-toolbar {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
       }
       &-toolbar-left {
         display: grid;
@@ -12,7 +12,6 @@ body {
       }
       &-content {
         position: relative;
-        font-size: var(--text-body-s);
         padding: 12px 16px !important;
 
         &-wrapper {

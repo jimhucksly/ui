@@ -1,9 +1,9 @@
 <template>
   <v-container class="b-radiogroup" :id="`radiogroup-${uid}`" :class="viewClass">
     <v-row no-gutters>
-      <v-col v-if="label" :class="[labelSizeClasses]">
+      <v-col v-if="label" :class="[labelSizeClasses, { 'mb-3': labelOnTop }]">
         <div class="d-flex">
-          <ld-help v-if="isShowHelp" :tooltip="help.tooltip" :link="help.link" class="mr-1" />
+          <b-help v-if="isShowHelp" :tooltip="help.tooltip" :link="help.link" class="mr-1" />
           <b-label
             class="b-radiogroup-label"
             :label="label"

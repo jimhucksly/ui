@@ -5,10 +5,10 @@ import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
 import ViewportMixin from '@/mixins/viewport.mixins';
 import UnitService from '@/services/unit.service';
-import { IHostObject, IModalInfo, IModalWindow, IViewModel, ModalWindow } from '@/types/dialogs';
-import { ModalType } from '@/types/modalType';
+import { IHostObject, IModalInfo, IModalResult, IModalWindow, IViewModel } from '@/types/dialogs';
+import { getScrollbarWidth } from '@/utils/scrollbarWidth';
 import { DialogListeners } from './dialog.listeners';
-import { DialogManager } from './dialog.manager';
+import { DialogManager, ModalType } from './dialog.manager';
 import DialogMinimizedComponent from './dialog.minimized.vue';
 import { ConfirmDialog } from './dialogs';
 
@@ -40,13 +40,19 @@ enum ModalCancelReason {
 export default class DialogComponent extends mixins(ViewportMixin) {
   @Prop({ type: String, default: '' }) id: string;
 
-  readonly minimized: Array<ModalWindow> = [];
   readonly dialogManager = new DialogManager();
   readonly dialogListeners = new DialogListeners();
 
-  modals: Array<ModalWindow> = [];
+  readonly messageDetailSeparator = 'Message detail: ';
 
-  resizingModalId: number = null;
+  modals: Array<IModalWindow> = [];
+
+  unloadPromises: Map<number | string, Promise<void>> = new Map();
+  unloadPromisesResolve: Map<number | string, () => void> = new Map();
+
+  resizingModalId: IModalWindow['id'] = null;
+
+  scrollbarWidth = 0;
 
   onResizeHandler: () => void = null;
 
@@ -60,30 +66,27 @@ export default class DialogComponent extends mixins(ViewportMixin) {
   }
 
   created() {
-    this.dialogManager.setMinimized(this.minimized);
     this.onResizeHandler = this.onResize.bind(this);
     window.addEventListener('resize', this.onResizeHandler);
   }
 
   mounted() {
+    const style = window.getComputedStyle(document.body);
+    const gap = UnitService.unitToNumber(style?.getPropertyValue('--modal-window-gap') ?? 24);
+    this.dialogManager.setProps({ gap });
     this.$nextTick(() => {
       eventBus.$on('dialog:open' + this.id, this.open);
-
       eventBus.$on('dialog:props' + this.id, this.onSetProps);
-
       eventBus.$on('dialog:close:all' + this.id, this.closeAll);
-
       eventBus.$on('dialog:maximized' + this.id, this.onMaximize);
+      this.scrollbarWidth = getScrollbarWidth();
     });
   }
 
   beforeUnmount() {
     eventBus.$off('dialog:open' + this.id, this.open);
-
     eventBus.$off('dialog:props' + this.id, this.onSetProps);
-
     eventBus.$off('dialog:close:all' + this.id, this.closeAll);
-
     eventBus.$off('dialog:maximized' + this.id, this.onMaximize);
     window.removeEventListener('resize', this.onResizeHandler);
   }
@@ -96,7 +99,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
   }
 
-  open(modalInfo: IModalInfo) {
+  async open(modalInfo: IModalInfo) {
     if (!modalInfo.hostObject) {
       modalInfo.hostObject = {
         contentType: null,
@@ -114,12 +117,12 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
     if (!this.isAlertDialog(modalInfo) && !this.isConfirmDialog(modalInfo)) {
       this.dialogManager.setParentDialog(modalInfo);
-      if (modalInfo.hostObject.parentId) {
-        this.dialogManager.hideDialog(modalInfo.hostObject.parentId);
+      if (modalInfo.hostObject.parentId && !['left', 'right'].includes(modalInfo.align)) {
+        this.dialogManager.hideDialog(modalInfo.hostObject);
       }
     }
-    const modal: ModalWindow = {
-      id: Number(modalInfo.hostObject.id),
+    const modal: IModalWindow = {
+      id: modalInfo.hostObject.id,
       component: modalInfo.component,
       componentProps: modalInfo.componentProps,
       hostObject: modalInfo.hostObject,
@@ -156,6 +159,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       size: modalInfo.size,
       css: modalInfo.css,
       closable: isDefined(modalInfo.closable) ? modalInfo.closable : true,
+      scrim: false,
       expandable: modalInfo.expandable,
       minimizable: modalInfo.minimizable,
       minimized: false,
@@ -168,21 +172,22 @@ export default class DialogComponent extends mixins(ViewportMixin) {
        */
       retainFocus: false,
       help: modalInfo.help,
+      scrollbar: 0,
+      resizeObserver: null,
     };
     if (modal.expandable) {
       modal.expanded = modalInfo.expanded;
-      if (!modal.expandedSize && !modal.collapsedSize) {
-        modal.expandedSize = { width: modal.width, height: modal.height };
-        modal.collapsedSize = { width: modal.width, height: modal.height };
-      } else if (modal.expandedSize && !modal.collapsedSize) {
-        const { height, width } = modal.expandedSize;
+      if (modal.expanded && modal.expandedSize) {
         modal.noModal = modal.expandedSize.noModal;
-        modal.collapsedSize = { height, width };
-      } else if (!modal.expandedSize && modal.collapsedSize) {
-        const { height, width } = modal.collapsedSize;
+        modal.width = modal.expandedSize.size ? this.getWidthBySize(modal.expandedSize.size) : modal.expandedSize.width;
+      }
+      if (!modal.expanded && modal.collapsedSize) {
         modal.noModal = modal.collapsedSize.noModal;
-        modal.expandedSize = { height, width };
-      } else {
+        modal.width = modal.collapsedSize.size
+          ? this.getWidthBySize(modal.collapsedSize.size)
+          : modal.collapsedSize.width;
+      }
+      if (!isDefined(modal.noModal)) {
         modal.noModal = !modal.expanded;
       }
       if (!modal.noModal) {
@@ -192,9 +197,13 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         modal.noModal = false;
       }
     }
+    const promises = Array.from(this.unloadPromises.values());
+    await Promise.all(promises);
+    modal.scrim = true;
+    this.dialogManager.dialogCreate(modal);
     this.modals.push(modal);
     const checkDialogExist = setInterval(() => {
-      const el = document.querySelector(`.${this.uniqKey(modal)}`);
+      const el = document.querySelector(`.${this.dialogManager.uniqKey(modal)}`);
       if (el) {
         clearInterval(checkDialogExist);
         const listenerHandler = (e: KeyboardEvent) => {
@@ -227,14 +236,29 @@ export default class DialogComponent extends mixins(ViewportMixin) {
             btnOk.focus();
           }
         }
+
         this.dialogManager.dialogCreated(modal);
         eventBus.$emit('dialog:created' + this.id, modal.hostObject);
+
+        modal.resizeObserver = new ResizeObserver(entries => {
+          if (!entries?.[0]) {
+            return;
+          }
+          const entry = entries?.[0].target as HTMLElement;
+          const i = this.findModalIndex(modal);
+          if (i > -1) {
+            this.modals[i].scrollbar = entry.scrollHeight > entry.clientHeight ? 1 : 0;
+          }
+        });
+
+        const text = modal.el.querySelector('.v-card-text[data-role="modal-text"]');
+        modal.resizeObserver.observe(text);
       }
     }, 100);
   }
 
-  modalClass(modal: ModalWindow): Array<string> {
-    const result: Array<string> = [`${this.uniqKey(modal)}`, `${ModalType[modal.type]}`];
+  modalClass(modal: IModalWindow): Array<string> {
+    const result: Array<string> = [`${this.dialogManager.uniqKey(modal)}`, `${ModalType[modal.type]}`];
     if (this.id) {
       result.push(`${ModalType[modal.type]}-${this.id}`);
     }
@@ -256,11 +280,11 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return result;
   }
 
-  modalType(modal: ModalWindow): string {
+  modalType(modal: IModalWindow): string {
     return `${ModalType[modal.type]}`;
   }
 
-  dialogClass(modal: ModalWindow): Array<string> {
+  dialogClass(modal: IModalWindow): Array<string> {
     const result: Array<string> = [this.modalType(modal)];
     if (this.id) {
       result.push(this.modalType(modal) + `-${this.id}`);
@@ -271,7 +295,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return result;
   }
 
-  modalWidth(modal: ModalWindow): number | string {
+  modalWidth(modal: IModalWindow): number | string {
     this.$nextTick(() => {
       this.stylingModal(modal);
       this.alignButtons(modal);
@@ -279,20 +303,24 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return this.defaultWidth(modal);
   }
 
-  stylingModal(modal: ModalWindow) {
+  stylingModal(modal: IModalWindow) {
     if (modal.minimized) {
       return;
     }
     if (!modal.el) {
-      modal.el = document.querySelector(`.${this.uniqKey(modal)}`);
+      modal.el = document.querySelector(`.${this.dialogManager.uniqKey(modal)}`);
     }
     if (!modal.el) {
       return;
     }
 
     const LIMIT_HEIGHT = 600;
-    const MODAL_WINDOW_GAP = 24;
     const viewportH = this.viewport().h;
+
+    let topGap = Math.floor(viewportH * 0.1);
+    while (topGap % 4 > 0) {
+      topGap++;
+    }
 
     const getWidth = () => {
       if (this.isMobileGlobal) {
@@ -300,12 +328,19 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       }
       let w = modal.width || this.defaultWidth(modal);
       if (modal.expandable) {
-        w = (modal.expanded ? modal.expandedSize?.width : modal.collapsedSize?.width) || w;
+        if (modal.expanded) {
+          w = modal.expandedSize?.size ? this.getWidthBySize(modal.expandedSize?.size) : modal.expandedSize?.width || w;
+        } else {
+          w = modal.collapsedSize?.size
+            ? this.getWidthBySize(modal.collapsedSize?.size)
+            : modal.collapsedSize?.width || w;
+        }
       }
       return UnitService.convertToUnit(w);
     };
 
-    modal.el.style.width = getWidth();
+    modal.width = getWidth();
+    modal.el.style.width = modal.width;
 
     const getHeight = () => {
       if (modal.fullHeight) {
@@ -313,14 +348,16 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       }
       let h = modal.height || 'auto';
       if (modal.expandable) {
-        h = (modal.expanded ? modal.expandedSize?.height : modal.collapsedSize?.height) || h;
+        if (modal.expanded) {
+          h = modal.expandedSize?.height || h;
+        } else {
+          h = modal.collapsedSize?.height || h;
+        }
       }
       return UnitService.convertToUnit(h);
     };
 
     modal.el.style.height = getHeight();
-
-    let mxH = 0;
 
     const getMaxHeight = () => {
       if (modal.align === 'left' || modal.align === 'right') {
@@ -329,16 +366,16 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (this.isMobileGlobal) {
         return '100%';
       }
+      if (modal.fullHeight) {
+        return '100%';
+      }
       if (viewportH >= LIMIT_HEIGHT) {
-        mxH = viewportH - 2 * MODAL_WINDOW_GAP;
-        return `calc(100% - 2 * ${this.modalWindowGap})`;
+        return `calc(100% - ${this.modalWindowGap})`;
       }
       return 'unset';
     };
 
     modal.el.style.maxHeight = getMaxHeight();
-
-    let modalH = 0;
 
     const getPaddingTop = () => {
       if (modal.align === 'left' || modal.align === 'right') {
@@ -348,7 +385,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         return '0';
       }
       if (modal.fullHeight) {
-        return this.modalWindowGap;
+        return UnitService.convertToUnit(topGap);
       }
       if (this.isMobileGlobal) {
         return this.modalWindowGap;
@@ -357,14 +394,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
         return '0';
       }
       if (modal.expandable) {
-        modalH = modal.expanded ? modal.expandedSize?.height : modal.collapsedSize?.height;
-        modalH = UnitService.unitToNumber(modalH);
-        if (modalH > viewportH) {
-          return '0';
-        }
-        return modalH >= LIMIT_HEIGHT ? 'unset' : `calc(${Math.floor(viewportH * 0.1)}px + ${this.modalWindowGap})`;
+        return UnitService.convertToUnit(topGap);
       }
-      return viewportH >= LIMIT_HEIGHT ? `calc(${Math.floor(viewportH * 0.1)}px + ${this.modalWindowGap})` : 'unset';
+      return viewportH >= LIMIT_HEIGHT ? UnitService.convertToUnit(topGap) : 'unset';
     };
 
     modal.el.style.paddingTop = getPaddingTop();
@@ -376,6 +408,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (modal.noModal) {
         return '0';
       }
+      if (modal.fullHeight) {
+        return this.modalWindowGap;
+      }
       return viewportH >= LIMIT_HEIGHT ? 'unset' : this.modalWindowGap;
     };
 
@@ -385,49 +420,50 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       if (modal.align === 'left' || modal.align === 'right') {
         return '0';
       }
-      let mt = this.modalWindowGap;
-      if (modal.expandable && modal.expanded && modalH < viewportH) {
-        mt = UnitService.convertToUnit(
-          MODAL_WINDOW_GAP + Math.min(Math.abs(Number(mxH) - Number(modalH)), Math.floor(viewportH * 0.1))
-        );
+      if (modal.fullHeight) {
+        return '0';
       }
-      return `${mt} ${this.modalWindowGap} ${this.modalWindowGap} ${this.modalWindowGap}`;
+      if (modal.noModal) {
+        return '0';
+      }
+      return `0 ${this.modalWindowGap} 0 ${this.modalWindowGap}`;
     };
 
     modal.el.style.margin = getMargin();
   }
 
-  alignButtons(modal: ModalWindow) {
+  alignButtons(modal: IModalWindow) {
     if (modal.minimized) {
       return;
     }
     if (!modal.el) {
-      modal.el = document.querySelector(`.${this.uniqKey(modal)}`);
+      modal.el = document.querySelector(`.${this.dialogManager.uniqKey(modal)}`);
     }
-    const actions: HTMLElement = modal.el.querySelector('.v-card-actions');
+    const actions: HTMLElement = modal.el.querySelector('.v-card-actions[data-role="modal-actions"]');
     if (actions) {
       const buttons = modal.el.querySelectorAll('.v-card-actions > button');
-      const max = Math.max(...Array.from(buttons).map((b: HTMLElement) => b.clientWidth));
-      const attr = document.createAttribute('style');
-      attr.value = `--max-child-width: ${UnitService.convertToUnit(max)}`;
-      actions.setAttributeNode(attr);
+      const arr = Array.from(buttons);
+      const max = Math.max(...arr.map((b: HTMLElement) => b.clientWidth));
+      for (const b of arr) {
+        (b as HTMLElement).style.minWidth = UnitService.convertToUnit(max);
+      }
     }
   }
 
-  modalTitle(modal: ModalWindow): string {
+  modalTitle(modal: IModalWindow): string {
     if (modal.description instanceof Function) {
       return modal.description();
     }
     return modal.description || modal.title;
   }
 
-  handleHide(modal: ModalWindow) {
-    if (!modal.resolved) {
-      this.handleOk(modal);
-    }
-  }
+  // handleHide(modal: IModalWindow) {
+  //   if (!modal.resolved) {
+  //     this.handleOk(modal);
+  //   }
+  // }
 
-  async handleOk(modal: ModalWindow): Promise<boolean> {
+  async handleOk(modal: IModalWindow): Promise<boolean> {
     modal = this.findModal(modal.hostObject);
     if (!modal) {
       return;
@@ -446,7 +482,6 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       case ModalType.CreateEdit:
         if (!modal.settedResult && modal.componentInstance && modal.componentInstance.save) {
           modal.okLoading = true;
-          /* eslint-disable-next-line no-useless-call */
           let resultSave = modal.componentInstance.save.call(modal.componentInstance);
           if (resultSave instanceof Promise) {
             try {
@@ -482,7 +517,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
   }
 
   async handleCancel(
-    modal: ModalWindow,
+    modal: IModalWindow,
     /* кнопка, которая вызывала данное событие - крестик, кнопка Назад, кнопка Отмена */
     cancelReason: ModalCancelReason = ModalCancelReason.FromCloseButton
   ) {
@@ -502,22 +537,25 @@ export default class DialogComponent extends mixins(ViewportMixin) {
 
     try {
       let canUnload = true;
-      if (fromOkButtonReason || fromEnterKeyPressReason) {
-        canUnload = await this.handleOk(modal);
-      } else if (
-        modal.componentInstance &&
-        modal.componentInstance.isChanged &&
-        modal.componentInstance.isChanged instanceof Function
-      ) {
-        /* eslint-disable-next-line no-useless-call */
-        const isChanged = modal.componentInstance.isChanged.call(modal.componentInstance);
-        if (isChanged) {
+      switch (true) {
+        case fromOkButtonReason || fromEnterKeyPressReason:
+          canUnload = await this.handleOk(modal);
+          break;
+        case fromCloseButtonReason:
           canUnload = await this.askCanUnload(modal, cancelReason);
-        }
-      } else {
-        canUnload = await this.askCanUnload(modal, cancelReason);
+          break;
+        default:
+          if (
+            modal.componentInstance &&
+            modal.componentInstance.isChanged &&
+            modal.componentInstance.isChanged instanceof Function
+          ) {
+            const isChanged = modal.componentInstance.isChanged.call(modal.componentInstance);
+            if (isChanged) {
+              canUnload = await this.askCanUnload(modal, cancelReason);
+            }
+          }
       }
-
       if (!canUnload) {
         return;
       }
@@ -530,23 +568,12 @@ export default class DialogComponent extends mixins(ViewportMixin) {
           }
         }
         if (fromOkButtonReason || fromEscapeKeyPressReason || fromBackButtonReason) {
-          this.dialogManager.showDialog(modal.hostObject.parentId);
+          this.dialogManager.showDialog({ id: modal.hostObject.parentId });
         }
       }
 
-      // if (canUnload) {
-      //   if (modal.isChanged instanceof Function) {
-      //     canUnload = !modal.isChanged();
-      //   } else {
-      //     const event = new Event('beforeunload');
-      //     (event as unknown as { modal: boolean }).modal = true;
-      //     window.dispatchEvent(event);
-      //     canUnload = 'canUnload' in event ? (event as unknown as { canUnload: boolean }).canUnload : true;
-      //     dialogText = (event as unknown as { dialogText: string }).dialogText ?? dialogText;
-      //   }
-      // }
+      this.remove(modal);
 
-      modal.show = false;
       if (isDefined(modal.okResult) && isSuccessReason) {
         return modal.resolveFunction(modal.okResult);
       }
@@ -558,7 +585,6 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       modal.resolveFunction(this.isSelectDialog(modal) || this.isCreateEditDialog(modal) ? null : false);
     } finally {
       if (!modal.show) {
-        this.remove(modal);
         modal.okResult = null;
         modal.cancelResult = null;
         this.dialogListeners.remove(modal);
@@ -591,7 +617,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
   }
 
-  onSetResult(modal: ModalWindow, result: IViewModel<string | number>): void {
+  onSetResult(modal: IModalWindow, result: IModalResult<IViewModel<string | number>>): void {
     setTimeout(() => {
       modal.okLoading = false;
       modal.okResult = result;
@@ -612,7 +638,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }, 1);
   }
 
-  onSetResultAndClose(modal: ModalWindow, result: IViewModel<string | number>): void {
+  onSetResultAndClose(modal: IModalWindow, result: IModalResult<IViewModel<string | number>>): void {
     setTimeout(() => {
       modal.okResult = result;
       modal.settedResult = true;
@@ -623,23 +649,18 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }, 1);
   }
 
-  onExpandCollapse(modal: ModalWindow) {
+  onExpandCollapse(modal: IModalWindow) {
     this.resizingModalId = modal.id;
-    if (window.requestAnimationFrame) {
-      window.requestAnimationFrame(() => {
-        modal.expanded = !modal.expanded;
-        const prevNoModal = modal.noModal;
-        modal.noModal = !modal.expanded;
-        window.requestAnimationFrame(() => {
-          if (modal.noModal !== prevNoModal) {
-            this.dialogManager.dialogModalChanged(modal);
-          }
-          setTimeout(() => {
-            this.resizingModalId = null;
-          }, 400);
-        });
+    this.$nextTick(() => {
+      modal.expanded = !modal.expanded;
+      modal.noModal = !modal.expanded;
+      this.$nextTick(() => {
+        this.dialogManager.dialogModalChanged(modal);
+        setTimeout(() => {
+          this.resizingModalId = null;
+        }, 400);
       });
-    }
+    });
   }
 
   onMaximize(modal: IModalWindow) {
@@ -655,88 +676,108 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     eventBus.$emit('on-minimize' + this.id, modal.minimized);
   }
 
-  onActivate(modal: ModalWindow) {
+  onActivate(modal: IModalWindow) {
     modal.processingDescription = null;
     this.dialogManager.activate(modal);
   }
 
-  onProcessing(modal: ModalWindow, message?: string) {
+  onProcessing(modal: IModalWindow, message?: string) {
     if (message) {
       modal.processingDescription = message;
     }
     this.dialogManager.dialogProcessing(modal);
   }
 
-  onHelp(modal: ModalWindow) {
+  onHelp(modal: IModalWindow) {
     if (modal.componentInstance && modal.componentInstance.onHelp) {
       modal.componentInstance.onHelp();
     }
   }
 
-  remove(modal: ModalWindow) {
+  remove(modal: IModalWindow) {
     modal.resolved = true;
-    this.$nextTick(() => {
-      const i = this.modals.indexOf(modal);
-      if (i > -1) {
-        this.modals.splice(i, 1);
-        this.dialogManager.dialogClosed(modal);
-      }
-    });
+    modal.show = false;
+    this.unloadPromises.set(
+      modal.hostObject.id,
+      new Promise(resolve => {
+        this.unloadPromisesResolve.set(modal.hostObject.id, resolve);
+      })
+    );
   }
 
-  isAlertDialog(modal: ModalWindow): boolean {
+  dialogEnter(modal: IModalWindow) {
+    //
+  }
+
+  dialogLeave(modal: IModalWindow) {
+    const text = modal.el.querySelector('.v-card-text[data-role="modal-text"]');
+    modal.resizeObserver.unobserve(text);
+    const i = this.findModalIndex(modal);
+    if (i > -1) {
+      const id = modal.hostObject.id;
+      this.modals.splice(i, 1);
+      this.dialogManager.dialogClosed(modal);
+      if (this.unloadPromisesResolve.has(id)) {
+        const func = this.unloadPromisesResolve.get(id);
+        func();
+        this.unloadPromises.delete(id);
+      }
+    }
+  }
+
+  isAlertDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.Alert;
   }
 
-  isPromptDialog(modal: ModalWindow): boolean {
+  isPromptDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.Prompt;
   }
 
-  isConfirmDialog(modal: ModalWindow): boolean {
+  isConfirmDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.Confirm;
   }
 
-  isInfoDialog(modal: ModalWindow): boolean {
+  isInfoDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.Info;
   }
 
-  isSelectDialog(modal: ModalWindow): boolean {
+  isSelectDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.Select;
   }
 
-  isCreateEditDialog(modal: ModalWindow): boolean {
+  isCreateEditDialog(modal: IModalWindow | IModalInfo): boolean {
     return modal.type === ModalType.CreateEdit;
   }
 
-  isExpanded(modal: ModalWindow): boolean {
+  isExpanded(modal: IModalWindow): boolean {
     if (!modal.expandable) {
       return false;
     }
     return modal.expanded;
   }
 
-  isCollapsed(modal: ModalWindow): boolean {
+  isCollapsed(modal: IModalWindow): boolean {
     if (!modal.expandable) {
       return false;
     }
     return !modal.expanded;
   }
 
-  hasParent(modal: ModalWindow): boolean {
+  hasParent(modal: IModalWindow): boolean {
     return this.dialogManager.hasParent(modal);
   }
 
-  setVisibility(id: number) {
-    if (!this.resizingModalId) {
-      return 'visible';
-    }
-    if (id === this.resizingModalId) {
-      return 'hidden';
-    }
-    return 'visible';
-  }
+  // setVisibility(id: number) {
+  //   if (!this.resizingModalId) {
+  //     return 'visible';
+  //   }
+  //   if (id === this.resizingModalId) {
+  //     return 'hidden';
+  //   }
+  //   return 'visible';
+  // }
 
-  showCancelBtn(modal: ModalWindow): boolean {
+  showCancelBtn(modal: IModalWindow): boolean {
     if (this.isAlertDialog(modal) || this.isInfoDialog(modal)) {
       return false;
     }
@@ -749,7 +790,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return true;
   }
 
-  showOkBtn(modal: ModalWindow): boolean {
+  showOkBtn(modal: IModalWindow): boolean {
     if (this.isSelectDialog(modal)) {
       return !modal.selectAsOk;
     }
@@ -759,7 +800,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return true;
   }
 
-  okButtonText(modal: ModalWindow) {
+  okButtonText(modal: IModalWindow) {
     if (modal.okTitle) {
       return modal.okTitle;
     }
@@ -775,7 +816,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
   }
 
-  cancelButtonText(modal: ModalWindow) {
+  cancelButtonText(modal: IModalWindow) {
     if (modal.cancelTitle) {
       return modal.cancelTitle;
     }
@@ -785,27 +826,48 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return this.$i18n.gettext('Dialog Cancel');
   }
 
-  showScrim(modal: ModalWindow): boolean {
-    return !(modal.noModal || this.hasParent(modal));
+  showScrim(modal: IModalWindow): boolean {
+    if (!modal) {
+      return true;
+    }
+    if (modal.noModal) {
+      return false;
+    }
+    // if (modal.hostObject.layer === this.topLayer) {
+    //   return true;
+    // }
+    return modal.scrim;
   }
 
-  onComponentInstanceCreated(modal: ModalWindow, instance: { save?(): void }): void {
+  onComponentInstanceCreated(modal: IModalWindow, instance: { save?(): void }): void {
     modal.componentInstance = instance;
   }
 
-  dialogBindings(modal: ModalWindow) {
+  dialogBindings(modal: IModalWindow) {
     return {
       width: this.modalWidth(modal),
       height: 'auto',
+      'data-foreground': modal.hostObject.layer === this.topLayer,
+      // 'data-layer': modal.hostObject.layer,
+      style: { 'z-index': 2000 + modal.hostObject.layer * 10 },
     };
   }
 
-  private defaultWidth(modal: ModalWindow): string | number {
+  hasContentDetails(content: string): boolean {
+    const exp = new RegExp(this.messageDetailSeparator);
+    return exp.test(content);
+  }
+
+  private defaultWidth(modal: IModalWindow): string | number {
     if (this.isMobileGlobal) {
       return '100%';
     }
+    return this.getWidthBySize(modal.size);
+  }
+
+  private getWidthBySize(size: 's' | 'm' | 'l') {
     const w = this.viewport().w;
-    switch (modal.size) {
+    switch (size) {
       case 's':
         if (w >= 1920) {
           return 600;
@@ -827,21 +889,25 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     }
   }
 
-  private uniqKey(modal: ModalWindow): string {
-    return `dlg-${modal.id}`;
-  }
-
-  private findModal(host: IHostObject): ModalWindow {
+  private findModal(host: IHostObject): IModalWindow {
     return this.modals.find(m => this.dialogManager.modalIdentity(m, host));
   }
 
-  private async askCanUnload(modal: ModalWindow, cancelReason: ModalCancelReason): Promise<boolean> {
+  private findModalIndex(modal: IModalWindow): number {
+    return this.modals.indexOf(modal);
+  }
+
+  private async askCanUnload(modal: IModalWindow, cancelReason: ModalCancelReason): Promise<boolean> {
     const fromCloseButtonReason = cancelReason === ModalCancelReason.FromCloseButton;
     const fromCancelButtonReason = cancelReason === ModalCancelReason.FromCancelButton;
     const fromBackButtonReason = cancelReason === ModalCancelReason.FromBackButton;
     const fromEscapeKeyPressReason = cancelReason === ModalCancelReason.FromEscapeKeyPress;
 
-    if (fromCloseButtonReason && fromCancelButtonReason && modal.componentInstance && modal.componentInstance.onClose) {
+    if (
+      (fromCloseButtonReason || fromCancelButtonReason) &&
+      modal.componentInstance &&
+      modal.componentInstance.onClose
+    ) {
       return modal.componentInstance.onClose();
     }
     if (fromEscapeKeyPressReason) {
@@ -882,7 +948,7 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return true;
   }
 
-  private closeModal(modal: ModalWindow) {
+  private closeModal(modal: IModalWindow) {
     modal.show = false;
     modal.resolveFunction(null);
     this.remove(modal);
@@ -907,5 +973,9 @@ export default class DialogComponent extends mixins(ViewportMixin) {
 
   get cancelReason(): Record<string, ModalCancelReason> {
     return ModalCancelReason;
+  }
+
+  get topLayer(): number {
+    return this.dialogManager.getTopLayer();
   }
 }

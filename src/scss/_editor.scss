@@ -104,10 +104,40 @@ body {
         border: 2px solid transparent;
         border-radius: var(--border-radius);
 
+        &.ql-picker {
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--input-s);
+            border: 1px solid var(--input-border-color-default) !important;
+            border-radius: var(--border-radius);
+            transition: all 0.2s;
+            z-index: 0;
+          }
+
+          &:hover {
+            &:after {
+              border: 1px solid var(--input-border-color-hover) !important;
+            }
+          }
+
+          &.ql-expanded {
+            &:after {
+              display: none;
+            }
+          }
+        }
+
         .ql-picker-label {
-          height: 20px;
           border: none !important;
+          position: relative;
+          height: 20px;
           background: none;
+          z-index: 1;
 
           &:hover {
             background: none;
@@ -120,10 +150,43 @@ body {
               stroke: var(--text);
             }
           }
+
+          & > svg {
+            visibility: hidden;
+          }
+
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            margin-top: -4px;
+            right: 12px;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid var(--grey-d-1);
+            border-bottom: 2px solid var(--grey-d-1);
+            transform: rotate(45deg);
+          }
+        }
+
+        .ql-picker-options {
+          border: none !important;
+          background-color: var(--white);
+          border-radius: var(--border-radius);
+          box-shadow: var(--shadow-l);
+          margin-top: 2px !important;
         }
 
         &.ql-expanded {
           border-color: var(--focus);
+
+          .ql-picker-label {
+            &:after {
+              transform: rotate(-135deg);
+              margin-top: 0;
+            }
+          }
         }
       }
 

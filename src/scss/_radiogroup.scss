@@ -29,7 +29,6 @@ body {
 
     .b-radiogroup-label {
       min-height: unset;
-      font-family: var(--medium);
     }
 
     .validate {
@@ -79,6 +78,7 @@ body {
           .b-label-content {
             font-size: $f;
             line-height: calc($f + 6px);
+            color: var(--grey-d-1);
           }
         }
       }

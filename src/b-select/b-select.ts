@@ -22,7 +22,7 @@ interface IInjectionForm {
   name: 'SelectComponent',
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })
@@ -36,6 +36,7 @@ export default class SelectComponent extends mixins(
 ) {
   @Inject({ from: 'form', default: null }) declare form: IInjectionForm;
 
+  /* eslint-disable-next-line @typescript-eslint/naming-convention */
   instanceType = ComponentName.Select;
 
   @Emit('blur') emitBlur(value: FocusEvent) {

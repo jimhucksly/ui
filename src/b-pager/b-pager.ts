@@ -31,7 +31,6 @@ export default class PagerComponent extends mixins(ViewportMixin) {
   pages: Array<IPage> = [];
   page = 1;
   count = 0;
-  size = 0;
   from = 1;
   to = 10;
 
@@ -45,7 +44,6 @@ export default class PagerComponent extends mixins(ViewportMixin) {
 
   @Watch('options', { immediate: true, deep: true }) onOptionsChanged() {
     if (this.unlimited) {
-      this.size = this.options.pageSize ? this.options.pageSize : this.sizes[0];
       this.page = this.options.page ? this.options.page : 1;
       return;
     }
@@ -55,7 +53,6 @@ export default class PagerComponent extends mixins(ViewportMixin) {
       return;
     }
     if (this.size !== this.options.pageSize) {
-      this.size = this.options.pageSize ? this.options.pageSize : this.sizes[0];
       this.pages = this.calcPages();
       return;
     }
@@ -166,6 +163,10 @@ export default class PagerComponent extends mixins(ViewportMixin) {
       page: this.page,
       size: value,
     });
+  }
+
+  get size(): number {
+    return this.options.pageSize ? this.options.pageSize : this.sizes[0];
   }
 
   get totalPages(): number {

@@ -189,13 +189,15 @@ export class CreateEditDialog<T> extends InteractiveDialog {
   expandable?: boolean;
   minimizable?: boolean;
   collapsedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   expandedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   expanded?: boolean;
@@ -212,13 +214,15 @@ export class CreateEditDialog<T> extends InteractiveDialog {
       expandable?: boolean;
       minimizable?: boolean;
       collapsedSize?: {
-        width: string | number;
-        height: string | number;
+        size?: 's' | 'm' | 'l';
+        width?: string | number;
+        height?: string | number;
         noModal?: boolean;
       };
       expandedSize?: {
-        width: string | number;
-        height: string | number;
+        size?: 's' | 'm' | 'l';
+        width?: string | number;
+        height?: string | number;
         noModal?: boolean;
       };
       expanded?: boolean;

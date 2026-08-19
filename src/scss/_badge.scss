@@ -4,6 +4,8 @@
   --badge-s: 20px;
   --badge-m: 24px;
   --badge-l: 28px;
+  --badge-x: 32px;
+  --badge-xl: 36px;
   --badge-rounded-border-radius: 24px;
   --badge-square-border-radius: 6px;
 }
@@ -27,6 +29,16 @@ $sizearray: (
     10px,
     var(--text-body-m),
   ),
+  "x-large": (
+    var(--badge-x),
+    12px,
+    var(--text-body-m),
+  ),
+  "extra-large": (
+    var(--badge-xl),
+    14px,
+    var(--text-body-l),
+  )
 );
 
 body {
@@ -171,7 +183,7 @@ body {
     @include badgetonal('grey', var(--grey-l-5), var(--grey-d-3));
 
     @each $size, $values in $sizearray {
-      &.v-btn--size-#{$size} {
+      &.b-badge--size-#{$size} {
         $h: list.nth($values, 1);
         $p: list.nth($values, 2);
         $f: list.nth($values, 3);
@@ -181,7 +193,7 @@ body {
 
         .v-btn__content {
           font-size: $f;
-          line-height: calc($f + 4px);
+          line-height: calc($f + 8px);
         }
 
         &.b-badge--circle {

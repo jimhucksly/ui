@@ -24,7 +24,7 @@ type InjectionForm = IInjectionForm;
   name: 'SelectListBoxComponent',
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })

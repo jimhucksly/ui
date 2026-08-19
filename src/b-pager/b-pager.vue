@@ -11,7 +11,7 @@
       <div style="width: 85px; margin-right: 24px">
         <component
           :is="$ui.options.aliases['b-select']"
-          v-model="size"
+          :model-value="size"
           :items="sizes"
           hide-details
           @update:model-value="onChange"

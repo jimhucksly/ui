@@ -2,7 +2,7 @@
   <div class="b-dialog">
     <minimized
       :id="id"
-      :dialogs="minimized"
+      :dialogs="modals.filter(m => m.minimized)"
       @maximize="onMinimize($event)"
       @close="handleCancel($event, cancelReason.FromCloseButton)"
       @close-all="handleCancelAll"
@@ -16,100 +16,141 @@
         persistent
         scroll-strategy="none"
         v-bind="dialogBindings(modal)"
-        :hide-header-close="!modal.closable"
-        :hide-overlay="modal.noModal"
         :no-click-animation="true"
         :retain-focus="modal.retainFocus"
         :scrim="showScrim(modal)"
-        @hide="handleHide(modal)"
+        @after-enter="dialogEnter(modal)"
+        @after-leave="dialogLeave(modal)"
       >
-        <v-card>
+        <v-card data-role="modal" :style="{ '--scrollbar-width': scrollbarWidth }">
+          <!-- ---------- -->
           <!-- Title -->
+          <!-- ---------- -->
+          <v-card-title data-role="modal-title">
+            <div style="height: 40px" class="d-flex align-center">
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="hasParent(modal)"
+                icon
+                text
+                size="m"
+                class="mr-2"
+                @click="handleCancel(modal, cancelReason.FromBackButton)"
+              >
+                <svg-icon>to left</svg-icon>
+              </component>
+            </div>
 
-          <v-card-title>
-            <component
-              :is="$ui.options.aliases['b-button']"
-              v-if="hasParent(modal)"
-              icon
-              text
-              class="mr-2"
-              @click="handleCancel(modal, cancelReason.FromBackButton)"
-            >
-              <svg-icon>to left</svg-icon>
-            </component>
-
-            <span class="b-dialog__title"> {{ modalTitle(modal) }} </span>
+            <div class="b-dialog__title">
+              {{ modalTitle(modal) }}
+            </div>
 
             <v-spacer></v-spacer>
 
-            <component
-              :is="$ui.options.aliases['b-button']"
-              icon
-              text
-              :tooltip="true"
-              :tooltip-text="$i18n.gettext('Help')"
-              v-if="modal.help"
-              @click="onHelp(modal)"
-            >
-              <svg-icon>help</svg-icon>
-            </component>
+            <div style="height: 40px" class="d-flex align-center">
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="modal.help"
+                icon
+                text
+                size="m"
+                :tooltip="true"
+                :tooltip-text="$i18n.gettext('Help')"
+                @click="onHelp(modal)"
+              >
+                <svg-icon>help</svg-icon>
+              </component>
 
-            <component
-              :is="$ui.options.aliases['b-button']"
-              v-if="modal.minimizable && !isMobileGlobal"
-              icon
-              text
-              @click="onMinimize(modal)"
-            >
-              <svg-icon>minimize</svg-icon>
-            </component>
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="modal.minimizable && !isMobileGlobal"
+                icon
+                text
+                size="m"
+                @click="onMinimize(modal)"
+              >
+                <svg-icon>minimize</svg-icon>
+              </component>
 
-            <component
-              :is="$ui.options.aliases['b-button']"
-              v-if="isExpanded(modal) && !isMobileGlobal"
-              icon
-              text
-              @click="onExpandCollapse(modal)"
-            >
-              <svg-icon>collapse</svg-icon>
-            </component>
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="isExpanded(modal) && !isMobileGlobal"
+                icon
+                text
+                size="m"
+                @click="onExpandCollapse(modal)"
+              >
+                <svg-icon>collapse</svg-icon>
+              </component>
 
-            <component
-              :is="$ui.options.aliases['b-button']"
-              v-if="isCollapsed(modal) && !isMobileGlobal"
-              icon
-              text
-              @click="onExpandCollapse(modal)"
-            >
-              <svg-icon>expand</svg-icon>
-            </component>
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="isCollapsed(modal) && !isMobileGlobal"
+                icon
+                text
+                size="m"
+                @click="onExpandCollapse(modal)"
+              >
+                <svg-icon>expand</svg-icon>
+              </component>
 
-            <component
-              :is="$ui.options.aliases['b-button']"
-              v-if="modal.closable || isMobileGlobal"
-              icon
-              text
-              class="ml-1"
-              @click="handleCancel(modal, cancelReason.FromCloseButton)"
-            >
-              <svg-icon>close</svg-icon>
-            </component>
+              <component
+                :is="$ui.options.aliases['b-button']"
+                v-if="modal.closable || isMobileGlobal"
+                icon
+                text
+                size="m"
+                class="ml-1"
+                @click="handleCancel(modal, cancelReason.FromCloseButton)"
+              >
+                <svg-icon>close</svg-icon>
+              </component>
+            </div>
           </v-card-title>
-
+          <!-- ---------- -->
           <!-- Content -->
-
-          <v-card-text v-if="modal.content && (isAlertDialog(modal) || isConfirmDialog(modal))">
-            <div class="b-dialog__text" v-html="modal.content"></div>
+          <!-- ---------- -->
+          <v-card-text
+            v-if="modal.content && (isAlertDialog(modal) || isConfirmDialog(modal))"
+            data-role="modal-text"
+            :style="{
+              '--scrollbar-visible': modal.scrollbar,
+            }"
+          >
+            <template v-if="hasContentDetails(modal.content)">
+              <div class="b-dialog__text" v-html="modal.content.split(messageDetailSeparator)[0]"></div>
+              <v-expansion-panels class="elevation-0">
+                <v-expansion-panel class="px-0">
+                  <v-expansion-panel-title style="color: var(--grey-d-1)">
+                    <template #actions>
+                      <b-icon>chevron-right</b-icon>
+                    </template>
+                    {{ $i18n.gettext('Details') }}
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
+                    <div class="b-dialog__text" v-html="modal.content.split(messageDetailSeparator)[1]"></div>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </template>
+            <div class="b-dialog__text" v-else v-html="modal.content"></div>
           </v-card-text>
 
-          <v-card-text v-else-if="isPromptDialog(modal)">
+          <v-card-text
+            v-else-if="isPromptDialog(modal)"
+            data-role="modal-text"
+            :style="{
+              '--scrollbar-visible': modal.scrollbar,
+            }"
+          >
             <component :is="$ui.options.aliases['b-textarea']" v-model="modal.content" rows="3" />
           </v-card-text>
 
           <v-card-text
             v-else-if="modal.component"
+            data-role="modal-text"
             :style="{
-              visibility: setVisibility(modal.id),
+              '--scrollbar-visible': modal.scrollbar,
             }"
           >
             <component :is="$ui.options.aliases['b-loader']" :transparent="true" :visible="modal.loading" />
@@ -140,7 +181,7 @@
 
           <!-- Actions -->
 
-          <v-card-actions v-if="!modal.hideFooter">
+          <v-card-actions v-if="!modal.hideFooter" data-role="modal-actions">
             <component
               :is="$ui.options.aliases['b-button']"
               v-if="hasParent(modal)"

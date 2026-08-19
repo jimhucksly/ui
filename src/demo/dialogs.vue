@@ -10,8 +10,11 @@
                 <v-card-text style="background-color: var(--grey-l-6)" class="pa-0">
                   <v-container>
                     <v-row>
-                      <v-col>
+                      <v-col cols="3">
                         <b-button @click="callAlertDialog">Alert Dialog</b-button>
+                      </v-col>
+                      <v-col cols="3">
+                        <b-switch label="message with details" v-model="alert.details" hide-details class="mb-2" />
                       </v-col>
                     </v-row>
                   </v-container>
@@ -154,9 +157,12 @@ import {
   SelectDialog,
 } from '@/b-dialog/dialogs';
 import markdownToHTML from './mixins/markdownToHTML';
-import { delay } from '@dn-web/core';
+import { delay, uniqueID } from '@dn-web/core';
 export default {
   data(): {
+    alert: {
+      details: boolean;
+    };
     prompt: {
       model: string;
     };
@@ -189,6 +195,9 @@ export default {
     };
   } {
     return {
+      alert: {
+        details: false,
+      },
       prompt: {
         model: null,
       },
@@ -245,7 +254,9 @@ export default {
       DialogManager.exec(
         new AlertDialog({
           title: 'Внимание',
-          content: 'Информационное сообщение',
+          content: this.alert.details
+            ? 'Информационное сообщение Message detail: Подробности по сообщению'
+            : 'Информационное сообщение',
         })
       );
     },
@@ -313,15 +324,34 @@ export default {
       }
     },
     async callCreateDialog() {
+      const id = uniqueID(6, '0-9');
       const res = await DialogManager.exec<{ first_name: string; last_name: string }>(
         new CreateEditDialog<{ first_name: string; last_name: string }>({
-          title: 'Создание объекта',
+          title: `Создание объекта ${id}`,
           component: 'create-edit-component',
           componentProps: {
             model: null,
           },
           help: true,
           okColor: 'success',
+          expandable: true,
+          minimizable: true,
+          expanded: false,
+          collapsedSize: {
+            height: '575px',
+            width: '560px',
+            noModal: true,
+          },
+          expandedSize: {
+            height: '800px',
+            width: '1088px',
+            noModal: false,
+          },
+          hostObject: {
+            id,
+            kind: 1,
+            contentType: 1,
+          },
         })
       );
       if (res) {
@@ -329,18 +359,32 @@ export default {
       }
     },
     async callEditDialog() {
+      const id = uniqueID(6, '0-9');
       const res = await DialogManager.exec<{ first_name: string; last_name: string }>(
         new CreateEditDialog<{ first_name: string; last_name: string }>({
-          title: 'Редактирование объекта',
+          title: `Редактирование объекта ${id}`,
           component: 'create-edit-component',
           componentProps: {
             model: null,
           },
           expandable: true,
+          expanded: true,
+          expandedSize: {
+            size: 'm',
+          },
+          collapsedSize: {
+            size: 's',
+            height: '450px',
+          },
           minimizable: true,
           loading: true,
           help: true,
           okColor: 'success',
+          hostObject: {
+            id,
+            kind: 1,
+            contentType: 1,
+          },
         }),
         async () => {
           await delay(1000);

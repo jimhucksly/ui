@@ -11,6 +11,7 @@
   :label-to-left="labelToLeft"
   :help="{ tooltip: 'tooltip text' }"
   :size="'s'"
+  :indeterminate="indeterminate"
   hint="Hint text"
   color="primary"
 />
@@ -26,5 +27,6 @@ help: { tooltip: string; link: string; } // иконка справки
 size: 's' | 'm' | 'l' // размер
 hint: string // подсказка под лейблом
 color: string // цвет
+indeterminate: boolean // добавление состояния неопредленности, когда modelValue не равно ни true, ни false
 ```
 # end of cols

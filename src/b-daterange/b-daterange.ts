@@ -24,7 +24,7 @@ type IDatepickerProps = DatepickerProps;
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })
@@ -60,6 +60,8 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
 
   event: FocusEvent = null;
   isFocused = false;
+
+  updatingMonth = false;
 
   currentMinDate: Date = null;
   currentMaxDate: Date = null;
@@ -375,13 +377,96 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     }, 100);
   }
 
-  onUpdateMonth(index: number, event: number) {
-    if (index) {
-      this.startMonth = event - 1;
-      this.endMonth = event;
-    } else {
-      this.startMonth = event;
-      this.endMonth = event + 1;
+  onUpdateMonth(index: number, month: number) {
+    if (this.updatingMonth) {
+      return;
+    }
+    this.updatingMonth = true;
+    setTimeout(() => {
+      this.updatingMonth = false;
+    }, 300);
+    const current = {
+      start: this.startMonth,
+      end: this.endMonth,
+    };
+    const direction = this.getUpdateDirection(index ? current.end : current.start, month);
+    switch (true) {
+      // изменения из левого календаря
+      case index === 0:
+        this.startMonth = month;
+        switch (direction) {
+          // forward
+          case 1:
+            if (this.startYear === this.endYear && month === 11) {
+              this.endMonth = 0;
+              this.endYear = this.endYear + 1;
+              return;
+            }
+            if (month === 0) {
+              this.startYear = this.startYear + 1;
+            }
+            if (this.startYear === this.endYear) {
+              this.endMonth = this.endMonth + 1;
+            }
+            break;
+          // backward
+          case 0:
+            if (this.endYear - this.startYear === 1 && month === 10) {
+              this.endYear = this.endYear - 1;
+              this.endMonth = 11;
+              return;
+            }
+            if (month === 11 && this.startYear === this.endYear) {
+              this.startYear = this.startYear - 1;
+              this.endMonth = this.endMonth - 1;
+              return;
+            }
+            if (this.startYear === this.endYear && month + 2 === this.endMonth) {
+              this.endMonth = this.endMonth - 1;
+            }
+            break;
+        }
+        break;
+      // изменения из правого календаря
+      case index === 1:
+        this.endMonth = month;
+        switch (direction) {
+          // forward
+          case 1:
+            if (month === 0) {
+              this.endYear = this.endYear + 1;
+              if (this.endYear - this.startYear === 1 && this.startMonth === 10) {
+                this.startMonth = 11;
+              }
+              return;
+            }
+            if (month === 1) {
+              if (this.endYear - this.startYear === 1 && this.startMonth === 11) {
+                this.startMonth = 0;
+                this.startYear = this.startYear + 1;
+              }
+              return;
+            }
+            if (this.startYear === this.endYear && month === this.startMonth + 2) {
+              this.startMonth = this.startMonth + 1;
+            }
+            break;
+          // backward
+          case 0:
+            if (month === this.startMonth) {
+              if (month === 0) {
+                this.startMonth = 11;
+                this.startYear = this.startYear === this.endYear ? this.startYear - 1 : this.startYear;
+                return;
+              }
+              if (month === 11) {
+                this.endYear = this.endYear - 1;
+              }
+              this.startMonth = this.startMonth - 1;
+            }
+            break;
+        }
+        break;
     }
   }
 
@@ -455,6 +540,16 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     return result;
   }
 
+  private getUpdateDirection(current: number, target: number): 0 | 1 {
+    if (target === 0) {
+      return current === 11 ? 1 : 0;
+    }
+    if (target === 11) {
+      return current === 0 ? 0 : 1;
+    }
+    return target > current ? 1 : 0;
+  }
+
   private emitInput(value: Array<Date>) {
     this.emitUpdateModelValue(value);
   }
@@ -463,10 +558,9 @@ export default class DaterangeComponent extends mixins(GridMixin, ValidatableMix
     if (!this.startDate || !this.endDate) {
       return '';
     }
-    return [
-      datetime.dateToLocal(this.startDate, this.locale),
-      datetime.dateToLocal(this.endDate, this.locale),
-    ].join(' - ');
+    return [datetime.dateToLocal(this.startDate, this.locale), datetime.dateToLocal(this.endDate, this.locale)].join(
+      ' - '
+    );
   }
 
   get locale(): string {

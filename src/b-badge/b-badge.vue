@@ -1,11 +1,10 @@
 <template>
   <v-btn
     class="b-badge"
-    :class="[`b-badge--${rounded ? 'rounded' : 'square'}`, { 'b-badge--circle': circle }]"
+    :class="[`b-badge--${rounded ? 'rounded' : 'square'}`, { 'b-badge--circle': circle }, `b-badge--size-${mySize}`]"
     :color="color"
     :variant="variant"
     :readonly="true"
-    :size="mySize"
   >
     <i v-if="dot && !circle" class="b-badge-dot"></i>
     <slot />

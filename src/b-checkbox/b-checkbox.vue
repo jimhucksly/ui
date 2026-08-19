@@ -6,6 +6,7 @@
         'b-checkbox--focused': isFocused && !disabled && !readonly,
         'b-checkbox--disabled': disabled,
         'b-checkbox--readonly': readonly,
+        'b-checkbox--indeterminate': isUnknown,
         'b-checkbox--hovered': isLabelHover && !disabled && !readonly,
         'b-checkbox--label-to-left': labelToLeft,
         'cursor-pointer': !disabled && !readonly,
@@ -15,7 +16,7 @@
     ]"
   >
     <div class="d-flex align-center" :class="{ 'flex-row-reverse justify-end': !labelToLeft }">
-      <ld-help
+      <b-help
         v-if="isShowHelp"
         :tooltip="help.tooltip"
         :link="help.link"
@@ -44,14 +45,27 @@
           @input="onChange"
         />
         <i class="b-checkbox-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none">
-            <path
-              d="M0.5 2.3L2.46364 4.1C2.46364 4.1 4.55802 1.90589 5.9 0.5"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <template v-if="indeterminate && isUnknown">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="2" viewBox="0 0 8 2" fill="none">
+              <path
+                d="M0.75 0.75H6.75"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </template>
+          <template v-else>
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" fill="none" id="check">
+              <path
+                d="M0.5 2.3L2.46364 4.1C2.46364 4.1 4.55802 1.90589 5.9 0.5"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </template>
         </i>
       </label>
     </div>

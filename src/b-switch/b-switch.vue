@@ -48,7 +48,7 @@
         :class="{ 'ml-2': size !== 'l', 'ml-3': size === 'l' }"
         @click="onLabelClick"
       />
-      <ld-help
+      <b-help
         v-if="isShowHelp"
         :tooltip="help.tooltip"
         :link="help.link"

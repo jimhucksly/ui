@@ -1,4 +1,5 @@
 import { eventBus, uniqueID } from '@dn-web/core';
+import UnitService from '@/services/unit.service';
 import {
   AlertDialog,
   ConfirmDialog,
@@ -12,6 +13,7 @@ import {
   PromptDialog,
   SelectDialog,
 } from '@/types/dialogs';
+import DialogLayers from './dialog.layers';
 
 export enum ModalButton {
   Ok,
@@ -27,41 +29,36 @@ export enum ModalType {
   CreateEdit,
 }
 
-const GAP = 17;
-const MARGIN_RIGHT = 25;
-const MARGIN_BOTTOM = 68;
-
-export class DialogManager {
-  private readonly _visibled: Array<IModalWindow> = [];
-  private _minimized: Array<IModalWindow> = [];
+export class DialogManager extends DialogLayers {
   private _viewPortWidth: number;
 
-  /* eslint-disable-next-line sonarjs/public-static-readonly */
   static _id = '';
 
+  private GAP = 24;
+
   constructor() {
+    super();
     this._viewPortWidth = window.innerWidth;
     window.addEventListener('resize', this.onResizeHandler.bind(this) as () => void);
   }
 
-  setMinimized(minimized: Array<IModalWindow>) {
-    this._minimized = minimized;
+  setProps(data: { gap: number }) {
+    if (data.gap) {
+      this.GAP = data.gap;
+    }
   }
 
-  modalIdentity(modal: IModalWindow, host: IHostObject) {
-    if (!modal.hostObject || !host) {
-      return false;
-    }
-    return (
-      modal.hostObject?.id === host?.id &&
-      modal.hostObject?.contentType === host?.contentType &&
-      modal.hostObject?.kind === host?.kind
-    );
+  uniqKey(modal: IModalWindow): string {
+    return `dlg-${modal.id}`;
   }
 
   tryToOpen(host: IHostObject): boolean {
-    const found = this._visibled.concat(this._minimized).find(m => this.modalIdentity(m, host));
+    const found = this._all().find(m => this.modalIdentity(m, host));
     return !found;
+  }
+
+  dialogCreate(info: IModalWindow) {
+    this.add(info);
   }
 
   dialogCreated(info: IModalWindow): void {
@@ -69,20 +66,21 @@ export class DialogManager {
       return;
     }
     info.el = document.querySelector(`.${this.uniqKey(info)}`);
-    this.shiftLeft(info);
     this.refreshPositions();
   }
 
-  dialogModalChanged(info: IModalWindow, callback: () => void = null) {
+  dialogModalChanged(info: IModalWindow) {
     if (!info) {
       return;
     }
+    info.el = document.querySelector(`.${this.uniqKey(info)}`);
     if (info.noModal) {
       /**
        * диалог стал немодальным (окно не перекрывает другой контент, с ним можно взаимодействовать)
        */
       let timeoutId: number;
       let refreshed = false;
+      this.down(info);
       const resizeEnd = () => {
         clearTimeout(timeoutId);
         resizeObserver.unobserve(info.el);
@@ -111,7 +109,7 @@ export class DialogManager {
       /**
        * диалог стал модальным (окно перекрывает другой контент и не даем с ним взаимодействовать)
        */
-      this.setDialogModal(info, callback);
+      this.setDialogModal(info);
     }
   }
 
@@ -139,17 +137,13 @@ export class DialogManager {
         (info as unknown as { _wasModal: boolean })._wasModal = true;
         info.noModal = true;
       }
-      const i = this._visibled.findIndex(m => this.modalIdentity(m, info.hostObject));
-      if (i > -1) {
-        this._visibled.splice(i, 1);
-      }
-      this.addToMinimized(info);
+      this.minimizeDialog(info.hostObject);
       this.refreshPositions();
     } else {
       // диалог развернут
-      this.removeFromMinimized(info);
-      this.toggleDialogShow(info);
-      this.shiftLeft(info);
+      this.showDialog(info.hostObject);
+      this.remove(info);
+      this.add(info);
       if ((info as unknown as { _wasModal: boolean })._wasModal) {
         info.noModal = false;
         delete (info as unknown as { _wasModal: boolean })._wasModal;
@@ -169,38 +163,28 @@ export class DialogManager {
 
   dialogClosed(info: IModalWindow): void {
     try {
-      if (this.removeFromMinimized(info)) {
-        return;
-      }
-      const i = this._visibled.findIndex(m => this.modalIdentity(m, info.hostObject));
-      if (i > -1) {
-        this._visibled.splice(i, 1);
+      const { value } = this.find(info.hostObject);
+      if (value) {
+        this.remove(value);
         this.refreshPositions();
       }
     } finally {
-      if (!this._visibled.length) {
+      if (!this._visibled().length) {
         DialogManager._id = '';
       }
     }
   }
 
   activate(info: IModalWindow): void {
-    let i = this._minimized.findIndex(d => d === info);
-    let dlg: IModalWindow = null;
-    if (i > -1) {
-      dlg = this._minimized[i];
-      this._minimized.splice(i, 1);
-    }
-    if (dlg) {
-      dlg.minimized = false;
-      this.dialogMinimizeChanged(dlg);
+    const { layer, value } = this.find(info.hostObject);
+    if (!value) {
+      this.add(info);
       this.refreshPositions();
-    } else {
-      i = this._visibled.findIndex(m => this.modalIdentity(m, info.hostObject));
-      if (i > -1) {
-        this._visibled.splice(i, 1);
-      }
-      this.shiftLeft(info);
+      return;
+    }
+    if (layer === -1) {
+      value.minimized = false;
+      this.dialogMinimizeChanged(value);
       this.refreshPositions();
     }
   }
@@ -211,28 +195,46 @@ export class DialogManager {
   }
 
   setParentDialog(info: IModalInfo) {
-    for (const m of this._visibled.toReversed()) {
+    for (const m of this._visibled().toReversed()) {
       if (!m.visible) {
         continue;
       }
       if (!m.show) {
         continue;
       }
+      if (m.type === info.type) {
+        if (m.hostObject && info.hostObject && m.hostObject.contentType === info.hostObject.contentType) {
+          continue;
+        }
+      }
       info.hostObject.parentId = m.id;
     }
   }
 
-  hideDialog(id: string | number) {
-    const i = this._visibled.findIndex(m => m.id === id);
-    if (i > -1) {
-      this._visibled[i].visible = false;
+  hideDialog(hostObject: IHostObject) {
+    const { value } = this.find(hostObject);
+    if (value) {
+      value.visible = false;
     }
   }
 
-  showDialog(id: string | number) {
-    const i = this._visibled.findIndex(m => m.id === id);
-    if (i > -1) {
-      this._visibled[i].visible = true;
+  showDialog(hostObject: IHostObject) {
+    const { value } = this.find(hostObject);
+    if (value) {
+      value.visible = true;
+    }
+  }
+
+  minimizeDialog(hostObject: IHostObject) {
+    const { value } = this.find(hostObject);
+    if (value) {
+      value.minimized = true;
+      value.el.style.bottom = 'unset';
+      value.el.style.right = 'unset';
+      value.el.classList.add('b-dialog-content--hidden');
+      this.hideDialog(value.hostObject);
+      this.remove(value);
+      this.add(value);
     }
   }
 
@@ -244,19 +246,15 @@ export class DialogManager {
     const result: Array<IModalWindow> = [];
     let id = modal.hostObject.parentId;
     while (id) {
-      const index = this._visibled.findIndex(m => m.id === id);
-      if (index > -1) {
-        result.push(this._visibled[index]);
-        id = this._visibled[index].hostObject?.parentId;
+      const i = this._visibled().find(m => m.id === id);
+      if (i) {
+        result.push(i);
+        id = i.hostObject?.parentId;
       } else {
         id = null;
       }
     }
     return result;
-  }
-
-  private shiftLeft(info: IModalWindow): void {
-    this._visibled.push(info);
   }
 
   /**
@@ -268,39 +266,43 @@ export class DialogManager {
    * Окна, не уместившиеся в рабочую область, будут свернуты.
    */
   private refreshPositions(): void {
-    let right = 0;
-    let index = -1;
-    let unusedArea = this._viewPortWidth;
-    for (let i = this._visibled.length - 1; i >= 0; i--) {
-      const dlg = this._visibled[i];
-      // пропускаем окна, раскрытые в стандарное представление с затемненным фоном
-      if (!dlg.noModal) {
+    for (const layer of this.getLayers()) {
+      if (layer === -1) {
         continue;
       }
-      const offset = dlg.el.clientWidth + GAP;
-      // проверяем, хватит ли незанятой области для отображения еще одного окна
-      if (unusedArea < offset) {
-        const info = this._visibled.shift();
-        info.el.style.bottom = 'unset';
-        info.el.style.right = 'unset';
-        setTimeout(() => {
-          this.addToMinimized(info);
-        }, 1);
-      } else {
-        right = MARGIN_RIGHT + offset * ++index;
-        // на каждой итерации вычисляем ширину незанятой области
-        unusedArea -= MARGIN_RIGHT + offset;
-        dlg.el.style.margin = '0';
-        dlg.el.style.position = 'absolute';
-        dlg.el.style.bottom = `${MARGIN_BOTTOM}px`;
-        dlg.el.style.right = `${right}px`;
-        dlg.el.classList.remove('b-dialog-content--hidden');
-        dlg.el.classList.add('b-dialog-content--no-modal');
+      let unusedArea = this._viewPortWidth;
+      for (const dlg of this.get(layer).toReversed()) {
+        // пропускаем окна, раскрытые в стандарное представление с затемненным фоном
+        if (!dlg.noModal) {
+          continue;
+        }
+        if (dlg.minimized) {
+          continue;
+        }
+        const el: HTMLElement = document.querySelector(`.${this.uniqKey(dlg)}`);
+        if (!el) {
+          return;
+        }
+        dlg.el = el;
+        const offset = UnitService.unitToNumber(dlg.width) + this.GAP;
+        // проверяем, хватит ли незанятой области для отображения еще одного окна
+        if (unusedArea < offset) {
+          this.minimizeDialog(dlg);
+        } else {
+          // на каждой итерации вычисляем ширину незанятой области
+          dlg.el.style.margin = '0';
+          dlg.el.style.position = 'absolute';
+          dlg.el.style.bottom = UnitService.convertToUnit(2 * this.GAP);
+          dlg.el.style.right = UnitService.convertToUnit(this._viewPortWidth - unusedArea + this.GAP);
+          dlg.el.classList.remove('b-dialog-content--hidden');
+          dlg.el.classList.add('b-dialog-content--no-modal');
+          unusedArea = unusedArea - offset;
+        }
       }
     }
   }
 
-  private setDialogModal(info: IModalWindow, callback: () => void = null): void {
+  private setDialogModal(info: IModalWindow): void {
     if (!info) {
       return;
     }
@@ -310,35 +312,17 @@ export class DialogManager {
     info.el.style.bottom = 'unset';
     info.el.style.right = 'unset';
     info.el.classList.remove('b-dialog-content--no-modal');
+    this.up(info);
   }
 
-  private addToMinimized(info: IModalWindow): void {
-    this.toggleDialogShow(info);
-    info.minimized = true;
-    this._minimized.unshift(info);
-  }
-
-  private removeFromMinimized(info: IModalWindow): boolean {
-    const i = this._minimized.findIndex(m => this.modalIdentity(m, info.hostObject));
-    if (i > -1) {
-      this._minimized.splice(i, 1);
-      return true;
-    }
-    return false;
-  }
-
-  private toggleDialogShow(info: IModalWindow) {
-    if (info.el.parentElement.style.display !== 'none') {
-      (info as unknown as { _lastDisplayProp: string })._lastDisplayProp = info.el.parentElement.style.display;
-      info.el.parentElement.style.display = 'none';
-    } else {
-      info.el.parentElement.style.display = (info as unknown as { _lastDisplayProp: string })._lastDisplayProp;
-    }
-  }
-
-  private uniqKey(info: IModalWindow): string {
-    return `dlg-${info.id}`;
-  }
+  // private toggleDialogShow(info: IModalWindow) {
+  //   if (info.el.parentElement.style.display !== 'none') {
+  //     (info as unknown as { _lastDisplayProp: string })._lastDisplayProp = info.el.parentElement.style.display;
+  //     info.el.parentElement.style.display = 'none';
+  //   } else {
+  //     info.el.parentElement.style.display = (info as unknown as { _lastDisplayProp: string })._lastDisplayProp;
+  //   }
+  // }
 
   public static id(value: string) {
     DialogManager._id = value;

@@ -13,7 +13,7 @@ import InputMixin from '@/mixins/input.mixin';
  */
 @Options({
   components: {
-    'ld-help': Help,
+    'b-help': Help,
     'b-label': Label,
   },
 })
@@ -31,6 +31,10 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
    * Исходное значение, используется когда modelValue - массив
    */
   @Prop() initialValue: unknown;
+  /**
+   * Показывать явно состояние неопределенного выбора
+   */
+  @Prop() indeterminate: boolean;
   /**
    * id для автотестов
    */
@@ -127,6 +131,22 @@ export default class CheckboxComponent extends mixins(InputMixin, GridMixin, Hel
       return this.modelValue.includes(this.initialValue);
     }
     return this.modelValue === true;
+  }
+
+  get isUnknown(): boolean {
+    if (!this.indeterminate) {
+      return false;
+    }
+    if (this.isChecked) {
+      return false;
+    }
+    if (isDefined(this.uncheckedValue)) {
+      return this.modelValue !== this.uncheckedValue;
+    }
+    if (this.modelValue === false) {
+      return false;
+    }
+    return true;
   }
 
   get mySize(): string {

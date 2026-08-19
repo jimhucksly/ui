@@ -42,6 +42,7 @@ body {
       position: relative;
       display: flex;
       align-items: center;
+      justify-content: center;
       height: 100%;
       width: 100%;
       background-color: var(--white);
@@ -58,14 +59,16 @@ body {
     }
 
     input[type='checkbox']:checked + .b-checkbox-icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: var(--white);
       overflow: hidden;
       svg {
         opacity: 1;
+      }
+    }
+
+    &.b-checkbox--indeterminate {
+      input[type='checkbox'] + .b-checkbox-icon {
+        color: var(--white);
       }
     }
 
@@ -93,7 +96,7 @@ body {
         }
 
         input[type='checkbox']:checked + .b-checkbox-icon {
-          svg {
+          svg#check {
             height: calc($size * 0.5);
             width: calc($size * 0.9);
           }
@@ -171,6 +174,12 @@ body {
       &.text-#{$color} {
         input[type='checkbox']:checked + .b-checkbox-icon {
           @include checkboxiconcolor($d);
+        }
+
+        &.b-checkbox--indeterminate {
+          input[type='checkbox'] + .b-checkbox-icon {
+            @include checkboxiconcolor($d);
+          }
         }
 
         &:not(.b-checkbox--readonly) {

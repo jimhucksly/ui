@@ -5,7 +5,7 @@
 * Props
 ```js
 color: string // primary (default), secondary, success, warning, error, grey
-size: 's' | 'm' | 'l'
+size: 's' | 'm' | 'l' | 'x' | 'xl', // 20px, 24px, 28px, 32px, 38px
 rounded: boolean // (default: true), закругленные углы и более квадратные
 circle: // (default: false), включает отображение в виде круга
 dot: boolean // (default: true) отображение точки

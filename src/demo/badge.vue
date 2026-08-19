@@ -5,7 +5,7 @@
       <b-tabs v-bind="tabProps">
         <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
-            <v-col cols="4">
+            <v-col cols="3">
               <b-badge
                 v-for="i in count"
                 class="mx-1"
@@ -29,11 +29,13 @@
                 <b-radiobutton label="grey" value="grey" />
               </b-radiogroup>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="5">
               <b-radiogroup v-model="size" hide-details row :column="false" label="size:" label-on-top>
                 <b-radiobutton label="small" value="s" />
                 <b-radiobutton label="medium" value="m" />
                 <b-radiobutton label="large" value="l" />
+                <b-radiobutton label="x-large" value="x" />
+                <b-radiobutton label="extra-large" value="xl" />
               </b-radiogroup>
               <b-radiogroup
                 v-model="variant"

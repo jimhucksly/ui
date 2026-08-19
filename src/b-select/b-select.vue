@@ -107,7 +107,7 @@
             </template>
           </v-select>
           <div v-if="isShowHelp" class="b-select-help">
-            <ld-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
+            <b-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
           </div>
         </div>
       </v-col>

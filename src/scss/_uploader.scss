@@ -67,19 +67,19 @@ body {
 
     .b-uploader-validate {
       font-size: var(--font-size);
-      height: 20px;
+      height: 16px;
     }
 
     .b-uploader-items {
       display: flex;
       flex-direction: column;
-      padding-top: 24px;
+      padding-top: 20px;
       max-width: 90%;
     }
 
     .b-uploader-item {
       display: flex;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
 
       &-icon {
         display: flex;
@@ -90,6 +90,13 @@ body {
         background-color: var(--primary-l-6);
         border-radius: 36px;
         color: var(--primary-d-1);
+      }
+
+      &-actions {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: end;
+        gap: 8px;
       }
     }
 

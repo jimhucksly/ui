@@ -98,7 +98,7 @@
             </v-card>
           </v-menu>
           <div v-if="isShowHelp" class="b-daterange-help">
-            <ld-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
+            <b-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
           </div>
         </div>
         <div class="v-input__details" v-if="!hideDetails">

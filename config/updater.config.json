@@ -12,6 +12,7 @@
     ["ld-daterange", "b-daterange"],
     ["ld-dialog", "b-dialog"],
     ["ld-edit-text", "b-edit-text"],
+    ["ld-edit-masked-text", "b-edit-masked-text"],
     ["ld-expansion-panel", "b-expansion-panel"],
     ["ld-expansion-panels", "b-expansion-panels"],
     ["ld-icon", "b-icon"],
@@ -34,10 +35,17 @@
     ["ld-timepicker", "b-timepicker"],
     ["ld-toggle-buttons", "b-toggle-buttons"],
     ["ld-uploader", "b-uploader"],
+    ["ld-dropdown", "b-dropdown"],
+    ["ld-help", "b-help"],
     ["@ldmjs/ui", "@dn-web/ui"],
     ["@ldmjs/core", "@dn-web/core"],
     ["$ldmuii18n", "$i18n"],
-    ["$ldmui", "$ui"]
+    ["ldmuiOptions", "IOptions"],
+    ["ldmui", "ui"],
+    ["LdButton", "BButton"],
+    ["this.$utils.datetime", "datetime"],
+    ["this.$utils.isDefined", "isDefined"],
+    ["uidGen", "uniqueID"]
   ],
-  "exclude": ["avatar", "iterator", "toolbar", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
+  "exclude": ["avatar", "iterator", "text-viewer", "toolbar", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
 }

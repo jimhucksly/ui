@@ -14,6 +14,9 @@ declare module '@vue/runtime-core' {
       gettext: (value: string) => string;
     },
     $toasted: IToasted;
+    $utils: {
+      isDefined: (value: unknown) => boolean;
+    }
   }
 }
 export declare const defaults: Record<string, unknown>;
@@ -59,11 +62,7 @@ export {
 export {
   ModalButton,
   ModalType
-} from './ld-dialog/dialog.manager';
-export {
-  IIteratorRemovedItem,
-  IIteratorSortField
-} from './types/iterator';
+} from './b-dialog/dialog.manager';
 export {
   IPagerOptions
 } from './types/pager';

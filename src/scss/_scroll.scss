@@ -19,6 +19,7 @@
 *:not(.scroll-s)::-webkit-scrollbar-track {
   background-color: var(--white);
   transition: 0.2s;
+  border-radius: var(--border-radius);
 }
 
 *:not(.scroll-s)::-webkit-scrollbar-track:hover {

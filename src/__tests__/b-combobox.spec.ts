@@ -106,7 +106,9 @@ function setupTest(props?: Record<string, unknown>) {
       sync: false,
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

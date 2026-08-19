@@ -8,7 +8,6 @@ body {
       }
     }
 
-
     &.elevation-0 {
       & > .v-expansion-panel {
         & > .v-expansion-panel__shadow {
@@ -18,14 +17,14 @@ body {
     }
   }
   .v-expansion-panel {
-    padding: 0 32px;
+    padding: 0 24px;
     border-radius: var(--border-radius);
     &:not(:first-child) {
       &:after {
         content: unset !important;
       }
     }
-    .v-expansion-panel-title {
+    & > .v-expansion-panel-title {
       display: flex;
       flex-direction: row-reverse;
       justify-content: flex-end !important;
@@ -45,6 +44,12 @@ body {
         .v-expansion-panel-title__icon {
           display: none;
         }
+      }
+    }
+
+    & > .v-expansion-panel-text {
+      & > .v-expansion-panel-text__wrapper {
+        padding: 0 0 24px 0 !important;
       }
     }
 

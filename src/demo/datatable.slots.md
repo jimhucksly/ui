@@ -63,6 +63,15 @@ column: ITableColumn // текущая колонка
 cancel: () => void // метод для скрытия конекстного меню
 ```
 ```html
+<!-- popup меню строки -->
+<template #popup-menu="{ row }">
+  ...
+</template>
+```
+```js
+row: Record<string, unknown> // текущий элемент списка
+```
+```html
 <!-- отображение сообщения об отсутствии данных -->
 <template #empty>
   ...

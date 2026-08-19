@@ -22,9 +22,7 @@ const rootComponent = defineComponent({
       <b-textarea v-bind="$props" v-model="text" ref="cmp" />
     </div>
   `,
-  data(): {
-    text: string;
-  } {
+  data() {
     return {
       text: null,
     };
@@ -36,7 +34,9 @@ function setupTest(props?: Record<string, unknown>) {
     let options = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

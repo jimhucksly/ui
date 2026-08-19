@@ -250,7 +250,7 @@
         <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
             <v-col cols="6">
-              <ld-edit-masked-text
+              <b-edit-masked-text
                 v-model="maskedText.value"
                 :disabled="editMaskedText.disabled"
                 :readonly="editMaskedText.readonly"

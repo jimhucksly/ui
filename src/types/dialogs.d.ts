@@ -31,10 +31,12 @@ export interface IViewModel<T> {
 }
 
 export interface IHostObject {
-  contentType: unknown;
   id: number | string;
-  kind: unknown;
+  contentType?: unknown;
+  kind?: unknown;
   parentId?: number | string;
+  index?: number;
+  layer?: number;
 }
 
 export interface IModalResult<T> {
@@ -58,8 +60,8 @@ export interface IModalInfo {
   pressEscAsCancel?: boolean;
   hostObject?: IHostObject;
   /**
-   * Окно немодальное - это начит окно отображается поверх контента страницы и не ограничивает пользователя
-   * во взатмодействии со страницей.
+   * Окно немодальное - это значит окно отображается поверх контента страницы и не ограничивает пользователя
+   * во взаимодействии со страницей.
    * Окно модальное - это значит окно отображается поверх контента страницы, возможно с затемненным фоном,
    * ограничивая пользователя в действиях, пока окно не будет закрыто
    */
@@ -77,28 +79,33 @@ export interface IModalInfo {
   cancelResult?: number | string | boolean | IModalResult<IViewModel<number | string>>;
   settedResult?: boolean;
   hideFooter?: boolean;
-  size?: DialogSize;
+  size?: 's' | 'm' | 'l';
   width?: number | string;
   height?: number | string;
   fullHeight?: boolean;
   align?: 'left' | 'right';
   css?: string;
+  scrim?: boolean;
   closable?: boolean;
   expandable?: boolean;
   minimizable?: boolean;
   expanded?: boolean;
   minimized?: boolean;
   collapsedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   expandedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   help?: boolean;
+  scrollbar?: number;
+  resizeObserver?: ResizeObserver;
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   resolveFunction?: (data?: any) => void;
   /**
@@ -107,15 +114,26 @@ export interface IModalInfo {
   isChanged?: () => boolean;
 }
 
+enum ModalType {
+  Alert,
+  Prompt,
+  Info,
+  Confirm,
+  Select,
+  CreateEdit,
+}
+
 export interface IModalWindow extends IModalInfo {
-  id: number;
+  id: string | number;
   type: ModalType;
   show: boolean;
   visible: boolean;
   component?: string;
   componentInstance?: {
-    save?(): void;
-    onClose?(): void | Promise<boolean>;
+    save?: () => void;
+    onClose?: () => Promise<boolean>;
+    onHelp?: () => void;
+    isChanged?: () => boolean;
   };
   okLoading: boolean;
   okOnly: boolean;
@@ -124,8 +142,6 @@ export interface IModalWindow extends IModalInfo {
   retainFocus: boolean;
   okTitle: string;
 }
-
-export type ModalWindow = IModalWindow<IViewModel<number | string>>;
 
 export class Dialog {
   /* eslint-disable-next-line @typescript-eslint/naming-convention */
@@ -238,13 +254,15 @@ export class CreateEditDialog<T> extends InteractiveDialog {
   expandable?: boolean;
   minimizable?: boolean;
   collapsedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   expandedSize?: {
-    width: string | number;
-    height: string | number;
+    size?: 's' | 'm' | 'l';
+    width?: string | number;
+    height?: string | number;
     noModal?: boolean;
   };
   expanded?: boolean;
@@ -261,13 +279,15 @@ export class CreateEditDialog<T> extends InteractiveDialog {
       expandable?: boolean;
       minimizable?: boolean;
       collapsedSize?: {
-        width: string | number;
-        height: string | number;
+        size?: 's' | 'm' | 'l';
+        width?: string | number;
+        height?: string | number;
         noModal?: boolean;
       };
       expandedSize?: {
-        width: string | number;
-        height: string | number;
+        size?: 's' | 'm' | 'l';
+        width?: string | number;
+        height?: string | number;
         noModal?: boolean;
       };
       expanded?: boolean;

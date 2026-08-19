@@ -23,7 +23,7 @@ type InjectionForm = IInjectionForm;
   components: {
     'imask-input': IMaskComponent,
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
     'svg-icon': Icon,
   },
 })

@@ -43,12 +43,14 @@ function setupTest(props?: Record<string, unknown>) {
     let options: ComponentMountingOptions<void> = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },
       global: {
-        plugins: [vuetify, ui],
+        plugins: [vuetify, ldmui],
       },
     };
     if (props) {
@@ -154,5 +156,12 @@ describe('TimepickerComponent', () => {
     component.is24hr = false;
     await delay(300);
     expect(testComponent._time).toEqual('12:00 pm');
+  });
+
+  it('Корректно выставляет время, если на вход передана строка ISO', async () => {
+    const dt = new Date(2021, 0, 22, 15, 55);
+    component.time = dt.toISOString();
+    await delay(300);
+    expect(testComponent._time).toEqual('15:55');
   });
 });

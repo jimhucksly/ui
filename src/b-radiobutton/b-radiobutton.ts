@@ -15,7 +15,7 @@ import InputMixin from '@/mixins/input.mixin';
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
   },
 })
 export default class RadiobuttonComponent extends mixins(InputMixin, HelpMixin) {

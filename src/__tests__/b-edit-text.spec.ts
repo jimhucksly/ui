@@ -49,7 +49,9 @@ function setupTest(props?: Record<string, unknown>) {
     let options: ComponentMountingOptions<void> = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

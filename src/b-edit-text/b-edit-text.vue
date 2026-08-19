@@ -75,7 +75,7 @@
             </template>
           </v-text-field>
           <div v-if="isShowHelp" class="b-edit-text-help">
-            <ld-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
+            <b-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
           </div>
         </div>
         <!-------------->
@@ -138,7 +138,7 @@
             </div>
           </div>
           <div v-if="isShowHelp" class="b-edit-text-help" style="height: var(--input-height)">
-            <ld-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
+            <b-help :tooltip="help.tooltip" :link="help.link" :size="isSmall ? 20 : 24" />
           </div>
         </div>
       </v-col>

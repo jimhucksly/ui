@@ -28,7 +28,7 @@ interface IRadio extends Vue {
 @Options({
   components: {
     'b-label': Label,
-    'ld-help': Help,
+    'b-help': Help,
   },
 })
 export default class RadioGroupComponent extends mixins(InputMixin, GridMixin, HelpMixin, ValidatableMixin) {

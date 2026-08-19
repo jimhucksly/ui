@@ -55,9 +55,7 @@ const rootComponent = defineComponent({
       <b-select v-bind="$props" v-model="value" ref="cmp"></b-select>
     </div>
   `,
-  data(): {
-    value: Array<unknown>;
-  } {
+  data() {
     return {
       value: null,
     };
@@ -69,7 +67,9 @@ function setupTest(props?: Record<string, unknown>) {
     let options = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

@@ -75,7 +75,7 @@
           <span>max. {{ maxValue }}</span>
         </div>
       </div>
-      <div class="b-uploader-validate" v-if="!hideDetails && !hasItems">
+      <div class="b-uploader-validate" v-if="persistentHint || (!hideDetails && !hasItems)">
         <transition name="squash">
           <span v-if="inputHint || showError" :class="[showError ? 'error--text' : 'grey--text']">
             {{ showError ? validationMessage : inputHint }}
@@ -108,7 +108,7 @@
                 />
               </div>
               <!-- buttons -->
-              <div class="d-flex justify-end">
+              <div class="b-uploader-item-actions">
                 <slot name="actions" :file="item"></slot>
                 <component
                   :is="$ui.options.aliases['b-button']"

@@ -26,7 +26,7 @@ document.body.innerHTML = `
 function modalId(div: HTMLElement): string {
   return Array.from(div.classList)
     .find(el => /dlg/.test(el))
-    .replace(/\D/g, '');
+    .replace(/[\D]/g, '');
 }
 
 const rootComponent = defineComponent({
@@ -46,7 +46,13 @@ const info = defineComponent({
 });
 
 const select = defineComponent({
-  emits: ['set-result', 'cancel'],
+  props: {
+    setResultAndClose: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['set-result', 'set-result-and-close', 'cancel'],
   template: `
     <div id="test-select-element">
       <b-button @click="select(1)" id="select-btn-ok">ok</b-button>
@@ -55,7 +61,11 @@ const select = defineComponent({
   `,
   methods: {
     select(i: number) {
-      this.$emit('set-result', i);
+      if (this.setResultAndClose) {
+        this.$emit('set-result-and-close', i);
+      } else {
+        this.$emit('set-result', i);
+      }
     },
     cancel() {
       this.$emit('cancel');
@@ -117,6 +127,9 @@ function setupTest(props?: Record<string, unknown>) {
             },
           },
         ],
+        stubs: {
+          transition: false,
+        },
       },
     };
     if (props) {
@@ -229,7 +242,6 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog())
       .then(data => {
         result = data;
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -254,7 +266,6 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog())
       .then(data => {
         result = data;
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -280,7 +291,6 @@ describe('DialogComponent: Prompt', () => {
     DialogManager.exec(createDialog({ pressEnterAsOk: false }))
       .then(data => {
         result = data;
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -342,7 +352,6 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -363,7 +372,6 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -380,7 +388,6 @@ describe('DialogComponent: Confirm', () => {
     DialogManager.exec(createDialog())
       .then((data: boolean) => {
         result = Boolean(data);
-        return true;
       })
       .catch(err => {
         /* eslint-disable no-console */
@@ -567,21 +574,24 @@ describe('DialogComponent: Select', () => {
     `;
   });
 
-  const createDialog = (props: Record<string, unknown> = {}) =>
-    new SelectDialog({
+  const createDialog = (props: Record<string, unknown> = {}) => {
+    const componentProps = (props.componentProps as Record<string, unknown>) ?? {};
+    return new SelectDialog({
       ...props,
       title: 'title',
       component: 'test-select-cmp',
       componentProps: {
+        ...componentProps,
         selectedItems: [],
         disabledItems: [],
       },
     });
+  };
 
   const okBtn = (): VueWrapper => wrapper.findComponent('#select-btn-ok') as VueWrapper;
   const cancelBtn = (): VueWrapper => wrapper.findComponent('#select-btn-cancel') as VueWrapper;
 
-  it('Корректно создает диалог типа Select', async () => {
+  it('Если вызвано set-result и selectAsOk = true, должен закрыть окно и вернуть результат', async () => {
     let result = null;
     DialogManager.exec(createDialog({ selectAsOk: true }))
       .then(data => {
@@ -601,7 +611,35 @@ describe('DialogComponent: Select', () => {
     expect(result).toEqual(1);
   });
 
-  it('Select: При отмене возвращает null', async () => {
+  it('Если вызвано select-result-and-close и selectAsOk = false, должен закрыть окно и вернуть результат', async () => {
+    let result = null;
+    DialogManager.exec(
+      createDialog({
+        selectAsOk: false,
+        componentProps: {
+          setResultAndClose: true,
+        },
+      })
+    )
+      .then(data => {
+        result = data;
+      })
+      .catch(err => {
+        /* eslint-disable no-console */
+        console.error(err);
+      });
+    await delay(300);
+    let dialog: HTMLElement = document.querySelector('.v-dialog');
+    expect(dialog.classList.contains('Select')).toBeTruthy();
+    const btn = okBtn();
+    btn.trigger('click');
+    await delay(300);
+    expect(result).toEqual(1);
+    dialog = document.querySelector('.b-dialog-content');
+    expect(dialog).toBeNull();
+  });
+
+  it('При отмене возвращает null', async () => {
     let result: unknown = 1;
     DialogManager.exec(createDialog({ selectAsOk: true }))
       .then(data => {
@@ -622,8 +660,8 @@ describe('DialogComponent: Select', () => {
   it('По нажатию Enter срабатывает логика кнопки Ок', async () => {
     let result = null;
     DialogManager.exec(createDialog())
-      .then(data => {
-        result = data;
+      .then(_ => {
+        result = 1;
       })
       .catch(err => {
         /* eslint-disable no-console */

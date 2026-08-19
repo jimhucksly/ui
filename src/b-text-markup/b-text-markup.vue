@@ -1,7 +1,13 @@
 <template>
   <v-container
     class="b-text-markup"
-    :class="{ 'b-text-markup--focused': isFocused && !disabled, 'b-text-markup--disabled': disabled }"
+    :class="[
+      `b-text-markup--${mySize}`,
+      {
+        'b-text-markup--focused': isFocused && !disabled,
+        'b-text-markup--disabled': disabled,
+      },
+    ]"
   >
     <v-row no-gutters>
       <v-col v-if="label" :class="[labelSizeClasses]">
@@ -16,12 +22,13 @@
                 :model-value="preview"
                 :items="items"
                 :disabled="disabled || readonly"
-                class="mb-2"
+                class="mb-1"
+                :size="size"
                 @update:model-value="toggle"
               />
               <v-spacer></v-spacer>
               <div v-if="isShowHelp" class="b-text-markup-help">
-                <ld-help :tooltip="help.tooltip" :link="help.link" />
+                <b-help :tooltip="help.tooltip" :link="help.link" />
               </div>
             </div>
             <v-runtime-template v-if="preview" :template="template" />

@@ -218,7 +218,8 @@ export default defineConfig(
         "sonarjs/no-clear-text-protocols": "off",
         "sonarjs/different-types-comparison": "off",
         "sonarjs/no-nested-functions": "off",
-        "sonarjs/no-skipped-tests": "off"
+        "sonarjs/no-skipped-tests": "off",
+        "sonarjs/public-static-readonly": "off"
       }
     },
     // simple sort
@@ -291,7 +292,7 @@ export default defineConfig(
         "no-sequences": "error",
         "no-throw-literal": "error",
         "no-unused-expressions": "error",
-        "no-useless-call": "error",
+        "no-useless-call": "off",
         "no-useless-concat": "error",
         "no-useless-return": "error",
         "no-useless-assignment": "off",

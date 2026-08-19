@@ -40,9 +40,7 @@ const rootComponent = defineComponent({
       </b-radiogroup>
     </div>
   `,
-  data(): {
-    value: unknown;
-  } {
+  data() {
     return {
       value: null,
     };
@@ -61,9 +59,7 @@ const rootComponent2 = defineComponent({
       <b-radiogroup v-model="value" ref="cmp2" :values="values" />
     </div>
   `,
-  data(): {
-    value: unknown;
-  } {
+  data() {
     return {
       value: null,
     };
@@ -75,7 +71,9 @@ function setupTest(props?: Record<string, unknown>, order: number = 0) {
     let options = {
       provide: {
         form: {
+          /* eslint-disable-next-line */
           register: () => {},
+          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

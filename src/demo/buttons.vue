@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex flex-column">
     <content-header>Buttons: Default</content-header>
-    <content-body h="500">
+    <content-body h="600">
       <b-tabs v-bind="tabProps">
         <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
@@ -20,7 +20,7 @@
                 class="mx-2"
                 :class="{ 'mb-2': main.block }"
               >
-                <b-icon>plus</b-icon>
+                <b-icon>account</b-icon>
                 <span v-if="!main.icon">Button</span>
                 <template #text> <span v-if="main.icon">Button tooltip</span> </template>
                 <b-icon v-if="!main.icon">chevron-down</b-icon>

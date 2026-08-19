@@ -1,4 +1,4 @@
-import { generatePalette, PaletteScheme } from '@dn-web/core';
+import { generatePalette, isDefined, PaletteScheme } from '@dn-web/core';
 import { App, reactive } from 'vue';
 import { reg as bbadgeReg } from '@/b-badge';
 import { reg as bbreadcrumbsReg } from '@/b-breadcrumbs';
@@ -11,6 +11,7 @@ import { reg as bdatatableReg } from '@/b-datatable';
 import { reg as bdatepickerReg } from '@/b-datepicker';
 import { reg as bdaterangeReg } from '@/b-daterange';
 import { reg as bdialogReg } from '@/b-dialog';
+import { reg as beditmaskedtextReg } from '@/b-edit-masked-text';
 import { reg as bedittextReg } from '@/b-edit-text';
 import { reg as bexpansionpanelReg } from '@/b-expansion-panel';
 import { reg as bexpansionpanelsReg } from '@/b-expansion-panels';
@@ -197,6 +198,7 @@ const dnwebui = {
     bdaterangeReg(vue, options);
     bdialogReg(vue, options);
     bedittextReg(vue, options);
+    beditmaskedtextReg(vue, options);
     bexpansionpanelReg(vue, options);
     bexpansionpanelsReg(vue, options);
     biconReg(vue, options);
@@ -218,6 +220,10 @@ const dnwebui = {
     btimepickerReg(vue, options);
     btogglebuttonsReg(vue, options);
     buploaderReg(vue, options);
+
+    vue.config.globalProperties.$utils = {
+      isDefined: (value: unknown) => isDefined(value),
+    };
   },
 };
 

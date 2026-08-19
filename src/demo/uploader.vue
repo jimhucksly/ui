@@ -19,6 +19,7 @@
                 :width="setWidth ? width : undefined"
                 :height="setHeight ? height : undefined"
                 :input-hint="inputHint ? 'Добавьте файл' : ''"
+                :persistent-hint="persistentHint"
                 :hide-details="hideDetails"
                 :max="max ? 20971520 : 0"
                 :size="size"
@@ -64,6 +65,7 @@
               <b-switch label="fluid" v-model="fluid" hide-details />
               <b-switch label="full height" v-model="fullHeight" hide-details />
               <b-switch label="input hint" v-model="inputHint" hide-details />
+              <b-switch label="persistent hint" v-model="persistentHint" hide-details />
               <b-switch label="hideDetails" v-model="hideDetails" hide-details />
               <b-switch label="custom actions" v-model="customActions" hide-details />
               <b-switch label="accept docx, png, jpg" v-model="accept" hide-details />
@@ -120,6 +122,7 @@ export default {
       hideDetails: false,
       customActions: false,
       inputHint: true,
+      persistentHint: true,
       error: false,
       max: true,
       size: 'm',

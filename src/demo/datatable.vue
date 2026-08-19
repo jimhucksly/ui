@@ -60,13 +60,13 @@
                       </span>
                     </template>
                     <template #header:controls>
-                      <b-button icon text @click="openSettings">
-                        <b-icon>edit_grid</b-icon>
+                      <b-button icon variant="text" @click="openSettings">
+                        <b-icon>tune</b-icon>
                       </b-button>
                       <v-menu>
                         <template #activator="{ props }">
-                          <b-button icon text v-bind="props">
-                            <b-icon>more_vert</b-icon>
+                          <b-button icon variant="text" v-bind="props">
+                            <b-icon>dots-vertical</b-icon>
                           </b-button>
                         </template>
                         <v-list>

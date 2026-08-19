@@ -52,7 +52,7 @@ function setupTest(props?: Record<string, unknown>) {
             install(vue: App) {
               vue.use(ui, {
                 LdPager: {
-                  entityName: (_: unknown, count: number) => `${count} документов`,
+                  entityName: (_, count) => `${count} документов`,
                 },
               });
             },
