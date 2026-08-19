@@ -113,7 +113,7 @@ describe('BreadcrumbsComponent', () => {
     setupTest(null, rootComponent1);
     const spy = jest.spyOn($router, 'push');
     const ul = wrapper.find('ul');
-    const li = ul.find('li[text="LDM UI DEMO"]');
+    const li = ul.find('li[text="DN WEB UI DEMO"]');
     const div = li.find('div');
     div.trigger('click');
     await delay(300);
@@ -123,7 +123,7 @@ describe('BreadcrumbsComponent', () => {
   it('Если передан обработчик @open, передает управление ему', async () => {
     setupTest(null, rootComponent2);
     const ul = wrapper.find('ul');
-    const li = ul.find('li[text="LDM UI DEMO"]');
+    const li = ul.find('li[text="DN WEB UI DEMO"]');
     const div = li.find('div');
     div.trigger('click');
     await delay(300);

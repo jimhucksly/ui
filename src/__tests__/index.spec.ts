@@ -32,9 +32,7 @@ function setupTest(props?: Record<string, unknown>, options: IOptions = {}) {
     let config = {
       provide: {
         form: {
-          /* eslint-disable-next-line */
           register: () => {},
-          /* eslint-disable-next-line */
           unregister: () => {},
         },
       },

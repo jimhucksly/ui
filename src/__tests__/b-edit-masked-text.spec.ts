@@ -2,7 +2,7 @@ import { delay } from '@dn-web/core';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { defineComponent } from 'vue';
 import { Vue } from 'vue-property-decorator';
-import ldmui from '@/index';
+import ui from '@/index';
 import vuetify from '@/vuetify.setup';
 
 interface IComponent extends Vue {
@@ -42,7 +42,7 @@ async function setupTest(props?: Record<string, unknown>) {
         },
       },
       global: {
-        plugins: [vuetify, ldmui],
+        plugins: [vuetify, ui],
       },
     };
     if (props) {
