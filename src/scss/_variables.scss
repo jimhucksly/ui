@@ -3,6 +3,7 @@ $icon-height: 24px !default; // размеры обычной иконки
 
 :root {
   --text: var(--grey-d-5);
+  --text-disabled: var(--grey-l-2);
   --focus: var(--primary-d-1);
   --highlight: var(--grey-d-1);
   --white: hsla(255, 100%, 100%, 100%);

@@ -49,5 +49,18 @@
     ["this.$utils.uidGen", "uniqueID"],
     ["uidGen", "uniqueID"]
   ],
-  "exclude": ["avatar", "iterator", "text-viewer", "toolbar", "treeview", "editor", "utils", "upgrade", "test", "home", "index"]
+  "exclude": [
+    "avatar",
+    "iterator",
+    "text-viewer",
+    "toolbar",
+    "treeview",
+    "editor",
+    "utils",
+    "upgrade",
+    "test",
+    "home",
+    "index",
+    "loader"
+  ]
 }

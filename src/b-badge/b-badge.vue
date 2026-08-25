@@ -1,8 +1,12 @@
 <template>
   <v-btn
     class="b-badge"
-    :class="[`b-badge--${rounded ? 'rounded' : 'square'}`, { 'b-badge--circle': circle }, `b-badge--size-${mySize}`]"
-    :color="color"
+    :class="[
+      `b-badge--${rounded ? 'rounded' : 'square'}`,
+      { 'b-badge--circle': circle, 'b-badge--disabled': disabled },
+      `b-badge--size-${mySize}`,
+    ]"
+    :color="disabled ? 'grey' : color"
     :variant="variant"
     :readonly="true"
   >

@@ -28,8 +28,8 @@ body {
     .b-uploader-droparea {
       position: relative;
       border: 1px dashed var(--grey-l-3);
-      border-radius: 8px;
-      margin-bottom: 8px;
+      border-radius: var(--border-radius);
+      margin-bottom: 4px;
       transition: all 0.2s;
       cursor: pointer;
 
@@ -159,24 +159,24 @@ body {
 
         &:hover {
           .b-uploader-placeholder {
-            color: var(--grey-l-2);
+            color: var(--text-disabled);
 
             svg {
-              color: var(--grey-l-2);
+              color: var(--text-disabled);
             }
           }
         }
       }
       .b-uploader-placeholder {
-        color: var(--grey-l-2);
+        color: var(--text-disabled);
 
         svg {
-          color: var(--grey-l-2);
+          color: var(--text-disabled);
         }
       }
 
       .b-uploader-max {
-        color: var(--grey-l-2);
+        color: var(--text-disabled);
       }
     }
   }

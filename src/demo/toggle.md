@@ -24,5 +24,12 @@ size: string // s (default), m, l
 rounded: boolean // (default: false), закругленные углы и более квадратные
 disabled: boolean //
 ```
+* Slots
+ ```html
+ <!-- здесь 0 - это item.id -->
+<template #item-0="{ item, disabled }">
+  <!-- контент переключателя -->
+</template>
+ ```
  # end of cols
 

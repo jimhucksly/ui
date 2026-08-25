@@ -15,6 +15,7 @@
                 :circle="circle"
                 :dot="dot"
                 :variant="variant"
+                :disabled="disabled"
               >
                 {{ circle ? i : 'Badge' }}
               </b-badge>
@@ -50,6 +51,7 @@
                 <b-radiobutton label="outlined" value="outlined" />
                 <b-radiobutton label="tonal" value="tonal" />
               </b-radiogroup>
+              <b-switch v-model="disabled" label="disabled" hide-details />
               <b-switch v-model="rounded" label="rounded" hide-details />
               <b-switch v-model="circle" label="circle" hide-details />
               <b-switch v-model="dot" label="dot" hide-details />
@@ -72,6 +74,7 @@ export default {
       color: 'primary',
       size: 's',
       variant: 'tonal',
+      disabled: false,
       rounded: true,
       circle: false,
       dot: true,

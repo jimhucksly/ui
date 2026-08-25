@@ -7,7 +7,7 @@
     :style="{ 'max-width': myWidthValue, width: myWidthValue }"
   >
     <v-card-text class="d-flex flex-column" :class="{ 'h-100': fullHeight }">
-      <b-label v-if="label" :label="label" :required="required"></b-label>
+      <b-label v-if="label" :label="label" :required="required" class="mb-1"></b-label>
       <div
         class="b-uploader-droparea"
         ref="droparea"

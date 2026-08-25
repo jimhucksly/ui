@@ -21,6 +21,18 @@ export default class LoaderComponent extends Vue {
     }
   }
 
+  circleTo4Paths(cx: number, cy: number, r: number) {
+    const K = 0.5522847498;
+    const d = r * K;
+
+    return {
+      top: `M ${cx} ${cy - r} C ${cx + d} ${cy - r}, ${cx + r} ${cy - d}, ${cx + r} ${cy}`,
+      right: `M ${cx + r} ${cy} C ${cx + r} ${cy + d}, ${cx + d} ${cy + r}, ${cx} ${cy + r}`,
+      bottom: `M ${cx} ${cy + r} C ${cx - d} ${cy + r}, ${cx - r} ${cy + d}, ${cx - r} ${cy}`,
+      left: `M ${cx - r} ${cy} C ${cx - r} ${cy - d}, ${cx - d} ${cy - r}, ${cx} ${cy - r}`,
+    };
+  }
+
   get mySize(): string {
     switch (this.size) {
       case 'xs':
@@ -48,6 +60,36 @@ export default class LoaderComponent extends Vue {
         return 48;
       case 'xl':
         return 64;
+    }
+  }
+
+  get iconStroke(): number {
+    switch (this.size) {
+      case 'xs':
+        return 4;
+      case 's':
+        return 5;
+      case 'm':
+        return 6;
+      case 'l':
+        return 8;
+      case 'xl':
+        return 10;
+    }
+  }
+
+  get r(): number {
+    switch (this.size) {
+      case 'xs':
+        return 2;
+      case 's':
+        return 3;
+      case 'm':
+        return 4;
+      case 'l':
+        return 5;
+      case 'xl':
+        return 6;
     }
   }
 

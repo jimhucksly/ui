@@ -265,10 +265,10 @@ body {
         &[disabled] {
           background-color: var(--white) !important;
           border-color: var(--grey-l-4) !important;
-          color: var(--grey-l-2) !important;
+          color: var(--text-disabled) !important;
 
           svg {
-            color: var(--grey-l-2) !important;
+            color: var(--text-disabled) !important;
           }
         }
       }
@@ -378,10 +378,10 @@ body {
         }
 
         &[disabled] {
-          color: var(--grey-l-2) !important;
+          color: var(--text-disabled) !important;
 
           svg {
-            color: var(--grey-l-2) !important;
+            color: var(--text-disabled) !important;
           }
         }
       }
@@ -680,7 +680,7 @@ body {
       // bg disabled
       var(--grey-l-6),
       // color disabled
-      var(--grey-l-2)
+      var(--text-disabled)
     );
 
     // -- text

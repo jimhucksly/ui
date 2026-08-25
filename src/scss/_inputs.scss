@@ -48,7 +48,7 @@ $sizearray: (
 
 $input-border-color-default: var(--grey-l-4);
 $input-border-color-hover: var(--grey);
-$input-disabled-color: var(--grey-l-2);
+$input-disabled-color: var(--text-disabled);
 $input-disabled-background-color: var(--grey-l-6);
 
 $input-border-color-readonly: var(--grey-l-6);
@@ -1130,13 +1130,13 @@ textarea:-moz-placeholder {
 input.disabled,
 input[disabled] {
   background-color: var(--grey-l-6);
-  color: var(--grey-l-2);
+  color: var(--text-disabled);
 }
 
 textarea.disabled,
 textarea[disabled] {
   background-color: var(--grey-l-6);
-  color: var(--grey-l-2);
+  color: var(--text-disabled);
 }
 
 input {

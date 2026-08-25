@@ -30,10 +30,10 @@ body {
       }
 
       &[disabled] {
-        color: var(--grey-l-2);
+        color: var(--text-disabled);
 
         span {
-          color: var(--grey-l-2);
+          color: var(--text-disabled);
         }
       }
 

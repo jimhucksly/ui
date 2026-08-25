@@ -109,12 +109,12 @@
                     <div class="d-flex flex-column scroll-s">
                       <component
                         :is="$ui.options.aliases['b-button']"
-                        :color="buttonText(i) === _hours ? 'primary' : 'grey'"
-                        variant="text"
-                        icon
-                        class="mb-1"
                         v-for="i in new Array(is24hr ? 24 : 12).fill(null).map((_, j) => j)"
                         :key="i"
+                        :color="buttonText(i) === _hours ? 'primary' : 'grey'"
+                        :variant="buttonText(i) === _hours ? 'flat' : 'text'"
+                        icon
+                        class="mb-1"
                         @click="setHours(is24hr ? i : i + 1)"
                       >
                         {{ buttonText(is24hr ? i : i + 1) }}
@@ -123,11 +123,11 @@
                     <div class="d-flex flex-column scroll-s">
                       <component
                         :is="$ui.options.aliases['b-button']"
-                        :color="buttonText(i) === _minutes ? 'primary' : 'grey'"
-                        variant="text"
-                        icon
                         v-for="i in new Array(60).fill(null).map((_, j) => j)"
                         :key="i"
+                        :color="buttonText(i) === _minutes ? 'primary' : 'grey'"
+                        :variant="buttonText(i) === _minutes ? 'flat' : 'text'"
+                        icon
                         @click="setMinutes(i)"
                       >
                         {{ buttonText(i) }}

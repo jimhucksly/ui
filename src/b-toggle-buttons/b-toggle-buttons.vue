@@ -11,7 +11,7 @@
               :disabled="disabled"
               @click="onClick(index)"
             >
-              <slot :item="item">
+              <slot :name="`item-${item.id}`" :item="item" :disabled="disabled">
                 <div class="ld-toggle-button-content">
                   <component v-if="item.icon" :is="$ui.options.aliases['b-icon']" :icon="item.icon" />
                   <span v-if="item.text">{{ item.text }}</span>
@@ -22,6 +22,7 @@
                     :color="modelValue === index ? 'primary' : 'grey'"
                     :fill="modelValue === index"
                     :size="size"
+                    :disabled="disabled"
                   >
                     {{ item.badge }}
                   </component>

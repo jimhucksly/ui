@@ -147,7 +147,7 @@ body {
                       color: var(--primary);
 
                       &.v-btn--disabled {
-                        border-color: var(--grey-l-2);
+                        border-color: var(--text-disabled);
                       }
                     }
 
@@ -251,7 +251,7 @@ body {
           transition: all 0.1s;
 
           &.v-btn--disabled {
-            color: var(--grey-l-2);
+            color: var(--text-disabled);
           }
         }
       }

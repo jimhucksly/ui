@@ -90,6 +90,7 @@ $button-width: 36px;
 @mixin selected() {
   &:not([disabled]) {
     background-color: var(--primary);
+    border-radius: var(--border-radius);
     span {
       color: var(--white);
     }

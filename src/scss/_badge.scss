@@ -64,6 +64,15 @@ body {
         .b-badge-dot {
           background-color: var(--white);
         }
+
+        &.b-badge--disabled {
+          background-color: var(--grey-l-5);
+          color: var(--text-disabled);
+
+          .b-badge-dot {
+            background-color: var(--text-disabled);
+          }
+        }
       }
     }
 
@@ -78,6 +87,15 @@ body {
 
         .b-badge-dot {
           background-color: $border;
+        }
+
+        &.b-badge--disabled {
+          border: 1px solid var(--text-disabled);
+          color: var(--text-disabled);
+
+          .b-badge-dot {
+            background-color: var(--text-disabled);
+          }
         }
       }
     }
@@ -94,6 +112,15 @@ body {
 
         .b-badge-dot {
           background-color: $color;
+        }
+
+        &.b-badge--disabled {
+          background-color: var(--grey-l-5);
+          color: var(--text-disabled);
+
+          .b-badge-dot {
+            background-color: var(--text-disabled);
+          }
         }
       }
     }
@@ -189,6 +216,7 @@ body {
         $f: list.nth($values, 3);
         font-weight: 500;
         height: $h;
+        min-width: $h !important;
         padding: 0 $p !important;
 
         .v-btn__content {

@@ -10,4 +10,5 @@ rounded: boolean // (default: true), закругленные углы и бол
 circle: // (default: false), включает отображение в виде круга
 dot: boolean // (default: true) отображение точки
 variant: string // flat, outlined, tonal (default)
+disabled: boolean
 ```

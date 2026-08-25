@@ -128,7 +128,6 @@ body {
       position: absolute;
       top: 50%;
       left: 50%;
-      animation: rotating 1s linear infinite;
     }
 
     @include loadersize();

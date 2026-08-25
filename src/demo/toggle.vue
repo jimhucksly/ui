@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex flex-column">
     <content-header>Toggle Buttons</content-header>
-    <content-body h="400">
+    <content-body h="450">
       <b-tabs v-bind="tabProps">
         <b-tab index="0" heading="Playground">
           <v-row class="pt-3">
