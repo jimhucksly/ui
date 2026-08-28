@@ -34,6 +34,8 @@ const doAsync = async () => {
       'vue-screen-utils': 'vue-screen-utils',
       '@vuelidate/core': '@vuelidate/core',
       '@vuelidate/validators': '@vuelidate/validators',
+      '@dn-web/core': '@dn-web/core',
+      '@dn-web/datatable': '@dn-web/datatable',
       '@/mixins/validators': './utils/validators.js', // from index.js
       '../mixins/validators': '../utils/validators.js', // from components/<file>.js
       ...libs.externals,
