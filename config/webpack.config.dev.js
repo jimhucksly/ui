@@ -1,10 +1,10 @@
+const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VuetifyPlugin } = require('webpack-plugin-vuetify');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const devServer = require('./server');
 const { version } = require('../package.json');
 
 const commonConfig = require('./webpack.config.common');
@@ -64,7 +64,20 @@ const doAsync = async () => {
       }),
       new ESLintPlugin()
     ],
-    devServer,
+    devServer: {
+      port: 4000,
+      host: '0.0.0.0',
+      historyApiFallback: true,
+      hot: true,
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false,
+          runtimeErrors: false,
+        }
+      },
+      static: path.resolve(__dirname, './public'),
+    }
   }
 };
 

@@ -55,8 +55,12 @@ fs.writeFile(
 let pkg = fs.readFileSync(path.join(__dirname, '../build/package.json'), { encoding: 'utf-8' });
 pkg = JSON.parse(pkg);
 pkg.scripts = {
-  demo: "cross-env NODE_ENV=production webpack serve --config webpack.config.js --progress --profile",
-  pub: "node publish.js && npm publish --access=public --tag=latest && node updateVersion.js"
+  "demo": "npm run demo:clear && npm run demo:start && concurrently \"npm run demo:app\" \"npm run demo:server\"",
+  "demo:clear": "node clear.js ./demo",
+  "demo:start": "node start.js ./demo",
+  "demo:app": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --profile",
+  "demo:server": "node server.js",
+  "pub": "node publish.js && npm publish --access=public --tag=latest && node updateVersion.js"
 }
 delete pkg.repository;
 delete pkg.packageManager;

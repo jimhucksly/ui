@@ -14,8 +14,11 @@ const doAsync = async () => {
     ...commonConfig,
     mode: 'production',
     entry: {
-      'main': path.resolve(__dirname, './release'),
       'index': path.resolve(__dirname, './release/css/index.css'),
+      'main': path.resolve(__dirname, './release'),
+    },
+    output: {
+      path: path.resolve(__dirname, './demo'),
     },
     plugins: [
       new VueLoaderPlugin(),
@@ -24,7 +27,7 @@ const doAsync = async () => {
         template: path.resolve(__dirname, './index.html'),
       }),
       new DefinePlugin({
-        '$DEV': true,
+        '$DEV': false,
         '$VERSION': JSON.stringify(version),
         '$ICONS': JSON.stringify(icons),
         '__VUE_OPTIONS_API__': true,

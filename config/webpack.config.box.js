@@ -43,6 +43,14 @@ module.exports = {
           to: './index.html',
         },
         {
+          from: 'config/start.js',
+          to: './start.js',
+        },
+        {
+          from: 'config/clear.js',
+          to: './clear.js',
+        },
+        {
           from: 'favicon.ico',
           to: './favicon.ico',
         },

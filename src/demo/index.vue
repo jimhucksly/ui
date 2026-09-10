@@ -14,8 +14,8 @@
         <template v-for="(tab, i) in tabs">
           <b-tab :index="i" :readonly="tab.disabled" :heading="tab.name">
             <template #header>
-              <strong v-if="tab.disabled" style="letter-spacing: 1px; color: var(--warning-d-1)">
-                - {{ tab.name }}
+              <strong v-if="tab.disabled" style="letter-spacing: 1px; color: var(--warning-d-1); text-transform: uppercase;">
+                {{ tab.name }}
               </strong>
               <template v-else>
                 <span> {{ tab.name }} </span>

@@ -1,4 +1,3 @@
-const devServer = require('./server');
 const rules = require('./rules');
 const path = require('path');
 
@@ -25,6 +24,5 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm-bundler.js',
       '@': 'src',
     },
-  },
-  devServer,
+  }
 }
