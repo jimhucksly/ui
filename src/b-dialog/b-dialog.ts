@@ -5,7 +5,7 @@ import Icon from '@/components/icon/icon.vue';
 import { Emit } from '@/decorators/emit.decorator';
 import ViewportMixin from '@/mixins/viewport.mixins';
 import UnitService from '@/services/unit.service';
-import { IHostObject, IModalInfo, IModalResult, IModalWindow, IViewModel } from '@/types/dialogs';
+import { IHostObject, IModalInfo, IModalResult, IModalWindow, IOptions, IViewModel } from '@/types/dialogs';
 import { getScrollbarWidth } from '@/utils/scrollbarWidth';
 import { DialogListeners } from './dialog.listeners';
 import { DialogManager, ModalType } from './dialog.manager';
@@ -27,6 +27,8 @@ enum ModalCancelReason {
   FromEscapeKeyPress = 'escape',
 }
 
+type Options = IOptions;
+
 /**
  * Dialogs
  * @displayName b-dialog
@@ -39,9 +41,7 @@ enum ModalCancelReason {
 })
 export default class DialogComponent extends mixins(ViewportMixin) {
   @Prop({ type: String, default: '' }) id: string;
-
-  readonly dialogManager = new DialogManager();
-  readonly dialogListeners = new DialogListeners();
+  @Prop({ type: Object, default: () => ({ identicalDialogsAllowed: true }) }) options: Options;
 
   readonly messageDetailSeparator = 'Message detail: ';
 
@@ -110,11 +110,13 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     if (!this.dialogManager.tryToOpen(modalInfo.hostObject)) {
       return;
     }
+
     const found = this.findModal(modalInfo.hostObject);
     if (found) {
       this.dialogManager.activate(found);
       return;
     }
+
     if (!this.isAlertDialog(modalInfo) && !this.isConfirmDialog(modalInfo)) {
       this.dialogManager.setParentDialog(modalInfo);
       if (modalInfo.hostObject.parentId && !['left', 'right'].includes(modalInfo.align)) {
@@ -158,8 +160,8 @@ export default class DialogComponent extends mixins(ViewportMixin) {
       align: modalInfo.align,
       size: modalInfo.size,
       css: modalInfo.css,
-      closable: isDefined(modalInfo.closable) ? modalInfo.closable : true,
       scrim: false,
+      closable: isDefined(modalInfo.closable) ? modalInfo.closable : true,
       expandable: modalInfo.expandable,
       minimizable: modalInfo.minimizable,
       minimized: false,
@@ -844,10 +846,11 @@ export default class DialogComponent extends mixins(ViewportMixin) {
   }
 
   dialogBindings(modal: IModalWindow) {
+    const topLayer = this.dialogManager.getTopLayer();
     return {
       width: this.modalWidth(modal),
       height: 'auto',
-      'data-foreground': modal.hostObject.layer === this.topLayer,
+      'data-foreground': modal.hostObject.layer === topLayer,
       // 'data-layer': modal.hostObject.layer,
       style: { 'z-index': 2000 + modal.hostObject.layer * 10 },
     };
@@ -975,7 +978,11 @@ export default class DialogComponent extends mixins(ViewportMixin) {
     return ModalCancelReason;
   }
 
-  get topLayer(): number {
-    return this.dialogManager.getTopLayer();
+  get dialogManager(): DialogManager {
+    return new DialogManager(this.options);
+  }
+
+  get dialogListeners(): DialogListeners {
+    return new DialogListeners();
   }
 }

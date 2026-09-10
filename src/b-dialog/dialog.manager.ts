@@ -10,6 +10,7 @@ import {
   IModalWindow,
   InfoDialog,
   InteractiveDialog,
+  IOptions,
   PromptDialog,
   SelectDialog,
 } from '@/types/dialogs';
@@ -36,10 +37,17 @@ export class DialogManager extends DialogLayers {
 
   private GAP = 24;
 
-  constructor() {
+  private readonly _options: IOptions = {
+    identicalDialogsAllowed: false,
+  };
+
+  constructor(options?: IOptions) {
     super();
     this._viewPortWidth = window.innerWidth;
     window.addEventListener('resize', this.onResizeHandler.bind(this) as () => void);
+    if (options) {
+      this._options = options;
+    }
   }
 
   setProps(data: { gap: number }) {
@@ -52,6 +60,10 @@ export class DialogManager extends DialogLayers {
     return `dlg-${modal.id}`;
   }
 
+  /**
+   * true - идентичных диалогов не найдено, нужно создать новый
+   * false - найден идентичный диалог, надо его активировать
+   */
   tryToOpen(host: IHostObject): boolean {
     const found = this._all().find(m => this.modalIdentity(m, host));
     return !found;
@@ -202,7 +214,7 @@ export class DialogManager extends DialogLayers {
       if (!m.show) {
         continue;
       }
-      if (m.type === info.type) {
+      if (!this._options.identicalDialogsAllowed && m.type === info.type) {
         if (m.hostObject && info.hostObject && m.hostObject.contentType === info.hostObject.contentType) {
           continue;
         }

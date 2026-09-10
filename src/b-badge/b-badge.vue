@@ -8,10 +8,11 @@
     ]"
     :color="disabled ? 'grey' : color"
     :variant="variant"
-    :readonly="true"
+    :aria-label="ariaLabel"
+    :aria-describedby="ariaDescribedby"
   >
     <i v-if="dot && !circle" class="b-badge-dot"></i>
-    <slot />
+    <slot></slot>
   </v-btn>
 </template>
 <script src="./b-badge.ts"></script>
