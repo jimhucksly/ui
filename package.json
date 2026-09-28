@@ -1,6 +1,6 @@
 {
   "name": "@dn-web/ui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "engines": {
     "node": ">=22",
@@ -20,7 +20,7 @@
     "build:box:stage2": "node config/index.js",
     "build:box": "npm run build:box:stage1 && npm run build:box:stage2",
     "test": "npm run clear && jest --runInBand --no-cache",
-    "clear": "node config/clear.js ./build",
+    "clear": "node config/clear.js ../build",
     "lint": "npx eslint --cache --ext .ts src",
     "version": "node -v",
     "pub": "node config/publish.warning.js"
